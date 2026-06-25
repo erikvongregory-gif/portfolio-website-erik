@@ -15,6 +15,7 @@ import {
   Services,
   SiteFooter,
 } from "@/components";
+import { ContactDialog } from "@/components/ContactDialog";
 
 export default function Home() {
   return (
@@ -51,7 +52,7 @@ export default function Home() {
                 onBackground="neutral-strong"
                 style={{ letterSpacing: "-0.04em", lineHeight: 0.98 }}
               >
-                <Text as="span" onBackground="neutral-weak">
+                <Text as="span" onBackground="neutral-medium">
                   Websites mit Charakter,
                 </Text>{" "}
                 die Kunden bringen.
@@ -61,7 +62,7 @@ export default function Home() {
             <RevealFx translateY="8" delay={0.2} horizontal="start" paddingBottom="32">
               <Text
                 wrap="balance"
-                onBackground="neutral-weak"
+                onBackground="neutral-medium"
                 variant="body-default-l"
                 style={{ lineHeight: 1.55, maxWidth: "32rem" }}
               >
@@ -73,9 +74,7 @@ export default function Home() {
             <RevealFx translateY="12" delay={0.3} horizontal="start" paddingBottom="20">
               <Row gap="8" wrap vertical="center">
                 <Magnetic>
-                  <Button href="#kontakt" variant="primary" size="l" arrowIcon>
-                    Kostenloses Erstgespräch
-                  </Button>
+                  <ContactDialog label="Kostenlos anfragen" size="l" />
                 </Magnetic>
                 <Button href="#projekte" variant="tertiary" size="l">
                   Projekte ansehen

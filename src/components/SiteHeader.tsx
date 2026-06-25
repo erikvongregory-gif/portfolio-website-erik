@@ -14,6 +14,7 @@ import {
   Text,
 } from "@once-ui-system/core";
 import styles from "./SiteHeader.module.scss";
+import { ContactDialog } from "./ContactDialog";
 
 const navLinks = [
   { label: "Projekte", href: "/#projekte" },
@@ -117,9 +118,7 @@ export function SiteHeader() {
                   {link.label}
                 </Button>
               ))}
-              <Button href="/#kontakt" variant="primary" size="s" arrowIcon>
-                Kontakt
-              </Button>
+              <ContactDialog label="Kostenlos anfragen" size="s" />
             </Flex>
             <Flex hide m={{ hide: false }}>
               <IconButton
