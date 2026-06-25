@@ -3,7 +3,16 @@ import { Reveal, SpotlightCard } from "@/components/motion";
 import { Section, SectionHeader } from "./Section";
 import styles from "./sections.module.scss";
 
-const projects = [
+type Project = {
+  title: string;
+  chrome: string;
+  category: string;
+  image: string;
+  body: string;
+  comingSoon?: boolean;
+};
+
+const projects: Project[] = [
   {
     title: "EvGlab",
     chrome: "evglab.com",
@@ -31,6 +40,7 @@ const projects = [
     category: "Gastronomie · Restaurant",
     image: "/images/projects/da-peppe/hero.png",
     body: "Website für eine italienische Osteria & Pizzeria: appetitlich, warm und einladend, mit klarer Speisekarte.",
+    comingSoon: true,
   },
 ];
 
@@ -62,12 +72,29 @@ export function Projects() {
                   <span className={styles.dot} />
                   <span className={styles.dot} />
                 </div>
-                <Text variant="label-default-s" onBackground="neutral-weak" style={{ marginLeft: "0.375rem" }}>
+                <Text
+                  variant="label-default-s"
+                  onBackground="neutral-weak"
+                  style={{ marginLeft: "0.375rem" }}
+                  className={p.comingSoon ? styles.blurText : undefined}
+                >
                   {p.chrome}
                 </Text>
               </div>
               <div className={styles.imageWrap}>
-                <img className={styles.image} src={p.image} alt={`${p.title} – Website`} />
+                <img
+                  className={`${styles.image}${p.comingSoon ? ` ${styles.imageBlur}` : ""}`}
+                  src={p.image}
+                  alt={p.comingSoon ? "Projekt – bald verfügbar" : `${p.title} – Website`}
+                />
+                {p.comingSoon && (
+                  <div className={styles.teaser}>
+                    <span className={styles.teaserBadge}>
+                      <span className={styles.teaserDot} />
+                      Eventuell bald verfügbar
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -75,7 +102,11 @@ export function Projects() {
                 <Tag size="s" variant="neutral">
                   {p.category}
                 </Tag>
-                <Text variant="heading-strong-s" onBackground="neutral-strong">
+                <Text
+                  variant="heading-strong-s"
+                  onBackground="neutral-strong"
+                  className={p.comingSoon ? styles.blurText : undefined}
+                >
                   {p.title}
                 </Text>
                 <Text variant="body-default-m" onBackground="neutral-weak">

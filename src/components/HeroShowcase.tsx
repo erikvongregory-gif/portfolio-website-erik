@@ -6,6 +6,7 @@ import styles from "./HeroShowcase.module.scss";
 type CardContent = {
   title: string;
   image: string;
+  comingSoon?: boolean;
 };
 
 // A single 3D state along the carousel arc.
@@ -43,7 +44,7 @@ const projects: CardContent[] = [
     image: "/images/projects/kapitalanlagen/hero.png",
   },
   { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero.png" },
-  { title: "Da Peppe", image: "/images/projects/da-peppe/hero.png" },
+  { title: "Da Peppe", image: "/images/projects/da-peppe/hero.png", comingSoon: true },
 ];
 
 // Slots on the arc, filled with real work (repeated) instead of empty placeholders.
@@ -178,10 +179,26 @@ export function HeroShowcase() {
                   <span className={styles.dot} />
                   <span className={styles.dot} />
                 </div>
-                <span className={styles.title}>{c.title}</span>
+                <span
+                  className={`${styles.title}${c.comingSoon ? ` ${styles.blurText}` : ""}`}
+                >
+                  {c.title}
+                </span>
               </div>
               <div className={styles.imageWrap}>
-                <img className={styles.image} src={c.image} alt={`${c.title} – Website`} />
+                <img
+                  className={`${styles.image}${c.comingSoon ? ` ${styles.imageBlur}` : ""}`}
+                  src={c.image}
+                  alt={c.comingSoon ? "Projekt – bald verfügbar" : `${c.title} – Website`}
+                />
+                {c.comingSoon && (
+                  <div className={styles.teaser}>
+                    <span className={styles.teaserBadge}>
+                      <span className={styles.teaserDot} />
+                      Eventuell bald verfügbar
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </figure>
