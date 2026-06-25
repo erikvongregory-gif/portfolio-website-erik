@@ -32,23 +32,37 @@ export function SmoothScroll() {
     };
     raf = requestAnimationFrame(loop);
 
-    // Smooth in-page anchor jumps (account for the fixed header).
+    // Smooth in-page anchor jumps (account for the fixed header). Handles both
+    // bare "#section" links and "/#section" links (used by the header/footer),
+    // the latter only while we're already on the homepage so cross-page links
+    // (e.g. from /ueber-uns) still navigate normally.
     const onClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       const anchor = target?.closest("a");
       if (!anchor) return;
       const href = anchor.getAttribute("href");
-      if (!href || !href.startsWith("#") || href.length < 2) return;
-      const el = document.querySelector(href);
+      if (!href) return;
+
+      let hash: string | null = null;
+      if (href.startsWith("#")) {
+        hash = href;
+      } else if (href.startsWith("/#") && window.location.pathname === "/") {
+        hash = href.slice(1);
+      }
+      if (!hash || hash.length < 2) return;
+
+      const el = document.querySelector(hash);
       if (!el) return;
       e.preventDefault();
       lenis.scrollTo(el as HTMLElement, { offset: -96 });
     };
-    document.addEventListener("click", onClick);
+    // Capture phase so we intercept the click before Next.js <Link> performs
+    // its client-side navigation (which would otherwise win and swallow the jump).
+    document.addEventListener("click", onClick, true);
 
     return () => {
       cancelAnimationFrame(raf);
-      document.removeEventListener("click", onClick);
+      document.removeEventListener("click", onClick, true);
       lenis.destroy();
       lenisInstance = null;
     };
