@@ -3,9 +3,10 @@ import { SmartLink } from "@once-ui-system/core";
 import { LegalBlock, LegalLayout, LegalSubheading, LegalText } from "@/components";
 
 export const metadata: Metadata = {
-  title: "Datenschutzerklärung – Erik EvgLab",
+  title: "Datenschutzerklärung",
   description:
     "Informationen zur Verarbeitung personenbezogener Daten auf der Website von Erik EvgLab gemäß DSGVO.",
+  alternates: { canonical: "/datenschutz" },
 };
 
 export default function Datenschutz() {

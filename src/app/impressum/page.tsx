@@ -3,8 +3,9 @@ import { SmartLink } from "@once-ui-system/core";
 import { LegalBlock, LegalLayout, LegalSubheading, LegalText } from "@/components";
 
 export const metadata: Metadata = {
-  title: "Impressum – Erik EvgLab",
+  title: "Impressum",
   description: "Impressum und Anbieterkennzeichnung gemäß § 5 DDG für die Website von Erik EvgLab.",
+  alternates: { canonical: "/impressum" },
 };
 
 export default function Impressum() {

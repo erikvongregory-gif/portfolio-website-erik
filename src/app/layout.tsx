@@ -8,17 +8,52 @@ import classNames from "classnames";
 
 import { Column, Flex } from "@once-ui-system/core";
 import { Aurora, CookieBanner, Providers, ScrollProgress, SiteHeader, SmoothScroll } from "@/components";
-import { fonts, style, dataStyle } from "@/resources";
+import { fonts, style, dataStyle, baseURL } from "@/resources";
+
+const title = "Erik EvgLab – Websites mit Charakter, die Kunden bringen.";
+const description =
+  "Webentwicklung und Design aus einer Hand. Kein Vorlagen-Look, sondern ein Auftritt mit Persönlichkeit, der Anfragen bringt. Aus Landsberg am Lech.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://webdesign.evglab.com"),
-  title: "Erik EvgLab – Websites mit Charakter, die Kunden bringen.",
-  description:
-    "Webentwicklung und Design aus einer Hand. Kein Vorlagen-Look, sondern ein Auftritt mit Persönlichkeit, der Anfragen bringt. Aus Landsberg am Lech.",
+  metadataBase: new URL(baseURL),
+  title: {
+    default: title,
+    template: "%s · Erik EvgLab",
+  },
+  description,
+  applicationName: "Erik EvgLab",
+  authors: [{ name: "Erik von Gregory", url: baseURL }],
+  creator: "Erik von Gregory",
+  publisher: "Erik EvgLab",
+  keywords: [
+    "Webdesign",
+    "Webentwicklung",
+    "Landingpage",
+    "Website erstellen",
+    "Webdesigner Landsberg am Lech",
+    "Webdesign Bayern",
+    "Freelancer Webentwicklung",
+    "Branding",
+    "Next.js Entwickler",
+    "Erik EvgLab",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
-    title: "Erik EvgLab – Websites mit Charakter, die Kunden bringen.",
-    description:
-      "Webentwicklung und Design aus einer Hand. Kein Vorlagen-Look, sondern ein Auftritt mit Persönlichkeit, der Anfragen bringt.",
+    title,
+    description,
     url: "/",
     siteName: "Erik EvgLab",
     locale: "de_DE",
@@ -26,9 +61,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Erik EvgLab – Websites mit Charakter, die Kunden bringen.",
-    description:
-      "Webentwicklung und Design aus einer Hand. Ein Auftritt mit Persönlichkeit, der Anfragen bringt.",
+    title,
+    description,
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
 };
 

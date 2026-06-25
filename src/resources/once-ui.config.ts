@@ -1,7 +1,7 @@
 import { DataStyleConfig, EffectsConfig, FontsConfig, StyleConfig } from "@/types";
 
-// IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://localhost:3000";
+// Used for SEO in meta tags, canonical URLs, sitemap and schema.
+const baseURL: string = "https://webdesign.evglab.com";
 
 import { Geist } from "next/font/google";
 import { Geist_Mono } from "next/font/google";

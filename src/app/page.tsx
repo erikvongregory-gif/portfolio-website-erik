@@ -16,10 +16,66 @@ import {
   SiteFooter,
 } from "@/components";
 import { ContactDialog } from "@/components/ContactDialog";
+import { JsonLd } from "@/components/JsonLd";
+import { baseURL } from "@/resources";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": `${baseURL}/#business`,
+  name: "EvgLab",
+  alternateName: "Erik EvgLab",
+  description:
+    "Webentwicklung und Design aus einer Hand. Individuelle Websites und Landingpages mit Persönlichkeit, die Anfragen bringen.",
+  url: baseURL,
+  image: `${baseURL}/opengraph-image`,
+  email: "info@evglab.com",
+  telephone: "+491731706012",
+  priceRange: "€€",
+  founder: {
+    "@type": "Person",
+    name: "Erik von Gregory",
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Hauptstraße 18",
+    postalCode: "86925",
+    addressLocality: "Fuchstal",
+    addressRegion: "Bayern",
+    addressCountry: "DE",
+  },
+  areaServed: ["Landsberg am Lech", "Bayern", "Deutschland"],
+  knowsLanguage: ["de"],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Leistungen",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        priceCurrency: "EUR",
+        price: "2500",
+        itemOffered: { "@type": "Service", name: "Komplette Website" },
+      },
+      {
+        "@type": "Offer",
+        priceCurrency: "EUR",
+        price: "1500",
+        itemOffered: { "@type": "Service", name: "Landingpage" },
+      },
+      {
+        "@type": "Offer",
+        priceCurrency: "EUR",
+        price: "99",
+        itemOffered: { "@type": "Service", name: "Website-Betreuung (monatlich)" },
+      },
+    ],
+  },
+};
 
 export default function Home() {
   return (
     <Column fillWidth horizontal="center">
+      <JsonLd data={structuredData} />
       <Column
         as="section"
         fillWidth

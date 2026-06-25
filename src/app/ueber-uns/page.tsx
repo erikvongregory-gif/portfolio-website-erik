@@ -14,9 +14,17 @@ import {
 } from "@/components";
 
 export const metadata: Metadata = {
-  title: "Über mich – Erik EvgLab",
+  title: "Über mich",
   description:
     "Hinter EvgLab steht eine Person: Erik. Webentwicklung und Design aus Landsberg am Lech – direkt, ehrlich und ohne Umwege.",
+  alternates: { canonical: "/ueber-uns" },
+  openGraph: {
+    title: "Über mich · Erik EvgLab",
+    description:
+      "Hinter EvgLab steht eine Person: Erik. Webentwicklung und Design aus Landsberg am Lech – direkt, ehrlich und ohne Umwege.",
+    url: "/ueber-uns",
+    type: "profile",
+  },
 };
 
 const values: { icon: IconName; title: string; body: string }[] = [
