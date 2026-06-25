@@ -11,6 +11,16 @@
   .heroCopy {
     padding: clamp(22px, 6vw, 32px) clamp(20px, 5.5vw, 30px);
     border-radius: 22px;
+  }
+
+  /* The glass treatment lives on a pseudo-element so it can fade in together
+     with the RevealFx text instead of popping in fully formed on first paint. */
+  .heroCopy::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
     background: color-mix(in srgb, var(--page-background) 80%, transparent);
     backdrop-filter: blur(18px) saturate(150%);
     -webkit-backdrop-filter: blur(18px) saturate(150%);
@@ -19,5 +29,23 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.5),
       0 2px 1px rgba(0, 0, 0, 0.03),
       0 36px 70px -38px rgba(0, 0, 0, 0.32);
+    opacity: 0;
+    transform: translateY(8px);
+    animation: heroCardReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes heroCardReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroCopy::before {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
