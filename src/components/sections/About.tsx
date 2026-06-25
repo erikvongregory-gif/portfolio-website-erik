@@ -61,7 +61,7 @@ export function About() {
                   background="surface"
                   border="neutral-alpha-weak"
                   radius="l"
-                  padding="28"
+                  padding="24"
                   gap="4"
                 >
                   <Text

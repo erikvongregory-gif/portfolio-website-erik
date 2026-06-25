@@ -41,12 +41,12 @@ export function Reveal({ children, delay = 0, y = 24 }: RevealProps) {
 
   if (!isValidElement(children)) return children;
 
-  const child = children as ReactElement<{ className?: string; style?: React.CSSProperties }>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const child = children as ReactElement<any>;
   const prevClass = child.props.className ? `${child.props.className} ` : "";
 
   return cloneElement(child, {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ref: ref as any,
+    ref,
     className: `${prevClass}${styles.reveal}${shown ? ` ${styles.revealIn}` : ""}`,
     style: {
       ...(child.props.style || {}),

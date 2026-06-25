@@ -40,7 +40,7 @@ export default function Home() {
           style={{ position: "relative", zIndex: 1 }}
         >
           <Column flex={5} maxWidth={30} gap="0" horizontal="start" align="left">
-            <RevealFx horizontal="start" paddingBottom="28">
+            <RevealFx horizontal="start" paddingBottom="24">
               <CapacityBadge taken={3} total={4} />
             </RevealFx>
 

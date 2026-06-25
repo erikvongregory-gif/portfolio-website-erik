@@ -1,0 +1,46 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  animation: fade 0.18s ease-out;
+}
+
+.panel {
+  animation: slide 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link {
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.link:active {
+  opacity: 0.6;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .panel {
+    animation: none;
+  }
+}

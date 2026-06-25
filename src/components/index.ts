@@ -3,6 +3,7 @@ export { HeroShowcase } from "@/components/HeroShowcase";
 export { HeroMarquee } from "@/components/HeroMarquee";
 export { SiteHeader } from "@/components/SiteHeader";
 export { CapacityBadge } from "@/components/CapacityBadge";
+export { CookieBanner } from "@/components/CookieBanner";
 export {
   Section,
   SectionHeader,
@@ -14,6 +15,10 @@ export {
   About,
   FinalCta,
   SiteFooter,
+  LegalLayout,
+  LegalBlock,
+  LegalSubheading,
+  LegalText,
 } from "@/components/sections";
 export {
   Reveal,

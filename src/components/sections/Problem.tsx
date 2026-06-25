@@ -149,7 +149,7 @@ export function Problem() {
               <Text className={styles.num} variant="heading-strong-l" onBackground="neutral-weak">
                 {p.no}
               </Text>
-              <Column gap="6">
+              <Column gap="8">
                 <Text variant="heading-strong-s" onBackground="neutral-strong">
                   {p.title}
                 </Text>

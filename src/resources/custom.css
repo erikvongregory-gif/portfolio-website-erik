@@ -67,3 +67,31 @@
   --scheme-neutral-600-50: rgba(137,152,159,0.5);
   /*
 }*/
+
+/* ============================================================
+   Großbildschirm-Skalierung (QHD, 4K, 5K, 8K, Ultrawide)
+   ------------------------------------------------------------
+   Die gesamte Once-UI-Oberfläche ist rem-basiert: Typografie,
+   Abstände, Radien und Layout-Breiten (z. B. maxWidth={68} ->
+   68rem) hängen alle an der Root-Schriftgröße. Statt jedes
+   Element einzeln zu vergrößern, skalieren wir hier die
+   Root-Schriftgröße ab sehr breiten Viewports fließend nach
+   oben. Dadurch wächst das komplette Design proportional mit
+   und füllt große Monitore satt aus, ohne Proportionen,
+   Hierarchie oder Zeilenlängen (Zeichen pro Zeile) zu verändern.
+
+   Standard-Laptops und -Desktops (< 1680px) bleiben komplett
+   unberührt; Tablet/Mobile-Skalierung von Once UI ebenfalls.
+   Werte sind in CSS-Pixeln gedacht – OS-Skalierung (z. B. 4K
+   @ 150%) meldet entsprechend kleinere Viewports, was hier
+   automatisch korrekt mitberücksichtigt wird.
+   ============================================================ */
+@media (min-width: 1680px) {
+  html {
+    /* +~0,52px je 100px Breite über 1600px, gedeckelt bei 48px.
+       Beispiele (CSS-Pixel-Breite -> Root-Größe):
+       1920 -> ~17,7px · 2560 -> ~21px · 3840 -> ~27,6px
+       5120 -> ~34,3px · 7680 -> 48px (Cap). */
+    font-size: clamp(16px, calc(16px + (100vw - 1600px) * 0.0052), 48px);
+  }
+}

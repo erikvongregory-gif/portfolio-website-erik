@@ -54,7 +54,7 @@ const lerp = (a: number, b: number, f: number) => a + (b - a) * f;
 export function HeroShowcase() {
   const stageRef = useRef<HTMLDivElement>(null);
   const deckRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
     const stage = stageRef.current;

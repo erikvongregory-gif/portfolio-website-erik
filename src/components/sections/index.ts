@@ -7,3 +7,4 @@ export { Process } from "./Process";
 export { About } from "./About";
 export { FinalCta } from "./FinalCta";
 export { SiteFooter } from "./SiteFooter";
+export { LegalLayout, LegalBlock, LegalSubheading, LegalText } from "./LegalLayout";

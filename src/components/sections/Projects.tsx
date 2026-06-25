@@ -62,7 +62,7 @@ export function Projects() {
                   <span className={styles.dot} />
                   <span className={styles.dot} />
                 </div>
-                <Text variant="label-default-s" onBackground="neutral-weak" style={{ marginLeft: 6 }}>
+                <Text variant="label-default-s" onBackground="neutral-weak" style={{ marginLeft: "0.375rem" }}>
                   {p.chrome}
                 </Text>
               </div>
@@ -71,7 +71,7 @@ export function Projects() {
               </div>
             </div>
 
-              <Column gap="10" paddingX="4">
+              <Column gap="8" paddingX="4">
                 <Tag size="s" variant="neutral">
                   {p.category}
                 </Tag>

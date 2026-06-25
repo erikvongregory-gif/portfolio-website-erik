@@ -26,7 +26,7 @@ export function CapacityBadge({ taken = 3, total = 4, label }: CapacityBadgeProp
 
   return (
     <Column
-      gap="10"
+      gap="8"
       paddingX="16"
       paddingY="12"
       radius="l"

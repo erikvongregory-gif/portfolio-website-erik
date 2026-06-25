@@ -14,8 +14,8 @@ const contactLinks = [
 ];
 
 const legalLinks = [
-  { label: "Impressum", href: "#" },
-  { label: "Datenschutz", href: "#" },
+  { label: "Impressum", href: "/impressum" },
+  { label: "Datenschutz", href: "/datenschutz" },
 ];
 
 export function SiteFooter() {
