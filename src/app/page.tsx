@@ -1,121 +1,119 @@
+import { Button, Column, Flex, Heading, RevealFx, Row, Text } from "@once-ui-system/core";
 import {
-  Heading,
-  Text,
-  Button,
-  RevealFx,
-  Column,
-  Badge,
-  Row,
-  Schema,
-  Meta,
-  Line,
-} from "@once-ui-system/core";
-import { home, about, work, person, baseURL, routes } from "@/resources";
-import { Mailchimp } from "@/components";
-import { Projects } from "@/components/work/Projects";
-import { Posts } from "@/components/blog/Posts";
-
-export async function generateMetadata() {
-  return Meta.generate({
-    title: home.title,
-    description: home.description,
-    baseURL: baseURL,
-    path: home.path,
-    image: home.image,
-  });
-}
+  About,
+  Approach,
+  CapacityBadge,
+  FinalCta,
+  HeroMarquee,
+  HeroShowcase,
+  Magnetic,
+  Marquee,
+  Problem,
+  Process,
+  Projects,
+  ScrollRevealText,
+  Services,
+  SiteFooter,
+} from "@/components";
 
 export default function Home() {
   return (
-    <Column maxWidth="m" gap="xl" paddingY="12" horizontal="center">
-      <Schema
-        as="webPage"
-        baseURL={baseURL}
-        path={home.path}
-        title={home.title}
-        description={home.description}
-        image={`/api/og/generate?title=${encodeURIComponent(home.title)}`}
-        author={{
-          name: person.name,
-          url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
-        }}
-      />
-      <Column fillWidth horizontal="center" gap="m">
-        <Column maxWidth="s" horizontal="center" align="center">
-          {home.featured.display && (
-            <RevealFx
-              fillWidth
-              horizontal="center"
-              paddingTop="16"
-              paddingBottom="32"
-              paddingLeft="12"
-            >
-              <Badge
-                background="brand-alpha-weak"
-                paddingX="12"
-                paddingY="4"
-                onBackground="neutral-strong"
-                textVariant="label-default-s"
-                arrow={false}
-                href={home.featured.href}
-              >
-                <Row paddingY="2">{home.featured.title}</Row>
-              </Badge>
+    <Column fillWidth horizontal="center">
+      <Column
+        as="section"
+        fillWidth
+        horizontal="center"
+        paddingX="l"
+        paddingTop="128"
+        paddingBottom="80"
+        vertical="center"
+        style={{ minHeight: "100svh" }}
+      >
+        <HeroMarquee />
+
+        <Row
+          fillWidth
+          maxWidth={68}
+          vertical="center"
+          gap="xl"
+          s={{ direction: "column", gap: "56" }}
+          style={{ position: "relative", zIndex: 1 }}
+        >
+          <Column flex={5} maxWidth={30} gap="0" horizontal="start" align="left">
+            <RevealFx horizontal="start" paddingBottom="28">
+              <CapacityBadge taken={3} total={4} />
             </RevealFx>
-          )}
-          <RevealFx translateY="4" fillWidth horizontal="center" paddingBottom="16">
-            <Heading wrap="balance" variant="display-strong-l">
-              {home.headline}
-            </Heading>
-          </RevealFx>
-          <RevealFx translateY="8" delay={0.2} fillWidth horizontal="center" paddingBottom="32">
-            <Text wrap="balance" onBackground="neutral-weak" variant="heading-default-xl">
-              {home.subline}
-            </Text>
-          </RevealFx>
-          <RevealFx paddingTop="12" delay={0.4} horizontal="center" paddingLeft="12">
-            <Button
-              id="projects"
-              data-border="rounded"
-              href={work.path}
-              variant="secondary"
-              size="m"
-              weight="default"
-              arrowIcon
-            >
-              <Row gap="8" vertical="center" paddingRight="4">
-                Meine Webseiten ansehen
+
+            <RevealFx translateY="4" delay={0.1} horizontal="start" paddingBottom="20">
+              <Heading
+                wrap="balance"
+                variant="display-strong-xl"
+                onBackground="neutral-strong"
+                style={{ letterSpacing: "-0.04em", lineHeight: 0.98 }}
+              >
+                <Text as="span" onBackground="neutral-weak">
+                  Websites mit Charakter,
+                </Text>{" "}
+                die Kunden bringen.
+              </Heading>
+            </RevealFx>
+
+            <RevealFx translateY="8" delay={0.2} horizontal="start" paddingBottom="32">
+              <Text
+                wrap="balance"
+                onBackground="neutral-weak"
+                variant="body-default-l"
+                style={{ lineHeight: 1.55, maxWidth: "32rem" }}
+              >
+                Webentwicklung und Design aus einer Hand. Kein Vorlagen-Look, sondern ein Auftritt
+                mit Persönlichkeit, der Anfragen bringt.
+              </Text>
+            </RevealFx>
+
+            <RevealFx translateY="12" delay={0.3} horizontal="start" paddingBottom="20">
+              <Row gap="8" wrap vertical="center">
+                <Magnetic>
+                  <Button href="#kontakt" variant="primary" size="l" arrowIcon>
+                    Kostenloses Erstgespräch
+                  </Button>
+                </Magnetic>
+                <Button href="#projekte" variant="tertiary" size="l">
+                  Projekte ansehen
+                </Button>
               </Row>
-            </Button>
-          </RevealFx>
+            </RevealFx>
+
+            <RevealFx translateY="12" delay={0.4} horizontal="start">
+              <Text variant="label-default-s" onBackground="neutral-weak">
+                Kostenlos · Antwort innerhalb 24h · Landsberg am Lech
+              </Text>
+            </RevealFx>
+          </Column>
+
+          <Flex flex={6} fillWidth m={{ hide: true }}>
+            <RevealFx fillWidth delay={0.3}>
+              <HeroShowcase />
+            </RevealFx>
+          </Flex>
+        </Row>
+      </Column>
+
+      <Problem />
+      <Projects />
+
+      <Column as="section" fillWidth horizontal="center" paddingY="160" gap="64">
+        <Marquee />
+        <Column maxWidth={48} fillWidth horizontal="center" paddingX="l">
+          <ScrollRevealText text="Deine Website ist der erste Eindruck deiner Marke. Ich sorge dafür, dass er auffällt, Vertrauen schafft und Kunden bringt." />
         </Column>
       </Column>
-      <RevealFx translateY="16" delay={0.6}>
-        <Projects range={[1, 1]} />
-      </RevealFx>
-      {routes["/blog"] && (
-        <Column fillWidth gap="24" marginBottom="l">
-          <Row fillWidth paddingRight="64">
-            <Line maxWidth={48} />
-          </Row>
-          <Row fillWidth gap="24" marginTop="40" s={{ direction: "column" }}>
-            <Row flex={1} paddingLeft="l" paddingTop="24">
-              <Heading as="h2" variant="display-strong-xs" wrap="balance">
-                Latest from the blog
-              </Heading>
-            </Row>
-            <Row flex={3} paddingX="20">
-              <Posts range={[1, 2]} columns="2" />
-            </Row>
-          </Row>
-          <Row fillWidth paddingLeft="64" horizontal="end">
-            <Line maxWidth={48} />
-          </Row>
-        </Column>
-      )}
-      <Projects range={[2]} />
-      <Mailchimp />
+
+      <Approach />
+      <Services />
+      <Process />
+      <About />
+      <FinalCta />
+      <SiteFooter />
     </Column>
   );
 }

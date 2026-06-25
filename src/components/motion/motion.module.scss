@@ -1,0 +1,169 @@
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-y, 24px));
+  filter: blur(10px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.9s ease;
+  will-change: opacity, transform;
+}
+
+.revealIn {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* ---------- Spotlight + tilt card ---------- */
+.spotlight {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
+  will-change: transform;
+}
+
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    440px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(90, 108, 255, 0.1),
+    rgba(0, 0, 0, 0.04) 35%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.spotlightGlow:hover::after {
+  opacity: 1;
+}
+
+.spotlight:hover {
+  box-shadow: 0 38px 72px -34px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- Magnetic wrapper ---------- */
+.magnetic {
+  display: inline-flex;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* ---------- Scroll progress ---------- */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, rgba(90, 108, 255, 0.9), var(--neutral-on-background-strong));
+  z-index: 10;
+}
+
+/* ---------- Aurora background ---------- */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: #f3f2f0;
+}
+
+.aurora::before,
+.aurora::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  will-change: transform;
+}
+
+.aurora::before {
+  width: 58vw;
+  height: 58vw;
+  left: -12vw;
+  top: -16vw;
+  background: radial-gradient(circle, rgba(90, 108, 255, 0.14), transparent 60%);
+  animation: drift1 26s ease-in-out infinite alternate;
+}
+
+.aurora::after {
+  width: 52vw;
+  height: 52vw;
+  right: -12vw;
+  top: 4vw;
+  background: radial-gradient(circle, rgba(120, 120, 120, 0.16), transparent 60%);
+  animation: drift2 32s ease-in-out infinite alternate;
+}
+
+.blob3 {
+  position: absolute;
+  width: 44vw;
+  height: 44vw;
+  left: 28vw;
+  bottom: -22vw;
+  border-radius: 50%;
+  filter: blur(80px);
+  background: radial-gradient(circle, rgba(150, 150, 150, 0.13), transparent 60%);
+  animation: drift3 38s ease-in-out infinite alternate;
+}
+
+@keyframes drift1 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(12vw, 10vh, 0) scale(1.15);
+  }
+}
+
+@keyframes drift2 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(-14vw, 12vh, 0) scale(0.92);
+  }
+}
+
+@keyframes drift3 {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-10vw, -12vh, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .spotlight {
+    transform: none;
+    transition: none;
+  }
+  .magnetic {
+    transition: none;
+  }
+  .aurora::before,
+  .aurora::after,
+  .blob3 {
+    animation: none;
+  }
+}

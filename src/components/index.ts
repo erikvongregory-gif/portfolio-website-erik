@@ -1,10 +1,29 @@
-export { Header } from "@/components/Header";
-export { Footer } from "@/components/Footer";
-export { Mailchimp } from "@/components/Mailchimp";
-export { ProjectCard } from "@/components/ProjectCard";
-export { HeadingLink } from "@/components/HeadingLink";
-export { RouteGuard } from "@/components/RouteGuard";
 export { Providers } from "@/components/Providers";
-export { ScrollToHash } from "@/components/ScrollToHash";
-export { ThemeToggle } from "@/components/ThemeToggle";
-export { CustomMDX } from "@/components/mdx";
+export { HeroShowcase } from "@/components/HeroShowcase";
+export { HeroMarquee } from "@/components/HeroMarquee";
+export { SiteHeader } from "@/components/SiteHeader";
+export { CapacityBadge } from "@/components/CapacityBadge";
+export {
+  Section,
+  SectionHeader,
+  Problem,
+  Projects,
+  Approach,
+  Services,
+  Process,
+  About,
+  FinalCta,
+  SiteFooter,
+} from "@/components/sections";
+export {
+  Reveal,
+  SpotlightCard,
+  Magnetic,
+  Counter,
+  ScrollProgress,
+  ScrollRevealText,
+  SmoothScroll,
+  Marquee,
+  Parallax,
+  Aurora,
+} from "@/components/motion";

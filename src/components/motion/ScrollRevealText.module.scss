@@ -1,0 +1,25 @@
+.text {
+  margin: 0;
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.75rem, 4.4vw, 3.4rem);
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.word {
+  display: inline-block;
+  color: var(--neutral-on-background-strong);
+  opacity: 0.14;
+  transition: opacity 0.2s ease;
+  white-space: pre;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    opacity: 1;
+    transition: none;
+  }
+}

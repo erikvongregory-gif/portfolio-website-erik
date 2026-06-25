@@ -1,0 +1,122 @@
+.stage {
+  position: relative;
+  width: 100%;
+  height: min(82vh, 900px);
+  min-height: 560px;
+  perspective: 3400px;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+
+  /* Soft feather on every edge so cards dissolve into the page
+     instead of being cut off by a hard rectangular boundary. */
+  --fade-top: 15%;
+  --fade-bottom: 10%;
+  --fade-right: 16%;
+  --fade-left: 6%;
+
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 var(--fade-top)),
+    linear-gradient(to top, transparent 0%, #000 var(--fade-bottom)),
+    linear-gradient(to left, transparent 0%, #000 var(--fade-right)),
+    linear-gradient(to right, transparent 0%, #000 var(--fade-left));
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 var(--fade-top)),
+    linear-gradient(to top, transparent 0%, #000 var(--fade-bottom)),
+    linear-gradient(to left, transparent 0%, #000 var(--fade-right)),
+    linear-gradient(to right, transparent 0%, #000 var(--fade-left));
+  mask-composite: intersect;
+}
+
+.stage:active {
+  cursor: grabbing;
+}
+
+.deck {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: translateX(-10%) rotateX(3deg) rotateY(-4deg);
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 54%;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1200 / 840;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(158deg, var(--neutral-background-weak), var(--neutral-background-medium));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 2px 1px rgba(0, 0, 0, 0.04),
+    0 50px 90px -40px rgba(0, 0, 0, 0.4),
+    0 22px 44px -26px rgba(0, 0, 0, 0.26);
+}
+
+.chrome {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  padding: 0 14px;
+  background: var(--neutral-background-medium);
+  border-bottom: 1px solid var(--neutral-alpha-weak);
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--neutral-alpha-medium);
+}
+
+.title {
+  margin-left: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--neutral-on-background-weak);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.imageWrap {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+@media (max-width: 1023px) {
+  .stage {
+    display: none;
+  }
+}

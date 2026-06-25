@@ -1,0 +1,55 @@
+.item {
+  transform-origin: left center;
+  transition:
+    opacity 0.5s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.5s ease,
+    border-color 0.5s ease;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  transition: color 0.5s ease;
+}
+
+/* Stepper (pinned) mode: dim everything, lift the active one. */
+.stepper .item {
+  opacity: 0.28;
+  transform: scale(0.97);
+}
+
+.stepper .item.active {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Dynamic left headline that swaps per active step. */
+.lead {
+  animation: leadIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes leadIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+.quote {
+  padding-left: 16px;
+  border-left: 2px solid var(--neutral-alpha-medium);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .lead {
+    transition: none;
+    animation: none;
+  }
+}
