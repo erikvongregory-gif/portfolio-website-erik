@@ -3,6 +3,17 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 
+// Module-level handle so other components (e.g. modals) can pause/resume scrolling.
+let lenisInstance: Lenis | null = null;
+
+export function stopLenis() {
+  lenisInstance?.stop();
+}
+
+export function startLenis() {
+  lenisInstance?.start();
+}
+
 export function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -12,6 +23,7 @@ export function SmoothScroll() {
       smoothWheel: true,
       wheelMultiplier: 1,
     });
+    lenisInstance = lenis;
 
     let raf = 0;
     const loop = (time: number) => {
@@ -38,6 +50,7 @@ export function SmoothScroll() {
       cancelAnimationFrame(raf);
       document.removeEventListener("click", onClick);
       lenis.destroy();
+      lenisInstance = null;
     };
   }, []);
 

@@ -20,13 +20,19 @@ export function Magnetic({ children, strength = 0.35 }: MagneticProps) {
     el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
   };
 
-  const onLeave = () => {
+  const reset = () => {
     const el = ref.current;
     if (el) el.style.transform = "translate(0px, 0px)";
   };
 
   return (
-    <span ref={ref} className={styles.magnetic} onMouseMove={onMove} onMouseLeave={onLeave}>
+    <span
+      ref={ref}
+      className={styles.magnetic}
+      onMouseMove={onMove}
+      onMouseLeave={reset}
+      onPointerDown={reset}
+    >
       {children}
     </span>
   );

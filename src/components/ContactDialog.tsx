@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Column, Dialog, Input, Row, Text, Textarea } from "@once-ui-system/core";
+import { startLenis, stopLenis } from "@/components/motion/SmoothScroll";
 
 type ContactDialogProps = {
   label?: string;
@@ -22,6 +23,14 @@ export function ContactDialog({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+
+  // Pause Lenis smooth scrolling while the modal is open (the dialog already
+  // locks body overflow, but Lenis hijacks the wheel and would keep scrolling).
+  useEffect(() => {
+    if (!open) return;
+    stopLenis();
+    return () => startLenis();
+  }, [open]);
 
   const send = () => {
     const subject = `Anfrage Erstgespräch${name ? ` – ${name}` : ""}`;
