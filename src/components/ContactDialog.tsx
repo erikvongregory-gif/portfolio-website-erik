@@ -14,7 +14,10 @@ type ContactDialogProps = {
 
 type Status = "idle" | "sending" | "success" | "error";
 
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+// Web3Forms access keys are public by design (they live in the client form).
+// Falls back to the hardcoded key if the env var isn't set.
+const WEB3FORMS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "1b75a706-3ef0-418c-99dc-87ff0b272e99";
 
 export function ContactDialog({
   label = "Kostenlos anfragen",
