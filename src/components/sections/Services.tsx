@@ -44,7 +44,7 @@ export function Services() {
 
       <Grid columns="3" m={{ columns: "1" }} gap="16">
         {services.map((s, i) => (
-          <Reveal key={s.title} delay={i * 0.1}>
+          <Reveal key={s.title} delay={i * 0.1} scale={0.95}>
           <Column fillHeight>
           <SpotlightCard
             tiltStrength={4}

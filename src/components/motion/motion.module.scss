@@ -1,7 +1,8 @@
 /* ---------- Scroll reveal ---------- */
 .reveal {
   opacity: 0;
-  transform: translateY(var(--reveal-y, 24px));
+  transform: translate3d(var(--reveal-x, 0px), var(--reveal-y, 24px), 0)
+    scale(var(--reveal-scale, 1));
   filter: blur(10px);
   transition:
     opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
@@ -49,6 +50,19 @@
 
 .spotlight:hover {
   box-shadow: 0 38px 72px -34px rgba(0, 0, 0, 0.3);
+}
+
+/* Touch devices have no hover/tilt – give a crisp press feedback instead. */
+@media (hover: none) {
+  .spotlight {
+    transition:
+      transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+  }
+  .spotlight:active {
+    transform: perspective(1000px) scale(0.97);
+  }
 }
 
 /* ---------- Magnetic wrapper ---------- */

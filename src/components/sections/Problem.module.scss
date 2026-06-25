@@ -23,6 +23,16 @@
   transform: scale(1.05);
 }
 
+/* Mobile: gentler focus – the centred problem lights up while scrolling,
+   no scaling so nothing pokes out of the viewport. */
+.mobileStepper .item {
+  opacity: 0.46;
+}
+
+.mobileStepper .item.active {
+  opacity: 1;
+}
+
 /* Dynamic left headline that swaps per active step. */
 .lead {
   animation: leadIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -51,5 +61,8 @@
   .lead {
     transition: none;
     animation: none;
+  }
+  .mobileStepper .item {
+    opacity: 1;
   }
 }

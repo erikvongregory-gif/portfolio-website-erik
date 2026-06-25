@@ -7,9 +7,11 @@ type RevealProps = {
   children: ReactElement;
   delay?: number;
   y?: number;
+  x?: number;
+  scale?: number;
 };
 
-export function Reveal({ children, delay = 0, y = 24 }: RevealProps) {
+export function Reveal({ children, delay = 0, y = 24, x = 0, scale = 1 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [shown, setShown] = useState(false);
 
@@ -52,6 +54,8 @@ export function Reveal({ children, delay = 0, y = 24 }: RevealProps) {
       ...(child.props.style || {}),
       transitionDelay: `${delay}s`,
       ["--reveal-y" as string]: `${y}px`,
+      ["--reveal-x" as string]: `${x}px`,
+      ["--reveal-scale" as string]: `${scale}`,
     } as React.CSSProperties,
   });
 }

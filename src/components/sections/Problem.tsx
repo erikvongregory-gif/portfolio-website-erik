@@ -2,6 +2,7 @@
 
 import { Column, Heading, Row, Tag, Text } from "@once-ui-system/core";
 import { useEffect, useRef, useState } from "react";
+import { Reveal } from "@/components/motion";
 import { Section } from "./Section";
 import styles from "./Problem.module.scss";
 
@@ -38,8 +39,10 @@ const problems = [
 
 export function Problem() {
   const trackRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
   const [active, setActive] = useState(0);
+  const [mobileActive, setMobileActive] = useState(0);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -53,6 +56,45 @@ export function Problem() {
       rm.removeEventListener("change", update);
     };
   }, []);
+
+  // Mobile: light up whichever problem is closest to the centre of the screen
+  // as you scroll – the touch-friendly counterpart to the desktop stepper.
+  useEffect(() => {
+    if (enabled) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const list = listRef.current;
+    if (!list) return;
+    let raf = 0;
+    const apply = () => {
+      raf = 0;
+      const items = Array.from(list.children) as HTMLElement[];
+      if (!items.length) return;
+      const focus = window.innerHeight * 0.5;
+      let best = 0;
+      let bestDist = Infinity;
+      items.forEach((el, i) => {
+        const r = el.getBoundingClientRect();
+        const center = r.top + r.height / 2;
+        const dist = Math.abs(center - focus);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
+      });
+      setMobileActive(best);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(apply);
+    };
+    apply();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [enabled]);
 
   useEffect(() => {
     if (!enabled) return;
@@ -109,22 +151,24 @@ export function Problem() {
               </Text>
             </Column>
           ) : (
-            <Column gap="16">
-              <Heading
-                variant="display-strong-xs"
-                onBackground="neutral-strong"
-                wrap="balance"
-                style={{ letterSpacing: "-0.03em", lineHeight: 1.08 }}
-              >
-                Eine Website zu haben{" "}
-                <Text as="span" onBackground="neutral-weak">
-                  reicht nicht.
+            <Reveal>
+              <Column gap="16">
+                <Heading
+                  variant="display-strong-xs"
+                  onBackground="neutral-strong"
+                  wrap="balance"
+                  style={{ letterSpacing: "-0.03em", lineHeight: 1.08 }}
+                >
+                  Eine Website zu haben{" "}
+                  <Text as="span" onBackground="neutral-weak">
+                    reicht nicht.
+                  </Text>
+                </Heading>
+                <Text variant="body-default-l" onBackground="neutral-weak" wrap="balance">
+                  Die meisten Seiten scheitern an denselben vier Punkten. Genau die löse ich.
                 </Text>
-              </Heading>
-              <Text variant="body-default-l" onBackground="neutral-weak" wrap="balance">
-                Die meisten Seiten scheitern an denselben vier Punkten. Genau die löse ich.
-              </Text>
-            </Column>
+              </Column>
+            </Reveal>
           )}
 
           {enabled && (
@@ -134,17 +178,25 @@ export function Problem() {
           )}
         </Column>
 
-        <Column flex={6} fillWidth gap="8" className={enabled ? styles.stepper : undefined}>
-          {problems.map((p, i) => (
+        <Column
+          ref={listRef}
+          flex={6}
+          fillWidth
+          gap="8"
+          className={enabled ? styles.stepper : styles.mobileStepper}
+        >
+          {problems.map((p, i) => {
+            const isActive = enabled ? active === i : mobileActive === i;
+            return (
             <Row
               key={p.no}
-              className={`${styles.item} ${enabled && active === i ? styles.active : ""}`}
+              className={`${styles.item} ${isActive ? styles.active : ""}`}
               gap="24"
               padding="20"
               radius="l"
               vertical="start"
-              background={enabled && active === i ? "surface" : undefined}
-              border={enabled && active === i ? "neutral-alpha-medium" : undefined}
+              background={isActive ? "surface" : undefined}
+              border={isActive ? "neutral-alpha-medium" : undefined}
             >
               <Text className={styles.num} variant="heading-strong-l" onBackground="neutral-weak">
                 {p.no}
@@ -158,7 +210,8 @@ export function Problem() {
                 </Text>
               </Column>
             </Row>
-          ))}
+            );
+          })}
         </Column>
       </Row>
     </Section>

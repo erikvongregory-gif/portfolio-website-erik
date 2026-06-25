@@ -52,7 +52,7 @@ export function Projects() {
 
       <Grid columns="2" m={{ columns: "1" }} gap="32">
         {projects.map((p, i) => (
-          <Reveal key={p.title} delay={i * 0.1}>
+          <Reveal key={p.title} delay={i * 0.1} y={32} scale={0.94}>
             <Column fillWidth>
             <SpotlightCard className={styles.card} gap="20" glow={false} tiltStrength={5}>
               <div className={styles.shot}>

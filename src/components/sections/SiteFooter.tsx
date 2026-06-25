@@ -1,4 +1,5 @@
 import { Column, Flex, Line, Row, SmartLink, Text } from "@once-ui-system/core";
+import { CookieSettingsButton } from "@/components/CookieSettingsButton";
 
 const navLinks = [
   { label: "Projekte", href: "/#projekte" },
@@ -68,7 +69,7 @@ export function SiteFooter() {
           <Text variant="body-default-xs" onBackground="neutral-weak">
             © 2026 Erik EvgLab · Landsberg am Lech
           </Text>
-          <Row gap="20">
+          <Row gap="20" vertical="center" wrap>
             {legalLinks.map((l) => (
               <SmartLink key={l.label} href={l.href}>
                 <Text variant="body-default-xs" onBackground="neutral-weak">
@@ -76,6 +77,7 @@ export function SiteFooter() {
                 </Text>
               </SmartLink>
             ))}
+            <CookieSettingsButton />
           </Row>
         </Row>
       </Column>

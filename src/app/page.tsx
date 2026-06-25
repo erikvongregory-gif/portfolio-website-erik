@@ -1,4 +1,5 @@
 import { Button, Column, Flex, Heading, RevealFx, Row, Text } from "@once-ui-system/core";
+import styles from "./page.module.scss";
 import {
   About,
   Approach,
@@ -39,7 +40,14 @@ export default function Home() {
           s={{ direction: "column", gap: "56" }}
           style={{ position: "relative", zIndex: 1 }}
         >
-          <Column flex={5} maxWidth={30} gap="0" horizontal="start" align="left">
+          <Column
+            className={styles.heroCopy}
+            flex={5}
+            maxWidth={30}
+            gap="0"
+            horizontal="start"
+            align="left"
+          >
             <RevealFx horizontal="start" paddingBottom="24">
               <CapacityBadge taken={3} total={4} />
             </RevealFx>
