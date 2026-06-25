@@ -14,6 +14,7 @@ const projects: CardContent[] = [
     image: "/images/projects/kapitalanlagen/hero.png",
   },
   { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero.png" },
+  { title: "Lünebräu", image: "/images/projects/lunebraeu/hero.png" },
   { title: "Da Peppe", image: "/images/projects/da-peppe/hero.png" },
 ];
 
@@ -41,12 +42,12 @@ function MarqueeCard({ card }: { card: CardContent }) {
 const rows: { items: CardContent[]; reverse: boolean; duration: number }[] = [
   { items: projects, reverse: false, duration: 46 },
   {
-    items: [projects[2], projects[0], projects[3], projects[1]],
+    items: [projects[2], projects[4], projects[0], projects[3], projects[1]],
     reverse: true,
     duration: 38,
   },
   {
-    items: [projects[1], projects[3], projects[0], projects[2]],
+    items: [projects[1], projects[3], projects[0], projects[4], projects[2]],
     reverse: false,
     duration: 54,
   },

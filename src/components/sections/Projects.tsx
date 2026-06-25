@@ -35,6 +35,13 @@ const projects: Project[] = [
     body: "Auftritt für Automation und Retrofit: technisch präzise, klar strukturiert und seriös.",
   },
   {
+    title: "Lünebräu",
+    chrome: "luenebraeu.vercel.app",
+    category: "Craft-Bier · Brauerei",
+    image: "/images/projects/lunebraeu/hero.png",
+    body: "Markenauftritt für eine Craft-Bier-Brauerei aus Lüneburg: kantig, handwerklich und mit Haltung – vom Sortiment bis zur Bestellung.",
+  },
+  {
     title: "Da Peppe",
     chrome: "da-peppe",
     category: "Gastronomie · Restaurant",
@@ -57,7 +64,7 @@ export function Projects() {
             </Text>
           </>
         }
-        description="Vier Auszüge aus bisher fünf umgesetzten Projekten."
+        description="Fünf Auszüge aus meinen bisher umgesetzten Projekten."
       />
 
       <Grid columns="2" m={{ columns: "1" }} gap="32">

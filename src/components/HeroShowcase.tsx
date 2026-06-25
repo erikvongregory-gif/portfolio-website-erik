@@ -44,6 +44,7 @@ const projects: CardContent[] = [
     image: "/images/projects/kapitalanlagen/hero.png",
   },
   { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero.png" },
+  { title: "Lünebräu", image: "/images/projects/lunebraeu/hero.png" },
   { title: "Da Peppe", image: "/images/projects/da-peppe/hero.png", comingSoon: true },
 ];
 
