@@ -7,12 +7,29 @@ import type { Metadata } from "next";
 import classNames from "classnames";
 
 import { Column, Flex } from "@once-ui-system/core";
-import { Aurora, Providers, ScrollProgress, SiteHeader, SmoothScroll } from "@/components";
+import { Aurora, CookieBanner, Providers, ScrollProgress, SiteHeader, SmoothScroll } from "@/components";
 import { fonts, style, dataStyle } from "@/resources";
 
 export const metadata: Metadata = {
-  title: "Erik EvgLab",
-  description: "",
+  metadataBase: new URL("https://webdesign.evglab.com"),
+  title: "Erik EvgLab – Websites mit Charakter, die Kunden bringen.",
+  description:
+    "Webentwicklung und Design aus einer Hand. Kein Vorlagen-Look, sondern ein Auftritt mit Persönlichkeit, der Anfragen bringt. Aus Landsberg am Lech.",
+  openGraph: {
+    title: "Erik EvgLab – Websites mit Charakter, die Kunden bringen.",
+    description:
+      "Webentwicklung und Design aus einer Hand. Kein Vorlagen-Look, sondern ein Auftritt mit Persönlichkeit, der Anfragen bringt.",
+    url: "/",
+    siteName: "Erik EvgLab",
+    locale: "de_DE",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Erik EvgLab – Websites mit Charakter, die Kunden bringen.",
+    description:
+      "Webentwicklung und Design aus einer Hand. Ein Auftritt mit Persönlichkeit, der Anfragen bringt.",
+  },
 };
 
 export default function RootLayout({
@@ -112,6 +129,7 @@ export default function RootLayout({
           <Flex id="top" fillWidth fillHeight horizontal="center" zIndex={1} flex={1}>
             {children}
           </Flex>
+          <CookieBanner />
         </Column>
       </Providers>
     </Flex>
