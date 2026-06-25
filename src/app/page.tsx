@@ -6,7 +6,6 @@ import {
   FinalCta,
   HeroMarquee,
   HeroShowcase,
-  Magnetic,
   Marquee,
   Problem,
   Process,
@@ -73,9 +72,7 @@ export default function Home() {
 
             <RevealFx translateY="12" delay={0.3} horizontal="start" paddingBottom="20">
               <Row gap="8" wrap vertical="center">
-                <Magnetic>
-                  <ContactDialog label="Kostenlos anfragen" size="l" />
-                </Magnetic>
+                <ContactDialog label="Kostenlos anfragen" size="l" />
                 <Button href="#projekte" variant="tertiary" size="l">
                   Projekte ansehen
                 </Button>
