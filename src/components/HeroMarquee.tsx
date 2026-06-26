@@ -5,6 +5,7 @@ import styles from "./HeroMarquee.module.scss";
 type CardContent = {
   title: string;
   image: string;
+  comingSoon?: boolean;
 };
 
 const projects: CardContent[] = [
@@ -15,7 +16,7 @@ const projects: CardContent[] = [
   },
   { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero.png" },
   { title: "Lünebräu", image: "/images/projects/lunebraeu/hero.png" },
-  { title: "Da Peppe", image: "/images/projects/da-peppe/hero.png" },
+  { title: "Da Peppe", image: "/images/projects/da-peppe/hero.png", comingSoon: true },
 ];
 
 function MarqueeCard({ card }: { card: CardContent }) {
@@ -28,10 +29,17 @@ function MarqueeCard({ card }: { card: CardContent }) {
             <span className={styles.dot} />
             <span className={styles.dot} />
           </div>
-          <span className={styles.title}>{card.title}</span>
+          <span className={`${styles.title}${card.comingSoon ? ` ${styles.blurText}` : ""}`}>
+            {card.title}
+          </span>
         </div>
         <div className={styles.imageWrap}>
-          <img className={styles.image} src={card.image} alt="" loading="lazy" />
+          <img
+            className={`${styles.image}${card.comingSoon ? ` ${styles.imageBlur}` : ""}`}
+            src={card.image}
+            alt=""
+            loading="lazy"
+          />
         </div>
       </div>
     </figure>

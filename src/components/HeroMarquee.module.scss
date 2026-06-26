@@ -142,6 +142,16 @@
   object-position: top center;
 }
 
+/* Coming-soon project: obscure the preview in the background marquee. */
+.imageBlur {
+  filter: blur(18px) saturate(0.92);
+  transform: scale(1.16);
+}
+
+.blurText {
+  filter: blur(5px);
+}
+
 /* Just a gentle fade into the page at the very top and bottom – the slides
    stay vivid across the middle since the copy has its own glass card. */
 .scrim {

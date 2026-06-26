@@ -1,4 +1,4 @@
-import { Column, Grid, Tag, Text } from "@once-ui-system/core";
+import { Column, Grid, Icon, Row, SmartLink, Tag, Text } from "@once-ui-system/core";
 import { Reveal, SpotlightCard } from "@/components/motion";
 import { Section, SectionHeader } from "./Section";
 import styles from "./sections.module.scss";
@@ -9,6 +9,7 @@ type Project = {
   category: string;
   image: string;
   body: string;
+  url?: string;
   comingSoon?: boolean;
 };
 
@@ -19,6 +20,7 @@ const projects: Project[] = [
     category: "Eigene Marke · KI-Marketing",
     image: "/images/projects/evglab/hero.png",
     body: "KI-Marketing-Plattform für Brauereien: Produktmotive und Kampagnen per Knopfdruck statt teurem Fotoshooting.",
+    url: "https://evglab.com",
   },
   {
     title: "Kapitalanlagen Deutschland",
@@ -33,6 +35,7 @@ const projects: Project[] = [
     category: "Industrie · Automation",
     image: "/images/projects/ib-jungen/hero.png",
     body: "Auftritt für Automation und Retrofit: technisch präzise, klar strukturiert und seriös.",
+    url: "https://ib-jungen-web.vercel.app",
   },
   {
     title: "Lünebräu",
@@ -40,6 +43,7 @@ const projects: Project[] = [
     category: "Craft-Bier · Brauerei",
     image: "/images/projects/lunebraeu/hero.png",
     body: "Markenauftritt für eine Craft-Bier-Brauerei aus Lüneburg: kantig, handwerklich und mit Haltung – vom Sortiment bis zur Bestellung.",
+    url: "https://luenebraeu.vercel.app",
   },
   {
     title: "Da Peppe",
@@ -68,42 +72,41 @@ export function Projects() {
       />
 
       <Grid columns="2" m={{ columns: "1" }} gap="32">
-        {projects.map((p, i) => (
-          <Reveal key={p.title} delay={i * 0.1} y={32} scale={0.94}>
-            <Column fillWidth>
+        {projects.map((p, i) => {
+          const card = (
             <SpotlightCard className={styles.card} gap="20" glow={false} tiltStrength={5}>
               <div className={styles.shot}>
-              <div className={styles.chrome}>
-                <div className={styles.dots}>
-                  <span className={styles.dot} />
-                  <span className={styles.dot} />
-                  <span className={styles.dot} />
-                </div>
-                <Text
-                  variant="label-default-s"
-                  onBackground="neutral-weak"
-                  style={{ marginLeft: "0.375rem" }}
-                  className={p.comingSoon ? styles.blurText : undefined}
-                >
-                  {p.chrome}
-                </Text>
-              </div>
-              <div className={styles.imageWrap}>
-                <img
-                  className={`${styles.image}${p.comingSoon ? ` ${styles.imageBlur}` : ""}`}
-                  src={p.image}
-                  alt={p.comingSoon ? "Projekt – bald verfügbar" : `${p.title} – Website`}
-                />
-                {p.comingSoon && (
-                  <div className={styles.teaser}>
-                    <span className={styles.teaserBadge}>
-                      <span className={styles.teaserDot} />
-                      Eventuell bald verfügbar
-                    </span>
+                <div className={styles.chrome}>
+                  <div className={styles.dots}>
+                    <span className={styles.dot} />
+                    <span className={styles.dot} />
+                    <span className={styles.dot} />
                   </div>
-                )}
+                  <Text
+                    variant="label-default-s"
+                    onBackground="neutral-weak"
+                    style={{ marginLeft: "0.375rem" }}
+                    className={p.comingSoon ? styles.blurText : undefined}
+                  >
+                    {p.chrome}
+                  </Text>
+                </div>
+                <div className={styles.imageWrap}>
+                  <img
+                    className={`${styles.image}${p.comingSoon ? ` ${styles.imageBlur}` : ""}`}
+                    src={p.image}
+                    alt={p.comingSoon ? "Projekt – bald verfügbar" : `${p.title} – Website`}
+                  />
+                  {p.comingSoon && (
+                    <div className={styles.teaser}>
+                      <span className={styles.teaserBadge}>
+                        <span className={styles.teaserDot} />
+                        Eventuell bald verfügbar
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
 
               <Column gap="8" paddingX="4">
                 <Tag size="s" variant="neutral">
@@ -119,11 +122,38 @@ export function Projects() {
                 <Text variant="body-default-m" onBackground="neutral-weak">
                   {p.body}
                 </Text>
+                {p.url && (
+                  <Row gap="4" vertical="center" paddingTop="4">
+                    <Text variant="label-strong-s" onBackground="neutral-strong">
+                      Live ansehen
+                    </Text>
+                    <Icon name="arrowUpRight" size="xs" onBackground="neutral-strong" />
+                  </Row>
+                )}
               </Column>
             </SpotlightCard>
-            </Column>
-          </Reveal>
-        ))}
+          );
+
+          return (
+            <Reveal key={p.title} delay={i * 0.1} y={32} scale={0.94}>
+              {p.url ? (
+                <SmartLink
+                  href={p.url}
+                  unstyled
+                  fillWidth
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "none" }}
+                  aria-label={`${p.title} – Website live in neuem Tab ansehen`}
+                >
+                  {card}
+                </SmartLink>
+              ) : (
+                <Column fillWidth>{card}</Column>
+              )}
+            </Reveal>
+          );
+        })}
       </Grid>
     </Section>
   );
