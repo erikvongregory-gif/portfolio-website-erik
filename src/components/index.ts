@@ -1,4 +1,5 @@
 export { Providers } from "@/components/Providers";
+export { BrandLogo, BrandMark } from "@/components/BrandLogo";
 export { HeroShowcase } from "@/components/HeroShowcase";
 export { HeroMarquee } from "@/components/HeroMarquee";
 export { SiteHeader } from "@/components/SiteHeader";

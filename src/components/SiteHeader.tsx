@@ -15,6 +15,7 @@ import {
 } from "@once-ui-system/core";
 import styles from "./SiteHeader.module.scss";
 import { ContactDialog } from "./ContactDialog";
+import { BrandMark } from "@/components/BrandLogo";
 
 const navLinks = [
   { label: "Projekte", href: "/#projekte" },
@@ -27,22 +28,7 @@ function Logo() {
   return (
     <SmartLink href="/" unstyled style={{ textDecoration: "none" }}>
       <Row vertical="center" gap="8">
-        <Flex
-          horizontal="center"
-          vertical="center"
-          radius="m"
-          style={{
-            width: "1.625rem",
-            height: "1.625rem",
-            background: "var(--brand-solid-strong)",
-            color: "var(--brand-on-solid-strong)",
-            fontSize: "0.8125rem",
-            fontWeight: 700,
-            letterSpacing: "-0.02em",
-          }}
-        >
-          E
-        </Flex>
+        <BrandMark size={26} />
         <Text
           variant="label-strong-m"
           onBackground="neutral-strong"

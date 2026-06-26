@@ -1,4 +1,5 @@
 import { Column, Flex, Line, Row, SmartLink, Text } from "@once-ui-system/core";
+import { BrandMark } from "@/components/BrandLogo";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
 
 const navLinks = [
@@ -25,9 +26,12 @@ export function SiteFooter() {
       <Column fillWidth maxWidth={68} gap="40">
         <Row fillWidth gap="40" horizontal="between" wrap s={{ direction: "column", gap: "32" }}>
           <Column gap="12" maxWidth={22}>
-            <Text variant="heading-strong-s" onBackground="neutral-strong" style={{ letterSpacing: "-0.01em" }}>
-              Erik EvgLab
-            </Text>
+            <Row vertical="center" gap="10">
+              <BrandMark size={28} />
+              <Text variant="heading-strong-s" onBackground="neutral-strong" style={{ letterSpacing: "-0.01em" }}>
+                Erik EvgLab
+              </Text>
+            </Row>
             <Text variant="body-default-s" onBackground="neutral-weak">
               Webentwicklung und Design aus Landsberg am Lech. Auftritte mit Persönlichkeit, die
               Anfragen bringen.
