@@ -61,7 +61,7 @@ export function BrandLogo({
   ...rest
 }: BrandLogoProps) {
   return (
-    <Row vertical="center" gap="10" {...rest}>
+    <Row vertical="center" gap="8" {...rest}>
       <BrandMark size={markSize} />
       {!iconOnly && (
         <Text
