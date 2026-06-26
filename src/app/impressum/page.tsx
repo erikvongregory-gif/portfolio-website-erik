@@ -34,7 +34,11 @@ export default function Impressum() {
       </LegalBlock>
 
       <LegalBlock title="Umsatzsteuer-Identifikationsnummer">
-        <LegalText>Kleinunternehmer gemäß § 19 UStG</LegalText>
+        <LegalText>
+          Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
+          <br />
+          DE424283984
+        </LegalText>
       </LegalBlock>
 
       <LegalBlock title="Verantwortlich für den Inhalt nach § 5 Abs. 2 DDG">
