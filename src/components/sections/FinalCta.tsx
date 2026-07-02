@@ -23,6 +23,7 @@ export function FinalCta() {
         }}
       >
         <Heading
+          as="h2"
           variant="display-strong-m"
           onBackground="neutral-strong"
           wrap="balance"

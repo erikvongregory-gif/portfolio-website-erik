@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
 import { SmartLink } from "@once-ui-system/core";
 import { LegalBlock, LegalLayout, LegalSubheading, LegalText } from "@/components";
+import { createPageOpenGraph, createPageTwitter } from "@/resources";
+
+const title = "Datenschutzerklärung";
+const description =
+  "Informationen zur Verarbeitung personenbezogener Daten auf der Website von Erik EvgLab gemäß DSGVO.";
 
 export const metadata: Metadata = {
-  title: "Datenschutzerklärung",
-  description:
-    "Informationen zur Verarbeitung personenbezogener Daten auf der Website von Erik EvgLab gemäß DSGVO.",
+  title,
+  description,
   alternates: { canonical: "/datenschutz" },
+  openGraph: createPageOpenGraph({ title, description, path: "/datenschutz" }),
+  twitter: createPageTwitter(title, description),
 };
 
 export default function Datenschutz() {
@@ -191,10 +197,35 @@ export default function Datenschutz() {
       </LegalBlock>
 
       <LegalBlock title="6. Cookies und Analyse-Tools">
+        <LegalSubheading>Cookie-Einwilligung</LegalSubheading>
         <LegalText>
-          Diese Website setzt keine Cookies zu Analyse- oder Marketingzwecken ein und verwendet
-          keine Tracking- oder Webanalyse-Dienste. Es findet keine Erstellung von Nutzerprofilen
-          statt.
+          Beim ersten Besuch kannst du über den Cookie-Hinweis festlegen, welche Kategorien du
+          erlaubst. Deine Auswahl wird lokal im Browser gespeichert (localStorage), damit sie bei
+          künftigen Besuchen berücksichtigt wird. Du kannst deine Entscheidung jederzeit über den
+          Link „Cookie-Einstellungen“ im Footer ändern.
+        </LegalText>
+
+        <LegalSubheading>Vercel Web Analytics (nur mit Einwilligung)</LegalSubheading>
+        <LegalText>
+          Wenn du der Kategorie „Statistik“ zustimmst, nutzen wir Vercel Web Analytics zur
+          anonymen Reichweitenmessung. Dabei werden u. a. besuchte Seiten, Referrer, Gerätetyp und
+          ungefährer Standort (Land/Region) verarbeitet. Vercel Analytics ist darauf ausgelegt,
+          keine personenbezogenen Profile zu erstellen und setzt keine Werbe-Cookies.
+        </LegalText>
+        <LegalText>
+          Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Ohne deine
+          Zustimmung wird Vercel Analytics nicht geladen. Anbieter ist Vercel Inc., 440 N Barranca
+          Ave #4133, Covina, CA 91723, USA. Weitere Informationen findest du in der{" "}
+          <SmartLink href="https://vercel.com/legal/privacy-policy" target="_blank">
+            Datenschutzerklärung von Vercel
+          </SmartLink>
+          .
+        </LegalText>
+
+        <LegalSubheading>Marketing</LegalSubheading>
+        <LegalText>
+          Marketing-Cookies und Werbe-Tracking sind aktuell nicht im Einsatz. Die entsprechende
+          Kategorie im Cookie-Banner ist nur für mögliche zukünftige Erweiterungen vorbereitet.
         </LegalText>
       </LegalBlock>
     </LegalLayout>

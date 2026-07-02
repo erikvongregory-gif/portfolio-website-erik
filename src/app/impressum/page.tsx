@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import { SmartLink } from "@once-ui-system/core";
 import { LegalBlock, LegalLayout, LegalSubheading, LegalText } from "@/components";
+import { createPageOpenGraph, createPageTwitter } from "@/resources";
+
+const title = "Impressum";
+const description = "Impressum und Anbieterkennzeichnung gemäß § 5 DDG für die Website von Erik EvgLab.";
 
 export const metadata: Metadata = {
-  title: "Impressum",
-  description: "Impressum und Anbieterkennzeichnung gemäß § 5 DDG für die Website von Erik EvgLab.",
+  title,
+  description,
   alternates: { canonical: "/impressum" },
+  openGraph: createPageOpenGraph({ title, description, path: "/impressum" }),
+  twitter: createPageTwitter(title, description),
 };
 
 export default function Impressum() {

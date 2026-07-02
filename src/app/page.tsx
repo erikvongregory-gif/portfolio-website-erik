@@ -75,6 +75,12 @@ const structuredData = {
 export default function Home() {
   return (
     <Column fillWidth horizontal="center">
+      <link
+        rel="preload"
+        as="image"
+        href="/images/projects/evglab/hero.png"
+        fetchPriority="high"
+      />
       <JsonLd data={structuredData} />
       <Column
         as="section"
@@ -110,6 +116,7 @@ export default function Home() {
 
             <RevealFx translateY="4" delay={0.1} horizontal="start" paddingBottom="20">
               <Heading
+                as="h1"
                 wrap="balance"
                 variant="display-strong-xl"
                 onBackground="neutral-strong"

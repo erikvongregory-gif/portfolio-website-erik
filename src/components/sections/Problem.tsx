@@ -134,6 +134,7 @@ export function Problem() {
           {enabled ? (
             <Column key={active} className={styles.lead} gap="16">
               <Heading
+                as="h2"
                 variant="display-strong-xs"
                 onBackground="neutral-strong"
                 wrap="balance"
@@ -154,6 +155,7 @@ export function Problem() {
             <Reveal>
               <Column gap="16">
                 <Heading
+                  as="h2"
                   variant="display-strong-xs"
                   onBackground="neutral-strong"
                   wrap="balance"

@@ -5,6 +5,7 @@ export { HeroMarquee } from "@/components/HeroMarquee";
 export { SiteHeader } from "@/components/SiteHeader";
 export { CapacityBadge } from "@/components/CapacityBadge";
 export { CookieBanner } from "@/components/CookieBanner";
+export { ConsentAnalytics } from "@/components/ConsentAnalytics";
 export { CookieSettingsButton } from "@/components/CookieSettingsButton";
 export {
   Section,

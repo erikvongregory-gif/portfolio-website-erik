@@ -13,8 +13,12 @@ import {
   Switch,
   Text,
 } from "@once-ui-system/core";
+import {
+  COOKIE_CONSENT_UPDATED_EVENT,
+  COOKIE_STORAGE_KEY,
+} from "@/lib/cookieConsent";
 
-export const COOKIE_STORAGE_KEY = "evglab-cookie-consent";
+export { COOKIE_STORAGE_KEY } from "@/lib/cookieConsent";
 export const COOKIE_SETTINGS_EVENT = "evglab:open-cookie-settings";
 
 type Consent = {
@@ -44,7 +48,7 @@ const categories: Category[] = [
     key: "statistics",
     title: "Statistik",
     description:
-      "Anonyme Reichweitenmessung, um zu verstehen, welche Inhalte ankommen. Aktuell nicht im Einsatz.",
+      "Anonyme Reichweitenmessung über Vercel Analytics – nur mit deiner Einwilligung. Hilft mir zu verstehen, welche Inhalte ankommen.",
   },
   {
     key: "marketing",
@@ -116,6 +120,7 @@ export function CookieBanner() {
       /* ignorieren */
     }
     setHasStored(true);
+    window.dispatchEvent(new Event(COOKIE_CONSENT_UPDATED_EVENT));
     animateOut();
   };
 
@@ -203,9 +208,9 @@ export function CookieBanner() {
               onBackground="neutral-weak"
               style={{ lineHeight: 1.6 }}
             >
-              Wir backen ohne Tracking. Diese Seite nutzt nur technisch notwendige Cookies – keine
-              Analyse, keine Werbung, kein schlechtes Gewissen. Du entscheidest trotzdem selbst, was
-              auf den Teller kommt. Mehr im{" "}
+              Technisch notwendige Cookies sind immer dabei. Statistik-Tools laden wir nur, wenn du
+              zustimmst – keine Werbung, kein schlechtes Gewissen. Du entscheidest selbst, was auf
+              den Teller kommt. Mehr im{" "}
               <SmartLink href="/datenschutz">Datenschutz</SmartLink>.
             </Text>
 

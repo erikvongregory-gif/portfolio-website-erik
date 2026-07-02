@@ -13,18 +13,30 @@ import {
   SpotlightCard,
 } from "@/components";
 
+import {
+  aboutOgImage,
+  createPageOpenGraph,
+  createPageTwitter,
+} from "@/resources";
+
 export const metadata: Metadata = {
   title: "Über mich",
   description:
     "Hinter EvgLab steht eine Person: Erik. Webentwicklung und Design aus Landsberg am Lech – direkt, ehrlich und ohne Umwege.",
   alternates: { canonical: "/ueber-uns" },
-  openGraph: {
-    title: "Über mich · Erik EvgLab",
+  openGraph: createPageOpenGraph({
+    title: "Über mich",
     description:
       "Hinter EvgLab steht eine Person: Erik. Webentwicklung und Design aus Landsberg am Lech – direkt, ehrlich und ohne Umwege.",
-    url: "/ueber-uns",
+    path: "/ueber-uns",
     type: "profile",
-  },
+    image: aboutOgImage,
+  }),
+  twitter: createPageTwitter(
+    "Über mich",
+    "Hinter EvgLab steht eine Person: Erik. Webentwicklung und Design aus Landsberg am Lech – direkt, ehrlich und ohne Umwege.",
+    aboutOgImage,
+  ),
 };
 
 const values: { icon: IconName; title: string; body: string }[] = [
@@ -76,6 +88,7 @@ export default function UeberUns() {
             </Reveal>
             <Reveal delay={0.08}>
               <Heading
+                as="h1"
                 variant="display-strong-l"
                 onBackground="neutral-strong"
                 wrap="balance"

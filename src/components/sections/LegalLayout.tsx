@@ -30,6 +30,7 @@ export function LegalLayout({ eyebrow, title, intro, updated, children }: LegalL
           </Reveal>
           <Reveal delay={0.08}>
             <Heading
+              as="h1"
               variant="display-strong-l"
               onBackground="neutral-strong"
               wrap="balance"

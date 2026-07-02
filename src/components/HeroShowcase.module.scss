@@ -39,7 +39,10 @@
 .deck {
   position: absolute;
   inset: 0;
-  transform-style: preserve-3d;
+  /* Bewusst KEIN preserve-3d: Mit eigener perspective behalten die Karten
+     ihre Tiefenwirkung (translateZ/rotate), werden aber flach nach z-index
+     gestapelt – so kann keine Karte mehr durch eine andere schneiden. */
+  perspective: 212.5rem;
   transform: translateX(-10%) rotateX(3deg) rotateY(-4deg);
 }
 

@@ -26,13 +26,17 @@ const DRAG_SENS = 0.7; // how strongly dragging scrubs the timeline
 
 // Control points of the arc, captured 1:1 from the reference animation.
 // Order = travel order: spawn (top, back, hidden) -> centre (front, big) -> exit (right, back, hidden).
+// Die z-Werte steigen entlang des Pfads monoton an: Eine Karte, die weiter
+// vorne im Umlauf ist, bleibt IMMER über den nachrückenden Karten. Dadurch
+// gibt es nie einen Ebenen-Tausch, während sich zwei Karten überlappen
+// (das sah aus, als würde eine Karte durch die andere "durchbacken").
 const KEYS: KeyState[] = [
   { tx: -10, ty: -300, tz: -1000, rx: 4, ry: -3, scale: 0.44, opacity: 0, z: 20 },
-  { tx: -10, ty: -168.78, tz: -140.54, rx: 2.657, ry: -1.81, scale: 0.937, opacity: 0.8, z: 74 },
+  { tx: -10, ty: -168.78, tz: -140.54, rx: 2.657, ry: -1.81, scale: 0.937, opacity: 0.8, z: 60 },
   { tx: -10, ty: -37.55, tz: 273.8, rx: 2.01, ry: -0.62, scale: 1.176, opacity: 0.997, z: 100 },
-  { tx: 52.74, ty: 65.77, tz: 142.25, rx: 2.215, ry: 0.571, scale: 1.1, opacity: 0.935, z: 91 },
-  { tx: 183.53, ty: 70, tz: -317.8, rx: 2.934, ry: 1.762, scale: 0.834, opacity: 0.72, z: 63 },
-  { tx: 314.75, ty: 70, tz: -972.33, rx: 3.957, ry: 2.952, scale: 0.456, opacity: 0.041, z: 22 },
+  { tx: 52.74, ty: 65.77, tz: 142.25, rx: 2.215, ry: 0.571, scale: 1.1, opacity: 0.935, z: 104 },
+  { tx: 183.53, ty: 70, tz: -317.8, rx: 2.934, ry: 1.762, scale: 0.834, opacity: 0.72, z: 108 },
+  { tx: 314.75, ty: 70, tz: -972.33, rx: 3.957, ry: 2.952, scale: 0.456, opacity: 0.041, z: 112 },
 ];
 
 const COUNT = KEYS.length;
@@ -191,6 +195,8 @@ export function HeroShowcase() {
                   className={`${styles.image}${c.comingSoon ? ` ${styles.imageBlur}` : ""}`}
                   src={c.image}
                   alt={c.comingSoon ? "Projekt – bald verfügbar" : `${c.title} – Website`}
+                  loading={i === 0 ? "eager" : "lazy"}
+                  fetchPriority={i === 0 ? "high" : "auto"}
                 />
                 {c.comingSoon && (
                   <div className={styles.teaser}>

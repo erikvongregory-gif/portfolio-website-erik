@@ -58,6 +58,7 @@ export function SectionHeader({ eyebrow, title, description, align = "start" }: 
       </Reveal>
       <Reveal delay={0.08}>
         <Heading
+          as="h2"
           variant="display-strong-s"
           onBackground="neutral-strong"
           wrap="balance"

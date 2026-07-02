@@ -5,7 +5,6 @@ import {
   Button,
   Column,
   Flex,
-  Heading,
   Icon,
   IconButton,
   RevealFx,
@@ -97,7 +96,7 @@ export function SiteHeader() {
         >
           <Logo />
 
-          <Row vertical="center" gap="4">
+          <Row as="nav" aria-label="Hauptnavigation" vertical="center" gap="4">
             <Flex m={{ hide: true }} gap="2" vertical="center">
               {navLinks.map((link) => (
                 <Button key={link.href} href={link.href} variant="tertiary" size="s">
@@ -166,13 +165,13 @@ export function SiteHeader() {
                       paddingY="20"
                       borderBottom="neutral-alpha-weak"
                     >
-                      <Heading
+                      <Text
                         variant="display-strong-xs"
                         onBackground="neutral-strong"
                         style={{ letterSpacing: "-0.02em" }}
                       >
                         {link.label}
-                      </Heading>
+                      </Text>
                       <Icon name="arrowUpRight" size="m" onBackground="neutral-weak" />
                     </Row>
                   </SmartLink>

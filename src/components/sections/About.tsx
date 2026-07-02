@@ -25,6 +25,7 @@ export function About() {
             Warum EvgLab
           </Tag>
           <Heading
+            as="h2"
             variant="display-strong-s"
             onBackground="neutral-strong"
             wrap="balance"

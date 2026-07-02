@@ -19,7 +19,7 @@ const projects: CardContent[] = [
   { title: "Da Peppe", image: "/images/projects/da-peppe/hero.png", comingSoon: true },
 ];
 
-function MarqueeCard({ card }: { card: CardContent }) {
+function MarqueeCard({ card, priority = false }: { card: CardContent; priority?: boolean }) {
   return (
     <figure className={styles.card} aria-hidden="true">
       <div className={styles.inner}>
@@ -38,7 +38,8 @@ function MarqueeCard({ card }: { card: CardContent }) {
             className={`${styles.image}${card.comingSoon ? ` ${styles.imageBlur}` : ""}`}
             src={card.image}
             alt=""
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "auto"}
           />
         </div>
       </div>
@@ -73,7 +74,7 @@ export function HeroMarquee() {
           >
             {/* Duplicated set keeps the loop seamless at translateX(-50%). */}
             {[...row.items, ...row.items].map((card, j) => (
-              <MarqueeCard key={j} card={card} />
+              <MarqueeCard key={j} card={card} priority={i === 0 && j === 0} />
             ))}
           </div>
         ))}

@@ -7,12 +7,20 @@ import type { Metadata } from "next";
 import classNames from "classnames";
 
 import { Column, Flex } from "@once-ui-system/core";
-import { Aurora, CookieBanner, Providers, ScrollProgress, SiteHeader, SmoothScroll } from "@/components";
-import { fonts, style, dataStyle, baseURL } from "@/resources";
+import {
+  Aurora,
+  ConsentAnalytics,
+  CookieBanner,
+  Providers,
+  ScrollProgress,
+  SiteHeader,
+  SmoothScroll,
+} from "@/components";
+import { fonts, style, dataStyle, baseURL, createPageOpenGraph, createPageTwitter } from "@/resources";
 
 const title = "Erik EvgLab – Websites mit Charakter, die Kunden bringen.";
 const description =
-  "Webentwicklung und Design aus einer Hand. Kein Vorlagen-Look, sondern ein Auftritt mit Persönlichkeit, der Anfragen bringt. Aus Landsberg am Lech.";
+  "Webdesign und Entwicklung aus Landsberg. Individuelle Auftritte mit Charakter, die Anfragen bringen.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseURL),
@@ -52,15 +60,11 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
+    ...createPageOpenGraph({ title: "Startseite", description, path: "/" }),
     title,
-    description,
-    url: "/",
-    siteName: "Erik EvgLab",
-    locale: "de_DE",
-    type: "website",
   },
   twitter: {
-    card: "summary_large_image",
+    ...createPageTwitter("Startseite", description),
     title,
     description,
   },
@@ -163,10 +167,19 @@ export default function RootLayout({
           <SmoothScroll />
           <ScrollProgress />
           <SiteHeader />
-          <Flex id="top" fillWidth fillHeight horizontal="center" zIndex={1} flex={1}>
+          <Flex
+            as="main"
+            id="top"
+            fillWidth
+            fillHeight
+            horizontal="center"
+            zIndex={1}
+            flex={1}
+          >
             {children}
           </Flex>
           <CookieBanner />
+          <ConsentAnalytics />
         </Column>
       </Providers>
     </Flex>
