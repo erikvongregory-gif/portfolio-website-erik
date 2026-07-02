@@ -16,6 +16,7 @@ export {
   Services,
   Process,
   About,
+  Testimonials,
   FinalCta,
   SiteFooter,
   LegalLayout,
@@ -34,4 +35,5 @@ export {
   Marquee,
   Parallax,
   Aurora,
+  RotatingWord,
 } from "@/components/motion";

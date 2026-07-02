@@ -11,9 +11,11 @@ import {
   Problem,
   Process,
   Projects,
+  RotatingWord,
   ScrollRevealText,
   Services,
   SiteFooter,
+  Testimonials,
 } from "@/components";
 import { ContactDialog } from "@/components/ContactDialog";
 import { JsonLd } from "@/components/JsonLd";
@@ -125,7 +127,8 @@ export default function Home() {
                 <Text as="span" onBackground="neutral-medium">
                   Websites mit Charakter,
                 </Text>{" "}
-                die Kunden bringen.
+                die <RotatingWord words={["Kunden", "Anfragen", "Aufträge", "Umsätze"]} />{" "}
+                bringen.
               </Heading>
             </RevealFx>
 
@@ -179,6 +182,7 @@ export default function Home() {
       <Services />
       <Process />
       <About />
+      <Testimonials />
       <FinalCta />
       <SiteFooter />
     </Column>

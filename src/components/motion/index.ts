@@ -9,3 +9,4 @@ export { SmoothScroll } from "./SmoothScroll";
 export { Marquee } from "./Marquee";
 export { Parallax } from "./Parallax";
 export { Aurora } from "./Aurora";
+export { RotatingWord } from "./RotatingWord";

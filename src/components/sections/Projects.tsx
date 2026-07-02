@@ -1,5 +1,6 @@
 import { Column, Grid, Icon, Row, SmartLink, Tag, Text } from "@once-ui-system/core";
 import { Reveal, SpotlightCard } from "@/components/motion";
+import { ProjectPreview } from "./ProjectPreview";
 import { Section, SectionHeader } from "./Section";
 import styles from "./sections.module.scss";
 
@@ -8,6 +9,8 @@ type Project = {
   chrome: string;
   category: string;
   image: string;
+  /** Scroll-Video der Live-Seite: spielt beim Hover mit allen Original-Effekten ab. */
+  video?: string;
   body: string;
   url?: string;
   comingSoon?: boolean;
@@ -19,6 +22,7 @@ const projects: Project[] = [
     chrome: "evglab.com",
     category: "Eigene Marke · KI-Marketing",
     image: "/images/projects/evglab/hero.png",
+    video: "/videos/projects/evglab.mp4",
     body: "KI-Marketing-Plattform für Brauereien: Produktmotive und Kampagnen per Knopfdruck statt teurem Fotoshooting.",
     url: "https://evglab.com",
   },
@@ -34,6 +38,7 @@ const projects: Project[] = [
     chrome: "ib-jungen.de",
     category: "Industrie · Automation",
     image: "/images/projects/ib-jungen/hero.png",
+    video: "/videos/projects/ib-jungen.mp4",
     body: "Auftritt für Automation und Retrofit: technisch präzise, klar strukturiert und seriös.",
     url: "https://ib-jungen-web.vercel.app",
   },
@@ -42,6 +47,7 @@ const projects: Project[] = [
     chrome: "luenebraeu.vercel.app",
     category: "Craft-Bier · Brauerei",
     image: "/images/projects/lunebraeu/hero.png",
+    video: "/videos/projects/lunebraeu.mp4",
     body: "Markenauftritt für eine Craft-Bier-Brauerei aus Lüneburg: kantig, handwerklich und mit Haltung – vom Sortiment bis zur Bestellung.",
     url: "https://luenebraeu.vercel.app",
   },
@@ -74,7 +80,13 @@ export function Projects() {
       <Grid columns="2" m={{ columns: "1" }} gap="32">
         {projects.map((p, i) => {
           const card = (
-            <SpotlightCard className={styles.card} gap="20" glow={false} tiltStrength={5}>
+            <SpotlightCard
+              className={styles.card}
+              gap="20"
+              glow={false}
+              tiltStrength={5}
+              data-project-card
+            >
               <div className={styles.shot}>
                 <div className={styles.chrome}>
                   <div className={styles.dots}>
@@ -92,10 +104,11 @@ export function Projects() {
                   </Text>
                 </div>
                 <div className={styles.imageWrap}>
-                  <img
-                    className={`${styles.image}${p.comingSoon ? ` ${styles.imageBlur}` : ""}`}
-                    src={p.image}
+                  <ProjectPreview
+                    image={p.image}
+                    video={p.comingSoon ? undefined : p.video}
                     alt={p.comingSoon ? "Projekt – bald verfügbar" : `${p.title} – Website`}
+                    blur={p.comingSoon}
                   />
                   {p.comingSoon && (
                     <div className={styles.teaser}>
