@@ -17,6 +17,7 @@ import {
   SmoothScroll,
 } from "@/components";
 import { fonts, style, dataStyle, baseURL, createPageOpenGraph, createPageTwitter } from "@/resources";
+import { Analytics } from "@vercel/analytics/next";
 
 const title = "Erik EvgLab – Websites mit Charakter, die Kunden bringen.";
 const description =
@@ -180,6 +181,7 @@ export default function RootLayout({
           </Flex>
           <CookieBanner />
           <ConsentAnalytics />
+          <Analytics />
         </Column>
       </Providers>
     </Flex>
