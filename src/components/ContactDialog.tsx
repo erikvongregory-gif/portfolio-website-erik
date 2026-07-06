@@ -3,6 +3,11 @@
 import { useEffect, useState } from "react";
 import { Button, Column, Dialog, Icon, Input, Row, Text, Textarea } from "@once-ui-system/core";
 import { startLenis, stopLenis } from "@/components/motion/SmoothScroll";
+import {
+  OPEN_CONTACT_EVENT,
+  QUOTE_MESSAGE_STORAGE_KEY,
+  registerContactOpenHandler,
+} from "@/lib/quoteContact";
 
 type ContactDialogProps = {
   label?: string;
@@ -10,6 +15,13 @@ type ContactDialogProps = {
   size?: "s" | "m" | "l";
   arrowIcon?: boolean;
   fillWidth?: boolean;
+  /** Nur Dialog rendern (z. B. Sticky-Bar), ohne eigenen Trigger-Button. */
+  dialogOnly?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  idPrefix?: string;
+  /** Hero-Dialog übernimmt globalen Opener (sichtbar auf Mobile). */
+  replaceGlobalHandler?: boolean;
 };
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -25,8 +37,20 @@ export function ContactDialog({
   size = "m",
   arrowIcon = true,
   fillWidth = false,
+  dialogOnly = false,
+  open: openProp,
+  onOpenChange,
+  idPrefix = "",
+  replaceGlobalHandler = false,
 }: ContactDialogProps) {
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isControlled = openProp !== undefined;
+  const open = isControlled ? openProp : internalOpen;
+
+  const setOpen = (next: boolean) => {
+    if (isControlled) onOpenChange?.(next);
+    else setInternalOpen(next);
+  };
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -42,6 +66,32 @@ export function ContactDialog({
     stopLenis();
     return () => startLenis();
   }, [open]);
+
+  useEffect(() => {
+    if (dialogOnly) return;
+
+    const openDialog = (message?: string) => {
+      if (message) setMessage(message);
+      setOpen(true);
+    };
+
+    const unregister = registerContactOpenHandler(openDialog, replaceGlobalHandler);
+    if (!unregister) return;
+
+    const onOpenContact = (event: Event) => {
+      const detail = (event as CustomEvent<{ message?: string }>).detail;
+      const stored = sessionStorage.getItem(QUOTE_MESSAGE_STORAGE_KEY);
+      const nextMessage = detail?.message ?? stored ?? undefined;
+      if (stored) sessionStorage.removeItem(QUOTE_MESSAGE_STORAGE_KEY);
+      openDialog(nextMessage);
+    };
+
+    window.addEventListener(OPEN_CONTACT_EVENT, onOpenContact);
+    return () => {
+      unregister();
+      window.removeEventListener(OPEN_CONTACT_EVENT, onOpenContact);
+    };
+  }, [dialogOnly, replaceGlobalHandler]);
 
   const mailtoFallback = () => {
     const subject = `Anfrage Erstgespräch${name ? ` – ${name}` : ""}`;
@@ -100,15 +150,18 @@ export function ContactDialog({
 
   return (
     <>
-      <Button
-        variant={variant}
-        size={size}
-        arrowIcon={arrowIcon}
-        fillWidth={fillWidth}
-        onClick={() => setOpen(true)}
-      >
-        {label}
-      </Button>
+      {!dialogOnly && (
+        <Button
+          variant={variant}
+          size={size}
+          arrowIcon={arrowIcon}
+          fillWidth={fillWidth}
+          data-open-contact=""
+          onClick={() => setOpen(true)}
+        >
+          {label}
+        </Button>
+      )}
 
       <Dialog
         isOpen={open}
@@ -156,20 +209,20 @@ export function ContactDialog({
         ) : (
           <Column gap="16" fillWidth>
             <Input
-              id="contact-name"
+              id={`${idPrefix}contact-name`}
               label="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <Input
-              id="contact-email"
+              id={`${idPrefix}contact-email`}
               type="email"
               label="E-Mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <Textarea
-              id="contact-message"
+              id={`${idPrefix}contact-message`}
               label="Worum geht's? (Projekt, Branche, Ziel)"
               lines={4}
               value={message}

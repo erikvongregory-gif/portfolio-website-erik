@@ -35,8 +35,8 @@
   border-radius: inherit;
   background: radial-gradient(
     440px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(90, 108, 255, 0.1),
-    rgba(0, 0, 0, 0.04) 35%,
+    var(--evg-spotlight-brand),
+    var(--evg-spotlight-fade) 35%,
     transparent 60%
   );
   opacity: 0;
@@ -49,7 +49,7 @@
 }
 
 .spotlight:hover {
-  box-shadow: 0 38px 72px -34px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 38px 72px -34px var(--evg-spotlight-shadow);
 }
 
 /* Touch devices have no hover/tilt – give a crisp press feedback instead. */
@@ -81,7 +81,7 @@
   width: 100%;
   transform-origin: 0 50%;
   transform: scaleX(0);
-  background: linear-gradient(90deg, rgba(90, 108, 255, 0.9), var(--neutral-on-background-strong));
+  background: linear-gradient(90deg, var(--evg-progress-start), var(--neutral-on-background-strong));
   z-index: 10;
 }
 
@@ -92,7 +92,7 @@
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background-color: #f3f2f0;
+  background-color: var(--evg-aurora-base);
 }
 
 .aurora::before,
@@ -109,7 +109,7 @@
   height: 58vw;
   left: -12vw;
   top: -16vw;
-  background: radial-gradient(circle, rgba(90, 108, 255, 0.14), transparent 60%);
+  background: radial-gradient(circle, var(--evg-aurora-blob-a), transparent 60%);
   animation: drift1 26s ease-in-out infinite alternate;
 }
 
@@ -118,7 +118,7 @@
   height: 52vw;
   right: -12vw;
   top: 4vw;
-  background: radial-gradient(circle, rgba(120, 120, 120, 0.16), transparent 60%);
+  background: radial-gradient(circle, var(--evg-aurora-blob-b), transparent 60%);
   animation: drift2 32s ease-in-out infinite alternate;
 }
 
@@ -130,7 +130,7 @@
   bottom: -22vw;
   border-radius: 50%;
   filter: blur(80px);
-  background: radial-gradient(circle, rgba(150, 150, 150, 0.13), transparent 60%);
+  background: radial-gradient(circle, var(--evg-aurora-blob-c), transparent 60%);
   animation: drift3 38s ease-in-out infinite alternate;
 }
 

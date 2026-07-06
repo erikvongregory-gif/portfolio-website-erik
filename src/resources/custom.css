@@ -76,6 +76,62 @@ body {
 }
 
 /* ============================================================
+   Theme-aware tokens (Light / Dark via [data-theme] on <html>)
+   ============================================================ */
+:root,
+[data-theme="light"] {
+  --evg-card-highlight: rgba(255, 255, 255, 0.5);
+  --evg-card-shadow-xs: rgba(0, 0, 0, 0.03);
+  --evg-card-shadow-sm: rgba(0, 0, 0, 0.04);
+  --evg-card-shadow-md: rgba(0, 0, 0, 0.22);
+  --evg-card-shadow-lg: rgba(0, 0, 0, 0.32);
+  --evg-card-shadow-xl: rgba(0, 0, 0, 0.38);
+  --evg-card-shadow-hover: rgba(0, 0, 0, 0.42);
+  --evg-aurora-base: #f3f2f0;
+  --evg-spotlight-brand: rgba(90, 108, 255, 0.1);
+  --evg-spotlight-fade: rgba(0, 0, 0, 0.04);
+  --evg-spotlight-shadow: rgba(0, 0, 0, 0.3);
+  --evg-aurora-blob-a: rgba(90, 108, 255, 0.14);
+  --evg-aurora-blob-b: rgba(120, 120, 120, 0.16);
+  --evg-aurora-blob-c: rgba(150, 150, 150, 0.13);
+  --evg-progress-start: rgba(90, 108, 255, 0.9);
+  --evg-cta-inset: rgba(255, 255, 255, 0.5);
+  --evg-portrait-shadow: rgba(0, 0, 0, 0.4);
+  --evg-noise-opacity: 0.04;
+  --evg-noise-blend: multiply;
+}
+
+[data-theme="dark"] {
+  --evg-card-highlight: rgba(255, 255, 255, 0.07);
+  --evg-card-shadow-xs: rgba(0, 0, 0, 0.18);
+  --evg-card-shadow-sm: rgba(0, 0, 0, 0.22);
+  --evg-card-shadow-md: rgba(0, 0, 0, 0.38);
+  --evg-card-shadow-lg: rgba(0, 0, 0, 0.5);
+  --evg-card-shadow-xl: rgba(0, 0, 0, 0.55);
+  --evg-card-shadow-hover: rgba(0, 0, 0, 0.62);
+  --evg-aurora-base: var(--page-background);
+  --evg-spotlight-brand: rgba(90, 108, 255, 0.2);
+  --evg-spotlight-fade: rgba(0, 0, 0, 0.12);
+  --evg-spotlight-shadow: rgba(0, 0, 0, 0.55);
+  --evg-aurora-blob-a: rgba(90, 108, 255, 0.22);
+  --evg-aurora-blob-b: rgba(180, 180, 200, 0.1);
+  --evg-aurora-blob-c: rgba(140, 140, 160, 0.08);
+  --evg-progress-start: rgba(120, 140, 255, 0.95);
+  --evg-cta-inset: rgba(255, 255, 255, 0.08);
+  --evg-portrait-shadow: rgba(0, 0, 0, 0.65);
+  --evg-noise-opacity: 0.07;
+  --evg-noise-blend: soft-light;
+}
+
+.pageNoise {
+  pointer-events: none;
+  opacity: var(--evg-noise-opacity);
+  mix-blend-mode: var(--evg-noise-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ============================================================
    Großbildschirm-Skalierung (QHD, 4K, 5K, 8K, Ultrawide)
    ------------------------------------------------------------
    Die gesamte Once-UI-Oberfläche ist rem-basiert: Typografie,

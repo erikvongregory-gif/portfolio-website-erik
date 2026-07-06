@@ -125,7 +125,7 @@ export default function UeberUns() {
                   overflow: "hidden",
                   aspectRatio: "4 / 5",
                   background: "var(--neutral-background-medium)",
-                  boxShadow: "0 44px 90px -44px rgba(0,0,0,0.4)",
+                  boxShadow: "0 44px 90px -44px var(--evg-portrait-shadow)",
                 }}
               >
                 <Parallax

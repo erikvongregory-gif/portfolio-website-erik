@@ -14,6 +14,7 @@ import {
 } from "@once-ui-system/core";
 import styles from "./SiteHeader.module.scss";
 import { ContactDialog } from "./ContactDialog";
+import { ThemeToggle } from "./ThemeToggle";
 import { BrandMark } from "@/components/BrandLogo";
 
 const navLinks = [
@@ -42,6 +43,7 @@ function Logo() {
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const closeMobileMenu = () => setOpen(false);
 
   useEffect(() => {
     if (!open) return;
@@ -103,9 +105,11 @@ export function SiteHeader() {
                   {link.label}
                 </Button>
               ))}
+              <ThemeToggle />
               <ContactDialog label="Kostenlos anfragen" size="s" />
             </Flex>
-            <Flex hide m={{ hide: false }}>
+            <Flex hide m={{ hide: false }} gap="4" vertical="center">
+              <ThemeToggle />
               <IconButton
                 icon="menu"
                 variant="tertiary"
@@ -132,13 +136,16 @@ export function SiteHeader() {
           <Column className={styles.panel} fillWidth fillHeight padding="16">
             <Row fillWidth horizontal="between" vertical="center">
               <Logo />
-              <IconButton
+              <Row gap="4" vertical="center">
+                <ThemeToggle />
+                <IconButton
                 icon="close"
                 variant="tertiary"
                 size="l"
                 aria-label="Menü schließen"
                 onClick={() => setOpen(false)}
               />
+              </Row>
             </Row>
 
             <Column
@@ -156,7 +163,8 @@ export function SiteHeader() {
                     unstyled
                     fillWidth
                     className={styles.link}
-                    onClick={() => setOpen(false)}
+                    onClick={closeMobileMenu}
+                    onClickCapture={closeMobileMenu}
                   >
                     <Row
                       fillWidth
@@ -186,7 +194,8 @@ export function SiteHeader() {
                 size="l"
                 fillWidth
                 arrowIcon
-                onClick={() => setOpen(false)}
+                onClick={closeMobileMenu}
+                onClickCapture={closeMobileMenu}
               >
                 Kostenloses Erstgespräch
               </Button>

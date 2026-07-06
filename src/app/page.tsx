@@ -16,6 +16,7 @@ import {
   Services,
   SiteFooter,
   Testimonials,
+  StickyMobileCta,
 } from "@/components";
 import { ContactDialog } from "@/components/ContactDialog";
 import { JsonLd } from "@/components/JsonLd";
@@ -87,6 +88,7 @@ export default function Home() {
       <Column
         as="section"
         className={styles.hero}
+        data-sticky-cta-hero
         fillWidth
         horizontal="center"
         paddingX="l"
@@ -147,7 +149,7 @@ export default function Home() {
 
             <RevealFx translateY="12" delay={0.3} horizontal="start" paddingBottom="20">
               <Row gap="8" wrap vertical="center">
-                <ContactDialog label="Kostenlos anfragen" size="l" />
+                <ContactDialog label="Kostenlos anfragen" size="l" replaceGlobalHandler />
                 <Button href="#projekte" variant="tertiary" size="l">
                   Projekte ansehen
                 </Button>
@@ -185,6 +187,7 @@ export default function Home() {
       <About />
       <Testimonials />
       <FinalCta />
+      <StickyMobileCta />
       <SiteFooter />
     </Column>
   );

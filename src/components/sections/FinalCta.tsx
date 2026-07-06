@@ -19,7 +19,7 @@ export function FinalCta() {
         horizontal="center"
         align="center"
         style={{
-          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.5)",
+          boxShadow: "inset 0 1px 0 var(--evg-cta-inset)",
         }}
       >
         <Heading

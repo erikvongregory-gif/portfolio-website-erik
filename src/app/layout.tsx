@@ -115,15 +115,14 @@ export default function RootLayout({
                     root.setAttribute('data-' + key, value);
                   });
                   const resolveTheme = (themeValue) => {
-                    if (!themeValue || themeValue === 'system') {
-                      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                    if (themeValue === 'dark' || themeValue === 'light') {
+                      return themeValue;
                     }
-                    return themeValue;
+                    return 'light';
                   };
-                  const defaultTheme = '${style.theme}';
-                  const resolved = resolveTheme(defaultTheme);
+                  const stored = localStorage.getItem('data-theme');
+                  const resolved = resolveTheme(stored);
                   root.setAttribute('data-theme', resolved);
-                  localStorage.setItem('data-theme', resolved);
                   Object.keys(config).forEach(key => {
                     const value = localStorage.getItem('data-' + key);
                     if (value) {
@@ -131,7 +130,7 @@ export default function RootLayout({
                     }
                   });
                 } catch (e) {
-                  document.documentElement.setAttribute('data-theme', 'dark');
+                  document.documentElement.setAttribute('data-theme', 'light');
                 }
               })();
             `,
@@ -155,14 +154,7 @@ export default function RootLayout({
             left="0"
             fill
             zIndex={0}
-            style={{
-              pointerEvents: "none",
-              opacity: 0.04,
-              mixBlendMode: "multiply",
-              backgroundImage:
-                "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-              backgroundSize: "200px 200px",
-            }}
+            className="pageNoise"
           />
           <SmoothScroll />
           <ScrollProgress />

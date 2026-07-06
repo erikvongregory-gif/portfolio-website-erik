@@ -1,0 +1,86 @@
+.selectCard {
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.selectCard:hover {
+  transform: translateY(-2px);
+}
+
+.selectCard:focus-visible {
+  outline: 2px solid var(--neutral-border-strong);
+  outline-offset: 2px;
+}
+
+.collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  pointer-events: none;
+  transition:
+    grid-template-rows 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.collapseOpen {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 1rem;
+  pointer-events: auto;
+}
+
+.collapseInner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.collapseInner > * {
+  transform: translateY(10px);
+  filter: blur(4px);
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.collapseOpen .collapseInner > * {
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.panel {
+  box-shadow:
+    inset 0 1px 0 var(--evg-card-highlight),
+    0 2px 1px var(--evg-card-shadow-sm),
+    0 24px 48px -32px var(--evg-card-shadow-lg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .selectCard {
+    transition: none;
+  }
+
+  .selectCard:hover {
+    transform: none;
+  }
+
+  .collapse {
+    transition: none;
+  }
+
+  .collapseOpen {
+    margin-top: 1rem;
+  }
+
+  .collapseInner > * {
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}

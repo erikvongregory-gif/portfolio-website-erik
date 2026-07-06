@@ -6,6 +6,14 @@ import Lenis from "lenis";
 // Module-level handle so other components (e.g. modals) can pause/resume scrolling.
 let lenisInstance: Lenis | null = null;
 
+type ScrollListener = () => void;
+const scrollListeners = new Set<ScrollListener>();
+
+export function subscribeScroll(listener: ScrollListener) {
+  scrollListeners.add(listener);
+  return () => scrollListeners.delete(listener);
+}
+
 export function stopLenis() {
   lenisInstance?.stop();
 }
@@ -24,6 +32,7 @@ export function SmoothScroll() {
       wheelMultiplier: 1,
     });
     lenisInstance = lenis;
+    lenis.on("scroll", () => scrollListeners.forEach((listener) => listener()));
 
     let raf = 0;
     const loop = (time: number) => {

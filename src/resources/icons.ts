@@ -14,6 +14,10 @@ import {
   HiOutlineRocketLaunch,
   HiBars3,
   HiXMark,
+  HiSun,
+  HiMoon,
+  HiMinus,
+  HiPlus,
 } from "react-icons/hi2";
 
 import {
@@ -39,6 +43,10 @@ export const iconLibrary: Record<string, IconType> = {
   arrowRight: HiArrowRight,
   menu: HiBars3,
   close: HiXMark,
+  sun: HiSun,
+  moon: HiMoon,
+  minus: HiMinus,
+  plus: HiPlus,
   email: HiEnvelope,
   globe: HiOutlineGlobeAsiaAustralia,
   person: PiUserCircleDuotone,
