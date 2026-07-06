@@ -2,6 +2,11 @@
    frosted-glass card for guaranteed readability while the slides stay vivid
    above and below it. On desktop the copy sits beside the 3D carousel, so no
    card treatment is applied. */
+.hero {
+  /* Clip the mobile marquee tracks so they cannot widen the document. */
+  overflow-x: clip;
+}
+
 .heroCopy {
   position: relative;
   z-index: 1;

@@ -14,6 +14,7 @@ type Project = {
   body: string;
   url?: string;
   comingSoon?: boolean;
+  obscured?: boolean;
 };
 
 const projects: Project[] = [
@@ -32,6 +33,7 @@ const projects: Project[] = [
     category: "Entwurf · Immobilien",
     image: "/images/projects/kapitalanlagen/hero.png",
     body: "Konzept-Entwurf für eine Immobilienfirma: ruhig, hochwertig und auf Vertrauen ausgelegt.",
+    obscured: true,
   },
   {
     title: "Ingenieurbüro Jungen",
@@ -79,6 +81,8 @@ export function Projects() {
 
       <Grid columns="2" m={{ columns: "1" }} gap="32">
         {projects.map((p, i) => {
+          const blurTitle = p.comingSoon || p.obscured;
+          const blurImage = p.comingSoon;
           const card = (
             <SpotlightCard
               className={styles.card}
@@ -106,9 +110,15 @@ export function Projects() {
                 <div className={styles.imageWrap}>
                   <ProjectPreview
                     image={p.image}
-                    video={p.comingSoon ? undefined : p.video}
-                    alt={p.comingSoon ? "Projekt – bald verfügbar" : `${p.title} – Website`}
-                    blur={p.comingSoon}
+                    video={blurImage ? undefined : p.video}
+                    alt={
+                      p.comingSoon
+                        ? "Projekt – bald verfügbar"
+                        : p.obscured
+                          ? "Projektentwurf"
+                          : `${p.title} – Website`
+                    }
+                    blur={blurImage}
                   />
                   {p.comingSoon && (
                     <div className={styles.teaser}>
@@ -128,7 +138,7 @@ export function Projects() {
                 <Text
                   variant="heading-strong-s"
                   onBackground="neutral-strong"
-                  className={p.comingSoon ? styles.blurText : undefined}
+                  className={blurTitle ? styles.blurText : undefined}
                 >
                   {p.title}
                 </Text>

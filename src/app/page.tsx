@@ -86,6 +86,7 @@ export default function Home() {
       <JsonLd data={structuredData} />
       <Column
         as="section"
+        className={styles.hero}
         fillWidth
         horizontal="center"
         paddingX="l"

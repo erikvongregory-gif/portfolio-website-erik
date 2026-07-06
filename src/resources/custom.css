@@ -68,6 +68,13 @@
   /*
 }*/
 
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+  overscroll-behavior-x: none;
+}
+
 /* ============================================================
    Großbildschirm-Skalierung (QHD, 4K, 5K, 8K, Ultrawide)
    ------------------------------------------------------------

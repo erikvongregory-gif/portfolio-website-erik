@@ -6,6 +6,8 @@ type CardContent = {
   title: string;
   image: string;
   comingSoon?: boolean;
+  /** Blur the project name only (e.g. client opted out of being named). */
+  obscured?: boolean;
 };
 
 const projects: CardContent[] = [
@@ -13,6 +15,7 @@ const projects: CardContent[] = [
   {
     title: "Kapitalanlagen Deutschland (Entwurf)",
     image: "/images/projects/kapitalanlagen/hero.png",
+    obscured: true,
   },
   { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero.png" },
   { title: "Lünebräu", image: "/images/projects/lunebraeu/hero.png" },
@@ -20,6 +23,8 @@ const projects: CardContent[] = [
 ];
 
 function MarqueeCard({ card, priority = false }: { card: CardContent; priority?: boolean }) {
+  const blurTitle = card.comingSoon || card.obscured;
+  const blurImage = card.comingSoon;
   return (
     <figure className={styles.card} aria-hidden="true">
       <div className={styles.inner}>
@@ -29,13 +34,13 @@ function MarqueeCard({ card, priority = false }: { card: CardContent; priority?:
             <span className={styles.dot} />
             <span className={styles.dot} />
           </div>
-          <span className={`${styles.title}${card.comingSoon ? ` ${styles.blurText}` : ""}`}>
+          <span className={`${styles.title}${blurTitle ? ` ${styles.blurText}` : ""}`}>
             {card.title}
           </span>
         </div>
         <div className={styles.imageWrap}>
           <img
-            className={`${styles.image}${card.comingSoon ? ` ${styles.imageBlur}` : ""}`}
+            className={`${styles.image}${blurImage ? ` ${styles.imageBlur}` : ""}`}
             src={card.image}
             alt=""
             loading={priority ? "eager" : "lazy"}

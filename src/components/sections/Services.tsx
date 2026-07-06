@@ -24,6 +24,13 @@ const services = [
     features: ["Updates & Sicherheit", "Kleine Änderungen", "Fester Ansprechpartner", "Monatlich kündbar"],
     featured: false,
   },
+  {
+    title: "Individuell auf Anfrage",
+    price: "Preis auf Anfrage",
+    body: "CMS-Anbindung, Reservierungstool oder andere Sonderwünsche – Umfang und Budget klären wir persönlich im Gespräch.",
+    features: ["CMS-System", "Reservierungstool", "Individuelle Funktionen", "Persönliche Beratung"],
+    featured: false,
+  },
 ];
 
 export function Services() {
@@ -39,10 +46,10 @@ export function Services() {
             </Text>
           </>
         }
-        description="Transparente Richtpreise. Was du bekommst, weißt du vorher."
+        description="Transparente Richtpreise – und für individuelle Lösungen ein persönliches Gespräch."
       />
 
-      <Grid columns="3" m={{ columns: "1" }} gap="16">
+      <Grid columns="2" m={{ columns: "1" }} gap="16">
         {services.map((s, i) => (
           <Reveal key={s.title} delay={i * 0.1} scale={0.95}>
           <Column fillHeight>

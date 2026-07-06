@@ -7,6 +7,7 @@ type CardContent = {
   title: string;
   image: string;
   comingSoon?: boolean;
+  obscured?: boolean;
 };
 
 // A single 3D state along the carousel arc.
@@ -46,6 +47,7 @@ const projects: CardContent[] = [
   {
     title: "Kapitalanlagen Deutschland (Entwurf)",
     image: "/images/projects/kapitalanlagen/hero.png",
+    obscured: true,
   },
   { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero.png" },
   { title: "Lünebräu", image: "/images/projects/lunebraeu/hero.png" },
@@ -169,7 +171,10 @@ export function HeroShowcase() {
   return (
     <div ref={stageRef} className={styles.stage} aria-label="Projekt-Vorschau Karussell" role="img">
       <div ref={deckRef} className={styles.deck}>
-        {cards.map((c, i) => (
+        {cards.map((c, i) => {
+          const blurTitle = c.comingSoon || c.obscured;
+          const blurImage = c.comingSoon;
+          return (
           <figure
             key={i}
             ref={(el) => {
@@ -185,16 +190,22 @@ export function HeroShowcase() {
                   <span className={styles.dot} />
                 </div>
                 <span
-                  className={`${styles.title}${c.comingSoon ? ` ${styles.blurText}` : ""}`}
+                  className={`${styles.title}${blurTitle ? ` ${styles.blurText}` : ""}`}
                 >
                   {c.title}
                 </span>
               </div>
               <div className={styles.imageWrap}>
                 <img
-                  className={`${styles.image}${c.comingSoon ? ` ${styles.imageBlur}` : ""}`}
+                  className={`${styles.image}${blurImage ? ` ${styles.imageBlur}` : ""}`}
                   src={c.image}
-                  alt={c.comingSoon ? "Projekt – bald verfügbar" : `${c.title} – Website`}
+                  alt={
+                    c.comingSoon
+                      ? "Projekt – bald verfügbar"
+                      : c.obscured
+                        ? "Projektentwurf"
+                        : `${c.title} – Website`
+                  }
                   loading={i === 0 ? "eager" : "lazy"}
                   fetchPriority={i === 0 ? "high" : "auto"}
                 />
@@ -209,7 +220,8 @@ export function HeroShowcase() {
               </div>
             </div>
           </figure>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

@@ -6,6 +6,8 @@
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  /* Wide marquee tracks must not expand the page scroll width on mobile. */
+  contain: paint;
   pointer-events: none;
 }
 
@@ -23,6 +25,7 @@
   flex-direction: column;
   justify-content: center;
   gap: clamp(16px, 5vw, 32px);
+  overflow: hidden;
 
   /* The copy sits on its own glass card, so the slides can stay crisp
      and vivid here. */
