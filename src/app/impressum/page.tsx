@@ -39,11 +39,9 @@ export default function Impressum() {
         </LegalText>
       </LegalBlock>
 
-      <LegalBlock title="Umsatzsteuer-Identifikationsnummer">
+      <LegalBlock title="Umsatzsteuer">
         <LegalText>
-          Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
-          <br />
-          DE424283984
+          Gemäß § 19 UStG wird als Kleinunternehmer keine Umsatzsteuer berechnet und ausgewiesen.
         </LegalText>
       </LegalBlock>
 
