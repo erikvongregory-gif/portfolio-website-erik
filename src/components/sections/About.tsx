@@ -1,6 +1,7 @@
 import { Column, Grid, Heading, Icon, Row, Tag, Text } from "@once-ui-system/core";
 import { Counter, Reveal } from "@/components/motion";
 import { Section } from "./Section";
+import styles from "./About.module.scss";
 
 const reasons = [
   "Direkter Kontakt, immer ich persönlich",
@@ -55,7 +56,25 @@ export function About() {
         </Reveal>
 
         <Column flex={1} fillWidth>
-          <Grid columns="1" gap="12" fillWidth m={{ columns: "3" }} s={{ columns: "1" }}>
+          <Row className={styles.statsRow} fillWidth>
+            {stats.map((s, i) => (
+              <Column key={s.label} className={styles.statItem} horizontal="center">
+                {i > 0 && <span className={styles.statDivider} aria-hidden="true" />}
+                <Text
+                  variant="display-strong-s"
+                  onBackground="neutral-strong"
+                  style={{ letterSpacing: "-0.03em" }}
+                >
+                  <Counter value={s.num} suffix={s.suffix} />
+                </Text>
+                <Text variant="body-default-xs" onBackground="neutral-weak" align="center">
+                  {s.label}
+                </Text>
+              </Column>
+            ))}
+          </Row>
+
+          <Grid className={styles.statsGrid} columns="1" gap="12" fillWidth m={{ columns: "3" }} s={{ columns: "1" }}>
             {stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 0.12}>
                 <Column

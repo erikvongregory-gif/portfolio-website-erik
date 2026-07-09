@@ -25,9 +25,10 @@ export function Section({
       horizontal="center"
       paddingX="l"
       paddingY={paddingY}
+      m={{ paddingY: "64" }}
       style={{ scrollMarginTop: "96px" }}
     >
-      <Column fillWidth maxWidth={maxWidth} gap={gap}>
+      <Column fillWidth maxWidth={maxWidth} gap={gap} m={{ gap: "32" }}>
         {children}
       </Column>
     </Column>

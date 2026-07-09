@@ -56,31 +56,32 @@ export function Process() {
           <Reveal key={s.no} delay={i * 0.06} y={16}>
           <Row
             fillWidth
-            gap="32"
+            gap="24"
             paddingTop={i === 0 ? "0" : "24"}
             paddingBottom="24"
             borderTop={i === 0 ? undefined : "neutral-alpha-weak"}
             vertical="start"
-            s={{ direction: "column", gap: "8" }}
           >
             <Text
               variant="display-strong-xs"
               onBackground="neutral-weak"
-              style={{ minWidth: "3rem", letterSpacing: "-0.02em" }}
+              style={{ minWidth: "2.5rem", letterSpacing: "-0.02em" }}
             >
               {s.no}
             </Text>
             <Column gap="8" flex={1}>
-              <Text variant="heading-strong-s" onBackground="neutral-strong">
-                {s.title}
-              </Text>
+              <Row fillWidth horizontal="between" vertical="center" gap="12" wrap>
+                <Text variant="heading-strong-s" onBackground="neutral-strong">
+                  {s.title}
+                </Text>
+                <Tag size="s" variant="neutral">
+                  {s.meta}
+                </Tag>
+              </Row>
               <Text variant="body-default-m" onBackground="neutral-weak">
                 {s.body}
               </Text>
             </Column>
-            <Tag size="s" variant="neutral">
-              {s.meta}
-            </Tag>
           </Row>
           </Reveal>
         ))}

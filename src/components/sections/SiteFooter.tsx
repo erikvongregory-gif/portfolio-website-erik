@@ -1,6 +1,7 @@
 import { Column, Flex, Line, Row, SmartLink, Text } from "@once-ui-system/core";
 import { BrandMark } from "@/components/BrandLogo";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
+import styles from "./SiteFooter.module.scss";
 
 const navLinks = [
   { label: "Projekte", href: "/#projekte" },
@@ -22,7 +23,15 @@ const legalLinks = [
 
 export function SiteFooter() {
   return (
-    <Flex as="footer" fillWidth horizontal="center" paddingX="l" paddingTop="64" paddingBottom="40">
+    <Flex
+      as="footer"
+      className={styles.footer}
+      fillWidth
+      horizontal="center"
+      paddingX="l"
+      paddingTop="64"
+      paddingBottom="40"
+    >
       <Column fillWidth maxWidth={68} gap="40">
         <Row fillWidth gap="40" horizontal="between" wrap s={{ direction: "column", gap: "32" }}>
           <Column gap="12" maxWidth={22}>

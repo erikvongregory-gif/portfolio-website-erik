@@ -2,7 +2,6 @@
 
 import { Column, Heading, Row, Tag, Text } from "@once-ui-system/core";
 import { useEffect, useRef, useState } from "react";
-import { Reveal } from "@/components/motion";
 import { Section } from "./Section";
 import styles from "./Problem.module.scss";
 
@@ -152,25 +151,31 @@ export function Problem() {
               </Text>
             </Column>
           ) : (
-            <Reveal>
-              <Column gap="16">
-                <Heading
-                  as="h2"
-                  variant="display-strong-xs"
-                  onBackground="neutral-strong"
-                  wrap="balance"
-                  style={{ letterSpacing: "-0.03em", lineHeight: 1.08 }}
-                >
-                  Eine Website zu haben{" "}
-                  <Text as="span" onBackground="neutral-weak">
-                    reicht nicht.
-                  </Text>
-                </Heading>
-                <Text variant="body-default-l" onBackground="neutral-weak" wrap="balance">
-                  Die meisten Seiten scheitern an denselben vier Punkten. Genau die löse ich.
-                </Text>
-              </Column>
-            </Reveal>
+            <Column key={mobileActive} className={styles.lead} gap="16">
+              <Heading
+                as="h2"
+                variant="display-strong-xs"
+                onBackground="neutral-strong"
+                wrap="balance"
+                style={{ letterSpacing: "-0.03em", lineHeight: 1.08 }}
+              >
+                {problems[mobileActive].lead}
+              </Heading>
+              <Text
+                className={styles.quote}
+                variant="body-default-l"
+                onBackground="neutral-weak"
+                wrap="balance"
+              >
+                {problems[mobileActive].quote}
+              </Text>
+            </Column>
+          )}
+
+          {!enabled && (
+            <Text variant="label-default-s" onBackground="neutral-weak">
+              {String(mobileActive + 1).padStart(2, "0")} / {String(problems.length).padStart(2, "0")}
+            </Text>
           )}
 
           {enabled && (

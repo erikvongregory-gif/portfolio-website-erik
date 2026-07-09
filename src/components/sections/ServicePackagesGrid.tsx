@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Button, Column, Grid, Icon, Line, Row, Tag, Text } from "@once-ui-system/core";
 import { Reveal, SpotlightCard } from "@/components/motion";
 import styles from "./Services.module.scss";
@@ -31,6 +31,16 @@ function Expandable({ open, children }: { open: boolean; children: ReactNode }) 
 
 export function ServicePackagesGrid({ packages }: ServicePackagesGridProps) {
   const [detailed, setDetailed] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1024px)");
+    const sync = () => {
+      if (mq.matches) setDetailed(false);
+    };
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   return (
     <Column fillWidth gap="24">

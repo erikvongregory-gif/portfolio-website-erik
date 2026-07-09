@@ -94,6 +94,7 @@ export default function Home() {
         paddingX="l"
         paddingTop="128"
         paddingBottom="80"
+        m={{ paddingTop: "104", paddingBottom: "64" }}
         vertical="center"
         style={{ minHeight: "100svh" }}
       >
@@ -148,7 +149,13 @@ export default function Home() {
             </RevealFx>
 
             <RevealFx translateY="12" delay={0.3} horizontal="start" paddingBottom="20">
-              <Row gap="8" wrap vertical="center">
+              <Row
+                className={styles.heroActions}
+                gap="8"
+                wrap
+                vertical="center"
+                m={{ direction: "column", horizontal: "stretch" }}
+              >
                 <ContactDialog label="Kostenlos anfragen" size="l" replaceGlobalHandler />
                 <Button href="#projekte" variant="tertiary" size="l">
                   Projekte ansehen
@@ -174,7 +181,14 @@ export default function Home() {
       <Problem />
       <Projects />
 
-      <Column as="section" fillWidth horizontal="center" paddingY="160" gap="64">
+      <Column
+        as="section"
+        fillWidth
+        horizontal="center"
+        paddingY="160"
+        gap="64"
+        m={{ paddingY: "80", gap: "40" }}
+      >
         <Marquee />
         <Column maxWidth={48} fillWidth horizontal="center" paddingX="l">
           <ScrollRevealText text="Deine Website ist der erste Eindruck deiner Marke. Ich sorge dafür, dass er auffällt, Vertrauen schafft und Kunden bringt." />

@@ -7,7 +7,7 @@ import { ContactDialog } from "@/components/ContactDialog";
 import { subscribeScroll } from "@/components/motion/SmoothScroll";
 import styles from "./StickyMobileCta.module.scss";
 
-const MOBILE_MQ = "(max-width: 768px)";
+const MOBILE_MQ = "(max-width: 1024px)";
 
 function shouldShowBar(hero: Element, kontakt: Element) {
   const heroRect = hero.getBoundingClientRect();
