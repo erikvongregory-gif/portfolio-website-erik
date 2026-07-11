@@ -20,9 +20,19 @@ type Project = {
   url?: string;
   comingSoon?: boolean;
   obscured?: boolean;
+  latest?: boolean;
 };
 
 const projects: Project[] = [
+  {
+    title: "Da Peppe",
+    chrome: "da-peppe.com",
+    category: "Gastronomie · Restaurant",
+    image: "/images/projects/da-peppe/hero-live.png",
+    body: "Website für eine italienische Osteria & Pizzeria: appetitlich, warm und einladend, mit klarer Speisekarte und Reservierung.",
+    url: "https://da-peppe.com",
+    latest: true,
+  },
   {
     title: "EvGlab",
     chrome: "evglab.com",
@@ -57,14 +67,6 @@ const projects: Project[] = [
     video: "/videos/projects/lunebraeu.mp4",
     body: "Markenauftritt für eine Craft-Bier-Brauerei aus Lüneburg: kantig, handwerklich und mit Haltung – vom Sortiment bis zur Bestellung.",
     url: "https://luenebraeu.vercel.app",
-  },
-  {
-    title: "Da Peppe",
-    chrome: "da-peppe",
-    category: "Gastronomie · Restaurant",
-    image: "/images/projects/da-peppe/hero.png",
-    body: "Website für eine italienische Osteria & Pizzeria: appetitlich, warm und einladend, mit klarer Speisekarte.",
-    comingSoon: true,
   },
 ];
 
@@ -151,6 +153,11 @@ export function Projects() {
                           <span className={styles.teaserDot} />
                           Eventuell bald verfügbar
                         </span>
+                      </div>
+                    )}
+                    {p.latest && (
+                      <div className={styles.latest}>
+                        <span className={styles.latestBadge}>Neuestes Projekt</span>
                       </div>
                     )}
                   </div>

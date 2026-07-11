@@ -51,7 +51,7 @@ const projects: CardContent[] = [
   },
   { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero.png" },
   { title: "Lünebräu", image: "/images/projects/lunebraeu/hero.png" },
-  { title: "Da Peppe", image: "/images/projects/da-peppe/hero.png", comingSoon: true },
+  { title: "Da Peppe", image: "/images/projects/da-peppe/hero-live.png" },
 ];
 
 // Slots on the arc, filled with real work (repeated) instead of empty placeholders.
