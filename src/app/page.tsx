@@ -29,7 +29,8 @@ const structuredData = {
   name: "EvgLab",
   alternateName: "Erik EvgLab",
   description:
-    "Webentwicklung und Design aus einer Hand. Individuelle Websites und Landingpages mit Persönlichkeit, die Anfragen bringen.",
+    "Webdesign und Webentwicklung aus Landsberg am Lech. Individuelle Websites und Landingpages mit Persönlichkeit, die Anfragen bringen.",
+  serviceType: ["Webdesign", "Webentwicklung", "Landingpage-Design", "Website-Betreuung"],
   url: baseURL,
   image: `${baseURL}/opengraph-image`,
   email: "info@evglab.com",
@@ -143,8 +144,8 @@ export default function Home() {
                 variant="body-default-l"
                 style={{ lineHeight: 1.55, maxWidth: "32rem" }}
               >
-                Webentwicklung und Design aus einer Hand. Kein Vorlagen-Look, sondern ein Auftritt
-                mit Persönlichkeit, der Anfragen bringt.
+                Webdesign und Webentwicklung aus Landsberg am Lech – kein Vorlagen-Look, sondern
+                ein Auftritt mit Persönlichkeit, der Anfragen bringt.
               </Text>
             </RevealFx>
 
@@ -165,7 +166,7 @@ export default function Home() {
 
             <RevealFx translateY="12" delay={0.4} horizontal="start">
               <Text variant="label-default-s" onBackground="neutral-weak">
-                Kostenlos · Antwort innerhalb 24h · Landsberg am Lech
+                Kostenlos · Antwort innerhalb 24h
               </Text>
             </RevealFx>
           </Column>

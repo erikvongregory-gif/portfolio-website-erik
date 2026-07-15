@@ -19,9 +19,9 @@ import {
 } from "@/components";
 import { fonts, style, dataStyle, baseURL, createPageOpenGraph, createPageTwitter } from "@/resources";
 
-const title = "Erik EvgLab – Websites mit Charakter, die Kunden bringen.";
+const title = "Webdesign Landsberg am Lech · Erik EvgLab";
 const description =
-  "Webdesign und Entwicklung aus Landsberg. Individuelle Auftritte mit Charakter, die Anfragen bringen.";
+  "Webdesign & Webentwicklung aus Landsberg am Lech. Individuelle Websites und Landingpages mit Charakter, die Anfragen bringen.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseURL),

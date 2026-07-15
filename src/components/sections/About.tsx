@@ -39,8 +39,8 @@ export function About() {
           </Heading>
           <Text variant="body-default-l" onBackground="neutral-weak">
             Hinter EvgLab steckt eine Person: ich, Erik. Du sprichst direkt mit mir, von der ersten
-            Idee bis nach dem Launch. Ich kenne jedes Detail deines Projekts und bin dafür
-            verantwortlich.
+            Idee bis nach dem Launch – aus Landsberg am Lech, für Kunden in Bayern und
+            deutschlandweit. Ich kenne jedes Detail deines Projekts und bin dafür verantwortlich.
           </Text>
           <Column gap="12" paddingTop="4">
             {reasons.map((r) => (
