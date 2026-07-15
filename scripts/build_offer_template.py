@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Erzeugt eine premium Angebotsvorlage (.docx) im Design von webdesign.evglab.com:
+Erzeugt eine premium Angebotsvorlage (.docx) im Design von evglab.com:
 minimalistisch, editorial, viel Weißraum, Geist-Font, schwarze Akzent-Blöcke.
 """
 
@@ -211,7 +211,7 @@ def build_footer(sec):
     p2 = footer.add_paragraph()
     p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p2.paragraph_format.space_after = Pt(2)
-    set_run(p2.add_run("Erik EvgLab  ·  Hauptstraße 18, 86925 Fuchstal  ·  info@evglab.com  ·  +49 173 170 6012  ·  webdesign.evglab.com"),
+    set_run(p2.add_run("Erik EvgLab  ·  Hauptstraße 18, 86925 Fuchstal  ·  info@evglab.com  ·  +49 173 170 6012  ·  evglab.com"),
             size=8, color=SECONDARY)
     p3 = footer.add_paragraph()
     p3.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -554,7 +554,7 @@ set_cell_margins(bc, top=200, bottom=200, left=200, right=200)
 cell_text(bc, "Bereit, wenn du es bist.", size=18, color=WHITE, bold=True,
           align=WD_ALIGN_PARAGRAPH.CENTER, space_after=4)
 p = bc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.paragraph_format.space_after = Pt(0)
-set_run(p.add_run("info@evglab.com   ·   +49 173 170 6012   ·   webdesign.evglab.com"),
+set_run(p.add_run("info@evglab.com   ·   +49 173 170 6012   ·   evglab.com"),
         size=10.5, color=RGBColor(0xCF, 0xCF, 0xCF))
 
 

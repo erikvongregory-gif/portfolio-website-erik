@@ -3,7 +3,7 @@
 Konkretes Angebot fuer "Da Peppe" mit zwei Optionen:
   A) Komplette Website  – 2.500 € einmalig
   B) Komplett + Betreuung – 1.500 € einmalig + 99 €/Monat
-Design im Look von webdesign.evglab.com.
+Design im Look von evglab.com.
 """
 
 from docx import Document
@@ -176,7 +176,7 @@ fp = footer.paragraphs[0]
 fp.alignment = WD_ALIGN_PARAGRAPH.CENTER; fp.paragraph_format.space_before = Pt(6)
 hairline(fp, color=LINE, size=4, space_after=4)
 fp2 = footer.add_paragraph(); fp2.alignment = WD_ALIGN_PARAGRAPH.CENTER; fp2.paragraph_format.space_after = Pt(2)
-set_run(fp2.add_run("Erik EvgLab  ·  Hauptstraße 18, 86925 Fuchstal  ·  info@evglab.com  ·  +49 173 170 6012  ·  webdesign.evglab.com"),
+set_run(fp2.add_run("Erik EvgLab  ·  Hauptstraße 18, 86925 Fuchstal  ·  info@evglab.com  ·  +49 173 170 6012  ·  evglab.com"),
         size=8, color=SECONDARY)
 fp3 = footer.add_paragraph(); fp3.alignment = WD_ALIGN_PARAGRAPH.CENTER; fp3.paragraph_format.space_after = Pt(0)
 add_page_number(fp3)
@@ -437,7 +437,7 @@ bc = banner.cell(0, 0); shade_cell(bc, DARK_HEX); set_cell_margins(bc, top=200, 
 cell_text(bc, "Freuen uns auf Da Peppe – online.", size=18, color=WHITE, bold=True,
           align=WD_ALIGN_PARAGRAPH.CENTER, space_after=4)
 p = bc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.paragraph_format.space_after = Pt(0)
-set_run(p.add_run("info@evglab.com   ·   +49 173 170 6012   ·   webdesign.evglab.com"),
+set_run(p.add_run("info@evglab.com   ·   +49 173 170 6012   ·   evglab.com"),
         size=10.5, color=RGBColor(0xCF, 0xCF, 0xCF))
 
 out = "Angebot_DaPeppe.docx"

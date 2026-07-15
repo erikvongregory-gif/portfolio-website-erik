@@ -1,7 +1,8 @@
+import { SITE_URL } from "@/lib/config";
 import { DataStyleConfig, EffectsConfig, FontsConfig, StyleConfig } from "@/types";
 
 // Used for SEO in meta tags, canonical URLs, sitemap and schema.
-const baseURL: string = "https://webdesign.evglab.com";
+const baseURL: string = SITE_URL;
 
 import { Geist } from "next/font/google";
 import { Geist_Mono } from "next/font/google";

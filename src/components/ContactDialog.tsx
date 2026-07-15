@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button, Column, Dialog, Icon, Input, Row, Text, Textarea } from "@once-ui-system/core";
 import { startLenis, stopLenis } from "@/components/motion/SmoothScroll";
+import { SITE_HOST } from "@/lib/config";
 import {
   OPEN_CONTACT_EVENT,
   QUOTE_MESSAGE_STORAGE_KEY,
@@ -127,7 +128,7 @@ export function ContactDialog({
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
-          subject: `Neue Anfrage über webdesign.evglab.com${name ? ` – ${name}` : ""}`,
+          subject: `Neue Anfrage über ${SITE_HOST}${name ? ` – ${name}` : ""}`,
           from_name: name || "Website-Anfrage",
           name,
           email,
