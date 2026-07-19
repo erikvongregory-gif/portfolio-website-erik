@@ -18,6 +18,7 @@ import {
   SmoothScroll,
 } from "@/components";
 import { fonts, style, dataStyle, baseURL, createPageOpenGraph, createPageTwitter } from "@/resources";
+import { Analytics } from "@vercel/analytics/next";
 
 const title = "Webdesign Landsberg am Lech · Erik EvgLab";
 const description =
@@ -174,6 +175,7 @@ export default function RootLayout({
           </Flex>
           <CookieBanner />
           <ConsentAnalytics />
+          <Analytics />
         </Column>
       </Providers>
     </Flex>
