@@ -30,6 +30,32 @@ const nextConfig = {
         destination: "https://evglab.com/:path*",
         permanent: true,
       },
+      // Legacy URLs still crawled by Google Search Console
+      {
+        source: "/loesungen/biergarten-event-marketing",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/loesungen/haendler-gastro-promotion",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/ebook/ki-fuer-brauereien.html",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/ratgeber",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/ratgeber/:path*",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
 };
