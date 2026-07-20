@@ -77,25 +77,12 @@ export function SiteHeader() {
         fillWidth
         horizontal="center"
         zIndex={3}
-        padding="16"
-        pointerEvents="none"
+        paddingX="l"
+        paddingY="12"
+        background="page"
+        borderBottom="neutral-alpha-weak"
       >
-        <Row
-          vertical="center"
-          gap="24"
-          paddingLeft="16"
-          paddingRight="8"
-          paddingY="8"
-          radius="full"
-          background="surface"
-          border="neutral-alpha-medium"
-          shadow="l"
-          pointerEvents="auto"
-          style={{
-            backdropFilter: "blur(14px) saturate(160%)",
-            WebkitBackdropFilter: "blur(14px) saturate(160%)",
-          }}
-        >
+        <Row fillWidth maxWidth="xl" horizontal="between" vertical="center">
           <Logo />
 
           <Row as="nav" aria-label="Hauptnavigation" vertical="center" gap="4">
@@ -136,16 +123,13 @@ export function SiteHeader() {
           <Column className={styles.panel} fillWidth fillHeight padding="16">
             <Row fillWidth horizontal="between" vertical="center">
               <Logo />
-              <Row gap="4" vertical="center">
-                <ThemeToggle />
-                <IconButton
+              <IconButton
                 icon="close"
                 variant="tertiary"
                 size="l"
                 aria-label="Menü schließen"
                 onClick={() => setOpen(false)}
               />
-              </Row>
             </Row>
 
             <Column
@@ -200,7 +184,7 @@ export function SiteHeader() {
                 Kostenloses Erstgespräch
               </Button>
               <Text variant="label-default-s" onBackground="neutral-weak" align="center">
-                Antwort innerhalb 24h · Landsberg am Lech
+                Antwort innerhalb 24h
               </Text>
             </Column>
           </Column>

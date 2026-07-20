@@ -11,7 +11,6 @@ import {
   Aurora,
   ConsentAnalytics,
   CookieBanner,
-  MobileJumpNav,
   Providers,
   ScrollProgress,
   SiteHeader,
@@ -160,7 +159,6 @@ export default function RootLayout({
           <SmoothScroll />
           <ScrollProgress />
           <SiteHeader />
-          <MobileJumpNav />
           <Flex
             as="main"
             id="top"

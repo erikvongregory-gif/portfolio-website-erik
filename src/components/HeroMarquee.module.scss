@@ -1,17 +1,16 @@
-/* Mobile-only animated background: the same project cards drift across the
-   screen in parallel rows (alternating direction) behind the hero copy. */
+/* Mobile-only project band under the hero copy — atmosphere, not overlay. */
 
 .root {
-  position: absolute;
-  inset: 0;
+  position: relative;
   z-index: 0;
+  width: 100%;
+  margin-top: clamp(28px, 8vw, 48px);
   overflow: hidden;
-  /* Wide marquee tracks must not expand the page scroll width on mobile. */
-  contain: paint;
   pointer-events: none;
+  background: transparent;
 }
 
-/* Desktop keeps the interactive 3D carousel, so the marquee is mobile-only. */
+/* Desktop keeps the interactive 3D carousel. */
 @media (min-width: 1024px) {
   .root {
     display: none;
@@ -19,31 +18,24 @@
 }
 
 .rows {
-  position: absolute;
-  inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: clamp(16px, 5vw, 32px);
+  gap: clamp(12px, 3.5vw, 20px);
   overflow: hidden;
-
-  /* The copy sits on its own glass card, so the slides can stay crisp
-     and vivid here. */
-  opacity: 1;
-
-  /* Feather the top and bottom so the rows dissolve into the page. */
+  opacity: 0.7;
+  background: transparent;
   -webkit-mask-image: linear-gradient(
-    to bottom,
+    to right,
     transparent 0%,
-    #000 14%,
-    #000 86%,
+    #000 8%,
+    #000 92%,
     transparent 100%
   );
   mask-image: linear-gradient(
-    to bottom,
+    to right,
     transparent 0%,
-    #000 14%,
-    #000 86%,
+    #000 8%,
+    #000 92%,
     transparent 100%
   );
 }
@@ -71,102 +63,32 @@
 
 .card {
   flex: 0 0 auto;
-  width: clamp(208px, 60vw, 300px);
-  /* margin (not flex gap) so the duplicated set tiles perfectly at -50%. */
-  margin-right: clamp(16px, 5vw, 32px);
+  width: clamp(168px, 48vw, 240px);
+  margin-right: clamp(12px, 4vw, 20px);
+  background: transparent;
 }
 
+/* Image only — no chrome, no fill behind the shot. */
 .inner {
   position: relative;
-  display: flex;
-  flex-direction: column;
   aspect-ratio: 1200 / 840;
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
-  background: linear-gradient(
-    158deg,
-    var(--neutral-background-weak),
-    var(--neutral-background-medium)
-  );
-  box-shadow:
-    inset 0 1px 0 var(--evg-card-highlight),
-    0 2px 1px var(--evg-card-shadow-sm),
-    0 40px 70px -34px var(--evg-card-shadow-xl),
-    0 18px 36px -24px var(--evg-card-shadow-md);
-}
-
-.chrome {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  height: 30px;
-  padding: 0 12px;
-  background: var(--neutral-background-medium);
-  border-bottom: 1px solid var(--neutral-alpha-weak);
-}
-
-.dots {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--neutral-alpha-medium);
-}
-
-.title {
-  margin-left: 5px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  color: var(--neutral-on-background-weak);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.imageWrap {
-  position: relative;
-  flex: 1 1 auto;
-  overflow: hidden;
+  background: transparent;
+  box-shadow: 0 18px 36px -24px var(--evg-card-shadow-md);
 }
 
 .image {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top center;
 }
 
-/* Coming-soon project: obscure the preview in the background marquee. */
 .imageBlur {
   filter: blur(18px) saturate(0.92);
   transform: scale(1.16);
-}
-
-.blurText {
-  filter: blur(5px);
-}
-
-/* Just a gentle fade into the page at the very top and bottom – the slides
-   stay vivid across the middle since the copy has its own glass card. */
-.scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    var(--page-background) 0%,
-    transparent 12%,
-    transparent 88%,
-    var(--page-background) 100%
-  );
 }
 
 @media (prefers-reduced-motion: reduce) {

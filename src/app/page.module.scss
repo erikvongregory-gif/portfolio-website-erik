@@ -1,9 +1,6 @@
-/* On mobile the hero copy floats over the moving slides, so it gets its own
-   frosted-glass card for guaranteed readability while the slides stay vivid
-   above and below it. On desktop the copy sits beside the 3D carousel, so no
-   card treatment is applied. */
+/* Mobile: no floating card — copy sits on the page, marquee is a quiet band below.
+   Desktop: copy beside the 3D carousel, no card treatment. */
 .hero {
-  /* Clip the mobile marquee tracks so they cannot widen the document. */
   overflow-x: clip;
 }
 
@@ -12,55 +9,55 @@
   z-index: 1;
 }
 
+/* Two unbreakable phrases → clean wrap:
+   „Websites mit Charakter,“ / „die … bringen.“ */
+.heroHeadlineLead,
+.heroHeadlineTail {
+  white-space: nowrap;
+}
+
+.heroAboutLink {
+  text-decoration: none;
+  width: fit-content;
+  transition: opacity 0.15s ease;
+}
+
+.heroAboutLink:hover {
+  opacity: 0.72;
+}
+
+.heroAboutAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid var(--neutral-alpha-medium);
+}
+
+.heroAboutAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+  display: block;
+}
+
 @media (max-width: 1024px) {
+  /* Slightly smaller so both lines fit without orphaning mid-phrase. */
+  .heroHeadline {
+    font-size: clamp(1.9rem, 8.5vw, 2.6rem) !important;
+  }
+
   .heroActions {
     width: 100%;
   }
 
-  .heroActions > * {
+  .heroActions [data-open-contact] {
     width: 100%;
   }
-}
 
-@media (max-width: 1024px) {
   .heroCopy {
-    padding: clamp(22px, 6vw, 32px) clamp(20px, 5.5vw, 30px);
-    border-radius: 22px;
-  }
-
-  /* The glass treatment lives on a pseudo-element so it can fade in together
-     with the RevealFx text instead of popping in fully formed on first paint. */
-  .heroCopy::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    z-index: -1;
-    background: color-mix(in srgb, var(--page-background) 80%, transparent);
-    backdrop-filter: blur(18px) saturate(150%);
-    -webkit-backdrop-filter: blur(18px) saturate(150%);
-    border: 1px solid var(--neutral-alpha-medium);
-    box-shadow:
-      inset 0 1px 0 var(--evg-card-highlight),
-      0 2px 1px var(--evg-card-shadow-xs),
-      0 36px 70px -38px var(--evg-card-shadow-lg);
-    opacity: 0;
-    transform: translateY(8px);
-    animation: heroCardReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-}
-
-@keyframes heroCardReveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .heroCopy::before {
-    animation: none;
-    opacity: 1;
-    transform: none;
+    max-width: 100%;
   }
 }

@@ -1,4 +1,4 @@
-import { Button, Column, Flex, Heading, RevealFx, Row, Text } from "@once-ui-system/core";
+import { Column, Flex, Heading, Icon, RevealFx, Row, SmartLink, Text } from "@once-ui-system/core";
 import styles from "./page.module.scss";
 import {
   About,
@@ -99,14 +99,12 @@ export default function Home() {
         vertical="center"
         style={{ minHeight: "100svh" }}
       >
-        <HeroMarquee />
-
         <Row
           fillWidth
           maxWidth={68}
           vertical="center"
           gap="xl"
-          s={{ direction: "column", gap: "56" }}
+          s={{ direction: "column", gap: "40" }}
           style={{ position: "relative", zIndex: 1 }}
         >
           <Column
@@ -117,23 +115,27 @@ export default function Home() {
             horizontal="start"
             align="left"
           >
-            <RevealFx horizontal="start" paddingBottom="24">
-              <CapacityBadge taken={3} total={4} />
-            </RevealFx>
+            <Column m={{ hide: true }} paddingBottom="24">
+              <RevealFx horizontal="start">
+                <CapacityBadge taken={3} total={4} />
+              </RevealFx>
+            </Column>
 
             <RevealFx translateY="4" delay={0.1} horizontal="start" paddingBottom="20">
               <Heading
                 as="h1"
-                wrap="balance"
+                className={styles.heroHeadline}
                 variant="display-strong-xl"
                 onBackground="neutral-strong"
                 style={{ letterSpacing: "-0.04em", lineHeight: 0.98 }}
               >
-                <Text as="span" onBackground="neutral-medium">
+                <Text as="span" className={styles.heroHeadlineLead} onBackground="neutral-medium">
                   Websites mit Charakter,
                 </Text>{" "}
-                die <RotatingWord words={["Kunden", "Anfragen", "Aufträge", "Umsätze"]} />{" "}
-                bringen.
+                <span className={styles.heroHeadlineTail}>
+                  die <RotatingWord words={["Kunden", "Anfragen", "Aufträge", "Umsätze"]} />{" "}
+                  bringen.
+                </span>
               </Heading>
             </RevealFx>
 
@@ -149,25 +151,39 @@ export default function Home() {
               </Text>
             </RevealFx>
 
-            <RevealFx translateY="12" delay={0.3} horizontal="start" paddingBottom="20">
+            <RevealFx translateY="12" delay={0.3} horizontal="start" paddingBottom="16">
               <Row
                 className={styles.heroActions}
-                gap="8"
+                gap="20"
                 wrap
                 vertical="center"
-                m={{ direction: "column", horizontal: "stretch" }}
               >
                 <ContactDialog label="Kostenlos anfragen" size="l" replaceGlobalHandler />
-                <Button href="#projekte" variant="tertiary" size="l">
-                  Projekte ansehen
-                </Button>
+                <SmartLink href="#projekte" unstyled>
+                  <Text variant="label-strong-s" onBackground="neutral-strong">
+                    Projekte ansehen
+                  </Text>
+                </SmartLink>
               </Row>
             </RevealFx>
 
             <RevealFx translateY="12" delay={0.4} horizontal="start">
-              <Text variant="label-default-s" onBackground="neutral-weak">
-                Kostenlos · Antwort innerhalb 24h
-              </Text>
+              <Column gap="12">
+                <Text variant="label-default-s" onBackground="neutral-weak">
+                  Antwort innerhalb 24h
+                </Text>
+                <SmartLink href="/ueber-uns" unstyled className={styles.heroAboutLink}>
+                  <Row gap="10" vertical="center">
+                    <span className={styles.heroAboutAvatar} aria-hidden="true">
+                      <img src="/images/about/erik.png" alt="" width={32} height={32} />
+                    </span>
+                    <Text variant="label-strong-s" onBackground="neutral-strong">
+                      Erik · Wer dahintersteckt
+                    </Text>
+                    <Icon name="arrowRight" size="xs" onBackground="neutral-strong" />
+                  </Row>
+                </SmartLink>
+              </Column>
             </RevealFx>
           </Column>
 
@@ -177,6 +193,8 @@ export default function Home() {
             </RevealFx>
           </Flex>
         </Row>
+
+        <HeroMarquee />
       </Column>
 
       <Problem />

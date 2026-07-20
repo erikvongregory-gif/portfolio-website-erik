@@ -36,9 +36,13 @@ const problems = [
   },
 ];
 
+/** Ignore near-ties so active index doesn't flicker at boundaries. */
+const MOBILE_HYSTERESIS_PX = 56;
+
 export function Problem() {
   const trackRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const mobileActiveRef = useRef(0);
   const [enabled, setEnabled] = useState(false);
   const [active, setActive] = useState(0);
   const [mobileActive, setMobileActive] = useState(0);
@@ -80,7 +84,19 @@ export function Problem() {
           best = i;
         }
       });
-      setMobileActive(best);
+
+      const prev = mobileActiveRef.current;
+      if (best !== prev) {
+        const prevEl = items[prev];
+        if (prevEl) {
+          const r = prevEl.getBoundingClientRect();
+          const prevDist = Math.abs(r.top + r.height / 2 - focus);
+          // Stay on the current item until the new one is clearly closer.
+          if (prevDist - bestDist < MOBILE_HYSTERESIS_PX) return;
+        }
+        mobileActiveRef.current = best;
+        setMobileActive(best);
+      }
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(apply);
@@ -122,6 +138,9 @@ export function Problem() {
     };
   }, [enabled]);
 
+  const step = enabled ? active : mobileActive;
+  const current = problems[step];
+
   const content = (
     <Section id="problem" paddingY="56">
       <Row fillWidth gap="64" vertical="center" m={{ direction: "column", gap: "40" }}>
@@ -130,59 +149,33 @@ export function Problem() {
             Das Problem
           </Tag>
 
-          {enabled ? (
-            <Column key={active} className={styles.lead} gap="16">
-              <Heading
-                as="h2"
-                variant="display-strong-xs"
-                onBackground="neutral-strong"
-                wrap="balance"
-                style={{ letterSpacing: "-0.03em", lineHeight: 1.08 }}
-              >
-                {problems[active].lead}
-              </Heading>
-              <Text
-                className={styles.quote}
-                variant="body-default-l"
-                onBackground="neutral-weak"
-                wrap="balance"
-              >
-                {problems[active].quote}
-              </Text>
-            </Column>
-          ) : (
-            <Column key={mobileActive} className={styles.lead} gap="16">
-              <Heading
-                as="h2"
-                variant="display-strong-xs"
-                onBackground="neutral-strong"
-                wrap="balance"
-                style={{ letterSpacing: "-0.03em", lineHeight: 1.08 }}
-              >
-                {problems[mobileActive].lead}
-              </Heading>
-              <Text
-                className={styles.quote}
-                variant="body-default-l"
-                onBackground="neutral-weak"
-                wrap="balance"
-              >
-                {problems[mobileActive].quote}
-              </Text>
-            </Column>
-          )}
-
-          {!enabled && (
-            <Text variant="label-default-s" onBackground="neutral-weak">
-              {String(mobileActive + 1).padStart(2, "0")} / {String(problems.length).padStart(2, "0")}
+          <Column
+            key={enabled ? active : "mobile-lead"}
+            className={enabled ? styles.lead : styles.leadStatic}
+            gap="16"
+          >
+            <Heading
+              as="h2"
+              variant="display-strong-xs"
+              onBackground="neutral-strong"
+              wrap="balance"
+              style={{ letterSpacing: "-0.03em", lineHeight: 1.08 }}
+            >
+              {current.lead}
+            </Heading>
+            <Text
+              className={styles.quote}
+              variant="body-default-l"
+              onBackground="neutral-weak"
+              wrap="balance"
+            >
+              {current.quote}
             </Text>
-          )}
+          </Column>
 
-          {enabled && (
-            <Text variant="label-default-s" onBackground="neutral-weak">
-              {String(active + 1).padStart(2, "0")} / {String(problems.length).padStart(2, "0")}
-            </Text>
-          )}
+          <Text variant="label-default-s" onBackground="neutral-weak">
+            {String(step + 1).padStart(2, "0")} / {String(problems.length).padStart(2, "0")}
+          </Text>
         </Column>
 
         <Column
@@ -193,30 +186,30 @@ export function Problem() {
           className={enabled ? styles.stepper : styles.mobileStepper}
         >
           {problems.map((p, i) => {
-            const isActive = enabled ? active === i : mobileActive === i;
+            const isActive = step === i;
             return (
-            <Row
-              key={p.no}
-              className={`${styles.item} ${isActive ? styles.active : ""}`}
-              gap="24"
-              padding="20"
-              radius="l"
-              vertical="start"
-              background={isActive ? "surface" : undefined}
-              border={isActive ? "neutral-alpha-medium" : undefined}
-            >
-              <Text className={styles.num} variant="heading-strong-l" onBackground="neutral-weak">
-                {p.no}
-              </Text>
-              <Column gap="8">
-                <Text variant="heading-strong-s" onBackground="neutral-strong">
-                  {p.title}
+              <Row
+                key={p.no}
+                className={`${styles.item} ${isActive ? styles.active : ""}`}
+                gap="24"
+                padding="20"
+                radius="l"
+                vertical="start"
+                background={isActive ? "surface" : undefined}
+                border={isActive ? "neutral-alpha-medium" : "transparent"}
+              >
+                <Text className={styles.num} variant="heading-strong-l" onBackground="neutral-weak">
+                  {p.no}
                 </Text>
-                <Text variant="body-default-m" onBackground="neutral-weak">
-                  {p.body}
-                </Text>
-              </Column>
-            </Row>
+                <Column gap="8">
+                  <Text variant="heading-strong-s" onBackground="neutral-strong">
+                    {p.title}
+                  </Text>
+                  <Text variant="body-default-m" onBackground="neutral-weak">
+                    {p.body}
+                  </Text>
+                </Column>
+              </Row>
             );
           })}
         </Column>

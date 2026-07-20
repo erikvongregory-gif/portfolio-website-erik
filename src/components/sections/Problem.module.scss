@@ -33,9 +33,12 @@
   opacity: 1;
 }
 
-/* Dynamic left headline that swaps per active step. */
 .lead {
   animation: leadIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.leadStatic {
+  transition: opacity 0.2s ease;
 }
 
 @keyframes leadIn {
@@ -58,7 +61,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .item,
-  .lead {
+  .lead,
+  .leadStatic {
     transition: none;
     animation: none;
   }
