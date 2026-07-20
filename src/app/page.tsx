@@ -82,7 +82,7 @@ export default function Home() {
       <link
         rel="preload"
         as="image"
-        href="/images/projects/evglab/hero.png"
+        href="/images/projects/evglab/hero-ki.png"
         fetchPriority="high"
       />
       <JsonLd data={structuredData} />

@@ -11,7 +11,7 @@ type CardContent = {
 };
 
 const projects: CardContent[] = [
-  { title: "EvGlab", image: "/images/projects/evglab/hero.png" },
+  { title: "EvGlab", image: "/images/projects/evglab/hero-ki.png" },
   {
     title: "Kapitalanlagen Deutschland (Entwurf)",
     image: "/images/projects/kapitalanlagen/hero.png",

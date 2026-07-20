@@ -35,12 +35,12 @@ const projects: Project[] = [
   },
   {
     title: "EvGlab",
-    chrome: "evglab.com",
+    chrome: "ki.evglab.com",
     category: "Eigene Marke · KI-Marketing",
-    image: "/images/projects/evglab/hero.png",
+    image: "/images/projects/evglab/hero-ki.png",
     video: "/videos/projects/evglab.mp4",
-    body: "KI-Marketing-Plattform für Brauereien: Produktmotive und Kampagnen per Knopfdruck statt teurem Fotoshooting.",
-    url: "https://evglab.com",
+    body: "KI-Marketing für Brauereien: Produktfotos, Kampagnenmotive und Social-Content im eigenen Markenstil – ohne Studio.",
+    url: "https://ki.evglab.com",
   },
   {
     title: "Kapitalanlagen Deutschland",
