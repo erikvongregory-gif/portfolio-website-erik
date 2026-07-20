@@ -8,6 +8,9 @@
   overflow: hidden;
   pointer-events: none;
   background: transparent;
+  opacity: 0;
+  visibility: hidden;
+  animation: marqueeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.95s both;
 }
 
 /* Desktop keeps the interactive 3D carousel. */
@@ -91,7 +94,26 @@
   transform: scale(1.16);
 }
 
+@keyframes marqueeIn {
+  from {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .root {
+    animation: none;
+    opacity: 1;
+    visibility: visible;
+  }
+
   .track {
     animation: none;
   }

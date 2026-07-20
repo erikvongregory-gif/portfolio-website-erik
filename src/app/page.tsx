@@ -116,12 +116,12 @@ export default function Home() {
             align="left"
           >
             <Column m={{ hide: true }} paddingBottom="24">
-              <RevealFx horizontal="start">
+              <RevealFx speed={400} horizontal="start">
                 <CapacityBadge taken={3} total={4} />
               </RevealFx>
             </Column>
 
-            <RevealFx translateY="4" delay={0.1} horizontal="start" paddingBottom="20">
+            <RevealFx speed={400} translateY="4" delay={0.05} horizontal="start" paddingBottom="20">
               <Heading
                 as="h1"
                 className={styles.heroHeadline}
@@ -139,7 +139,7 @@ export default function Home() {
               </Heading>
             </RevealFx>
 
-            <RevealFx translateY="8" delay={0.2} horizontal="start" paddingBottom="32">
+            <RevealFx speed={400} translateY="8" delay={0.12} horizontal="start" paddingBottom="32">
               <Text
                 wrap="balance"
                 onBackground="neutral-medium"
@@ -151,7 +151,7 @@ export default function Home() {
               </Text>
             </RevealFx>
 
-            <RevealFx translateY="12" delay={0.3} horizontal="start" paddingBottom="16">
+            <RevealFx speed={400} translateY="8" delay={0.18} horizontal="start" paddingBottom="16">
               <Row
                 className={styles.heroActions}
                 gap="20"
@@ -167,7 +167,7 @@ export default function Home() {
               </Row>
             </RevealFx>
 
-            <RevealFx translateY="12" delay={0.4} horizontal="start">
+            <RevealFx speed={400} translateY="8" delay={0.24} horizontal="start">
               <Column gap="12">
                 <Text variant="label-default-s" onBackground="neutral-weak">
                   Antwort innerhalb 24h
@@ -188,7 +188,7 @@ export default function Home() {
           </Column>
 
           <Flex flex={6} fillWidth m={{ hide: true }}>
-            <RevealFx fillWidth delay={0.3}>
+            <RevealFx fillWidth speed={400} delay={0.2}>
               <HeroShowcase />
             </RevealFx>
           </Flex>

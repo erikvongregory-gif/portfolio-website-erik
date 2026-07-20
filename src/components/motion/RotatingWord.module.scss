@@ -1,17 +1,40 @@
 .root {
-  display: inline;
+  display: inline-block;
+  position: relative;
   white-space: nowrap;
+  vertical-align: baseline;
+  line-height: inherit;
+}
+
+.animateWidth {
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Unsichtbare Mess-Spannen: gleiche Schrift, kein Layout-Einfluss. */
+.sizer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.sizer > span {
+  display: inline-block;
 }
 
 .word {
   display: inline-block;
+  line-height: inherit;
+  vertical-align: baseline;
   animation: rotatingWordIn 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes rotatingWordIn {
   from {
     opacity: 0;
-    transform: translateY(0.3em);
+    transform: translateY(0.25em);
     filter: blur(5px);
   }
   to {
@@ -22,6 +45,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .animateWidth {
+    transition: none;
+  }
+
   .word {
     animation: none;
   }
