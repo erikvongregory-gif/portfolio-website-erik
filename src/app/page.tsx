@@ -173,7 +173,7 @@ export default function Home() {
                   Antwort innerhalb 24h
                 </Text>
                 <SmartLink href="/ueber-uns" unstyled className={styles.heroAboutLink}>
-                  <Row gap="10" vertical="center">
+                  <Row gap="8" vertical="center">
                     <span className={styles.heroAboutAvatar} aria-hidden="true">
                       <img src="/images/about/erik.png" alt="" width={32} height={32} />
                     </span>
