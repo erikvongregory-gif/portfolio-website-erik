@@ -70,6 +70,138 @@ const projects: Project[] = [
   },
 ];
 
+function ProjectShot({ project: p }: { project: Project }) {
+  const blurImage = p.comingSoon;
+  return (
+    <div className={styles.shot}>
+      <div className={styles.chrome}>
+        <div className={styles.dots}>
+          <span className={styles.dot} />
+          <span className={styles.dot} />
+          <span className={styles.dot} />
+        </div>
+        <Text
+          variant="label-default-s"
+          onBackground="neutral-weak"
+          style={{ marginLeft: "0.375rem" }}
+          className={p.comingSoon ? styles.blurText : undefined}
+        >
+          {p.chrome}
+        </Text>
+      </div>
+      <div className={styles.imageWrap}>
+        <ProjectPreview
+          image={p.image}
+          video={blurImage ? undefined : p.video}
+          alt={
+            p.comingSoon
+              ? "Projekt – bald verfügbar"
+              : p.obscured
+                ? "Projektentwurf"
+                : `${p.title} – Website`
+          }
+          blur={blurImage}
+        />
+        {p.comingSoon && (
+          <div className={styles.teaser}>
+            <span className={styles.teaserBadge}>
+              <span className={styles.teaserDot} />
+              Eventuell bald verfügbar
+            </span>
+          </div>
+        )}
+        {p.latest && (
+          <div className={styles.latest}>
+            <span className={styles.latestBadge}>Neuestes Projekt</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ProjectMeta({ project: p, featured }: { project: Project; featured?: boolean }) {
+  const blurTitle = p.comingSoon || p.obscured;
+  return (
+    <Column gap={featured ? "12" : "8"} paddingX="4">
+      <Tag size="s" variant="neutral">
+        {p.category}
+      </Tag>
+      <Text
+        variant={featured ? "display-strong-xs" : "heading-strong-s"}
+        onBackground="neutral-strong"
+        className={blurTitle ? styles.blurText : undefined}
+        style={featured ? { letterSpacing: "-0.02em" } : undefined}
+      >
+        {p.title}
+      </Text>
+      <Text variant={featured ? "body-default-l" : "body-default-m"} onBackground="neutral-weak">
+        {p.body}
+      </Text>
+      {p.url && (
+        <Row gap="4" vertical="center" paddingTop="4">
+          <Text variant="label-strong-s" onBackground="neutral-strong">
+            Live ansehen
+          </Text>
+          <Icon name="arrowUpRight" size="xs" onBackground="neutral-strong" />
+        </Row>
+      )}
+    </Column>
+  );
+}
+
+function ProjectCard({ project: p, featured }: { project: Project; featured?: boolean }) {
+  if (featured) {
+    return (
+      <SpotlightCard
+        className={styles.card}
+        glow={false}
+        tilt={false}
+        data-project-card
+        fillWidth
+      >
+        <Row fillWidth gap="40" vertical="center" m={{ direction: "column", gap: "20" }}>
+          <Column flex={7} fillWidth>
+            <ProjectShot project={p} />
+          </Column>
+          <Column flex={5} fillWidth paddingY="12">
+            <ProjectMeta project={p} featured />
+          </Column>
+        </Row>
+      </SpotlightCard>
+    );
+  }
+  return (
+    <SpotlightCard
+      className={styles.card}
+      gap="20"
+      glow={false}
+      tiltStrength={5}
+      data-project-card
+    >
+      <ProjectShot project={p} />
+      <ProjectMeta project={p} />
+    </SpotlightCard>
+  );
+}
+
+function ProjectLink({ project: p, children }: { project: Project; children: React.ReactNode }) {
+  if (!p.url) return <Column fillWidth>{children}</Column>;
+  return (
+    <SmartLink
+      href={p.url}
+      unstyled
+      fillWidth
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ textDecoration: "none" }}
+      aria-label={`${p.title} – Website live in neuem Tab ansehen`}
+    >
+      {children}
+    </SmartLink>
+  );
+}
+
 export function Projects() {
   const [showAll, setShowAll] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -86,9 +218,11 @@ export function Projects() {
     return () => mq.removeEventListener("change", sync);
   }, []);
 
-  const visibleProjects =
-    isMobile && !showAll ? projects.slice(0, MOBILE_INITIAL) : projects;
-  const canExpand = isMobile && !showAll && projects.length > MOBILE_INITIAL;
+  const featured = projects.find((p) => p.latest) ?? projects[0];
+  const rest = projects.filter((p) => p !== featured);
+  const visibleRest =
+    isMobile && !showAll ? rest.slice(0, MOBILE_INITIAL - 1) : rest;
+  const canExpand = isMobile && !showAll && rest.length > MOBILE_INITIAL - 1;
 
   return (
     <Section id="projekte">
@@ -105,110 +239,21 @@ export function Projects() {
         description="Fünf Auszüge aus meinen bisher umgesetzten Projekten."
       />
 
-      <Column fillWidth gap="24">
+      <Column fillWidth gap="32">
+        <Reveal y={32} scale={0.97}>
+          <ProjectLink project={featured}>
+            <ProjectCard project={featured} featured />
+          </ProjectLink>
+        </Reveal>
+
         <Grid columns="2" m={{ columns: "1" }} gap="32">
-          {visibleProjects.map((p, i) => {
-            const blurTitle = p.comingSoon || p.obscured;
-            const blurImage = p.comingSoon;
-            const card = (
-              <SpotlightCard
-                className={styles.card}
-                gap="20"
-                glow={false}
-                tiltStrength={5}
-                data-project-card
-              >
-                <div className={styles.shot}>
-                  <div className={styles.chrome}>
-                    <div className={styles.dots}>
-                      <span className={styles.dot} />
-                      <span className={styles.dot} />
-                      <span className={styles.dot} />
-                    </div>
-                    <Text
-                      variant="label-default-s"
-                      onBackground="neutral-weak"
-                      style={{ marginLeft: "0.375rem" }}
-                      className={p.comingSoon ? styles.blurText : undefined}
-                    >
-                      {p.chrome}
-                    </Text>
-                  </div>
-                  <div className={styles.imageWrap}>
-                    <ProjectPreview
-                      image={p.image}
-                      video={blurImage ? undefined : p.video}
-                      alt={
-                        p.comingSoon
-                          ? "Projekt – bald verfügbar"
-                          : p.obscured
-                            ? "Projektentwurf"
-                            : `${p.title} – Website`
-                      }
-                      blur={blurImage}
-                    />
-                    {p.comingSoon && (
-                      <div className={styles.teaser}>
-                        <span className={styles.teaserBadge}>
-                          <span className={styles.teaserDot} />
-                          Eventuell bald verfügbar
-                        </span>
-                      </div>
-                    )}
-                    {p.latest && (
-                      <div className={styles.latest}>
-                        <span className={styles.latestBadge}>Neuestes Projekt</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <Column gap="8" paddingX="4">
-                  <Tag size="s" variant="neutral">
-                    {p.category}
-                  </Tag>
-                  <Text
-                    variant="heading-strong-s"
-                    onBackground="neutral-strong"
-                    className={blurTitle ? styles.blurText : undefined}
-                  >
-                    {p.title}
-                  </Text>
-                  <Text variant="body-default-m" onBackground="neutral-weak">
-                    {p.body}
-                  </Text>
-                  {p.url && (
-                    <Row gap="4" vertical="center" paddingTop="4">
-                      <Text variant="label-strong-s" onBackground="neutral-strong">
-                        Live ansehen
-                      </Text>
-                      <Icon name="arrowUpRight" size="xs" onBackground="neutral-strong" />
-                    </Row>
-                  )}
-                </Column>
-              </SpotlightCard>
-            );
-
-            return (
-              <Reveal key={p.title} delay={i * 0.1} y={32} scale={0.94}>
-                {p.url ? (
-                  <SmartLink
-                    href={p.url}
-                    unstyled
-                    fillWidth
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: "none" }}
-                    aria-label={`${p.title} – Website live in neuem Tab ansehen`}
-                  >
-                    {card}
-                  </SmartLink>
-                ) : (
-                  <Column fillWidth>{card}</Column>
-                )}
-              </Reveal>
-            );
-          })}
+          {visibleRest.map((p, i) => (
+            <Reveal key={p.title} delay={i * 0.1} y={32} scale={0.94}>
+              <ProjectLink project={p}>
+                <ProjectCard project={p} />
+              </ProjectLink>
+            </Reveal>
+          ))}
         </Grid>
 
         {canExpand && (

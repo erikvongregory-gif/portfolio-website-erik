@@ -34,18 +34,14 @@
 }
 
 .lead {
-  animation: leadIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.leadStatic {
-  transition: opacity 0.2s ease;
+  animation: leadIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes leadIn {
   from {
     opacity: 0;
-    transform: translateY(12px);
-    filter: blur(6px);
+    transform: translateY(10px);
+    filter: blur(5px);
   }
   to {
     opacity: 1;
@@ -59,14 +55,42 @@
   border-left: 2px solid var(--neutral-alpha-medium);
 }
 
+/* Keep the changing lead visible while scrolling the problem list on mobile.
+   Must be opaque: --surface-background is translucent in this project. */
+.mobileLead {
+  position: sticky;
+  top: 4.25rem;
+  z-index: 2;
+  margin-inline: -1.25rem;
+  padding: 0.75rem 1.25rem 1rem;
+  background-color: var(--page-background);
+  border: 1px solid var(--neutral-alpha-weak);
+  border-radius: 0 0 var(--radius-l) var(--radius-l);
+  box-shadow: 0 16px 28px -12px var(--evg-card-shadow-md);
+}
+
+@media (max-width: 1024px) {
+  .mobileLead :global(h2) {
+    font-size: clamp(1.25rem, 4.6vw, 1.55rem);
+    line-height: 1.15;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .item,
-  .lead,
-  .leadStatic {
+  .lead {
     transition: none;
     animation: none;
   }
   .mobileStepper .item {
     opacity: 1;
+  }
+  .mobileLead {
+    position: static;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    margin-inline: 0;
+    padding: 0;
   }
 }

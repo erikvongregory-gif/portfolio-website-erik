@@ -2,6 +2,7 @@ export { Section, SectionHeader } from "./Section";
 export { Problem } from "./Problem";
 export { Projects } from "./Projects";
 export { Approach } from "./Approach";
+export { Investment } from "./Investment";
 export { Services } from "./Services";
 export { Process } from "./Process";
 export { About } from "./About";

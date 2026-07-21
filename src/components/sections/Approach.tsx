@@ -24,6 +24,7 @@ export function Approach() {
   return (
     <Section id="anders">
       <SectionHeader
+        align="center"
         eyebrow="Was ich anders mache"
         title={
           <>
@@ -39,7 +40,14 @@ export function Approach() {
       <Grid columns="3" m={{ columns: "1" }} gap="32">
         {points.map((p, i) => (
           <Reveal key={p.title} delay={i * 0.1}>
-            <Column gap="16" paddingTop="24" borderTop="neutral-alpha-medium">
+            <Column
+              gap="16"
+              paddingTop="24"
+              borderTop="neutral-alpha-medium"
+              horizontal="center"
+              align="center"
+              m={{ horizontal: "start", align: "left" }}
+            >
               <Icon name={p.icon} size="m" onBackground="neutral-strong" />
               <Text variant="heading-strong-s" onBackground="neutral-strong">
                 {p.title}

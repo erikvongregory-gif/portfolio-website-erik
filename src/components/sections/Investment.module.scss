@@ -1,0 +1,22 @@
+.mobileLabel {
+  display: none;
+}
+
+.builderCol {
+  opacity: 0.72;
+}
+
+@media (max-width: 1024px) {
+  .mobileLabel {
+    display: block;
+  }
+
+  .compareRow {
+    align-items: stretch;
+  }
+
+  .builderCol {
+    opacity: 1;
+    padding-bottom: 0.15rem;
+  }
+}

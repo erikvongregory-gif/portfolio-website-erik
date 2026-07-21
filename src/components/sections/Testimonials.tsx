@@ -1,5 +1,5 @@
-import { Column, Grid, Row, Text } from "@once-ui-system/core";
-import { Reveal, SpotlightCard } from "@/components/motion";
+import { Column, Row, Text } from "@once-ui-system/core";
+import { Reveal } from "@/components/motion";
 import { Section, SectionHeader } from "./Section";
 
 // WICHTIG: Platzhalter-Zitate! Vor dem Livegang unbedingt durch echte,
@@ -20,9 +20,12 @@ const testimonials = [
 ];
 
 export function Testimonials() {
+  const [lead, ...rest] = testimonials;
+
   return (
-    <Section id="stimmen">
+    <Section id="stimmen" background="surface" gap="56">
       <SectionHeader
+        align="center"
         eyebrow="Stimmen"
         title={
           <>
@@ -35,50 +38,70 @@ export function Testimonials() {
         description="Keine gekauften Bewertungen – Stimmen aus echten Projekten."
       />
 
-      <Grid columns="2" m={{ columns: "1" }} gap="16">
-        {testimonials.map((t, i) => (
-          <Reveal key={t.name} delay={i * 0.1} y={24}>
-            <Column fillHeight>
-              <SpotlightCard
-                background="surface"
-                border="neutral-alpha-weak"
-                radius="l"
-                padding="32"
-                gap="20"
-                fillHeight
-                glow={false}
+      <Reveal y={24}>
+        <Column
+          fillWidth
+          maxWidth={44}
+          gap="24"
+          horizontal="center"
+          align="center"
+          style={{ marginInline: "auto" }}
+        >
+          <Text
+            as="blockquote"
+            variant="heading-strong-l"
+            onBackground="neutral-strong"
+            wrap="balance"
+            align="center"
+            style={{ lineHeight: 1.35, margin: 0, letterSpacing: "-0.02em" }}
+          >
+            „{lead.quote}“
+          </Text>
+          <Column gap="4" horizontal="center" align="center">
+            <Text variant="label-strong-s" onBackground="neutral-strong">
+              {lead.name}
+            </Text>
+            <Text variant="body-default-xs" onBackground="neutral-weak">
+              {lead.meta}
+            </Text>
+          </Column>
+        </Column>
+      </Reveal>
+
+      {rest.length > 0 && (
+        <Column fillWidth maxWidth={40} gap="0" style={{ marginInline: "auto" }}>
+          {rest.map((t, i) => (
+            <Reveal key={t.name} delay={0.08 + i * 0.08}>
+              <Column
+                gap="16"
+                paddingTop="32"
+                borderTop="neutral-alpha-medium"
+                horizontal="center"
+                align="center"
               >
-                <Text
-                  aria-hidden="true"
-                  variant="display-strong-m"
-                  onBackground="brand-weak"
-                  style={{ lineHeight: 0.6, letterSpacing: "-0.04em", userSelect: "none" }}
-                >
-                  „
-                </Text>
                 <Text
                   as="blockquote"
                   variant="body-default-l"
                   onBackground="neutral-medium"
+                  wrap="balance"
+                  align="center"
                   style={{ lineHeight: 1.6, margin: 0 }}
                 >
-                  {t.quote}
+                  „{t.quote}“
                 </Text>
-                <Row gap="12" vertical="center" paddingTop="4">
-                  <Column gap="2">
-                    <Text variant="label-strong-s" onBackground="neutral-strong">
-                      {t.name}
-                    </Text>
-                    <Text variant="body-default-xs" onBackground="neutral-weak">
-                      {t.meta}
-                    </Text>
-                  </Column>
+                <Row gap="8" vertical="center" wrap horizontal="center">
+                  <Text variant="label-strong-s" onBackground="neutral-strong">
+                    {t.name}
+                  </Text>
+                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                    · {t.meta}
+                  </Text>
                 </Row>
-              </SpotlightCard>
-            </Column>
-          </Reveal>
-        ))}
-      </Grid>
+              </Column>
+            </Reveal>
+          ))}
+        </Column>
+      )}
     </Section>
   );
 }

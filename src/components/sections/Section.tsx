@@ -8,6 +8,8 @@ type SectionProps = {
   maxWidth?: number;
   gap?: "16" | "24" | "32" | "40" | "48" | "56" | "64";
   paddingY?: "56" | "64" | "80" | "104" | "128";
+  /** Full-bleed band background – breaks up the page rhythm between sections. */
+  background?: "page" | "surface";
 };
 
 export function Section({
@@ -16,6 +18,7 @@ export function Section({
   maxWidth = 68,
   gap = "48",
   paddingY = "104",
+  background,
 }: SectionProps) {
   return (
     <Column
@@ -26,6 +29,7 @@ export function Section({
       paddingX="l"
       paddingY={paddingY}
       m={{ paddingY: "64" }}
+      background={background}
       style={{ scrollMarginTop: "96px" }}
     >
       <Column fillWidth maxWidth={maxWidth} gap={gap} m={{ gap: "32" }}>

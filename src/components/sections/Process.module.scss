@@ -1,0 +1,17 @@
+.stickyHeader {
+  position: sticky;
+  top: 7rem;
+}
+
+@media (max-width: 1024px) {
+  .stickyHeader {
+    position: static;
+    top: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stickyHeader {
+    position: static;
+  }
+}

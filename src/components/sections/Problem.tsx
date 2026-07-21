@@ -72,7 +72,7 @@ export function Problem() {
       raf = 0;
       const items = Array.from(list.children) as HTMLElement[];
       if (!items.length) return;
-      const focus = window.innerHeight * 0.5;
+      const focus = window.innerHeight * 0.58;
       let best = 0;
       let bestDist = Infinity;
       items.forEach((el, i) => {
@@ -142,18 +142,14 @@ export function Problem() {
   const current = problems[step];
 
   const content = (
-    <Section id="problem" paddingY="56">
-      <Row fillWidth gap="64" vertical="center" m={{ direction: "column", gap: "40" }}>
-        <Column flex={4} maxWidth={26} gap="24">
+    <Section id="problem" paddingY="56" background={enabled ? undefined : "surface"}>
+      <Row fillWidth gap="64" vertical="center" m={{ direction: "column", gap: "24" }}>
+        <Column flex={4} maxWidth={26} gap="16" className={enabled ? undefined : styles.mobileLead}>
           <Tag size="s" variant="neutral">
             Das Problem
           </Tag>
 
-          <Column
-            key={enabled ? active : "mobile-lead"}
-            className={enabled ? styles.lead : styles.leadStatic}
-            gap="16"
-          >
+          <Column key={step} className={styles.lead} gap="12">
             <Heading
               as="h2"
               variant="display-strong-xs"
@@ -165,7 +161,7 @@ export function Problem() {
             </Heading>
             <Text
               className={styles.quote}
-              variant="body-default-l"
+              variant="body-default-m"
               onBackground="neutral-weak"
               wrap="balance"
             >
@@ -195,7 +191,7 @@ export function Problem() {
                 padding="20"
                 radius="l"
                 vertical="start"
-                background={isActive ? "surface" : undefined}
+                background={isActive ? "page" : undefined}
                 border={isActive ? "neutral-alpha-medium" : "transparent"}
               >
                 <Text className={styles.num} variant="heading-strong-l" onBackground="neutral-weak">
@@ -233,6 +229,7 @@ export function Problem() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          background: "var(--surface-background)",
         }}
       >
         {content}

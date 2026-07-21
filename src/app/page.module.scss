@@ -9,13 +9,6 @@
   z-index: 1;
 }
 
-/* Two unbreakable phrases → clean wrap:
-   „Websites mit Charakter,“ / „die … bringen.“ */
-.heroHeadlineLead,
-.heroHeadlineTail {
-  white-space: nowrap;
-}
-
 .heroAboutLink {
   text-decoration: none;
   width: fit-content;
@@ -44,6 +37,14 @@
 }
 
 @media (max-width: 1024px) {
+  /* Two unbreakable phrases → clean wrap on mobile only:
+     „Websites mit Charakter,“ / „die … bringen.“
+     Desktop keeps natural wrap so copy stays beside the showcase. */
+  .heroHeadlineLead,
+  .heroHeadlineTail {
+    white-space: nowrap;
+  }
+
   /* Slightly smaller so both lines fit without orphaning mid-phrase. */
   .heroHeadline {
     font-size: clamp(1.9rem, 8.5vw, 2.6rem) !important;

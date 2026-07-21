@@ -7,6 +7,7 @@ import {
   FinalCta,
   HeroMarquee,
   HeroShowcase,
+  Investment,
   Marquee,
   Problem,
   Process,
@@ -215,6 +216,7 @@ export default function Home() {
       </Column>
 
       <Approach />
+      <Investment />
       <Services />
       <Process />
       <About />

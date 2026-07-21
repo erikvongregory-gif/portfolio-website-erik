@@ -14,6 +14,7 @@ export {
   Problem,
   Projects,
   Approach,
+  Investment,
   Services,
   Process,
   About,
