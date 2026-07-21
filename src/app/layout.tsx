@@ -118,7 +118,9 @@ export default function RootLayout({
                     if (themeValue === 'dark' || themeValue === 'light') {
                       return themeValue;
                     }
-                    return 'light';
+                    return window.matchMedia('(prefers-color-scheme: dark)').matches
+                      ? 'dark'
+                      : 'light';
                   };
                   const stored = localStorage.getItem('data-theme');
                   const resolved = resolveTheme(stored);
