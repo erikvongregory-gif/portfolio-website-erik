@@ -7,6 +7,7 @@ export { CapacityBadge } from "@/components/CapacityBadge";
 export { CookieBanner } from "@/components/CookieBanner";
 export { StickyMobileCta } from "@/components/StickyMobileCta";
 export { ConsentAnalytics } from "@/components/ConsentAnalytics";
+export { ConsentGoogleAnalytics } from "@/components/ConsentGoogleAnalytics";
 export { CookieSettingsButton } from "@/components/CookieSettingsButton";
 export {
   Section,

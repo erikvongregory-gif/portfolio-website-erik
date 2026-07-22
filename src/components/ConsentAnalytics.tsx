@@ -1,27 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Analytics, type BeforeSendEvent } from "@vercel/analytics/next";
-import {
-  COOKIE_CONSENT_UPDATED_EVENT,
-  hasStatisticsConsent,
-} from "@/lib/cookieConsent";
+import { hasStatisticsConsent } from "@/lib/cookieConsent";
+import { useStatisticsConsent } from "@/lib/useStatisticsConsent";
 
 export function ConsentAnalytics() {
-  const [enabled, setEnabled] = useState(false);
-
-  useEffect(() => {
-    const sync = () => setEnabled(hasStatisticsConsent());
-    sync();
-
-    window.addEventListener(COOKIE_CONSENT_UPDATED_EVENT, sync);
-    window.addEventListener("storage", sync);
-
-    return () => {
-      window.removeEventListener(COOKIE_CONSENT_UPDATED_EVENT, sync);
-      window.removeEventListener("storage", sync);
-    };
-  }, []);
+  const enabled = useStatisticsConsent();
 
   if (!enabled) return null;
 

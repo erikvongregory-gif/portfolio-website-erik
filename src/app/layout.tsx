@@ -10,6 +10,7 @@ import { Column, Flex } from "@once-ui-system/core";
 import {
   Aurora,
   ConsentAnalytics,
+  ConsentGoogleAnalytics,
   CookieBanner,
   Providers,
   ScrollProgress,
@@ -174,6 +175,7 @@ export default function RootLayout({
           </Flex>
           <CookieBanner />
           <ConsentAnalytics />
+          <ConsentGoogleAnalytics />
         </Column>
       </Providers>
     </Flex>

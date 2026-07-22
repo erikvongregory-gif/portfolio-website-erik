@@ -48,7 +48,7 @@ const categories: Category[] = [
     key: "statistics",
     title: "Statistik",
     description:
-      "Anonyme Reichweitenmessung über Vercel Analytics – nur mit deiner Einwilligung. Hilft mir zu verstehen, welche Inhalte ankommen.",
+      "Reichweitenmessung über Vercel Analytics und Google Analytics 4 – nur mit deiner Einwilligung. Hilft mir zu verstehen, welche Inhalte ankommen.",
   },
   {
     key: "marketing",

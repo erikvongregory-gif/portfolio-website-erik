@@ -205,21 +205,62 @@ export default function Datenschutz() {
           Link „Cookie-Einstellungen“ im Footer ändern.
         </LegalText>
 
-        <LegalSubheading>Vercel Web Analytics (nur mit Einwilligung)</LegalSubheading>
+        <LegalSubheading>Statistik-Tools (nur mit Einwilligung)</LegalSubheading>
         <LegalText>
-          Wenn du der Kategorie „Statistik“ zustimmst, nutzen wir Vercel Web Analytics zur
-          anonymen Reichweitenmessung. Dabei werden u. a. besuchte Seiten, Referrer, Gerätetyp und
-          ungefährer Standort (Land/Region) verarbeitet. Vercel Analytics ist darauf ausgelegt,
-          keine personenbezogenen Profile zu erstellen und setzt keine Werbe-Cookies.
+          Wenn du der Kategorie „Statistik“ zustimmst, nutzen wir die unten genannten
+          Analyse-Dienste parallel. Ohne deine Zustimmung werden sie nicht geladen. Du kannst
+          deine Einwilligung jederzeit über „Cookie-Einstellungen“ im Footer widerrufen; danach
+          werden keine weiteren Statistik-Events mehr gesendet.
+        </LegalText>
+
+        <LegalSubheading>Vercel Web Analytics</LegalSubheading>
+        <LegalText>
+          Vercel Web Analytics dient der anonymen Reichweitenmessung. Dabei werden u. a. besuchte
+          Seiten, Referrer, Gerätetyp und ungefährer Standort (Land/Region) verarbeitet. Vercel
+          Analytics ist darauf ausgelegt, keine personenbezogenen Profile zu erstellen und setzt
+          keine Werbe-Cookies.
         </LegalText>
         <LegalText>
-          Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Ohne deine
-          Zustimmung wird Vercel Analytics nicht geladen. Anbieter ist Vercel Inc., 440 N Barranca
-          Ave #4133, Covina, CA 91723, USA. Weitere Informationen findest du in der{" "}
+          Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Anbieter ist Vercel
+          Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA. Weitere Informationen findest du in
+          der{" "}
           <SmartLink href="https://vercel.com/legal/privacy-policy" target="_blank">
             Datenschutzerklärung von Vercel
           </SmartLink>
           .
+        </LegalText>
+
+        <LegalSubheading>Google Analytics 4</LegalSubheading>
+        <LegalText>
+          Google Analytics 4 (GA4) hilft uns, die Nutzung der Website detaillierter zu verstehen
+          (z. B. Seitenaufrufe, Verweildauer, Geräte- und Browserinformationen, ungefährer Standort
+          sowie technische Ereignisdaten). Die IP-Adresse wird verkürzt verarbeitet
+          (IP-Anonymisierung). Werbe- und Personalisierungssignale von Google sind bei uns
+          deaktiviert; Marketing-Tracking ist nicht Bestandteil der Statistik-Einwilligung.
+        </LegalText>
+        <LegalText>
+          Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Anbieter ist Google
+          Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Dabei kann eine
+          Übermittlung von Daten an Google LLC in die USA erfolgen. Google beruft sich hierfür u. a.
+          auf Standardvertragsklauseln bzw. das EU-U.S. Data Privacy Framework. Weitere
+          Informationen:{" "}
+          <SmartLink href="https://policies.google.com/privacy" target="_blank">
+            Datenschutzerklärung von Google
+          </SmartLink>{" "}
+          und{" "}
+          <SmartLink href="https://support.google.com/analytics/answer/6004245" target="_blank">
+            Hinweise zu Google Analytics und Datenschutz
+          </SmartLink>
+          .
+        </LegalText>
+        <LegalText>
+          Du kannst der Erfassung durch Google Analytics außerdem über Browser-Einstellungen bzw.
+          das{" "}
+          <SmartLink href="https://tools.google.com/dlpage/gaoptout" target="_blank">
+            Google-Analytics-Opt-out-Browser-Add-on
+          </SmartLink>{" "}
+          widersprechen. Unabhängig davon gilt: Ohne Statistik-Zustimmung im Cookie-Banner wird GA4
+          auf dieser Website nicht geladen.
         </LegalText>
 
         <LegalSubheading>Marketing</LegalSubheading>
