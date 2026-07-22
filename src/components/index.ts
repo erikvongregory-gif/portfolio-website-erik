@@ -31,6 +31,7 @@ export {
   Reveal,
   SpotlightCard,
   Magnetic,
+  MagneticHeroFx,
   Counter,
   ScrollProgress,
   ScrollRevealText,

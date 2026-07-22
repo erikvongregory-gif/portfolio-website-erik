@@ -79,6 +79,34 @@
   overflow: hidden;
   background: transparent;
   box-shadow: 0 18px 36px -24px var(--evg-card-shadow-md);
+  --mx: 0.5;
+  --my: 0.4;
+  --sheen: 0;
+}
+
+.inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: calc(var(--sheen, 0) * 0.9);
+  background: radial-gradient(
+    120px circle at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.4) * 100%),
+    rgba(255, 255, 255, 0.36),
+    rgba(255, 255, 255, 0.08) 42%,
+    transparent 70%
+  );
+  mix-blend-mode: soft-light;
+  transition: opacity 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner::after {
+    opacity: 0;
+    transition: none;
+  }
 }
 
 .image {

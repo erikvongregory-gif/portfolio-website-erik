@@ -8,6 +8,7 @@ import {
   HeroMarquee,
   HeroShowcase,
   Investment,
+  MagneticHeroFx,
   Marquee,
   Problem,
   Process,
@@ -91,6 +92,7 @@ export default function Home() {
         as="section"
         className={styles.hero}
         data-sticky-cta-hero
+        data-magnetic-hero
         fillWidth
         horizontal="center"
         paddingX="l"
@@ -98,8 +100,9 @@ export default function Home() {
         paddingBottom="80"
         m={{ paddingTop: "104", paddingBottom: "64" }}
         vertical="center"
-        style={{ minHeight: "100svh" }}
+        style={{ minHeight: "100svh", position: "relative" }}
       >
+        <MagneticHeroFx />
         <Row
           fillWidth
           maxWidth={68}
@@ -118,7 +121,7 @@ export default function Home() {
           >
             <Column m={{ hide: true }} paddingBottom="24">
               <RevealFx speed={400} horizontal="start">
-                <CapacityBadge taken={3} total={4} />
+                <CapacityBadge taken={3} total={4} label="1 Projekt diesen Monat noch frei" />
               </RevealFx>
             </Column>
 

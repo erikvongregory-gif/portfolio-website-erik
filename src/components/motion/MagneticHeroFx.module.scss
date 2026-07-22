@@ -1,0 +1,20 @@
+.glow {
+  position: absolute;
+  inset: -12% -8%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: calc(0.26 + var(--spot-active, 0) * 0.52);
+  background: radial-gradient(
+    38rem circle at var(--spot-x, 62%) var(--spot-y, 38%),
+    var(--evg-spotlight-brand),
+    transparent 58%
+  );
+  transition: opacity 0.45s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow {
+    opacity: 0.22;
+    transition: none;
+  }
+}

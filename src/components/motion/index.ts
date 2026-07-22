@@ -1,6 +1,7 @@
 export { Reveal } from "./Reveal";
 export { SpotlightCard } from "./SpotlightCard";
 export { Magnetic } from "./Magnetic";
+export { MagneticHeroFx } from "./MagneticHeroFx";
 export { Counter } from "./Counter";
 export { ScrollProgress } from "./ScrollProgress";
 export { ScrollPinScale } from "./ScrollPinScale";

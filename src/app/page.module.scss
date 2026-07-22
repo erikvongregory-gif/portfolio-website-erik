@@ -2,6 +2,9 @@
    Desktop: copy beside the 3D carousel, no card treatment. */
 .hero {
   overflow-x: clip;
+  --spot-x: 62%;
+  --spot-y: 38%;
+  --spot-active: 0;
 }
 
 .heroCopy {

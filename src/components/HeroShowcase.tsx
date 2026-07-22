@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { findMagneticHero, paintHeroSpotlight } from "@/lib/heroSpotlight";
 import styles from "./HeroShowcase.module.scss";
 
 type CardContent = {
@@ -125,9 +126,15 @@ export function HeroShowcase() {
       raf = requestAnimationFrame(tick);
     };
 
+    const paintSpot = (e: PointerEvent, strength = 1) => {
+      const hero = findMagneticHero(stage);
+      if (hero) paintHeroSpotlight(hero, e.clientX, e.clientY, strength);
+    };
+
     const onDown = (e: PointerEvent) => {
       dragging = true;
       stage.setPointerCapture(e.pointerId);
+      paintSpot(e, 1);
     };
     const onMove = (e: PointerEvent) => {
       const rect = stage.getBoundingClientRect();
@@ -135,6 +142,8 @@ export function HeroShowcase() {
       const ny = ((e.clientY - rect.top) / (rect.height || 1) - 0.5) * 2;
       tmx = nx * 5;
       tmy = -ny * 4;
+      // Pointer capture steals moves from the hero – keep the spotlight in sync.
+      paintSpot(e, dragging ? 1 : 0.85);
       if (!dragging) return;
       t = (((t + (e.movementX / (rect.width || 1)) * DRAG_SENS) % 1) + 1) % 1;
       render();
@@ -146,6 +155,7 @@ export function HeroShowcase() {
     const onUp = (e: PointerEvent) => {
       dragging = false;
       last = performance.now();
+      paintSpot(e, 0.7);
       if (stage.hasPointerCapture(e.pointerId)) stage.releasePointerCapture(e.pointerId);
     };
 
@@ -182,7 +192,7 @@ export function HeroShowcase() {
             }}
             className={styles.card}
           >
-            <div className={styles.inner}>
+            <div className={styles.inner} data-sheen>
               <div className={styles.chrome}>
                 <div className={styles.dots}>
                   <span className={styles.dot} />

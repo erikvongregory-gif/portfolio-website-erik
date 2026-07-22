@@ -26,7 +26,7 @@ function MarqueeCard({ card, priority = false }: { card: CardContent; priority?:
   const blurImage = card.comingSoon;
   return (
     <figure className={styles.card} aria-hidden="true">
-      <div className={styles.inner}>
+      <div className={styles.inner} data-sheen>
         <img
           className={`${styles.image}${blurImage ? ` ${styles.imageBlur}` : ""}`}
           src={card.image}
