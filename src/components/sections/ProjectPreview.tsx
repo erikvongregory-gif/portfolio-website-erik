@@ -30,6 +30,9 @@ export function ProjectPreview({ image, video, alt, blur }: ProjectPreviewProps)
       setActive(true);
       const v = videoRef.current;
       if (v) {
+        // Quelle erst beim ersten Hover setzen – sonst lädt der Browser alle
+        // Videos schon beim Seitenaufruf, auch auf Mobil ohne Hover.
+        if (!v.src) v.src = video;
         v.currentTime = 0;
         v.play().catch(() => {});
       }
@@ -60,11 +63,10 @@ export function ProjectPreview({ image, video, alt, blur }: ProjectPreviewProps)
         <video
           ref={videoRef}
           className={[styles.video, active ? styles.videoActive : ""].filter(Boolean).join(" ")}
-          src={video}
           muted
           playsInline
           loop
-          preload="metadata"
+          preload="none"
           aria-hidden="true"
           tabIndex={-1}
         />
