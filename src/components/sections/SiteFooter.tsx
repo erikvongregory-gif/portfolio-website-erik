@@ -8,12 +8,13 @@ const navLinks = [
   { label: "Leistungen", href: "/#leistungen" },
   { label: "Ablauf", href: "/#ablauf" },
   { label: "Über mich", href: "/ueber-uns" },
+  { label: "Webdesign Landsberg", href: "/webdesign-landsberg" },
 ];
 
 const contactLinks = [
   { label: "info@evglab.com", href: "mailto:info@evglab.com" },
   { label: "0173 170 6012", href: "tel:+491731706012" },
-  { label: "Landsberg am Lech", href: "/" },
+  { label: "Landsberg am Lech", href: "/webdesign-landsberg" },
 ];
 
 const legalLinks = [

@@ -25,13 +25,21 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: "Salon Liora",
+    chrome: "salon-liora.vercel.app",
+    category: "Entwurf · Friseursalon",
+    image: "/images/projects/salon-liora/hero.png",
+    body: "Demo-Entwurf für einen fiktiven Friseursalon: warm, elegant und einladend – mit Geschichte, Leistungen und Terminbuchung.",
+    url: "https://salon-liora.vercel.app",
+    latest: true,
+  },
+  {
     title: "Da Peppe",
     chrome: "da-peppe.com",
     category: "Gastronomie · Restaurant",
     image: "/images/projects/da-peppe/hero-live.png",
     body: "Website für eine italienische Osteria & Pizzeria: appetitlich, warm und einladend, mit klarer Speisekarte und Reservierung.",
     url: "https://da-peppe.com",
-    latest: true,
   },
   {
     title: "EvGlab",

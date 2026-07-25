@@ -44,6 +44,7 @@ const KEYS: KeyState[] = [
 const COUNT = KEYS.length;
 
 const projects: CardContent[] = [
+  { title: "Salon Liora", image: "/images/projects/salon-liora/hero.png" },
   { title: "EvGlab", image: "/images/projects/evglab/hero-ki.png" },
   {
     title: "Kapitalanlagen Deutschland (Entwurf)",
