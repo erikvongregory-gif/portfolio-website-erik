@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Column, Grid, Heading, Icon, type IconName, Row, Tag, Text } from "@once-ui-system/core";
 import {
   About,
@@ -132,15 +133,15 @@ export default function UeberUns() {
                   speed={0.05}
                   style={{ position: "absolute", top: "-10%", left: 0, width: "100%", height: "120%" }}
                 >
-                  <img
+                  <Image
                     src="/images/about/erik.png"
                     alt="Erik, Gründer von EvgLab"
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 416px"
                     style={{
-                      width: "100%",
-                      height: "100%",
                       objectFit: "cover",
                       objectPosition: "center 28%",
-                      display: "block",
                     }}
                   />
                 </Parallax>

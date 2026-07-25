@@ -1,0 +1,59 @@
+$circumference: 119.38; /* 2 * pi * r, r = 19 */
+
+.root {
+  width: fit-content;
+}
+
+.ring {
+  width: 2.375rem;
+  height: 2.375rem;
+  flex: 0 0 auto;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.ringTrack,
+.ringValue {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.ringTrack {
+  stroke: var(--neutral-alpha-weak);
+}
+
+.ringValue {
+  stroke: var(--brand-solid-strong);
+  stroke-dasharray: $circumference;
+  stroke-dashoffset: 0;
+  animation: ringFill 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ringFill {
+  from {
+    stroke-dashoffset: $circumference;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  background: var(--neutral-alpha-medium);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ringValue {
+    animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .divider {
+    display: none;
+  }
+}

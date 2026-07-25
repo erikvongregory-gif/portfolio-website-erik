@@ -1,4 +1,5 @@
 import { Column, Flex, Heading, Icon, RevealFx, Row, SmartLink, Text } from "@once-ui-system/core";
+import Image from "next/image";
 import styles from "./page.module.scss";
 import {
   About,
@@ -6,6 +7,7 @@ import {
   CapacityBadge,
   FinalCta,
   HeroMarquee,
+  HeroProof,
   HeroShowcase,
   Investment,
   MagneticHeroFx,
@@ -81,12 +83,6 @@ const structuredData = {
 export default function Home() {
   return (
     <Column fillWidth horizontal="center">
-      <link
-        rel="preload"
-        as="image"
-        href="/images/projects/evglab/hero-ki.png"
-        fetchPriority="high"
-      />
       <JsonLd data={structuredData} />
       <Column
         as="section"
@@ -122,6 +118,17 @@ export default function Home() {
             <Column m={{ hide: true }} paddingBottom="24">
               <RevealFx speed={400} horizontal="start">
                 <CapacityBadge taken={3} total={4} label="1 Projekt diesen Monat noch frei" />
+              </RevealFx>
+            </Column>
+
+            <Column hide m={{ hide: false }} paddingBottom="16">
+              <RevealFx speed={400} horizontal="start">
+                <CapacityBadge
+                  compact
+                  taken={3}
+                  total={4}
+                  label="1 Projekt diesen Monat noch frei"
+                />
               </RevealFx>
             </Column>
 
@@ -172,14 +179,17 @@ export default function Home() {
             </RevealFx>
 
             <RevealFx speed={400} translateY="8" delay={0.24} horizontal="start">
-              <Column gap="12">
-                <Text variant="label-default-s" onBackground="neutral-weak">
-                  Antwort innerhalb 24h
-                </Text>
+              <Column gap="20">
+                <HeroProof />
                 <SmartLink href="/ueber-uns" unstyled className={styles.heroAboutLink}>
                   <Row gap="8" vertical="center">
                     <span className={styles.heroAboutAvatar} aria-hidden="true">
-                      <img src="/images/about/erik.png" alt="" width={32} height={32} />
+                      <Image
+                        src="/images/about/erik-avatar.webp"
+                        alt=""
+                        width={32}
+                        height={32}
+                      />
                     </span>
                     <Text variant="label-strong-s" onBackground="neutral-strong">
                       Erik · Wer dahintersteckt

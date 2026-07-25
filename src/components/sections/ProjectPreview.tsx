@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import styles from "./ProjectPreview.module.scss";
 
@@ -48,11 +49,12 @@ export function ProjectPreview({ image, video, alt, blur }: ProjectPreviewProps)
 
   return (
     <div ref={wrapRef} className={styles.wrap}>
-      <img
+      <Image
         className={[styles.image, blur ? styles.blur : ""].filter(Boolean).join(" ")}
         src={image}
         alt={alt}
-        loading="lazy"
+        fill
+        sizes="(max-width: 1024px) 100vw, 640px"
       />
       {video && (
         <video

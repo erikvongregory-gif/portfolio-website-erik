@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import styles from "./HeroMarquee.module.scss";
 
 type CardContent = {
@@ -23,17 +24,17 @@ const projects: CardContent[] = [
   { title: "Da Peppe", image: "/images/projects/da-peppe/hero-live.png" },
 ];
 
-function MarqueeCard({ card, priority = false }: { card: CardContent; priority?: boolean }) {
+function MarqueeCard({ card }: { card: CardContent }) {
   const blurImage = card.comingSoon;
   return (
     <figure className={styles.card} aria-hidden="true">
       <div className={styles.inner} data-sheen>
-        <img
+        <Image
           className={`${styles.image}${blurImage ? ` ${styles.imageBlur}` : ""}`}
           src={card.image}
           alt=""
-          loading={priority ? "eager" : "lazy"}
-          fetchPriority={priority ? "high" : "auto"}
+          fill
+          sizes="240px"
         />
       </div>
     </figure>
@@ -62,7 +63,7 @@ export function HeroMarquee() {
           >
             {/* Duplicated set keeps the loop seamless at translateX(-50%). */}
             {[...row.items, ...row.items].map((card, j) => (
-              <MarqueeCard key={j} card={card} priority={i === 0 && j === 0} />
+              <MarqueeCard key={j} card={card} />
             ))}
           </div>
         ))}

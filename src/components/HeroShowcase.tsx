@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { findMagneticHero, paintHeroSpotlight } from "@/lib/heroSpotlight";
 import styles from "./HeroShowcase.module.scss";
@@ -7,6 +8,8 @@ import styles from "./HeroShowcase.module.scss";
 type CardContent = {
   title: string;
   image: string;
+  /** Live site – makes the card clickable while it sits at the front. */
+  url?: string;
   comingSoon?: boolean;
   obscured?: boolean;
 };
@@ -25,6 +28,7 @@ type KeyState = {
 
 const DURATION = 22; // seconds for one full revolution
 const DRAG_SENS = 0.7; // how strongly dragging scrubs the timeline
+const CLICK_SLOP = 6; // px of pointer travel still counted as a click
 
 // Control points of the arc, captured 1:1 from the reference animation.
 // Order = travel order: spawn (top, back, hidden) -> centre (front, big) -> exit (right, back, hidden).
@@ -44,16 +48,32 @@ const KEYS: KeyState[] = [
 const COUNT = KEYS.length;
 
 const projects: CardContent[] = [
-  { title: "Salon Liora", image: "/images/projects/salon-liora/hero.png" },
-  { title: "EvGlab", image: "/images/projects/evglab/hero-ki.png" },
+  {
+    title: "Salon Liora",
+    image: "/images/projects/salon-liora/hero.png",
+    url: "https://salon-liora.vercel.app",
+  },
+  { title: "EvGlab", image: "/images/projects/evglab/hero-ki.png", url: "https://ki.evglab.com" },
   {
     title: "Kapitalanlagen Deutschland (Entwurf)",
     image: "/images/projects/kapitalanlagen/hero.png",
     obscured: true,
   },
-  { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero.png" },
-  { title: "Lünebräu", image: "/images/projects/lunebraeu/hero.png" },
-  { title: "Da Peppe", image: "/images/projects/da-peppe/hero-live.png" },
+  {
+    title: "Ingenieurbüro Jungen",
+    image: "/images/projects/ib-jungen/hero.png",
+    url: "https://ib-jungen-web.vercel.app",
+  },
+  {
+    title: "Lünebräu",
+    image: "/images/projects/lunebraeu/hero.png",
+    url: "https://luenebraeu.vercel.app",
+  },
+  {
+    title: "Da Peppe",
+    image: "/images/projects/da-peppe/hero-live.png",
+    url: "https://da-peppe.com",
+  },
 ];
 
 // Slots on the arc, filled with real work (repeated) instead of empty placeholders.
@@ -77,6 +97,10 @@ export function HeroShowcase() {
     let dragging = false;
     let last = performance.now();
     let raf = 0;
+    let front = -1;
+    // Pointer down position – a release close to it counts as a click, not a drag.
+    let downX = 0;
+    let downY = 0;
 
     // Mouse-driven parallax tilt of the whole deck (lerped for smoothness).
     let tmx = 0;
@@ -85,6 +109,10 @@ export function HeroShowcase() {
     let cmy = 0;
 
     const render = () => {
+      // The card closest to the viewer (highest translateZ) is the interactive one.
+      let bestZ = Number.NEGATIVE_INFINITY;
+      let bestIndex = -1;
+
       for (let i = 0; i < cards.length; i++) {
         const el = cardRefs.current[i];
         if (!el) continue;
@@ -109,6 +137,18 @@ export function HeroShowcase() {
         el.style.transform = `translate3d(calc(-50% + ${tx}%), calc(-50% + ${ty}%), ${tz}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(0deg) scale(${scale})`;
         el.style.opacity = String(opacity);
         el.style.zIndex = String(z);
+
+        if (tz > bestZ) {
+          bestZ = tz;
+          bestIndex = i;
+        }
+      }
+
+      if (bestIndex !== front) {
+        cardRefs.current[front]?.removeAttribute("data-front");
+        cardRefs.current[bestIndex]?.setAttribute("data-front", "true");
+        front = bestIndex;
+        stage.dataset.clickable = cards[bestIndex]?.url ? "true" : "false";
       }
     };
 
@@ -134,6 +174,8 @@ export function HeroShowcase() {
 
     const onDown = (e: PointerEvent) => {
       dragging = true;
+      downX = e.clientX;
+      downY = e.clientY;
       stage.setPointerCapture(e.pointerId);
       paintSpot(e, 1);
     };
@@ -154,16 +196,27 @@ export function HeroShowcase() {
       tmy = 0;
     };
     const onUp = (e: PointerEvent) => {
+      const wasDragging = dragging;
       dragging = false;
       last = performance.now();
       paintSpot(e, 0.7);
+      if (stage.hasPointerCapture(e.pointerId)) stage.releasePointerCapture(e.pointerId);
+
+      if (!wasDragging) return;
+      if (Math.hypot(e.clientX - downX, e.clientY - downY) > CLICK_SLOP) return;
+      const url = cards[front]?.url;
+      if (url) window.open(url, "_blank", "noopener,noreferrer");
+    };
+    const onCancel = (e: PointerEvent) => {
+      dragging = false;
+      last = performance.now();
       if (stage.hasPointerCapture(e.pointerId)) stage.releasePointerCapture(e.pointerId);
     };
 
     stage.addEventListener("pointerdown", onDown);
     stage.addEventListener("pointermove", onMove);
     stage.addEventListener("pointerup", onUp);
-    stage.addEventListener("pointercancel", onUp);
+    stage.addEventListener("pointercancel", onCancel);
     stage.addEventListener("pointerleave", onLeave);
 
     render();
@@ -174,13 +227,18 @@ export function HeroShowcase() {
       stage.removeEventListener("pointerdown", onDown);
       stage.removeEventListener("pointermove", onMove);
       stage.removeEventListener("pointerup", onUp);
-      stage.removeEventListener("pointercancel", onUp);
+      stage.removeEventListener("pointercancel", onCancel);
       stage.removeEventListener("pointerleave", onLeave);
     };
   }, []);
 
   return (
-    <div ref={stageRef} className={styles.stage} aria-label="Projekt-Vorschau Karussell" role="img">
+    <div
+      ref={stageRef}
+      className={styles.stage}
+      aria-label="Projekt-Vorschau: ziehen zum Blättern, Klick öffnet die Website vorne"
+      role="group"
+    >
       <div ref={deckRef} className={styles.deck}>
         {cards.map((c, i) => {
           const blurTitle = c.comingSoon || c.obscured;
@@ -205,9 +263,14 @@ export function HeroShowcase() {
                 >
                   {c.title}
                 </span>
+                {c.url && (
+                  <span className={styles.cta} aria-hidden="true">
+                    Live ansehen ↗
+                  </span>
+                )}
               </div>
               <div className={styles.imageWrap}>
-                <img
+                <Image
                   className={`${styles.image}${blurImage ? ` ${styles.imageBlur}` : ""}`}
                   src={c.image}
                   alt={
@@ -217,8 +280,9 @@ export function HeroShowcase() {
                         ? "Projektentwurf"
                         : `${c.title} – Website`
                   }
-                  loading={i === 0 ? "eager" : "lazy"}
-                  fetchPriority={i === 0 ? "high" : "auto"}
+                  fill
+                  sizes="(min-width: 1440px) 420px, 30vw"
+                  priority={i === 0}
                 />
                 {c.comingSoon && (
                   <div className={styles.teaser}>
@@ -234,6 +298,19 @@ export function HeroShowcase() {
           );
         })}
       </div>
+
+      {/* Same destinations as the cards, reachable by keyboard and screen readers. */}
+      <ul className={styles.links}>
+        {projects.map((p) =>
+          p.url ? (
+            <li key={p.title}>
+              <a href={p.url} target="_blank" rel="noopener noreferrer">
+                {p.title} – Website live ansehen
+              </a>
+            </li>
+          ) : null,
+        )}
+      </ul>
     </div>
   );
 }
