@@ -11,6 +11,6 @@ export const WHATSAPP_URL =
 
 /** Compact social proof used next to primary CTAs. */
 export const CTA_PROOF = {
-  quote: "Bestellungen kommen jetzt direkt über die Website.",
-  attribution: "Lünebräu",
+  quote: "Innerhalb von nur drei Tagen waren wir mit einer komplett neuen Website online.",
+  attribution: "Da Peppe · Google",
 } as const;

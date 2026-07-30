@@ -2,9 +2,25 @@ import { Column, Row, Text } from "@once-ui-system/core";
 import { Reveal } from "@/components/motion";
 import { Section, SectionHeader } from "./Section";
 
-// WICHTIG: Platzhalter-Zitate! Vor dem Livegang unbedingt durch echte,
-// vom Kunden freigegebene Stimmen ersetzen.
-const testimonials = [
+type Testimonial = {
+  quote: string;
+  name: string;
+  meta: string;
+  /** Star rating from a public review (e.g. Google). */
+  rating?: number;
+  source?: string;
+};
+
+const testimonials: Testimonial[] = [
+  {
+    quote:
+      "Als Unternehmer habe ich schon immer großen Wert auf eine professionelle Internetseite gelegt. Allerdings war es für mich immer schwierig, einen Webdesigner zu finden, der meine Vorstellungen und Anforderungen wirklich versteht und umsetzt. Dann kam Erik: jung, dynamisch, kompetent und mit klaren Ideen! Innerhalb von nur drei Tagen waren wir mit einer komplett neuen Website online – mit einem modernen Erscheinungsbild, konkreten Lösungen und Bildern, die wirklich zeigen, wer wir sind und was wir machen. Vielen Dank, Erik!!",
+    name: "Da Peppe",
+    meta: "peppedelmar · Osteria & Pizzeria · Landsberg · da-peppe.com",
+    rating: 5,
+    source: "Google",
+  },
+  // Weitere Stimmen: bitte nur echte, freigegebene Kundenstimmen.
   {
     quote:
       "Erik hat unseren Auftritt komplett neu gedacht. Die Zusammenarbeit war direkt und unkompliziert – und das Ergebnis wirkt endlich so professionell wie unsere Arbeit.",
@@ -18,6 +34,30 @@ const testimonials = [
     meta: "Craft-Bier-Brauerei · Lüneburg",
   },
 ];
+
+function ReviewStars({ rating, source }: { rating: number; source?: string }) {
+  const filled = Math.round(rating);
+  return (
+    <Column gap="4" horizontal="center" align="center">
+      <Text
+        variant="label-strong-s"
+        onBackground="brand-strong"
+        aria-label={`${rating} von 5 Sternen`}
+        style={{ letterSpacing: "0.12em" }}
+      >
+        {"★".repeat(filled)}
+        <Text as="span" onBackground="neutral-weak">
+          {"★".repeat(Math.max(0, 5 - filled))}
+        </Text>
+      </Text>
+      {source && (
+        <Text variant="label-default-xs" onBackground="neutral-weak" align="center">
+          {source}-Bewertung
+        </Text>
+      )}
+    </Column>
+  );
+}
 
 export function Testimonials() {
   const [lead, ...rest] = testimonials;
@@ -35,7 +75,7 @@ export function Testimonials() {
             </Text>
           </>
         }
-        description="Keine gekauften Bewertungen – Stimmen aus echten Projekten."
+        description="Echte Stimmen aus Projekten – inklusive öffentlicher Google-Bewertung."
       />
 
       <Reveal y={24}>
@@ -47,13 +87,14 @@ export function Testimonials() {
           align="center"
           style={{ marginInline: "auto" }}
         >
+          {lead.rating != null && <ReviewStars rating={lead.rating} source={lead.source} />}
           <Text
             as="blockquote"
-            variant="heading-strong-l"
+            variant="body-default-l"
             onBackground="neutral-strong"
             wrap="balance"
             align="center"
-            style={{ lineHeight: 1.35, margin: 0, letterSpacing: "-0.02em" }}
+            style={{ lineHeight: 1.55, margin: 0, letterSpacing: "-0.01em" }}
           >
             „{lead.quote}“
           </Text>
@@ -79,6 +120,7 @@ export function Testimonials() {
                 horizontal="center"
                 align="center"
               >
+                {t.rating != null && <ReviewStars rating={t.rating} source={t.source} />}
                 <Text
                   as="blockquote"
                   variant="body-default-l"

@@ -1,0 +1,44 @@
+# EvgLab
+> Webdesign und Webentwicklung aus Landsberg am Lech. Individuelle Websites und Landingpages mit Charakter, die Anfragen bringen.
+
+EvgLab ist das Studio von Erik Freiherr von Gregory. Fokus: Webdesign, Webentwicklung und Landingpages für Unternehmen in Landsberg am Lech, Bayern und darüber hinaus – ohne Template-Look, mit klarem Fokus auf Anfragen.
+
+## Kernfakten
+- Name: EvgLab / Erik EvgLab
+- Person: Erik Freiherr von Gregory
+- Standort: Hauptstraße 18, 86925 Fuchstal (bei Landsberg am Lech), Bayern, Deutschland
+- E-Mail: info@evglab.com
+- Telefon: +49 173 1706012
+- Sprache: Deutsch
+- Richtpreise: komplette Website ab 2.500 €, Landingpage ab 1.500 €, Betreuung ab 99 € / Monat
+- Erstgespräch: kostenlos und unverbindlich, Antwort in der Regel innerhalb von 24 Stunden
+
+## Leistungen
+- Individuelles Webdesign
+- Webentwicklung (u. a. Next.js)
+- Landingpages
+- Website-Betreuung und Updates
+- Lokale Sichtbarkeit als Grundlage (Struktur, Inhalte, technische Basics)
+
+## Für wen
+Unternehmen und Selbstständige, die einen Auftritt mit Persönlichkeit wollen – besonders Gastronomie, Handwerk, Industrie, Marken und lokale Betriebe in und um Landsberg am Lech.
+
+## Wichtige Seiten
+- [Startseite](https://evglab.com/): Überblick, Projekte, Leistungen, Kontakt
+- [Webdesign Landsberg am Lech](https://evglab.com/webdesign-landsberg): lokale Leistungsseite mit FAQ und Preisen
+- [Über mich](https://evglab.com/ueber-uns): Person hinter EvgLab
+- [Impressum](https://evglab.com/impressum): Anbieterkennzeichnung
+- [Datenschutz](https://evglab.com/datenschutz): Datenschutzhinweise
+
+## Ausgewählte Projekte
+- [Da Peppe](https://da-peppe.com): Website für Osteria & Pizzeria in Landsberg am Lech (öffentliche 5★ Google-Bewertung für die Zusammenarbeit)
+- [Lünebräu](https://luenebraeu.vercel.app): Markenauftritt Craft-Bier-Brauerei
+- [Ingenieurbüro Jungen](https://ib-jungen-web.vercel.app): Industrie / Automation
+- [EvGlab KI](https://ki.evglab.com): KI-Marketing für Brauereien
+
+## Kontakt
+Für Anfragen zum Erstgespräch: https://evglab.com/#kontakt · WhatsApp / Telefon über die Kontaktdaten oben · E-Mail info@evglab.com
+
+## Optional
+- Sitemap: https://evglab.com/sitemap.xml
+- Robots: https://evglab.com/robots.txt
