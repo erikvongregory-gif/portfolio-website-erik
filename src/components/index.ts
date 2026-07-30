@@ -3,6 +3,7 @@ export { BrandLogo, BrandMark } from "@/components/BrandLogo";
 export { HeroShowcase } from "@/components/HeroShowcase";
 export { HeroMarquee } from "@/components/HeroMarquee";
 export { HeroProof } from "@/components/HeroProof";
+export { CtaProof } from "@/components/CtaProof";
 export { SiteHeader } from "@/components/SiteHeader";
 export { CapacityBadge } from "@/components/CapacityBadge";
 export { CookieBanner } from "@/components/CookieBanner";

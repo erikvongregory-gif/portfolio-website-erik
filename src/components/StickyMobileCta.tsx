@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Row, Text } from "@once-ui-system/core";
+import { Button, IconButton, Row, Text } from "@once-ui-system/core";
 import classNames from "classnames";
 import { ContactDialog } from "@/components/ContactDialog";
 import { subscribeScroll } from "@/components/motion/SmoothScroll";
+import { WHATSAPP_URL } from "@/lib/contact";
 import styles from "./StickyMobileCta.module.scss";
 
 const MOBILE_MQ = "(max-width: 1024px)";
@@ -76,9 +77,21 @@ export function StickyMobileCta() {
           >
             Kostenloses Erstgespräch
           </Text>
-          <Button variant="primary" size="m" arrowIcon onClick={() => setFormOpen(true)}>
-            Anfragen
-          </Button>
+          <Row gap="8" vertical="center" style={{ flexShrink: 0 }}>
+            <IconButton
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              icon="whatsapp"
+              variant="secondary"
+              size="m"
+              tooltip="WhatsApp"
+              aria-label="Per WhatsApp schreiben"
+            />
+            <Button variant="primary" size="m" arrowIcon onClick={() => setFormOpen(true)}>
+              Anfragen
+            </Button>
+          </Row>
         </Row>
       </Row>
 

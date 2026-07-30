@@ -3,6 +3,12 @@
 import { useEffect, useState } from "react";
 import { Button, Column, Dialog, Icon, Input, Row, Text, Textarea } from "@once-ui-system/core";
 import { startLenis, stopLenis } from "@/components/motion/SmoothScroll";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_TEL,
+  WHATSAPP_URL,
+} from "@/lib/contact";
 import { SITE_HOST } from "@/lib/config";
 import {
   OPEN_CONTACT_EVENT,
@@ -26,6 +32,12 @@ type ContactDialogProps = {
 };
 
 type Status = "idle" | "sending" | "success" | "error";
+
+const NEXT_STEPS = [
+  "Ich lese deine Nachricht.",
+  "Du bekommst innerhalb von 24 Stunden eine Antwort – meist schneller.",
+  "Im kurzen Gespräch klären wir, ob und wie wir starten.",
+] as const;
 
 // Web3Forms access keys are public by design (they live in the client form).
 // Falls back to the hardcoded key if the env var isn't set.
@@ -52,7 +64,6 @@ export function ContactDialog({
     if (isControlled) onOpenChange?.(next);
     else setInternalOpen(next);
   };
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -95,9 +106,9 @@ export function ContactDialog({
   }, [dialogOnly, replaceGlobalHandler]);
 
   const mailtoFallback = () => {
-    const subject = `Anfrage Erstgespräch${name ? ` – ${name}` : ""}`;
-    const body = `Name: ${name}\nE-Mail: ${email}\n\n${message}`;
-    window.location.href = `mailto:info@evglab.com?subject=${encodeURIComponent(
+    const subject = "Anfrage Erstgespräch";
+    const body = `E-Mail: ${email}\n\n${message}`;
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(body)}`;
   };
@@ -108,8 +119,8 @@ export function ContactDialog({
       setError("Bitte gib eine gültige E-Mail-Adresse an.");
       return;
     }
-    if (message.trim().length < 5) {
-      setError("Bitte schreib kurz, worum es geht.");
+    if (message.trim().length < 3) {
+      setError("Schreib kurz, worum es geht – ein Satz reicht.");
       return;
     }
     setError("");
@@ -128,9 +139,8 @@ export function ContactDialog({
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
-          subject: `Neue Anfrage über ${SITE_HOST}${name ? ` – ${name}` : ""}`,
-          from_name: name || "Website-Anfrage",
-          name,
+          subject: `Neue Anfrage über ${SITE_HOST}`,
+          from_name: email.split("@")[0] || "Website-Anfrage",
           email,
           message,
         }),
@@ -138,7 +148,6 @@ export function ContactDialog({
       const data = await res.json();
       if (data.success) {
         setStatus("success");
-        setName("");
         setEmail("");
         setMessage("");
       } else {
@@ -167,16 +176,16 @@ export function ContactDialog({
       <Dialog
         isOpen={open}
         onClose={() => setOpen(false)}
-        title={status === "success" ? "Anfrage gesendet" : "Kostenloses Erstgespräch"}
+        title={status === "success" ? "Anfrage angekommen" : "Kostenloses Erstgespräch"}
         description={
           status === "success"
             ? undefined
-            : "Kostenlos & unverbindlich · Antwort innerhalb von 24 Stunden."
+            : "Zwei Felder reichen. Antwort innerhalb von 24 Stunden."
         }
         footer={
           status === "success" ? (
             <Button variant="primary" size="m" onClick={() => setOpen(false)}>
-              Schließen
+              Alles klar
             </Button>
           ) : (
             <>
@@ -191,30 +200,89 @@ export function ContactDialog({
                 disabled={status === "sending"}
                 onClick={send}
               >
-                Anfrage senden
+                Absenden
               </Button>
             </>
           )
         }
       >
         {status === "success" ? (
-          <Column gap="16" fillWidth horizontal="center" align="center" paddingY="16">
-            <Icon name="email" size="l" onBackground="brand-strong" />
-            <Text variant="body-default-l" onBackground="neutral-strong" align="center" wrap="balance">
-              Danke! Deine Anfrage ist angekommen.
-            </Text>
-            <Text variant="body-default-m" onBackground="neutral-weak" align="center" wrap="balance">
-              Ich melde mich innerhalb von 24 Stunden bei dir – meist deutlich schneller.
-            </Text>
+          <Column gap="20" fillWidth paddingY="8">
+            <Column gap="8" fillWidth horizontal="center" align="center">
+              <Icon name="email" size="l" onBackground="brand-strong" />
+              <Text
+                variant="body-default-l"
+                onBackground="neutral-strong"
+                align="center"
+                wrap="balance"
+              >
+                Danke – deine Nachricht ist bei mir.
+              </Text>
+            </Column>
+
+            <Column gap="12" fillWidth>
+              <Text variant="label-strong-s" onBackground="neutral-strong">
+                Was als Nächstes passiert
+              </Text>
+              {NEXT_STEPS.map((step, i) => (
+                <Row key={step} gap="12" vertical="start" fillWidth>
+                  <Text
+                    variant="label-strong-s"
+                    onBackground="brand-strong"
+                    style={{ flexShrink: 0, minWidth: "1.25rem" }}
+                  >
+                    {i + 1}.
+                  </Text>
+                  <Text variant="body-default-m" onBackground="neutral-medium" wrap="balance">
+                    {step}
+                  </Text>
+                </Row>
+              ))}
+            </Column>
+
+            <Column gap="8" fillWidth paddingTop="4">
+              <Text variant="label-default-s" onBackground="neutral-weak">
+                Schneller geht’s per WhatsApp oder Anruf
+              </Text>
+              <Row gap="8" wrap>
+                <Button
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="secondary"
+                  size="s"
+                  prefixIcon="whatsapp"
+                >
+                  WhatsApp
+                </Button>
+                <Button href={CONTACT_PHONE_TEL} variant="secondary" size="s">
+                  {CONTACT_PHONE_DISPLAY}
+                </Button>
+              </Row>
+            </Column>
           </Column>
         ) : (
           <Column gap="16" fillWidth>
-            <Input
-              id={`${idPrefix}contact-name`}
-              label="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+            <Row gap="8" wrap>
+              <Button
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="secondary"
+                size="m"
+                prefixIcon="whatsapp"
+              >
+                WhatsApp
+              </Button>
+              <Button href={CONTACT_PHONE_TEL} variant="secondary" size="m">
+                Anrufen
+              </Button>
+            </Row>
+
+            <Text variant="label-default-s" onBackground="neutral-weak">
+              Oder kurz schreiben – Antwort in 24 h
+            </Text>
+
             <Input
               id={`${idPrefix}contact-email`}
               type="email"
@@ -224,8 +292,9 @@ export function ContactDialog({
             />
             <Textarea
               id={`${idPrefix}contact-message`}
-              label="Worum geht's? (Projekt, Branche, Ziel)"
-              lines={4}
+              label="Worum geht’s?"
+              placeholder="z. B. neue Website / Landingpage für …"
+              lines={3}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
@@ -237,29 +306,10 @@ export function ContactDialog({
             )}
             {status === "error" && (
               <Text variant="body-default-s" onBackground="danger-weak">
-                Senden hat nicht geklappt. Versuch es bitte erneut oder schreib direkt an
-                info@evglab.com.
+                Senden hat nicht geklappt. Versuch es erneut, nutze WhatsApp oder schreib an{" "}
+                {CONTACT_EMAIL}.
               </Text>
             )}
-
-            <Column gap="8" fillWidth paddingTop="4">
-              <Text variant="label-default-s" onBackground="neutral-weak">
-                Lieber direkt?
-              </Text>
-              <Row gap="8" wrap>
-                <Button
-                  href="mailto:info@evglab.com"
-                  variant="secondary"
-                  size="s"
-                  prefixIcon="email"
-                >
-                  info@evglab.com
-                </Button>
-                <Button href="tel:+491731706012" variant="secondary" size="s">
-                  0173 170 6012
-                </Button>
-              </Row>
-            </Column>
           </Column>
         )}
       </Dialog>

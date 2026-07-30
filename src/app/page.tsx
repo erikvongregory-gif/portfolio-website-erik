@@ -23,6 +23,7 @@ import {
   StickyMobileCta,
 } from "@/components";
 import { ContactDialog } from "@/components/ContactDialog";
+import { CtaProof } from "@/components/CtaProof";
 import { JsonLd } from "@/components/JsonLd";
 import { baseURL } from "@/resources";
 
@@ -162,7 +163,7 @@ export default function Home() {
               </Text>
             </RevealFx>
 
-            <RevealFx speed={400} translateY="8" delay={0.18} horizontal="start" paddingBottom="16">
+            <RevealFx speed={400} translateY="8" delay={0.18} horizontal="start" paddingBottom="12">
               <Row
                 className={styles.heroActions}
                 gap="20"
@@ -176,6 +177,10 @@ export default function Home() {
                   </Text>
                 </SmartLink>
               </Row>
+            </RevealFx>
+
+            <RevealFx speed={400} translateY="4" delay={0.2} horizontal="start" paddingBottom="20">
+              <CtaProof />
             </RevealFx>
 
             <RevealFx speed={400} translateY="8" delay={0.24} horizontal="start">
