@@ -35,7 +35,7 @@ export default function Datenschutz() {
           <br />
           E-Mail: <SmartLink href="mailto:info@evglab.com">info@evglab.com</SmartLink>
           <br />
-          Telefon: <SmartLink href="tel:+491731706012">0173 170 6012</SmartLink>
+          Telefon: <SmartLink href="tel:+4915565602176">01556 5602176</SmartLink>
         </LegalText>
         <LegalText>
           Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder

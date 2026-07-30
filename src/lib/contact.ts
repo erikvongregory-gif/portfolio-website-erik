@@ -1,12 +1,12 @@
 /** Shared contact channels – keep in sync with Impressum / structured data. */
 export const CONTACT_EMAIL = "info@evglab.com";
-export const CONTACT_PHONE_E164 = "+491731706012";
-export const CONTACT_PHONE_DISPLAY = "0173 170 6012";
+export const CONTACT_PHONE_E164 = "+4915565602176";
+export const CONTACT_PHONE_DISPLAY = "01556 5602176";
 export const CONTACT_PHONE_TEL = `tel:${CONTACT_PHONE_E164}`;
 
 /** WhatsApp chat – digits only, country code without +. */
 export const WHATSAPP_URL =
-  "https://wa.me/491731706012?text=" +
+  "https://wa.me/4915565602176?text=" +
   encodeURIComponent("Hallo Erik, ich interessiere mich für ein Erstgespräch.");
 
 /** Compact social proof used next to primary CTAs. */

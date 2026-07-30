@@ -39,7 +39,7 @@ const structuredData = {
   url: baseURL,
   image: `${baseURL}/opengraph-image`,
   email: "info@evglab.com",
-  telephone: "+491731706012",
+  telephone: "+4915565602176",
   priceRange: "€€",
   founder: {
     "@type": "Person",

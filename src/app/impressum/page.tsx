@@ -35,7 +35,7 @@ export default function Impressum() {
           <SmartLink href="mailto:info@evglab.com">info@evglab.com</SmartLink>
           <br />
           Telefon:{" "}
-          <SmartLink href="tel:+491731706012">0173 170 6012</SmartLink>
+          <SmartLink href="tel:+4915565602176">01556 5602176</SmartLink>
         </LegalText>
       </LegalBlock>
 

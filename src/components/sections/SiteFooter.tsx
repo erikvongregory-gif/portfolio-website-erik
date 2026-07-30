@@ -13,7 +13,7 @@ const navLinks = [
 
 const contactLinks = [
   { label: "info@evglab.com", href: "mailto:info@evglab.com" },
-  { label: "0173 170 6012", href: "tel:+491731706012" },
+  { label: "01556 5602176", href: "tel:+4915565602176" },
   { label: "Landsberg am Lech", href: "/webdesign-landsberg" },
 ];
 
