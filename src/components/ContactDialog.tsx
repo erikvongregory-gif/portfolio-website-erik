@@ -15,6 +15,7 @@ import {
   QUOTE_MESSAGE_STORAGE_KEY,
   registerContactOpenHandler,
 } from "@/lib/quoteContact";
+import styles from "./FormSuccess.module.scss";
 
 type ContactDialogProps = {
   label?: string;
@@ -34,8 +35,8 @@ type ContactDialogProps = {
 type Status = "idle" | "sending" | "success" | "error";
 
 const NEXT_STEPS = [
-  "Ich lese deine Nachricht.",
-  "Du bekommst innerhalb von 24 Stunden eine Antwort – meist schneller.",
+  "Ich lese deine Nachricht persönlich.",
+  "Antwort innerhalb von 24 Stunden – oft schon früher.",
   "Im kurzen Gespräch klären wir, ob und wie wir starten.",
 ] as const;
 
@@ -176,7 +177,7 @@ export function ContactDialog({
       <Dialog
         isOpen={open}
         onClose={() => setOpen(false)}
-        title={status === "success" ? "Anfrage angekommen" : "Kostenloses Erstgespräch"}
+        title={status === "success" ? "Geschafft" : "Kostenloses Erstgespräch"}
         description={
           status === "success"
             ? undefined
@@ -195,44 +196,60 @@ export function ContactDialog({
               <Button
                 variant="primary"
                 size="m"
-                arrowIcon
+                arrowIcon={status !== "sending"}
                 loading={status === "sending"}
                 disabled={status === "sending"}
                 onClick={send}
               >
-                Absenden
+                {status === "sending" ? "Wird gesendet…" : "Absenden"}
               </Button>
             </>
           )
         }
       >
         {status === "success" ? (
-          <Column gap="20" fillWidth paddingY="8">
-            <Column gap="8" fillWidth horizontal="center" align="center">
-              <Icon name="email" size="l" onBackground="brand-strong" />
-              <Text
-                variant="body-default-l"
-                onBackground="neutral-strong"
-                align="center"
-                wrap="balance"
+          <Column gap="24" fillWidth paddingY="8" className={styles.success}>
+            <Column gap="12" fillWidth horizontal="center" align="center">
+              <Row
+                className={styles.iconWrap}
+                horizontal="center"
+                vertical="center"
+                aria-hidden="true"
               >
-                Danke – deine Nachricht ist bei mir.
-              </Text>
+                <Icon name="check" size="l" onBackground="brand-strong" />
+              </Row>
+              <Column gap="4" fillWidth horizontal="center" align="center">
+                <Text
+                  variant="heading-strong-s"
+                  onBackground="neutral-strong"
+                  align="center"
+                  wrap="balance"
+                >
+                  Deine Anfrage ist bei mir.
+                </Text>
+                <Text
+                  variant="body-default-m"
+                  onBackground="neutral-weak"
+                  align="center"
+                  wrap="balance"
+                >
+                  Danke – ich melde mich persönlich bei dir.
+                </Text>
+              </Column>
             </Column>
 
-            <Column gap="12" fillWidth>
+            <Column gap="12" fillWidth className={styles.stagger}>
               <Text variant="label-strong-s" onBackground="neutral-strong">
                 Was als Nächstes passiert
               </Text>
-              {NEXT_STEPS.map((step, i) => (
+              {NEXT_STEPS.map((step) => (
                 <Row key={step} gap="12" vertical="start" fillWidth>
-                  <Text
-                    variant="label-strong-s"
+                  <Icon
+                    name="check"
+                    size="s"
                     onBackground="brand-strong"
-                    style={{ flexShrink: 0, minWidth: "1.25rem" }}
-                  >
-                    {i + 1}.
-                  </Text>
+                    style={{ flexShrink: 0, marginTop: "0.15rem" }}
+                  />
                   <Text variant="body-default-m" onBackground="neutral-medium" wrap="balance">
                     {step}
                   </Text>
@@ -242,7 +259,7 @@ export function ContactDialog({
 
             <Column gap="8" fillWidth paddingTop="4">
               <Text variant="label-default-s" onBackground="neutral-weak">
-                Schneller geht’s per WhatsApp oder Anruf
+                Noch schneller? Schreib oder ruf kurz durch.
               </Text>
               <Row gap="8" wrap>
                 <Button

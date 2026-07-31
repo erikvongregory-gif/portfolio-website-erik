@@ -8,6 +8,7 @@ import {
   CONTACT_PHONE_TEL,
 } from "@/lib/contact";
 import { SITE_HOST } from "@/lib/config";
+import styles from "./FormSuccess.module.scss";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -122,30 +123,40 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
       <Column
         id={`${idPrefix}check-form`}
         fillWidth
-        gap="20"
+        gap="24"
         padding="32"
         background="surface"
         border="neutral-alpha-medium"
         radius="xl"
+        className={styles.success}
         style={{ boxShadow: "inset 0 1px 0 var(--evg-cta-inset)" }}
       >
-        <Column gap="8" fillWidth horizontal="center" align="center">
-          <Icon name="email" size="l" onBackground="brand-strong" />
-          <Text variant="heading-strong-m" onBackground="neutral-strong" align="center">
-            Geschafft. Dein Check ist drin.
-          </Text>
-          <Text
-            variant="body-default-m"
-            onBackground="neutral-weak"
-            align="center"
-            wrap="balance"
+        <Column gap="12" fillWidth horizontal="center" align="center">
+          <Row
+            className={styles.iconWrap}
+            horizontal="center"
+            vertical="center"
+            aria-hidden="true"
           >
-            {confirmationSent
-              ? "Du bekommst gleich eine Bestätigung per E-Mail. Erik meldet sich innerhalb von 24 Stunden persönlich bei dir."
-              : "Erik meldet sich innerhalb von 24 Stunden persönlich bei dir - mit klaren Punkten, was dich Kunden kostet und was sich lohnt."}
-          </Text>
+            <Icon name="check" size="l" onBackground="brand-strong" />
+          </Row>
+          <Column gap="4" fillWidth horizontal="center" align="center">
+            <Text variant="heading-strong-m" onBackground="neutral-strong" align="center">
+              Geschafft. Dein Check ist drin.
+            </Text>
+            <Text
+              variant="body-default-m"
+              onBackground="neutral-weak"
+              align="center"
+              wrap="balance"
+            >
+              {confirmationSent
+                ? "Bestätigung ist unterwegs. Ich melde mich innerhalb von 24 Stunden persönlich bei dir."
+                : "Ich melde mich innerhalb von 24 Stunden persönlich – mit klaren Punkten, was dich Kunden kostet und was sich lohnt."}
+            </Text>
+          </Column>
         </Column>
-        <Column gap="8" fillWidth>
+        <Column gap="8" fillWidth className={styles.stagger}>
           <Text variant="label-default-s" onBackground="neutral-weak" align="center">
             Noch schneller per WhatsApp?
           </Text>
@@ -233,13 +244,13 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
       <Button
         variant="primary"
         size="l"
-        arrowIcon
+        arrowIcon={status !== "sending"}
         fillWidth
         loading={status === "sending"}
         disabled={status === "sending"}
         onClick={() => void send()}
       >
-        Kostenlosen Check sichern
+        {status === "sending" ? "Wird gesendet…" : "Kostenlosen Check sichern"}
       </Button>
 
       <Column gap="4" fillWidth horizontal="center">

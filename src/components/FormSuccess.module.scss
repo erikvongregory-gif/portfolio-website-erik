@@ -1,0 +1,70 @@
+.success {
+  animation: successIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.iconWrap {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand-alpha-weak);
+  animation: iconPop 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+
+.stagger > *:nth-child(1) {
+  animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+.stagger > *:nth-child(2) {
+  animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+.stagger > *:nth-child(3) {
+  animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+}
+
+@keyframes successIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes iconPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  70% {
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .success,
+  .iconWrap,
+  .stagger > * {
+    animation: none;
+  }
+}
