@@ -16,6 +16,7 @@ import {
   createPageOpenGraph,
   createPageTwitter,
 } from "@/resources";
+import styles from "./page.module.scss";
 
 const PAGE_PATH = "/website-check";
 const PAGE_TITLE = "Kostenloser Website-Check";
@@ -55,6 +56,21 @@ const objections: { q: string; a: string }[] = [
     a: "Eintragen: unter 1 Minute. Feedback: innerhalb von 24 Stunden.",
   },
 ];
+
+const benefits = [
+  {
+    title: "Wo Besucher abspringen",
+    body: "Erster Eindruck, Vertrauen, Mobile - die Stellen, an denen Kunden dich verlassen.",
+  },
+  {
+    title: "Ob deine Botschaft sitzt",
+    body: "Versteht jemand in 5 Sekunden, was du anbietest und warum er dich anfragen soll?",
+  },
+  {
+    title: "Was sich zuerst lohnt",
+    body: "Keine 20er-To-do-Liste. Die 2-3 Hebel, die den größten Unterschied machen.",
+  },
+] as const;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -103,6 +119,7 @@ export default function WebsiteCheckPage() {
 
       <Column
         as="section"
+        className={styles.hero}
         data-sticky-cta-hero
         fillWidth
         horizontal="center"
@@ -113,15 +130,33 @@ export default function WebsiteCheckPage() {
         style={{ minHeight: "100svh" }}
       >
         <Row
+          className={styles.heroRow}
           fillWidth
           maxWidth={68}
           gap="40"
           vertical="center"
           s={{ direction: "column", gap: "32" }}
         >
-          <Column flex={5} gap="0" horizontal="start" align="left" maxWidth={30}>
+          <Column
+            className={styles.copy}
+            flex={5}
+            gap="0"
+            horizontal="start"
+            align="left"
+            maxWidth={30}
+          >
             <Reveal y={12}>
-              <Column paddingBottom="16">
+              <Column m={{ hide: true }} paddingBottom="16">
+                <CapacityBadge
+                  taken={3}
+                  total={4}
+                  label="Nur noch wenige Check-Slots diese Woche"
+                />
+              </Column>
+            </Reveal>
+
+            <Reveal y={12}>
+              <Column hide m={{ hide: false }} paddingBottom="16">
                 <CapacityBadge
                   compact
                   taken={3}
@@ -140,6 +175,7 @@ export default function WebsiteCheckPage() {
             <Reveal delay={0.08}>
               <Heading
                 as="h1"
+                className={styles.headline}
                 variant="display-strong-l"
                 onBackground="neutral-strong"
                 wrap="balance"
@@ -165,7 +201,7 @@ export default function WebsiteCheckPage() {
             </Reveal>
 
             <Reveal delay={0.16}>
-              <Column gap="12" paddingTop="24" m={{ hide: true }}>
+              <Column className={styles.proofs} gap="12" paddingTop="24" m={{ hide: true }}>
                 <CtaProof />
                 <HeroProof />
               </Column>
@@ -173,6 +209,7 @@ export default function WebsiteCheckPage() {
           </Column>
 
           <Column
+            className={styles.formCol}
             flex={5}
             fillWidth
             id="check"
@@ -193,10 +230,11 @@ export default function WebsiteCheckPage() {
         </Reveal>
       </Column>
 
-      <Section id="warum" background="surface" paddingY="64" gap="32">
+      <Section id="warum" background="surface" gap="32">
         <Reveal>
           <Heading
             as="h2"
+            className={styles.sectionLead}
             variant="display-strong-s"
             onBackground="neutral-strong"
             wrap="balance"
@@ -206,37 +244,30 @@ export default function WebsiteCheckPage() {
           </Heading>
         </Reveal>
 
-        <Column fillWidth gap="0">
-          {[
-            {
-              title: "Wo Besucher abspringen",
-              body: "Erster Eindruck, Vertrauen, Mobile - die Stellen, an denen Kunden dich verlassen.",
-            },
-            {
-              title: "Ob deine Botschaft sitzt",
-              body: "Versteht jemand in 5 Sekunden, was du anbietest und warum er dich anfragen soll?",
-            },
-            {
-              title: "Was sich zuerst lohnt",
-              body: "Keine 20er-To-do-Liste. Die 2-3 Hebel, die den größten Unterschied machen.",
-            },
-          ].map((item, index) => (
+        <Column className={styles.benefits} fillWidth gap="0">
+          {benefits.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.05}>
               <Row
+                className={styles.benefitRow}
                 fillWidth
+                fillHeight
                 gap="20"
                 paddingY="20"
                 vertical="start"
                 borderTop="neutral-alpha-weak"
                 s={{ direction: "column", gap: "8" }}
               >
-                <Row gap="12" vertical="center" style={{ minWidth: "14rem" }}>
+                <Row className={styles.benefitTitle} gap="12" vertical="center">
                   <Icon name="check" size="s" onBackground="brand-strong" />
                   <Text variant="heading-strong-s" onBackground="neutral-strong">
                     {item.title}
                   </Text>
                 </Row>
-                <Text variant="body-default-m" onBackground="neutral-weak" style={{ maxWidth: "34rem" }}>
+                <Text
+                  variant="body-default-m"
+                  onBackground="neutral-weak"
+                  style={{ maxWidth: "34rem" }}
+                >
                   {item.body}
                 </Text>
               </Row>
@@ -245,7 +276,7 @@ export default function WebsiteCheckPage() {
         </Column>
       </Section>
 
-      <Section id="faq" paddingY="64" gap="24" maxWidth={48}>
+      <Section id="faq" gap="24">
         <Reveal>
           <Heading
             as="h2"
@@ -258,11 +289,12 @@ export default function WebsiteCheckPage() {
           </Heading>
         </Reveal>
 
-        <Column fillWidth gap="8">
+        <Column className={styles.faqs} fillWidth gap="8">
           {objections.map((item, index) => (
             <Reveal key={item.q} delay={index * 0.04}>
               <Column
                 fillWidth
+                fillHeight
                 gap="4"
                 padding="20"
                 background="surface"
@@ -281,7 +313,7 @@ export default function WebsiteCheckPage() {
         </Column>
       </Section>
 
-      <Section id="kontakt" paddingY="64" gap="24">
+      <Section id="kontakt" gap="24">
         <Column fillWidth horizontal="center" align="center" gap="12" maxWidth={36}>
           <Reveal>
             <Heading
@@ -308,7 +340,12 @@ export default function WebsiteCheckPage() {
         </Column>
 
         <Reveal delay={0.1}>
-          <Column fillWidth maxWidth={28} style={{ marginInline: "auto" }}>
+          <Column
+            className={styles.bottomForm}
+            fillWidth
+            maxWidth={28}
+            style={{ marginInline: "auto" }}
+          >
             <WebsiteCheckForm idPrefix="bottom-" />
           </Column>
         </Reveal>

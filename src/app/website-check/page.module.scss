@@ -1,0 +1,91 @@
+/* Desktop-only polish. Mobile layout stays as-is (max-width: 1024px). */
+
+.heroRow {
+  align-items: center;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.formCol {
+  min-width: 0;
+}
+
+.benefitTitle {
+  min-width: 14rem;
+}
+
+@media (min-width: 1025px) {
+  .hero {
+    padding-top: 8rem !important;
+    padding-bottom: 5rem !important;
+    justify-content: center;
+  }
+
+  .heroRow {
+    gap: 4rem !important;
+    align-items: center;
+  }
+
+  .copy {
+    flex: 1.05 1 0 !important;
+    max-width: 34rem !important;
+  }
+
+  .headline {
+    font-size: clamp(2.75rem, 3.6vw, 3.5rem) !important;
+    line-height: 1.02 !important;
+    max-width: 14ch;
+  }
+
+  .formCol {
+    flex: 0.95 1 0 !important;
+    max-width: 26rem !important;
+    order: 0 !important;
+  }
+
+  .formCol > * {
+    width: 100%;
+  }
+
+  .proofs {
+    margin-top: 0.5rem;
+  }
+
+  .benefits {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .benefitRow {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+    padding: 1.5rem !important;
+    border: 1px solid var(--neutral-alpha-weak);
+    border-radius: var(--radius-l);
+    border-top: 1px solid var(--neutral-alpha-weak) !important;
+    background: var(--page-background);
+    height: 100%;
+  }
+
+  .benefitTitle {
+    min-width: 0 !important;
+  }
+
+  .faqs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .bottomForm {
+    max-width: 28rem !important;
+  }
+
+  .sectionLead {
+    max-width: 22ch;
+  }
+}
