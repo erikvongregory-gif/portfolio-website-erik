@@ -263,10 +263,21 @@ export default function Datenschutz() {
           auf dieser Website nicht geladen.
         </LegalText>
 
-        <LegalSubheading>Marketing</LegalSubheading>
+        <LegalSubheading>Marketing / Meta Pixel (nur mit Einwilligung)</LegalSubheading>
         <LegalText>
-          Marketing-Cookies und Werbe-Tracking sind aktuell nicht im Einsatz. Die entsprechende
-          Kategorie im Cookie-Banner ist nur für mögliche zukünftige Erweiterungen vorbereitet.
+          Wenn du der Kategorie „Marketing“ zustimmst, setzen wir den Meta Pixel (Meta Platforms
+          Ireland Limited) ein. Damit messen wir Seitenaufrufe und Conversions (z. B. das Event
+          „Lead“ nach Absenden des Website-Check-Formulars), um Meta-Anzeigen auszuspielen und zu
+          optimieren. Ohne deine Zustimmung wird der Pixel nicht geladen.
+        </LegalText>
+        <LegalText>
+          Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Anbieter ist Meta
+          Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Irland. Dabei kann eine
+          Übermittlung von Daten an Meta Platforms, Inc. in die USA erfolgen. Weitere Informationen:{" "}
+          <SmartLink href="https://www.facebook.com/privacy/policy/" target="_blank">
+            Datenrichtlinie von Meta
+          </SmartLink>
+          . Du kannst die Einwilligung jederzeit über „Cookie-Einstellungen“ im Footer widerrufen.
         </LegalText>
       </LegalBlock>
     </LegalLayout>

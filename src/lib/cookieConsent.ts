@@ -30,3 +30,7 @@ export function getStoredConsent(): CookieConsent | null {
 export function hasStatisticsConsent(): boolean {
   return getStoredConsent()?.statistics === true;
 }
+
+export function hasMarketingConsent(): boolean {
+  return getStoredConsent()?.marketing === true;
+}

@@ -8,6 +8,7 @@ import {
   CONTACT_PHONE_TEL,
 } from "@/lib/contact";
 import { SITE_HOST } from "@/lib/config";
+import { trackMetaLead } from "@/lib/metaPixel";
 import styles from "./FormSuccess.module.scss";
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -106,6 +107,7 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
       setStatus("success");
       setWebsite("");
       setEmail("");
+      trackMetaLead();
     } catch {
       setStatus("error");
     }

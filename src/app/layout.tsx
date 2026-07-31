@@ -11,6 +11,7 @@ import {
   Aurora,
   ConsentAnalytics,
   ConsentGoogleAnalytics,
+  ConsentMetaPixel,
   CookieBanner,
   Providers,
   ScrollProgress,
@@ -176,6 +177,7 @@ export default function RootLayout({
           <CookieBanner />
           <ConsentAnalytics />
           <ConsentGoogleAnalytics />
+          <ConsentMetaPixel />
         </Column>
       </Providers>
     </Flex>

@@ -11,6 +11,7 @@ export { CookieBanner } from "@/components/CookieBanner";
 export { StickyMobileCta } from "@/components/StickyMobileCta";
 export { ConsentAnalytics } from "@/components/ConsentAnalytics";
 export { ConsentGoogleAnalytics } from "@/components/ConsentGoogleAnalytics";
+export { ConsentMetaPixel } from "@/components/ConsentMetaPixel";
 export { CookieSettingsButton } from "@/components/CookieSettingsButton";
 export {
   Section,

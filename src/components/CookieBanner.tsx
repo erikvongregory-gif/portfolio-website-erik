@@ -54,7 +54,7 @@ const categories: Category[] = [
     key: "marketing",
     title: "Marketing",
     description:
-      "Würde Inhalte und Anzeigen personalisieren. Aktuell nicht im Einsatz – nur für später vorbereitet.",
+      "Meta Pixel für Anzeigenmessung und Conversion-Tracking – nur mit deiner Einwilligung.",
   },
 ];
 
@@ -208,9 +208,8 @@ export function CookieBanner() {
               onBackground="neutral-weak"
               style={{ lineHeight: 1.6 }}
             >
-              Technisch notwendige Cookies sind immer dabei. Statistik-Tools laden wir nur, wenn du
-              zustimmst – keine Werbung, kein schlechtes Gewissen. Du entscheidest selbst, was auf
-              den Teller kommt. Mehr im{" "}
+              Technisch notwendige Cookies sind immer dabei. Statistik und Marketing laden wir nur,
+              wenn du zustimmst. Du entscheidest selbst, was auf den Teller kommt. Mehr im{" "}
               <SmartLink href="/datenschutz">Datenschutz</SmartLink>.
             </Text>
 
