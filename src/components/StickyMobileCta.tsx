@@ -19,13 +19,24 @@ function shouldShowBar(hero: Element, kontakt: Element) {
   return !heroVisible && !kontaktVisible;
 }
 
-export function StickyMobileCta() {
+type StickyMobileCtaProps = {
+  label?: string;
+  buttonLabel?: string;
+  /** If set, primary button scrolls/links here instead of opening the contact dialog. */
+  href?: string;
+};
+
+export function StickyMobileCta({
+  label = "Kostenloses Erstgespräch",
+  buttonLabel = "Anfragen",
+  href,
+}: StickyMobileCtaProps = {}) {
   const [visible, setVisible] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
 
   useEffect(() => {
     const hero = document.querySelector("[data-sticky-cta-hero]");
-    const kontakt = document.getElementById("kontakt");
+    const kontakt = document.getElementById("kontakt") ?? document.getElementById("check");
     if (!hero || !kontakt) return;
 
     const mq = window.matchMedia(MOBILE_MQ);
@@ -75,7 +86,7 @@ export function StickyMobileCta() {
             onBackground="neutral-strong"
             style={{ letterSpacing: "-0.01em", lineHeight: 1.2, flex: 1, minWidth: 0 }}
           >
-            Kostenloses Erstgespräch
+            {label}
           </Text>
           <Row gap="8" vertical="center" style={{ flexShrink: 0 }}>
             <IconButton
@@ -88,19 +99,27 @@ export function StickyMobileCta() {
               tooltip="WhatsApp"
               aria-label="Per WhatsApp schreiben"
             />
-            <Button variant="primary" size="m" arrowIcon onClick={() => setFormOpen(true)}>
-              Anfragen
-            </Button>
+            {href ? (
+              <Button href={href} variant="primary" size="m" arrowIcon>
+                {buttonLabel}
+              </Button>
+            ) : (
+              <Button variant="primary" size="m" arrowIcon onClick={() => setFormOpen(true)}>
+                {buttonLabel}
+              </Button>
+            )}
           </Row>
         </Row>
       </Row>
 
-      <ContactDialog
-        dialogOnly
-        open={formOpen}
-        onOpenChange={setFormOpen}
-        idPrefix="sticky-cta-"
-      />
+      {!href && (
+        <ContactDialog
+          dialogOnly
+          open={formOpen}
+          onOpenChange={setFormOpen}
+          idPrefix="sticky-cta-"
+        />
+      )}
     </>
   );
 }

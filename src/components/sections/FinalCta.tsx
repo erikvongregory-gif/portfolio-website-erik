@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { Button, Column, Heading, Row, Text } from "@once-ui-system/core";
 import { CtaProof } from "@/components/CtaProof";
 import { Magnetic, Reveal, SpotlightCard } from "@/components/motion";
@@ -11,7 +12,22 @@ import {
 import { openContactForm } from "@/lib/quoteContact";
 import { Section } from "./Section";
 
-export function FinalCta() {
+type FinalCtaProps = {
+  title?: ReactNode;
+  description?: string;
+  buttonLabel?: string;
+  /** If set, primary button links here instead of opening the contact dialog. */
+  href?: string;
+  footnote?: string;
+};
+
+export function FinalCta({
+  title,
+  description = "Das Erstgespräch ist kostenlos und unverbindlich. Schreib mir kurz - Antwort innerhalb von 24 Stunden.",
+  buttonLabel = "Kostenloses Erstgespräch",
+  href,
+  footnote = "Kostenlos · Unverbindlich · Antwort innerhalb 24h · Landsberg am Lech",
+}: FinalCtaProps = {}) {
   return (
     <Section id="kontakt">
       <Reveal>
@@ -39,10 +55,14 @@ export function FinalCta() {
               align="center"
               style={{ letterSpacing: "-0.035em", lineHeight: 1.02, maxWidth: "20ch" }}
             >
-              Bereit für eine Website, die auffällt{" "}
-              <Text as="span" onBackground="neutral-weak">
-                und Kunden bringt?
-              </Text>
+              {title ?? (
+                <>
+                  Bereit für eine Website, die auffällt{" "}
+                  <Text as="span" onBackground="neutral-weak">
+                    und Kunden bringt?
+                  </Text>
+                </>
+              )}
             </Heading>
 
             <Text
@@ -52,20 +72,25 @@ export function FinalCta() {
               wrap="balance"
               style={{ maxWidth: "46ch" }}
             >
-              Das Erstgespräch ist kostenlos und unverbindlich. Schreib mir kurz – Antwort
-              innerhalb von 24 Stunden.
+              {description}
             </Text>
 
             <Row gap="12" wrap horizontal="center" vertical="center" paddingTop="8">
               <Magnetic>
-                <Button
-                  variant="primary"
-                  size="l"
-                  arrowIcon
-                  onClick={() => openContactForm()}
-                >
-                  Kostenloses Erstgespräch
-                </Button>
+                {href ? (
+                  <Button href={href} variant="primary" size="l" arrowIcon>
+                    {buttonLabel}
+                  </Button>
+                ) : (
+                  <Button
+                    variant="primary"
+                    size="l"
+                    arrowIcon
+                    onClick={() => openContactForm()}
+                  >
+                    {buttonLabel}
+                  </Button>
+                )}
               </Magnetic>
               <Button
                 href={WHATSAPP_URL}
@@ -85,7 +110,7 @@ export function FinalCta() {
             <Column gap="12" fillWidth horizontal="center" paddingTop="4">
               <CtaProof align="center" />
               <Text variant="label-default-s" onBackground="neutral-weak" align="center">
-                Kostenlos · Unverbindlich · Antwort innerhalb 24h · Landsberg am Lech
+                {footnote}
               </Text>
             </Column>
           </SpotlightCard>

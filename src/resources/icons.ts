@@ -18,6 +18,7 @@ import {
   HiMoon,
   HiMinus,
   HiPlus,
+  HiCheck,
 } from "react-icons/hi2";
 
 import {
@@ -47,6 +48,7 @@ export const iconLibrary: Record<string, IconType> = {
   moon: HiMoon,
   minus: HiMinus,
   plus: HiPlus,
+  check: HiCheck,
   email: HiEnvelope,
   globe: HiOutlineGlobeAsiaAustralia,
   person: PiUserCircleDuotone,

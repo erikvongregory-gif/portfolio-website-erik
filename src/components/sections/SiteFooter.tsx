@@ -22,7 +22,52 @@ const legalLinks = [
   { label: "Datenschutz", href: "/datenschutz" },
 ];
 
-export function SiteFooter() {
+type SiteFooterProps = {
+  /** Legal-only footer for conversion landing pages (no nav leak). */
+  minimal?: boolean;
+};
+
+export function SiteFooter({ minimal = false }: SiteFooterProps) {
+  if (minimal) {
+    return (
+      <Flex
+        as="footer"
+        className={styles.footer}
+        fillWidth
+        horizontal="center"
+        paddingX="l"
+        paddingTop="40"
+        paddingBottom="40"
+      >
+        <Column fillWidth maxWidth={68} gap="20">
+          <Line background="neutral-alpha-weak" />
+          <Row
+            fillWidth
+            horizontal="between"
+            vertical="center"
+            gap="16"
+            wrap
+            s={{ direction: "column", gap: "12" }}
+          >
+            <Text variant="body-default-xs" onBackground="neutral-weak">
+              © 2026 Erik EvgLab · Kostenloser Website-Check
+            </Text>
+            <Row gap="20" vertical="center" wrap>
+              {legalLinks.map((l) => (
+                <SmartLink key={l.label} href={l.href}>
+                  <Text variant="body-default-xs" onBackground="neutral-weak">
+                    {l.label}
+                  </Text>
+                </SmartLink>
+              ))}
+              <CookieSettingsButton />
+            </Row>
+          </Row>
+        </Column>
+      </Flex>
+    );
+  }
+
   return (
     <Flex
       as="footer"
