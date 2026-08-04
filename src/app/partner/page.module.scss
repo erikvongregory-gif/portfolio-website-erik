@@ -235,6 +235,12 @@
   width: 100%;
 }
 
+.pitchCard {
+  background:
+    radial-gradient(ellipse 70% 80% at 100% 0%, rgba(245, 228, 166, 0.4), transparent 55%),
+    #fffcf8;
+}
+
 :global([data-theme="dark"]) .page,
 :global([data-theme="dark"]) .hero {
   background: #121410;
@@ -276,7 +282,8 @@
 
 :global([data-theme="dark"]) .illustCard,
 :global([data-theme="dark"]) .checkItem,
-:global([data-theme="dark"]) .dontItem {
+:global([data-theme="dark"]) .dontItem,
+:global([data-theme="dark"]) .pitchCard {
   background: #1a1c18 !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
 }

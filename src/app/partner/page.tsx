@@ -119,7 +119,7 @@ const sellTips = [
   },
   {
     title: "Sätze, die funktionieren",
-    body: "„Er baut individuelle Seiten zum Festpreis – Angebot in 24h.“ / „Sieht nicht nach Template aus.“ / „Ich kann dich direkt verbinden.“",
+    body: "„Das ist Investition, keine sinnlose Ausgabe – und steuerlich absetzbar.“ / „Festpreis in 24h, sieht nicht nach Template aus.“ / „Ich kann dich direkt verbinden.“",
   },
   {
     title: "Seite zum Weiterleiten",
@@ -420,6 +420,31 @@ export default function PartnerPage() {
             </Heading>
             <Text className={styles.muted} variant="body-default-m">
               Kurzes Playbook – genug, um sicher zu wirken, ohne Verkäufer zu spielen.
+            </Text>
+          </Column>
+        </Reveal>
+        <Reveal delay={0.04}>
+          <Column className={`${styles.illustCard} ${styles.pitchCard}`} fillWidth gap="12" padding="24">
+            <Tag size="s" variant="neutral">
+              Killer-Argument
+            </Tag>
+            <Heading
+              as="h3"
+              className={styles.sectionTitle}
+              variant="heading-strong-m"
+              wrap="balance"
+              style={{ letterSpacing: "-0.02em", lineHeight: 1.15 }}
+            >
+              Keine Ausgabe – eine Investition. Und steuerlich absetzbar.
+            </Heading>
+            <Text className={styles.lede} variant="body-default-m" style={{ lineHeight: 1.6 }}>
+              Eine Website ist für Betriebe in der Regel zu 100 % als Betriebsausgabe absetzbar.
+              Unternehmen brauchen Ausgaben, um den Gewinn kleiner zu halten und weniger Steuern zu
+              zahlen – und bekommen gleichzeitig etwas, das Kunden bringt. Genau so kannst du den
+              Preis im Gespräch drehen: nicht „Was kostet das?“, sondern „Was spart und bringt das?“
+            </Text>
+            <Text className={styles.muted} variant="label-default-s">
+              Keine Steuerberatung – der Steuerberater des Kunden hat das letzte Wort.
             </Text>
           </Column>
         </Reveal>
