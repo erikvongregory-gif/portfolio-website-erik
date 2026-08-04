@@ -19,6 +19,7 @@ import {
   baseURL,
   createPageOpenGraph,
   createPageTwitter,
+  festpreisOgImage,
 } from "@/resources";
 import styles from "./page.module.scss";
 
@@ -43,8 +44,9 @@ export const metadata: Metadata = {
     title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,
     path: PAGE_PATH,
+    image: festpreisOgImage,
   }),
-  twitter: createPageTwitter(PAGE_TITLE, PAGE_DESCRIPTION),
+  twitter: createPageTwitter(PAGE_TITLE, PAGE_DESCRIPTION, festpreisOgImage),
 };
 
 const deliverables = [

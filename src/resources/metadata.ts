@@ -14,12 +14,21 @@ export const aboutOgImage = {
   alt: "Erik von Gregory – Gründer von EvgLab",
 } as const;
 
+export const festpreisOgImage = {
+  url: "/festpreis/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: "Festpreis-Angebot in 24h – Website ohne Template-Look.",
+} as const;
+
+type PageOgImage = typeof defaultOgImage | typeof aboutOgImage | typeof festpreisOgImage;
+
 type PageOpenGraphOptions = {
   title: string;
   description: string;
   path: string;
   type?: "website" | "profile";
-  image?: typeof defaultOgImage | typeof aboutOgImage;
+  image?: PageOgImage;
 };
 
 export function createPageOpenGraph({
@@ -45,7 +54,7 @@ export function createPageOpenGraph({
 export function createPageTwitter(
   title: string,
   description: string,
-  image: typeof defaultOgImage | typeof aboutOgImage = defaultOgImage,
+  image: PageOgImage = defaultOgImage,
 ) {
   return {
     card: "summary_large_image" as const,

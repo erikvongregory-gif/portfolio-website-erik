@@ -5,5 +5,6 @@ export {
   createPageOpenGraph,
   createPageTwitter,
   defaultOgImage,
+  festpreisOgImage,
   siteName,
 } from "./metadata";
