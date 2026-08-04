@@ -21,7 +21,18 @@ export const festpreisOgImage = {
   alt: "Festpreis-Angebot in 24h – Website ohne Template-Look.",
 } as const;
 
-type PageOgImage = typeof defaultOgImage | typeof aboutOgImage | typeof festpreisOgImage;
+export const partnerOgImage = {
+  url: "/partner/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: "Partnerprogramm EvgLab – 30 % Provision bei Auftrag.",
+} as const;
+
+type PageOgImage =
+  | typeof defaultOgImage
+  | typeof aboutOgImage
+  | typeof festpreisOgImage
+  | typeof partnerOgImage;
 
 type PageOpenGraphOptions = {
   title: string;
