@@ -44,7 +44,7 @@ function Logo() {
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const conversion = pathname === "/website-check";
+  const conversion = pathname === "/festpreis";
   const [open, setOpen] = useState(false);
   const closeMobileMenu = () => setOpen(false);
 

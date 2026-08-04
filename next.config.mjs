@@ -30,6 +30,11 @@ const nextConfig = {
         destination: "https://evglab.com/:path*",
         permanent: true,
       },
+      {
+        source: "/website-check",
+        destination: "/festpreis",
+        permanent: true,
+      },
       // Legacy URLs still crawled by Google Search Console
       {
         source: "/loesungen/biergarten-event-marketing",

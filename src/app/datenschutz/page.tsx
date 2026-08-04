@@ -267,7 +267,7 @@ export default function Datenschutz() {
         <LegalText>
           Wenn du der Kategorie „Marketing“ zustimmst, setzen wir den Meta Pixel (Meta Platforms
           Ireland Limited) ein. Damit messen wir Seitenaufrufe und Conversions (z. B. das Event
-          „Lead“ nach Absenden des Website-Check-Formulars), um Meta-Anzeigen auszuspielen und zu
+          „Lead“ nach Absenden des Festpreis-Formulars), um Meta-Anzeigen auszuspielen und zu
           optimieren. Ohne deine Zustimmung wird der Pixel nicht geladen.
         </LegalText>
         <LegalText>

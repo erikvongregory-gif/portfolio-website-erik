@@ -22,7 +22,7 @@ import {
 } from "@/resources";
 import styles from "./page.module.scss";
 
-const PAGE_PATH = "/website-check";
+const PAGE_PATH = "/festpreis";
 const PAGE_TITLE = "Was kostet eine Website ohne Template-Look?";
 const PAGE_DESCRIPTION =
   "Festpreis-Angebot in 24h: Individuelle Websites aus Landsberg am Lech – kein Baukasten, kein Theme. Für Betriebe in Bayern.";

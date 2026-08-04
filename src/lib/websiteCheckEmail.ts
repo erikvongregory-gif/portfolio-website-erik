@@ -190,7 +190,7 @@ ${CONTACT_PHONE_DISPLAY}
           <tr>
             <td align="center" style="padding:24px 8px 0 8px;color:#404040;font-size:11px;line-height:1.5;">
               Du bekommst diese Mail, weil du auf
-              <a href="${SITE_URL}/website-check" style="color:#525252;text-decoration:underline;">evglab.com</a>
+              <a href="${SITE_URL}/festpreis" style="color:#525252;text-decoration:underline;">evglab.com</a>
               ein Festpreis-Angebot angefragt hast.
             </td>
           </tr>
