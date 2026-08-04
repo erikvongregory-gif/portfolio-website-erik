@@ -26,9 +26,17 @@ import {
   formatPriceRange,
 } from "@/lib/calculateQuote";
 import { requestQuoteConsultation } from "@/lib/quoteContact";
+import { WHATSAPP_PARTNER_URL } from "@/lib/contact";
 import styles from "./PriceCalculator.module.scss";
 
 const MAX_PAGES = 20;
+const PARTNER_COMMISSION = 0.3;
+
+type PriceCalculatorProps = {
+  /** Partner page: show 30% provision + WhatsApp CTA, optionally open by default. */
+  variant?: "default" | "partner";
+  defaultOpen?: boolean;
+};
 
 type SelectCardProps = {
   selected: boolean;
@@ -107,11 +115,22 @@ function StepBlock({ step, title, hint, children }: {
   );
 }
 
-export function PriceCalculator() {
-  const [open, setOpen] = useState(false);
+export function PriceCalculator({
+  variant = "default",
+  defaultOpen = false,
+}: PriceCalculatorProps = {}) {
+  const isPartner = variant === "partner";
+  const [open, setOpen] = useState(defaultOpen || isPartner);
   const [state, setState] = useState<QuoteState>(DEFAULT_QUOTE_STATE);
 
   const range = useMemo(() => calculateQuote(state), [state]);
+  const commission = useMemo(
+    () => ({
+      min: Math.round(range.min * PARTNER_COMMISSION),
+      max: Math.round(range.max * PARTNER_COMMISSION),
+    }),
+    [range],
+  );
   const addonStep = state.base === "website" ? "Schritt 3" : "Schritt 2";
 
   const setBase = (base: QuoteBase) => {
@@ -146,26 +165,32 @@ export function PriceCalculator() {
   };
 
   return (
-    <Column fillWidth gap="16" paddingTop="8">
-      <Reveal>
-        <Button
-          variant="secondary"
-          size="m"
-          fillWidth
-          arrowIcon
-          onClick={() => setOpen((value) => !value)}
-          aria-expanded={open}
-        >
-          {open ? "Rechner schließen" : "Individuell berechnen"}
-        </Button>
-      </Reveal>
+    <Column fillWidth gap="16" paddingTop={isPartner ? undefined : "8"}>
+      {!isPartner && (
+        <Reveal>
+          <Button
+            variant="secondary"
+            size="m"
+            fillWidth
+            arrowIcon
+            onClick={() => setOpen((value) => !value)}
+            aria-expanded={open}
+          >
+            {open ? "Rechner schließen" : "Individuell berechnen"}
+          </Button>
+        </Reveal>
+      )}
 
       <Column
         fillWidth
-        className={`${styles.collapse} ${open ? styles.collapseOpen : ""}`}
-        aria-hidden={!open}
+        className={
+          isPartner
+            ? undefined
+            : `${styles.collapse} ${open ? styles.collapseOpen : ""}`
+        }
+        aria-hidden={isPartner ? undefined : !open}
       >
-        <Column className={styles.collapseInner} fillWidth>
+        <Column className={isPartner ? undefined : styles.collapseInner} fillWidth>
           <SpotlightCard
             tilt={false}
             glow={false}
@@ -176,7 +201,9 @@ export function PriceCalculator() {
             padding="32"
             gap="32"
             role="region"
-            aria-label="Individueller Preisrechner"
+            aria-label={
+              isPartner ? "Preis- und Provisionsrechner" : "Individueller Preisrechner"
+            }
             className={styles.panel}
           >
             <StepBlock step="Schritt 1" title="Basis wählen">
@@ -280,7 +307,7 @@ export function PriceCalculator() {
                 align="center"
               >
                 <Text variant="label-default-s" onBackground="neutral-weak">
-                  Geschätzt
+                  {isPartner ? "Geschätzter Projektpreis" : "Geschätzt"}
                 </Text>
                 <Text
                   variant="display-strong-s"
@@ -291,19 +318,60 @@ export function PriceCalculator() {
                 >
                   {formatPriceRange(range)}
                 </Text>
+                {isPartner && (
+                  <Column
+                    fillWidth
+                    gap="4"
+                    paddingTop="12"
+                    horizontal="center"
+                    align="center"
+                    style={{
+                      borderTop: "1px solid var(--neutral-alpha-weak)",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    <Text variant="label-default-s" onBackground="neutral-weak">
+                      Deine Provision (30 %)
+                    </Text>
+                    <Text
+                      variant="heading-strong-l"
+                      align="center"
+                      aria-live="polite"
+                      style={{ letterSpacing: "-0.02em", color: "#2f5c3a" }}
+                    >
+                      {formatPriceRange(commission)}
+                    </Text>
+                  </Column>
+                )}
                 <Text
                   variant="body-default-s"
                   onBackground="neutral-weak"
                   align="center"
                   wrap="balance"
                 >
-                  Unverbindliche Richtpreise. Im Erstgespräch klären wir den genauen Umfang.
+                  {isPartner
+                    ? "Richtwerte zum Weitergeben. Der Festpreis kommt von mir – schriftlich."
+                    : "Unverbindliche Richtpreise. Im Erstgespräch klären wir den genauen Umfang."}
                 </Text>
               </Column>
 
-              <Button variant="primary" size="m" fillWidth arrowIcon onClick={handleConsultation}>
-                Kostenloses Erstgespräch anfragen
-              </Button>
+              {isPartner ? (
+                <Button
+                  href={WHATSAPP_PARTNER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="primary"
+                  size="m"
+                  fillWidth
+                  prefixIcon="whatsapp"
+                >
+                  Lead per WhatsApp schicken
+                </Button>
+              ) : (
+                <Button variant="primary" size="m" fillWidth arrowIcon onClick={handleConsultation}>
+                  Kostenloses Erstgespräch anfragen
+                </Button>
+              )}
             </Column>
           </SpotlightCard>
         </Column>

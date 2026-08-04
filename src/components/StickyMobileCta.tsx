@@ -24,19 +24,25 @@ type StickyMobileCtaProps = {
   buttonLabel?: string;
   /** If set, primary button scrolls/links here instead of opening the contact dialog. */
   href?: string;
+  /** Override WhatsApp link (e.g. partner prefills). */
+  whatsappHref?: string;
 };
 
 export function StickyMobileCta({
   label = "Kostenloses Erstgespräch",
   buttonLabel = "Anfragen",
   href,
+  whatsappHref = WHATSAPP_URL,
 }: StickyMobileCtaProps = {}) {
   const [visible, setVisible] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
 
   useEffect(() => {
     const hero = document.querySelector("[data-sticky-cta-hero]");
-    const kontakt = document.getElementById("kontakt") ?? document.getElementById("check");
+    const kontakt =
+      document.getElementById("kontakt") ??
+      document.getElementById("check") ??
+      document.getElementById("abschluss");
     if (!hero || !kontakt) return;
 
     const mq = window.matchMedia(MOBILE_MQ);
@@ -90,7 +96,7 @@ export function StickyMobileCta({
           </Text>
           <Row gap="8" vertical="center" style={{ flexShrink: 0 }}>
             <IconButton
-              href={WHATSAPP_URL}
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
               icon="whatsapp"
@@ -100,7 +106,15 @@ export function StickyMobileCta({
               aria-label="Per WhatsApp schreiben"
             />
             {href ? (
-              <Button href={href} variant="primary" size="m" arrowIcon>
+              <Button
+                href={href}
+                variant="primary"
+                size="m"
+                arrowIcon
+                {...(href.startsWith("http")
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+              >
                 {buttonLabel}
               </Button>
             ) : (

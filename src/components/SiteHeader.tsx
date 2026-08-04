@@ -44,7 +44,7 @@ function Logo() {
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const conversion = pathname === "/festpreis";
+  const hideHeader = pathname === "/festpreis" || pathname === "/partner";
   const [open, setOpen] = useState(false);
   const closeMobileMenu = () => setOpen(false);
 
@@ -70,7 +70,7 @@ export function SiteHeader() {
     };
   }, [open]);
 
-  if (conversion) {
+  if (hideHeader) {
     return null;
   }
 

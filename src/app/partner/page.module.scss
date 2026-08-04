@@ -1,0 +1,349 @@
+.page {
+  isolation: isolate;
+  background: #f4f2ef;
+  color: #1a1a18;
+}
+
+/* Asymmetric partner hero — not a festpreis clone */
+.hero {
+  position: relative;
+  background:
+    radial-gradient(ellipse 55% 45% at 8% 12%, rgba(245, 228, 166, 0.45), transparent 55%),
+    radial-gradient(ellipse 40% 35% at 92% 18%, rgba(168, 212, 230, 0.28), transparent 50%),
+    #f4f2ef;
+  overflow: hidden;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1.75rem;
+  width: 100%;
+  max-width: 58rem;
+  margin-inline: auto;
+  padding: 3.5rem 1.5rem 2rem;
+}
+
+.rateCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  min-height: 14rem;
+  padding: 1.75rem 1.5rem;
+  border-radius: 2rem;
+  background: #fffcf8;
+  border: 1.5px solid rgba(22, 21, 15, 0.1);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    0 18px 40px -28px rgba(22, 21, 15, 0.4);
+  overflow: hidden;
+}
+
+.rateCard::before {
+  content: "";
+  position: absolute;
+  inset: auto -20% -35% auto;
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74, 124, 89, 0.18), transparent 70%);
+  pointer-events: none;
+}
+
+.ratePercent {
+  position: relative;
+  font-size: clamp(4.5rem, 18vw, 6.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  font-weight: 700;
+  color: #2f5c3a !important;
+}
+
+.rateLabel {
+  position: relative;
+  max-width: 12rem;
+  color: #4a4a44 !important;
+}
+
+.heroCopy {
+  gap: 0.85rem;
+}
+
+.heroExamples {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.25rem;
+}
+
+.heroExample {
+  padding: 0.75rem 1rem;
+  border-radius: 1.25rem;
+  background: rgba(255, 252, 248, 0.85);
+  border: 1px solid rgba(22, 21, 15, 0.08);
+}
+
+.heroCtas {
+  margin-top: 0.35rem;
+}
+
+.heroBand {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  aspect-ratio: 1440 / 280;
+  max-height: 11rem;
+  overflow: hidden;
+  pointer-events: none;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 28%, #000 100%);
+}
+
+.heroSun {
+  position: absolute;
+  top: 1rem;
+  right: 4%;
+  z-index: 0;
+  width: min(28vw, 7.5rem);
+  height: auto;
+  pointer-events: none;
+  filter: saturate(1.15) brightness(1.12);
+  opacity: 0.9;
+}
+
+.followMarker {
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.lede {
+  color: #3a3a36 !important;
+}
+
+.muted {
+  color: #4a4a44 !important;
+}
+
+.sectionTitle {
+  color: #16150f !important;
+}
+
+.illustCard {
+  position: relative;
+  background: #fffcf8;
+  border: 1.5px solid rgba(22, 21, 15, 0.1);
+  border-radius: 1.75rem;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    0 10px 28px -22px rgba(22, 21, 15, 0.28);
+  overflow: hidden;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.illustCard:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    0 18px 36px -24px rgba(22, 21, 15, 0.35);
+}
+
+.illustCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4a7c59 0%, #f5e4a6 55%, #6ba3c4 100%);
+  opacity: 0.85;
+}
+
+.band,
+.bandAlt,
+.bandCta {
+  position: relative;
+  background: #f4f2ef !important;
+}
+
+.bandAlt {
+  background: #ebe7df !important;
+}
+
+.bandAlt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(245, 228, 166, 0.28), transparent 60%),
+    radial-gradient(ellipse 40% 35% at 8% 80%, rgba(168, 212, 230, 0.18), transparent 55%);
+}
+
+.bandCta {
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(245, 228, 166, 0.35), transparent 55%),
+    #f4f2ef !important;
+}
+
+.checklist {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.checkItem {
+  padding: 0.85rem 1rem;
+  border-radius: 1.5rem;
+  background: #fffcf8;
+  border: 1px solid rgba(22, 21, 15, 0.08);
+}
+
+.dontItem {
+  padding: 0.85rem 1rem;
+  border-radius: 1.5rem;
+  background: #fffcf8;
+  border: 1px solid rgba(22, 21, 15, 0.08);
+}
+
+.productPrice {
+  color: #2f5c3a !important;
+}
+
+.accentRule {
+  width: 2.5rem;
+  height: 3px;
+  border-radius: 999px;
+  background: #4a7c59;
+}
+
+.headline {
+  max-width: 14ch;
+  color: #16150f !important;
+}
+
+.headlineAccent {
+  color: #2f5c3a !important;
+}
+
+.calcWrap {
+  width: 100%;
+}
+
+:global([data-theme="dark"]) .page,
+:global([data-theme="dark"]) .hero {
+  background: #121410;
+  color: #f2f0ea;
+}
+
+:global([data-theme="dark"]) .hero {
+  background:
+    radial-gradient(ellipse 55% 45% at 8% 12%, rgba(74, 124, 89, 0.22), transparent 55%),
+    radial-gradient(ellipse 40% 35% at 92% 18%, rgba(107, 163, 196, 0.12), transparent 50%),
+    #121410;
+}
+
+:global([data-theme="dark"]) .rateCard,
+:global([data-theme="dark"]) .heroExample {
+  background: #1a1c18;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+:global([data-theme="dark"]) .ratePercent {
+  color: #8fbf9a !important;
+}
+
+:global([data-theme="dark"]) .lede,
+:global([data-theme="dark"]) .muted,
+:global([data-theme="dark"]) .rateLabel {
+  color: #c8c5bc !important;
+}
+
+:global([data-theme="dark"]) .headline,
+:global([data-theme="dark"]) .sectionTitle {
+  color: #f5f3ee !important;
+}
+
+:global([data-theme="dark"]) .headlineAccent,
+:global([data-theme="dark"]) .productPrice {
+  color: #8fbf9a !important;
+}
+
+:global([data-theme="dark"]) .illustCard,
+:global([data-theme="dark"]) .checkItem,
+:global([data-theme="dark"]) .dontItem {
+  background: #1a1c18 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+:global([data-theme="dark"]) .band,
+:global([data-theme="dark"]) .bandAlt,
+:global([data-theme="dark"]) .bandCta {
+  background: #121410 !important;
+}
+
+:global([data-theme="dark"]) .bandAlt {
+  background: #171914 !important;
+}
+
+:global([data-theme="dark"]) .accentRule {
+  background: #8fbf9a;
+}
+
+@media (min-width: 768px) {
+  .heroInner {
+    grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
+    align-items: end;
+    gap: 2.5rem;
+    padding: 4rem 2rem 2.5rem;
+  }
+
+  .heroExamples {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .products {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .rules {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .heroBand {
+    max-height: 13rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .headline {
+    font-size: clamp(2.2rem, 2.8vw, 3rem) !important;
+    line-height: 1.05 !important;
+  }
+
+  .rateCard {
+    min-height: 18rem;
+    padding: 2rem 1.75rem;
+  }
+}
