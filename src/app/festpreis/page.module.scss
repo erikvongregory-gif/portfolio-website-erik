@@ -14,6 +14,41 @@
   z-index: 1;
 }
 
+/* Mobile: sun in the upper hero (like the old full-bleed atmosphere) */
+.heroSky {
+  display: none;
+}
+
+/* Mobile: full-bleed illustration band (no side padding on hero) */
+.atmosphereSlot {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  aspect-ratio: 1440 / 460;
+  height: auto;
+  margin-top: 0.25rem;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.heroFootDesktop {
+  display: none;
+}
+
+.heroFootMobile {
+  display: inline-block;
+  margin-top: 0.75rem;
+}
+
+.followMarker {
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .heroCopy {
   padding: 0.75rem 1rem;
   border-radius: var(--radius-l);
@@ -21,6 +56,27 @@
 }
 
 @media (max-width: 1024px) {
+  .heroSky {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  .heroSun {
+    position: absolute;
+    top: 1.5%;
+    right: 1%;
+    z-index: 6;
+    width: min(42vw, 10rem);
+    height: auto;
+    overflow: visible;
+    pointer-events: none;
+    filter: saturate(1.2) brightness(1.18);
+  }
+
   .heroCopy {
     /* Soft text shadow instead of opaque wash covering sun/birds */
     padding: 0.5rem 0.25rem;
@@ -32,7 +88,6 @@
   }
 
   .heroInner {
-    /* Let sky art show in the top corners around the copy */
     padding-top: 0.5rem;
   }
 }
@@ -293,6 +348,31 @@
     padding-top: 2.5rem !important;
     padding-bottom: 2rem !important;
     overflow: hidden;
+  }
+
+  .atmosphereSlot {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: auto;
+    height: auto;
+    aspect-ratio: unset;
+    margin-top: 0;
+    margin-left: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .heroSky {
+    display: none !important;
+  }
+
+  .heroFootMobile {
+    display: none !important;
+  }
+
+  .heroFootDesktop {
+    display: inline-block;
   }
 
   .heroInner {

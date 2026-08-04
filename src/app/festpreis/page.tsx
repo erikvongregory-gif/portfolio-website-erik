@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Button, Column, Heading, Row, Tag, Text } from "@once-ui-system/core";
 import {
+  FollowBirds,
   LandingAtmosphere,
+  LandingHeroSkyDecor,
+  LandingSun,
   MotifBirds,
   MotifCheck,
   MotifDivider,
@@ -168,13 +171,15 @@ export default function WebsiteCheckPage() {
         data-sticky-cta-hero
         fillWidth
         horizontal="center"
-        paddingX="l"
         paddingTop="48"
         paddingBottom="64"
         m={{ paddingTop: "40", paddingBottom: "48" }}
         position="relative"
       >
-        <LandingAtmosphere />
+        <div className={styles.heroSky} aria-hidden="true">
+          <LandingHeroSkyDecor />
+          <LandingSun className={styles.heroSun} idPrefix="evg-hero" />
+        </div>
 
         <Column
           className={styles.heroInner}
@@ -184,6 +189,7 @@ export default function WebsiteCheckPage() {
           horizontal="center"
           vertical="center"
           position="relative"
+          paddingX="l"
           s={{ maxWidth: 36, gap: "24" }}
         >
           <Reveal y={12}>
@@ -235,7 +241,27 @@ export default function WebsiteCheckPage() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <Text className={styles.heroFoot} variant="label-default-s" align="center">
+            <Text
+              className={`${styles.heroFoot} ${styles.heroFootDesktop}`}
+              variant="label-default-s"
+              align="center"
+            >
+              Für Unternehmen, die mehr wollen als Baukasten und Template.
+            </Text>
+          </Reveal>
+        </Column>
+
+        <div className={styles.atmosphereSlot} aria-hidden="true">
+          <LandingAtmosphere />
+        </div>
+
+        <Column fillWidth horizontal="center" paddingX="l">
+          <Reveal delay={0.1}>
+            <Text
+              className={`${styles.heroFoot} ${styles.heroFootMobile}`}
+              variant="label-default-s"
+              align="center"
+            >
               Für Unternehmen, die mehr wollen als Baukasten und Template.
             </Text>
           </Reveal>
@@ -278,6 +304,8 @@ export default function WebsiteCheckPage() {
         </Reveal>
         <MotifDivider />
       </Section>
+      {/* Native marker — FollowBirds activates after this scrolls past */}
+      <div id="warum-follow-start" aria-hidden="true" className={styles.followMarker} />
 
       <Section id="leistung" className={styles.bandAlt} gap="32" maxWidth={48} paddingY="80">
         <Reveal>
@@ -528,6 +556,7 @@ export default function WebsiteCheckPage() {
         </Column>
       </Section>
 
+      <FollowBirds />
       <StickyMobileCta
         label="Festpreis in 24h"
         buttonLabel="Angebot anfordern"

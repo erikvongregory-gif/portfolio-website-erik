@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const adsDir = path.join(root, "public", "ads");
 const thumbsDir = path.join(adsDir, "thumbs");
+const fontsDir = path.join(adsDir, "fonts");
 fs.mkdirSync(thumbsDir, { recursive: true });
 
 const HIDE_COOKIES = `
@@ -44,7 +45,6 @@ const sites = [
         /alle akzeptieren/i,
         /accept all/i,
       ]);
-      // Nie „Cookie-Einstellungen“ klicken
       await page.waitForTimeout(500);
       await page.addStyleTag({ content: HIDE_COOKIES });
     },
@@ -55,7 +55,6 @@ const sites = [
     dismiss: async (page) => {
       await page.waitForLoadState("networkidle").catch(() => {});
       await page.waitForTimeout(1500);
-      // Splash tippen → Altersgate (Desktop-Mitte)
       const vp = page.viewportSize() || { width: 1440, height: 900 };
       await page.locator("body").click({
         position: { x: Math.floor(vp.width / 2), y: Math.floor(vp.height / 2) },
@@ -90,7 +89,6 @@ const sites = [
 
 async function captureThumbs(browser) {
   for (const site of sites) {
-    // Desktop-Viewport — Norddorf zeigt Website-/Desktop-Referenzen, keine Mobile-Screens
     const page = await browser.newPage({
       viewport: { width: 1440, height: 900 },
       deviceScaleFactor: 2,
@@ -102,7 +100,6 @@ async function captureThumbs(browser) {
       await page.waitForTimeout(600);
       await page.evaluate(() => window.scrollTo(0, 0));
       const out = path.join(thumbsDir, `${site.id}.png`);
-      // Nur oberer Hero-Bereich (saubere Desktop-Vorschau)
       await page.screenshot({
         path: out,
         type: "png",
@@ -123,26 +120,32 @@ function adHtml({ format, thumbFiles }) {
   const W = 1080;
   const H = isStory ? 1920 : 1350;
 
-  // Norddorf: Headline dominiert — ~23–45% der Höhe
-  const padTop = isStory ? Math.round(H * 0.14) : Math.round(H * 0.06);
-  const padBottom = isStory ? Math.round(H * 0.30) : Math.round(H * 0.16);
-  const gapAfterHeadline = isStory ? 36 : 28;
-  // Norddorf: Karten ~12% der Höhe, Gruppe ~62% der Breite
-  const cardW = isStory ? 268 : 240;
-  const cardH = isStory ? 220 : 196;
-  const cardGap = isStory ? 16 : 14;
-  const fontSize = isStory ? 112 : 84;
-  const copyW = isStory ? 900 : 720;
+  const padTop = isStory ? Math.round(H * 0.16) : Math.round(H * 0.07);
+  const padBottom = isStory ? Math.round(H * 0.28) : Math.round(H * 0.15);
+  const gapAfterHeadline = isStory ? 40 : 30;
+  // Norddorf: Hochformat-Karten
+  const cardW = isStory ? 236 : 210;
+  const cardH = isStory ? 310 : 276;
+  const cardGap = isStory ? 14 : 12;
+  const fontSize = isStory ? 100 : 76;
+  const copyW = isStory ? 920 : 720;
 
-  const thumbs = thumbFiles
+  const thumbs = [
+    { file: thumbFiles[0], pos: "top center" }, // Da Peppe – Logo mittig
+    { file: thumbFiles[1], pos: "left top" }, // Lünebräu – Headline links
+    { file: thumbFiles[2], pos: "left top" }, // Salon Liora – „Schönheit ist Handwerk“ links
+  ]
     .map(
-      (f) => `
+      ({ file, pos }) => `
       <div class="card">
-        <img src="file://${f.replace(/\\/g, "/")}" alt="" />
+        <img src="file://${file.replace(/\\/g, "/")}" alt="" style="object-position: ${pos};" />
         <div class="fade" aria-hidden="true"></div>
       </div>`,
     )
     .join("");
+
+  const playfairBold = `file://${path.join(fontsDir, "Playfair-ExtraBold.woff2").replace(/\\/g, "/")}`;
+  const playfairItalic = `file://${path.join(fontsDir, "Playfair-BoldItalic.woff2").replace(/\\/g, "/")}`;
 
   const rowW = cardW * 3 + cardGap * 2;
 
@@ -151,13 +154,26 @@ function adHtml({ format, thumbFiles }) {
 <head>
 <meta charset="utf-8" />
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,600;1,700&family=Geist:wght@500;600&display=swap');
+  @font-face {
+    font-family: "AdDisplay";
+    src: url("${playfairBold}") format("woff2");
+    font-weight: 800;
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "AdDisplay";
+    src: url("${playfairItalic}") format("woff2");
+    font-weight: 700;
+    font-style: italic;
+    font-display: block;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     width: ${W}px; height: ${H}px; overflow: hidden;
     background: #f7f6f3;
-    color: #16150f;
-    font-family: Geist, "Helvetica Neue", Arial, sans-serif;
+    color: #111;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
   body::before {
@@ -181,24 +197,22 @@ function adHtml({ format, thumbFiles }) {
     align-items: center;
     gap: ${gapAfterHeadline}px;
   }
-  .copy {
-    text-align: center;
-    width: ${copyW}px;
-  }
+  .copy { text-align: center; width: ${copyW}px; }
   h1 {
-    font-family: "Playfair Display", "Times New Roman", Georgia, serif;
+    font-family: "AdDisplay", Georgia, "Times New Roman", serif;
     font-weight: 800;
+    font-style: normal;
     font-size: ${fontSize}px;
-    line-height: 0.96;
-    letter-spacing: -0.03em;
+    line-height: 0.94;
+    letter-spacing: -0.02em;
     color: #111111;
   }
   h1 .line { display: block; }
   h1 .accent {
     color: #2a5236;
+    font-family: "AdDisplay", Georgia, serif;
     font-style: italic;
     font-weight: 700;
-    letter-spacing: -0.02em;
   }
   .refs {
     display: flex;
@@ -219,12 +233,10 @@ function adHtml({ format, thumbFiles }) {
     border-radius: 8px;
     overflow: hidden;
     background: #ebe9e4;
-    /* Soft glow wie Norddorf — nicht harter Schatten */
     box-shadow:
       0 0 0 1px rgba(22,21,15,0.04),
-      0 8px 24px rgba(22,21,15,0.08),
+      0 10px 28px rgba(22,21,15,0.09),
       0 2px 6px rgba(22,21,15,0.04);
-    filter: saturate(0.94) contrast(0.98);
   }
   .card img {
     width: 100%;
@@ -235,16 +247,16 @@ function adHtml({ format, thumbFiles }) {
   }
   .card .fade {
     position: absolute;
-    left: -8%; right: -8%; bottom: -2%;
-    height: 48%;
+    left: -10%; right: -10%; bottom: -4%;
+    height: 50%;
     background: linear-gradient(
       180deg,
       rgba(247,246,243,0) 0%,
-      rgba(247,246,243,0.45) 45%,
-      rgba(247,246,243,0.92) 78%,
+      rgba(247,246,243,0.35) 38%,
+      rgba(247,246,243,0.9) 78%,
       rgba(247,246,243,1) 100%
     );
-    filter: blur(6px);
+    filter: blur(7px);
     pointer-events: none;
   }
   .pill-wrap {
@@ -297,13 +309,17 @@ async function renderAd(browser, format, thumbFiles) {
   await page.goto(`file://${tmp.replace(/\\/g, "/")}`, { waitUntil: "networkidle" });
   await page.evaluate(async () => {
     await document.fonts.ready;
-    // Force-load Playfair cuts used in the ad
     await Promise.all([
-      document.fonts.load('800 112px "Playfair Display"'),
-      document.fonts.load('italic 700 112px "Playfair Display"'),
+      document.fonts.load('800 104px "AdDisplay"'),
+      document.fonts.load('italic 700 104px "AdDisplay"'),
     ]);
   });
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(300);
+  const used = await page.evaluate(() => {
+    const h1 = document.querySelector("h1");
+    return h1 ? getComputedStyle(h1).fontFamily : "";
+  });
+  console.log("font used:", used);
   const out = path.join(
     adsDir,
     format === "story" ? "evglab-ad-story-9x16.png" : "evglab-ad-feed-4x5.png",

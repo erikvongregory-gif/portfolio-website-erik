@@ -3,7 +3,7 @@ import "@once-ui-system/core/css/tokens.css";
 import "lenis/dist/lenis.css";
 import "@/resources/custom.css";
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import classNames from "classnames";
 
 import { Column, Flex } from "@once-ui-system/core";
@@ -23,6 +23,15 @@ import { fonts, style, dataStyle, baseURL, createPageOpenGraph, createPageTwitte
 const title = "Webdesign Landsberg am Lech · Erik EvgLab";
 const description =
   "Webdesign & Webentwicklung aus Landsberg am Lech. Individuelle Websites und Landingpages mit Charakter, die Anfragen bringen.";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f3f2f0" },
+    { media: "(prefers-color-scheme: dark)", color: "#121410" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseURL),

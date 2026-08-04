@@ -5,7 +5,8 @@ export { HeroMarquee } from "@/components/HeroMarquee";
 export { HeroProof } from "@/components/HeroProof";
 export { CtaProof } from "@/components/CtaProof";
 export { WebsiteCheckForm } from "@/components/WebsiteCheckForm";
-export { LandingAtmosphere } from "@/components/LandingAtmosphere";
+export { LandingAtmosphere, LandingHeroSkyDecor, LandingSun } from "@/components/LandingAtmosphere";
+export { FollowBirds } from "@/components/FollowBirds";
 export {
   MotifBirds,
   MotifCheck,

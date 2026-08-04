@@ -1,0 +1,85 @@
+.root {
+  position: fixed;
+  top: 5.25rem;
+  right: 1rem;
+  z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(calc(10px + var(--follow-x, 0px)), 0, 0);
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease,
+    transform 0.3s ease-out;
+  filter: drop-shadow(0 1px 1px rgba(244, 242, 239, 0.95));
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(var(--follow-x, 0px), 0, 0);
+}
+
+.bird {
+  display: block;
+  overflow: visible;
+}
+
+.bird:nth-child(2) {
+  margin-top: 0.4rem;
+}
+
+.bird:nth-child(3) {
+  margin-top: 0.15rem;
+}
+
+.wingL,
+.wingR {
+  transform-box: fill-box;
+  transform-origin: right center;
+  animation: flapL 0.42s ease-in-out infinite alternate;
+}
+
+.wingR {
+  transform-origin: left center;
+  animation-name: flapR;
+}
+
+.bird:nth-child(2) .wingL,
+.bird:nth-child(2) .wingR {
+  animation-duration: 0.36s;
+}
+
+.bird:nth-child(3) .wingL,
+.bird:nth-child(3) .wingR {
+  animation-duration: 0.5s;
+  animation-delay: 0.08s;
+}
+
+@keyframes flapL {
+  from {
+    transform: rotate(-8deg);
+  }
+  to {
+    transform: rotate(30deg);
+  }
+}
+
+@keyframes flapR {
+  from {
+    transform: rotate(8deg);
+  }
+  to {
+    transform: rotate(-30deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wingL,
+  .wingR {
+    animation: none;
+  }
+}
