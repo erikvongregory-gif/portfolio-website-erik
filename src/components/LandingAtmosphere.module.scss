@@ -96,21 +96,6 @@
     bottom: 0;
     width: 100%;
   }
-
-  .barnImg {
-    bottom: 1.25rem;
-    width: min(4.25rem, 18vw);
-  }
-
-  .deerImgA {
-    bottom: 1.1rem;
-    width: min(2.4rem, 10vw);
-  }
-
-  .deerImgB {
-    bottom: 0.95rem;
-    width: min(1.9rem, 8vw);
-  }
 }
 
 .cloud {
@@ -179,6 +164,42 @@
   animation-delay: -18s;
 }
 
+@media (min-width: 1025px) {
+  .landscape {
+    /* Full-bleed behind the hero — spans the viewport edge to edge */
+    height: 100%;
+    max-height: none;
+  }
+
+  .sun {
+    top: 5%;
+    right: 4%;
+    width: min(20vw, 13rem);
+  }
+
+  .cloudA {
+    top: 9%;
+    left: 5%;
+    width: min(15vw, 12rem);
+    opacity: 0.9;
+  }
+
+  .cloudB {
+    top: 14%;
+    right: 16%;
+    width: min(12vw, 9.5rem);
+    opacity: 0.75;
+  }
+
+  .flockA {
+    top: 11%;
+  }
+
+  .flockB {
+    top: 18%;
+  }
+}
+
 .bird {
   width: 1.55rem;
   height: auto;
@@ -236,45 +257,24 @@
 }
 
 .barnImg {
-  position: absolute;
-  z-index: 5;
-  /* On the near shore, in a clearing — not floating in the peaks */
-  left: 52%;
-  bottom: 5.5%;
-  width: min(5.25rem, 11vw);
-  height: auto;
-  object-fit: contain;
   pointer-events: none;
   filter: drop-shadow(0 2px 4px rgba(22, 21, 15, 0.14));
 }
 
 .deerImg {
-  position: absolute;
-  z-index: 6;
-  width: auto;
-  height: auto;
-  object-fit: contain;
   pointer-events: none;
   opacity: 0.72;
   filter: drop-shadow(0 1px 1px rgba(22, 21, 15, 0.1));
+  transform-box: fill-box;
+  transform-origin: center bottom;
 }
 
 .deerImgA {
-  /* Open meadow left of center, clear of the pine cluster */
-  left: 26%;
-  bottom: 5%;
-  width: min(2.75rem, 6vw);
-  height: auto;
   animation: deerSway 36s ease-in-out infinite alternate;
 }
 
 .deerImgB {
-  left: 34%;
-  bottom: 4.5%;
-  width: min(2.15rem, 4.8vw);
-  height: auto;
   opacity: 0.58;
-  transform: scaleX(-1);
   animation: deerSwayFlip 30s ease-in-out infinite alternate;
   animation-delay: -8s;
 }
@@ -336,8 +336,8 @@
 }
 
 .heronCatch {
-  opacity: 0;
-  animation: heronCatchShow 16s ease-in-out infinite;
+  /* Opacity driven by SMIL so it stays synced with the dive (no fish on approach) */
+  pointer-events: none;
 }
 
 .splashRing {
@@ -512,8 +512,8 @@
   }
   /* Tuck for dive */
   30%,
-  44% {
-    transform: rotate(48deg) scaleY(0.55);
+  44.5% {
+    transform: rotate(36deg) scaleY(0.6);
   }
   /* Open again on climb */
   56% {
@@ -549,21 +549,6 @@
   100% {
     transform: scaleY(1);
     opacity: 0.85;
-  }
-}
-
-@keyframes heronCatchShow {
-  0%,
-  44.5% {
-    opacity: 0;
-  }
-  46%,
-  90% {
-    opacity: 1;
-  }
-  96%,
-  100% {
-    opacity: 0;
   }
 }
 
@@ -617,7 +602,6 @@
   .heroFlock,
   .heronWing,
   .heronLegs,
-  .heronCatch,
   .splashRing,
   .splashBloom {
     animation: none;

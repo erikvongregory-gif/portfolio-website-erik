@@ -31,11 +31,11 @@
   pointer-events: none;
 }
 
-.heroFootDesktop {
+.heroFoot.heroFootDesktop {
   display: none;
 }
 
-.heroFootMobile {
+.heroFoot.heroFootMobile {
   display: inline-block;
   margin-top: 0.75rem;
 }
@@ -363,15 +363,30 @@
     pointer-events: none;
   }
 
+  /* Soft fade so the scene sits under copy without a hard cut */
+  .atmosphereSlot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(244, 242, 239, 0.35) 0%,
+      rgba(244, 242, 239, 0.08) 28%,
+      transparent 52%
+    );
+  }
+
   .heroSky {
     display: none !important;
   }
 
-  .heroFootMobile {
-    display: none !important;
+  .heroFoot.heroFootMobile {
+    display: none;
   }
 
-  .heroFootDesktop {
+  .heroFoot.heroFootDesktop {
     display: inline-block;
   }
 

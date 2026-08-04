@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./LandingAtmosphere.module.scss";
 
 /** Animated sun — reused in hero sky + landscape band on mobile. */
@@ -123,7 +122,7 @@ export function LandingAtmosphere() {
       <svg
         className={styles.landscape}
         viewBox="0 0 1440 460"
-        preserveAspectRatio="xMidYMax meet"
+        preserveAspectRatio="xMidYMax slice"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
@@ -212,6 +211,35 @@ export function LandingAtmosphere() {
             d="M-20 464 L-20 420 C180 400 400 435 620 415 C860 390 1100 430 1460 410 L1460 464 Z"
           />
         </g>
+
+        {/* Barn + deer in viewBox space so they stay on the near shore under slice/crop */}
+        <image
+          className={styles.barnImg}
+          href="/images/landing/barn.webp"
+          x="708"
+          y="312"
+          width="102"
+          height="102"
+          preserveAspectRatio="xMidYMax meet"
+        />
+        <image
+          className={`${styles.deerImg} ${styles.deerImgA}`}
+          href="/images/landing/deer.webp"
+          x="348"
+          y="350"
+          width="56"
+          height="56"
+          preserveAspectRatio="xMidYMax meet"
+        />
+        <image
+          className={`${styles.deerImg} ${styles.deerImgB}`}
+          href="/images/landing/deer.webp"
+          x="458"
+          y="356"
+          width="44"
+          height="44"
+          preserveAspectRatio="xMidYMax meet"
+        />
 
         <g className={styles.trees}>
           <g transform="translate(36, 300) scale(1.25)">
@@ -417,7 +445,7 @@ export function LandingAtmosphere() {
           <path fill="#16150F" fillOpacity="0.26" d="M634.5 384.5 C632 384 631 385 631.5 385.8 C632.2 386.5 633.8 386.2 635 385.5 Z" />
         </g>
 
-        {/* Prey fish — swims in the lake, then yanked at the strike */}
+        {/* Prey fish — swims in the lake, snatched at the beak tip */}
         <g className={styles.preyFishG}>
           <animateTransform
             attributeName="transform"
@@ -426,14 +454,14 @@ export function LandingAtmosphere() {
             repeatCount="indefinite"
             calcMode="linear"
             keyTimes="0;0.2;0.38;0.42;0.445;0.455;1"
-            values="560 378;640 375;700 376;708 374;702 350;698 335;560 378"
+            values="560 378;640 375;700 376;708 374;700 360;560 378;560 378"
           />
           <animate
             attributeName="opacity"
             dur="16s"
             repeatCount="indefinite"
-            keyTimes="0;0.42;0.445;0.455;1"
-            values="0.88;1;0.45;0;0"
+            keyTimes="0;0.42;0.445;0.452;1"
+            values="0.88;1;1;0;0"
           />
           <ellipse cx="0" cy="0" rx="9" ry="4" fill="#2F4A56" fillOpacity="0.9" />
           <path d="M-9 0 L-15 -4 L-15 4 Z" fill="#2F4A56" fillOpacity="0.9" />
@@ -471,7 +499,7 @@ export function LandingAtmosphere() {
           />
         </g>
 
-        {/* Grey heron — dive synced to prey fish in lake coords */}
+        {/* Grey heron — glides empty-beaked, strikes with tip, then climbs with catch */}
         <g className={styles.heronG}>
           <animateTransform
             attributeName="transform"
@@ -479,8 +507,8 @@ export function LandingAtmosphere() {
             dur="16s"
             repeatCount="indefinite"
             calcMode="linear"
-            keyTimes="0;0.06;0.2;0.3;0.38;0.44;0.55;0.78;1"
-            values="1080 45;960 85;820 140;760 240;720 320;700 365;540 190;260 65;40 25"
+            keyTimes="0;0.06;0.2;0.3;0.38;0.445;0.55;0.78;1"
+            values="1080 45;960 85;820 140;780 230;760 310;748 410;540 190;260 65;40 25"
           />
           <g>
             <animateTransform
@@ -489,8 +517,8 @@ export function LandingAtmosphere() {
               dur="16s"
               repeatCount="indefinite"
               calcMode="linear"
-              keyTimes="0;0.2;0.3;0.38;0.44;0.55;0.78;1"
-              values="-18;-24;28;58;72;-6;-18;-22"
+              keyTimes="0;0.2;0.3;0.38;0.445;0.55;0.78;1"
+              values="-18;-24;18;36;48;42;-8;-18;-22"
             />
             <g transform="scale(-1 1)">
               <path
@@ -508,11 +536,20 @@ export function LandingAtmosphere() {
                 strokeLinecap="round"
               />
               <circle cx="34" cy="-4" r="3.4" fill="#5A6578" />
+              {/* Beak */}
               <path fill="#C4A35A" d="M36 -5 L54 -2 L36 1 Z" />
-              <g className={styles.heronCatch}>
-                <ellipse cx="50" cy="4" rx="7" ry="3" fill="#2F4A56" />
-                <path d="M43 4 L37 1.2 L37 6.8 Z" fill="#2F4A56" />
-                <circle cx="54" cy="3" r="0.8" fill="#FDFBF6" fillOpacity="0.8" />
+              {/* Catch sits in the beak tip — hidden until the strike (SMIL, synced) */}
+              <g className={styles.heronCatch} opacity="0">
+                <animate
+                  attributeName="opacity"
+                  dur="16s"
+                  repeatCount="indefinite"
+                  keyTimes="0;0.445;0.455;0.9;0.96;1"
+                  values="0;0;1;1;0;0"
+                />
+                <ellipse cx="50" cy="-2" rx="6.5" ry="2.6" fill="#2F4A56" />
+                <path d="M43.5 -2 L38 -4.2 L38 0.2 Z" fill="#2F4A56" />
+                <circle cx="54" cy="-2.8" r="0.75" fill="#FDFBF6" fillOpacity="0.85" />
               </g>
               <path
                 className={styles.heronLegs}
@@ -533,31 +570,6 @@ export function LandingAtmosphere() {
           />
         </g>
       </svg>
-
-      <Image
-        className={styles.barnImg}
-        src="/images/landing/barn.webp"
-        alt=""
-        width={200}
-        height={200}
-        unoptimized
-      />
-      <Image
-        className={`${styles.deerImg} ${styles.deerImgA}`}
-        src="/images/landing/deer.webp"
-        alt=""
-        width={160}
-        height={160}
-        unoptimized
-      />
-      <Image
-        className={`${styles.deerImg} ${styles.deerImgB}`}
-        src="/images/landing/deer.webp"
-        alt=""
-        width={120}
-        height={120}
-        unoptimized
-      />
     </div>
   );
 }
