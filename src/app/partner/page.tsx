@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Button, Column, Heading, Row, Tag, Text } from "@once-ui-system/core";
 import {
-  FollowBirds,
   LandingAtmosphere,
   LandingSun,
   MotifBirds,
@@ -312,7 +311,6 @@ export default function PartnerPage() {
         </Column>
         <MotifDivider />
       </Section>
-      <div id="warum-follow-start" aria-hidden="true" className={styles.followMarker} />
 
       <Section id="produkte" className={styles.bandAlt} gap="32" maxWidth={48} paddingY="80">
         <Reveal>
@@ -606,7 +604,6 @@ export default function PartnerPage() {
         </Column>
       </Section>
 
-      <FollowBirds />
       <StickyMobileCta
         label="30 % bei Auftrag"
         buttonLabel="WhatsApp"
