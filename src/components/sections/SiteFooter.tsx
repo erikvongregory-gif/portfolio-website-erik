@@ -50,7 +50,7 @@ export function SiteFooter({ minimal = false }: SiteFooterProps) {
             s={{ direction: "column", gap: "12" }}
           >
             <Text variant="body-default-xs" onBackground="neutral-weak">
-              © 2026 Erik EvgLab · Kostenloser Website-Check
+              © 2026 Erik EvgLab · Landsberg am Lech
             </Text>
             <Row gap="20" vertical="center" wrap>
               {legalLinks.map((l) => (

@@ -1,0 +1,15 @@
+---
+description: Prefer soft rounded shapes — never sharp corners/edges in UI or illustrations
+alwaysApply: true
+---
+
+# Soft Rounding Preference
+
+Erik prefers **Abrundung** over sharp edges. Apply this everywhere in this project.
+
+## Rules
+- Never use sharp 90° corners on cards, motifs, buttons, images, or illustration shapes when you can round them.
+- Prefer generous `border-radius` (Once UI `radius="l"` / `xl`, or ≥1rem). Pills/circles for badges and checks.
+- In SVG illustrations: use curves, capsules, and soft blobs — no rectangular bars with square ends, no hard cut-off silhouettes.
+- Mountain/hill motifs should feel organic (smooth foothills, rounded lake), not clipped rectangles.
+- If a shape looks “kantig”, soften it before shipping.

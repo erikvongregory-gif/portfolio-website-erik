@@ -6,16 +6,21 @@ import { buildCheckConfirmationEmail } from "@/lib/websiteCheckEmail";
 const EMAIL_FROM =
   process.env.EMAIL_FROM || `Erik von Gregory <${CONTACT_EMAIL}>`;
 
-function normalizeUrl(raw: string) {
-  const trimmed = raw.trim();
-  if (!trimmed) return "";
-  if (/^https?:\/\//i.test(trimmed)) return trimmed;
-  return `https://${trimmed}`;
-}
+type FunnelBody = {
+  email?: string;
+  name?: string;
+  company?: string;
+  goal?: string;
+  budget?: string;
+  industry?: string;
+  features?: string[];
+  phone?: string;
+  website?: string;
+};
 
 /** Sends personalized confirmation to the lead (+ optional notify to Erik). */
 export async function POST(request: Request) {
-  let body: { website?: string; email?: string };
+  let body: FunnelBody;
   try {
     body = await request.json();
   } catch {
@@ -23,20 +28,20 @@ export async function POST(request: Request) {
   }
 
   const email = (body.email ?? "").trim().toLowerCase();
-  const website = normalizeUrl(body.website ?? "");
+  const name = (body.name ?? "").trim();
+  const company = (body.company ?? "").trim();
+  const goal = (body.goal ?? "").trim();
+  const budget = (body.budget ?? "").trim();
+  const industry = (body.industry ?? "").trim();
+  const phone = (body.phone ?? "").trim();
+  const website = (body.website ?? "").trim();
+  const features = Array.isArray(body.features) ? body.features : [];
 
-  let hostOk = false;
-  try {
-    hostOk = Boolean(new URL(website).hostname.includes("."));
-  } catch {
-    hostOk = false;
-  }
-
-  if (!hostOk) {
-    return NextResponse.json({ error: "Bitte eine gültige Website-Adresse angeben." }, { status: 400 });
-  }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "Bitte eine gültige E-Mail-Adresse angeben." }, { status: 400 });
+  }
+  if (name.length < 2 || company.length < 2) {
+    return NextResponse.json({ error: "Name und Firma/Projekt fehlen." }, { status: 400 });
   }
 
   const resendKey = process.env.RESEND_API_KEY;
@@ -46,7 +51,13 @@ export async function POST(request: Request) {
   }
 
   const resend = new Resend(resendKey);
-  const mail = buildCheckConfirmationEmail(website, email);
+  const mail = buildCheckConfirmationEmail({
+    email,
+    name,
+    company,
+    goal,
+    budget,
+  });
   let confirmationSent = false;
 
   try {
@@ -66,14 +77,26 @@ export async function POST(request: Request) {
     console.error("[website-check] confirmation failed:", err);
   }
 
-  // Backup-Notify an Erik (falls Web3Forms ausfällt)
+  const featureList = features.length > 0 ? features.join(", ") : "—";
   try {
     await resend.emails.send({
       from: EMAIL_FROM,
       to: CONTACT_EMAIL,
       replyTo: email,
-      subject: `Neuer Website-Check: ${website}`,
-      text: `Neue Anfrage für den kostenlosen Website-Check.\n\nWebsite: ${website}\nE-Mail: ${email}\n`,
+      subject: `Neue Festpreis-Anfrage: ${company}`,
+      text: [
+        "Neue Anfrage über den Kosten-Funnel.",
+        "",
+        `Name: ${name}`,
+        `E-Mail: ${email}`,
+        `Firma / Projekt: ${company}`,
+        `Ziel: ${goal || "—"}`,
+        `Budget: ${budget || "—"}`,
+        `Branche: ${industry || "—"}`,
+        `Features: ${featureList}`,
+        `Telefon: ${phone || "—"}`,
+        `Website: ${website || "—"}`,
+      ].join("\n"),
     });
   } catch (err) {
     console.error("[website-check] notify Erik failed:", err);

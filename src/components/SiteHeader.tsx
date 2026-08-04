@@ -71,31 +71,7 @@ export function SiteHeader() {
   }, [open]);
 
   if (conversion) {
-    return (
-      <Flex
-        as="header"
-        position="fixed"
-        top="0"
-        left="0"
-        fillWidth
-        horizontal="center"
-        zIndex={3}
-        paddingX="l"
-        paddingY="12"
-        background="page"
-        borderBottom="neutral-alpha-weak"
-      >
-        <Row fillWidth maxWidth="xl" horizontal="between" vertical="center">
-          <Logo />
-          <Row gap="8" vertical="center">
-            <ThemeToggle />
-            <Button href="#check" variant="primary" size="s" arrowIcon>
-              Check starten
-            </Button>
-          </Row>
-        </Row>
-      </Flex>
-    );
+    return null;
   }
 
   return (

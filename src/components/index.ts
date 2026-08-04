@@ -5,6 +5,14 @@ export { HeroMarquee } from "@/components/HeroMarquee";
 export { HeroProof } from "@/components/HeroProof";
 export { CtaProof } from "@/components/CtaProof";
 export { WebsiteCheckForm } from "@/components/WebsiteCheckForm";
+export { LandingAtmosphere } from "@/components/LandingAtmosphere";
+export {
+  MotifBirds,
+  MotifCheck,
+  MotifDivider,
+  MotifHills,
+  MotifStep,
+} from "@/components/LandingMotif";
 export { SiteHeader } from "@/components/SiteHeader";
 export { CapacityBadge } from "@/components/CapacityBadge";
 export { CookieBanner } from "@/components/CookieBanner";

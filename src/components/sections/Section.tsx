@@ -10,6 +10,7 @@ type SectionProps = {
   paddingY?: "56" | "64" | "80" | "104" | "128";
   /** Full-bleed band background – breaks up the page rhythm between sections. */
   background?: "page" | "surface";
+  className?: string;
 };
 
 export function Section({
@@ -19,11 +20,13 @@ export function Section({
   gap = "48",
   paddingY = "104",
   background,
+  className,
 }: SectionProps) {
   return (
     <Column
       as="section"
       id={id}
+      className={className}
       fillWidth
       horizontal="center"
       paddingX="l"

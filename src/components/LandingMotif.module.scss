@@ -1,0 +1,234 @@
+.motif {
+  display: block;
+  pointer-events: none;
+}
+
+.hills {
+  width: min(100%, 16rem);
+  height: auto;
+  opacity: 0.9;
+}
+
+.hillsFar {
+  animation: hillsBreathe 10s ease-in-out infinite alternate;
+  transform-origin: center bottom;
+}
+
+.hillsNear {
+  animation: hillsBreathe 8s ease-in-out infinite alternate-reverse;
+  transform-origin: center bottom;
+}
+
+.hillsLake {
+  animation: lakeShimmer 5s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+.flock {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  pointer-events: none;
+  animation: flockBob 5.5s ease-in-out infinite alternate;
+}
+
+.bird {
+  width: 1.35rem;
+  height: auto;
+  overflow: visible;
+}
+
+.birdB {
+  width: 1.05rem;
+  margin-top: 0.35rem;
+  animation: birdNudge 4.2s ease-in-out infinite alternate;
+}
+
+.birdC {
+  width: 0.9rem;
+  margin-top: 0.1rem;
+  animation: birdNudge 3.6s ease-in-out infinite alternate-reverse;
+}
+
+.wingL,
+.wingR {
+  transform-box: fill-box;
+  transform-origin: right center;
+  animation: flapL 0.42s ease-in-out infinite alternate;
+}
+
+.wingR {
+  transform-origin: left center;
+  animation-name: flapR;
+}
+
+.birdB .wingL,
+.birdB .wingR {
+  animation-duration: 0.36s;
+}
+
+.birdC .wingL,
+.birdC .wingR {
+  animation-duration: 0.5s;
+  animation-delay: 0.08s;
+}
+
+.check {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 1.35rem;
+  height: 1.35rem;
+  animation: softPop 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.check svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.stepBadge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  background: #4a7c59;
+  color: #fdfbf6;
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  animation: badgePulse 3.2s ease-in-out infinite;
+}
+
+.divider {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0 0;
+  opacity: 0.75;
+  animation: dividerFloat 7s ease-in-out infinite alternate;
+}
+
+@keyframes flapL {
+  from {
+    transform: rotate(-8deg);
+  }
+  to {
+    transform: rotate(30deg);
+  }
+}
+
+@keyframes flapR {
+  from {
+    transform: rotate(8deg);
+  }
+  to {
+    transform: rotate(-30deg);
+  }
+}
+
+@keyframes flockBob {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes birdNudge {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes hillsBreathe {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-1.5px);
+  }
+}
+
+@keyframes lakeShimmer {
+  from {
+    opacity: 0.75;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes softPop {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(74, 124, 89, 0.25);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 6px rgba(74, 124, 89, 0);
+  }
+}
+
+@keyframes dividerFloat {
+  from {
+    transform: translateY(0);
+    opacity: 0.65;
+  }
+  to {
+    transform: translateY(-3px);
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hillsFar,
+  .hillsNear,
+  .hillsLake,
+  .flock,
+  .birdB,
+  .birdC,
+  .wingL,
+  .wingR,
+  .check,
+  .stepBadge,
+  .divider {
+    animation: none !important;
+  }
+}
+
+:global([data-theme="dark"]) .hills {
+  opacity: 0.45;
+  filter: brightness(0.75) saturate(0.85);
+}
+
+:global([data-theme="dark"]) .bird {
+  stroke: #f5f3ee;
+}
+
+:global([data-theme="dark"]) .stepBadge {
+  background: #6f9b78;
+  color: #121410;
+}
+
+:global([data-theme="dark"]) .check svg circle {
+  fill: #6f9b78;
+}

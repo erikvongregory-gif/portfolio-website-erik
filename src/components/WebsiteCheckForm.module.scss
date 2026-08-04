@@ -1,0 +1,220 @@
+.shell {
+  overflow: hidden;
+}
+
+@media (min-width: 1025px) {
+  .shell {
+    padding: 1.5rem !important;
+    gap: 1rem !important;
+  }
+
+  .choice {
+    min-height: 2.85rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .choice:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.panel {
+  width: 100%;
+  animation: stepInFwd 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.panel[data-dir="back"] {
+  animation-name: stepInBack;
+}
+
+.staggerItem {
+  animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.95rem 1.1rem;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--radius-l);
+  border: 1px solid var(--neutral-alpha-weak);
+  background: var(--page-background);
+  transition:
+    border-color 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.choice:hover {
+  border-color: var(--neutral-alpha-medium);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -14px rgba(22, 21, 15, 0.35);
+}
+
+.choice:active {
+  transform: translateY(0) scale(0.985);
+  box-shadow: none;
+}
+
+.choice[aria-pressed="true"] {
+  border-color: var(--brand-alpha-medium, var(--neutral-alpha-medium));
+  background: var(--neutral-alpha-weak);
+}
+
+.choiceCheck {
+  display: grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  background: var(--brand-alpha-weak, transparent);
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.choiceCheck[data-on] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.choice:focus-visible {
+  outline: 2px solid var(--neutral-border-strong);
+  outline-offset: 2px;
+}
+
+.chip {
+  appearance: none;
+  cursor: pointer;
+  padding: 0.55rem 0.95rem;
+  min-height: 2.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--neutral-alpha-weak);
+  background: transparent;
+  transition:
+    border-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.chip:hover {
+  border-color: var(--neutral-alpha-medium);
+  transform: translateY(-1px);
+}
+
+.chip:active {
+  transform: scale(0.96);
+}
+
+.chip[data-selected] {
+  border-color: var(--brand-alpha-medium, var(--neutral-alpha-medium));
+  background: var(--neutral-alpha-weak);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--neutral-border-strong);
+  outline-offset: 2px;
+}
+
+.progressTrack {
+  flex: 1;
+  max-width: 8.5rem;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--neutral-alpha-weak);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--brand-solid-strong);
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav {
+  animation: fadeUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.08s;
+}
+
+.error {
+  animation: shakeIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes stepInFwd {
+  from {
+    opacity: 0;
+    transform: translate3d(14px, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes stepInBack {
+  from {
+    opacity: 0;
+    transform: translate3d(-14px, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes shakeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  70% {
+    transform: translateX(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .staggerItem,
+  .nav,
+  .error,
+  .choice,
+  .chip,
+  .choiceCheck,
+  .progressFill {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .choice:hover,
+  .chip:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
