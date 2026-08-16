@@ -135,7 +135,7 @@ export default function UeberUns() {
                 >
                   <Image
                     src="/images/about/erik.png"
-                    alt="Erik, Gründer von EvgLab"
+                    alt="Porträt von Erik von Gregory, Gründer von EvgLab"
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 416px"

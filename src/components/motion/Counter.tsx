@@ -9,23 +9,31 @@ type CounterProps = {
   duration?: number;
 };
 
+/**
+ * SSR/crawlers see the real target value. After mount, the number animates
+ * from 0 → value when the element enters the viewport.
+ */
 export function Counter({ value, suffix = "", prefix = "", duration = 1.6 }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [n, setN] = useState(0);
+  const [n, setN] = useState(value);
   const started = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
       setN(value);
       return;
     }
+
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting && !started.current) {
             started.current = true;
+            setN(0);
             const start = performance.now();
             const tick = (now: number) => {
               const p = Math.min((now - start) / (duration * 1000), 1);

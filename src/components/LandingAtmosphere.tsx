@@ -221,7 +221,10 @@ export function LandingAtmosphere() {
           width="102"
           height="102"
           preserveAspectRatio="xMidYMax meet"
-        />
+          aria-label="Scheune am bayerischen Seeufer"
+        >
+          <title>Scheune am bayerischen Seeufer</title>
+        </image>
         <image
           className={`${styles.deerImg} ${styles.deerImgA}`}
           href="/images/landing/deer.webp"
@@ -230,7 +233,10 @@ export function LandingAtmosphere() {
           width="56"
           height="56"
           preserveAspectRatio="xMidYMax meet"
-        />
+          aria-label="Reh in der Allgäu-Landschaft"
+        >
+          <title>Reh in der Allgäu-Landschaft</title>
+        </image>
         <image
           className={`${styles.deerImg} ${styles.deerImgB}`}
           href="/images/landing/deer.webp"
@@ -239,7 +245,10 @@ export function LandingAtmosphere() {
           width="44"
           height="44"
           preserveAspectRatio="xMidYMax meet"
-        />
+          aria-label="Reh am Seeufer"
+        >
+          <title>Reh am Seeufer</title>
+        </image>
 
         <g className={styles.trees}>
           <g transform="translate(36, 300) scale(1.25)">

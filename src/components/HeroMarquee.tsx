@@ -24,6 +24,12 @@ const projects: CardContent[] = [
   { title: "Da Peppe", image: "/images/projects/da-peppe/hero-live.png" },
 ];
 
+function marqueeAlt(card: CardContent): string {
+  if (card.comingSoon) return "Projekt – bald verfügbar";
+  if (card.obscured) return "Website-Entwurf für einen Kunden von EvgLab";
+  return `${card.title} – Website-Projekt von EvgLab`;
+}
+
 function MarqueeCard({ card }: { card: CardContent }) {
   const blurImage = card.comingSoon;
   return (
@@ -32,7 +38,7 @@ function MarqueeCard({ card }: { card: CardContent }) {
         <Image
           className={`${styles.image}${blurImage ? ` ${styles.imageBlur}` : ""}`}
           src={card.image}
-          alt=""
+          alt={marqueeAlt(card)}
           fill
           sizes="240px"
         />

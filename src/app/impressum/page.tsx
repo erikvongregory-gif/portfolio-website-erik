@@ -45,7 +45,7 @@ export default function Impressum() {
         </LegalText>
       </LegalBlock>
 
-      <LegalBlock title="Verantwortlich für den Inhalt nach § 5 Abs. 2 DDG">
+      <LegalBlock title="Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV">
         <LegalText>
           Erik Freiherr von Gregory
           <br />
@@ -55,16 +55,9 @@ export default function Impressum() {
         </LegalText>
       </LegalBlock>
 
-      <LegalBlock title="EU-Streitschlichtung">
+      <LegalBlock title="Verbraucherstreitbeilegung">
         <LegalText>
-          Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:{" "}
-          <SmartLink href="https://ec.europa.eu/consumers/odr/">
-            https://ec.europa.eu/consumers/odr/
-          </SmartLink>{" "}
-          Unsere E-Mail-Adresse finden Sie oben im Impressum.
-        </LegalText>
-        <LegalText>
-          Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+          Ich bin nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
           Verbraucherschlichtungsstelle teilzunehmen.
         </LegalText>
       </LegalBlock>

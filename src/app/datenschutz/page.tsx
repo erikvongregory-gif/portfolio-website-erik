@@ -46,10 +46,20 @@ export default function Datenschutz() {
 
       <LegalBlock title="2. Hosting">
         <LegalText>
-          Diese Website wird bei einem externen Dienstleister gehostet (Hoster). Die
-          personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des
-          Hosters gespeichert. Hierbei kann es sich v. a. um IP-Adressen, Kontaktanfragen, Meta- und
-          Kommunikationsdaten sowie sonstige Daten handeln, die über eine Website generiert werden.
+          Diese Website wird bei einem externen Dienstleister gehostet (Hoster). Anbieter ist Vercel
+          Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA. Die personenbezogenen Daten, die auf
+          dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann
+          es sich v. a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten sowie sonstige
+          Daten handeln, die über eine Website generiert werden.
+        </LegalText>
+        <LegalText>
+          Dabei kann eine Übermittlung personenbezogener Daten in die USA erfolgen. Vercel beruft
+          sich hierfür u. a. auf Standardvertragsklauseln bzw. das EU-U.S. Data Privacy Framework.
+          Weitere Informationen:{" "}
+          <SmartLink href="https://vercel.com/legal/privacy-policy" target="_blank">
+            Datenschutzerklärung von Vercel
+          </SmartLink>
+          .
         </LegalText>
         <LegalText>
           Der Einsatz des Hosters erfolgt zum Zwecke der Vertragserfüllung gegenüber unseren
@@ -184,6 +194,48 @@ export default function Datenschutz() {
           Löschung aufforderst, deine Einwilligung zur Speicherung widerrufst oder der Zweck für die
           Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung deines Anliegens).
           Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.
+        </LegalText>
+
+        <LegalSubheading>Kontakt- und Anfrageformular</LegalSubheading>
+        <LegalText>
+          Wenn du das Kontaktformular auf dieser Website nutzt, werden die von dir eingegebenen
+          Daten an uns übermittelt. Erfasst werden: E-Mail-Adresse und Nachrichteninhalt. Beim
+          Festpreis-Anfrageformular zusätzlich Name, Firma/Projekt, Branche, Ziel, Budget-Rahmen,
+          gewünschte Features sowie optional Telefonnummer und Website-URL.
+        </LegalText>
+        <LegalText>
+          Zweck der Verarbeitung ist die Bearbeitung deiner Anfrage und die Vorbereitung eines
+          Angebots. Die Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, soweit die Anfrage der
+          Durchführung vorvertraglicher Maßnahmen dient; in übrigen Fällen Art. 6 Abs. 1 lit. f
+          DSGVO (berechtigtes Interesse an der effektiven Bearbeitung eingehender Anfragen).
+        </LegalText>
+        <LegalText>
+          Zur technischen Übermittlung der Formulardaten setzen wir den Dienst Web3Forms ein
+          (Betreiber: Web3Creative, Kerala, Indien). Die Server von Web3Forms befinden sich in den
+          USA (US-East); damit kann eine Datenübermittlung in ein Drittland erfolgen. Beim
+          Festpreis-Funnel wird außerdem eine Bestätigungs-E-Mail über Resend Inc. (USA)
+          versendet; auch hier ist eine Übermittlung in die USA möglich.
+        </LegalText>
+        <LegalText>
+          Die von dir über das Formular übersandten Daten verbleiben bei uns, bis du uns zur
+          Löschung aufforderst, deine Einwilligung zur Speicherung widerrufst oder der Zweck für die
+          Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung deines Anliegens).
+          Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.
+        </LegalText>
+
+        <LegalSubheading>WhatsApp-Kontakt</LegalSubheading>
+        <LegalText>
+          Auf dieser Website findest du Links zu WhatsApp (wa.me). Wenn du einen solchen Link
+          anklickst, wird eine Verbindung zu WhatsApp Ireland Limited, Merrion Road, Dublin 4,
+          D04 X2K5, Irland, aufgebaut. Dabei können deine Telefonnummer und Nachrichteninhalte bei
+          WhatsApp verarbeitet werden; eine Weitergabe an verbundene Unternehmen in Drittländern
+          (u. a. Meta Platforms, Inc., USA) ist möglich.
+        </LegalText>
+        <LegalText>
+          Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, soweit die Kontaktaufnahme der
+          Anbahnung eines Vertrags dient, sonst Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse
+          an einer schnellen, kundenfreundlichen Erreichbarkeit). Die Nutzung von WhatsApp ist
+          freiwillig – Alternativen sind E-Mail und Telefon.
         </LegalText>
       </LegalBlock>
 

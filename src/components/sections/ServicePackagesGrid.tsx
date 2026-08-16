@@ -159,6 +159,10 @@ export function ServicePackagesGrid({ packages }: ServicePackagesGridProps) {
           );
         })}
       </Grid>
+
+      <Text variant="body-default-s" onBackground="neutral-weak" wrap="balance">
+        Alle Preise sind Endpreise. Umsatzsteuer wird gemäß § 19 UStG nicht ausgewiesen.
+      </Text>
     </Column>
   );
 }

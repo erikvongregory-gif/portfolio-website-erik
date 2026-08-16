@@ -8,7 +8,9 @@ type Testimonial = {
   meta: string;
   /** Star rating from a public review (e.g. Google). */
   rating?: number;
-  source?: string;
+  source?: "google" | "direkt";
+  /** Datum der öffentlichen Freigabe / letzten Verifikation (ISO YYYY-MM-DD). */
+  verifiedAt?: string;
 };
 
 const testimonials: Testimonial[] = [
@@ -18,9 +20,9 @@ const testimonials: Testimonial[] = [
     name: "Da Peppe",
     meta: "peppedelmar · Osteria & Pizzeria · Landsberg · da-peppe.com",
     rating: 5,
-    source: "Google",
+    source: "google",
   },
-  // Weitere Stimmen: bitte nur echte, freigegebene Kundenstimmen.
+  // Freigabe offen – bitte bestätigen, sonst entfernen wir die Zitate.
   {
     quote:
       "Erik hat unseren Auftritt komplett neu gedacht. Die Zusammenarbeit war direkt und unkompliziert – und das Ergebnis wirkt endlich so professionell wie unsere Arbeit.",
@@ -35,7 +37,7 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-function ReviewStars({ rating, source }: { rating: number; source?: string }) {
+function ReviewStars({ rating, source }: { rating: number; source?: "google" | "direkt" }) {
   const filled = Math.round(rating);
   return (
     <Column gap="4" horizontal="center" align="center">
@@ -50,9 +52,9 @@ function ReviewStars({ rating, source }: { rating: number; source?: string }) {
           {"★".repeat(Math.max(0, 5 - filled))}
         </Text>
       </Text>
-      {source && (
+      {source === "google" && (
         <Text variant="label-default-xs" onBackground="neutral-weak" align="center">
-          {source}-Bewertung
+          Google-Bewertung
         </Text>
       )}
     </Column>

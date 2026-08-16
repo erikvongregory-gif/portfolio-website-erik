@@ -353,6 +353,14 @@ export function PriceCalculator({
                     ? "Richtwerte zum Weitergeben. Der Festpreis kommt von mir – schriftlich."
                     : "Unverbindliche Richtpreise. Im Erstgespräch klären wir den genauen Umfang."}
                 </Text>
+                <Text
+                  variant="body-default-s"
+                  onBackground="neutral-weak"
+                  align="center"
+                  wrap="balance"
+                >
+                  Alle Preise sind Endpreise. Umsatzsteuer wird gemäß § 19 UStG nicht ausgewiesen.
+                </Text>
               </Column>
 
               {isPartner ? (

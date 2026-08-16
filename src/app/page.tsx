@@ -25,7 +25,14 @@ import {
 import { ContactDialog } from "@/components/ContactDialog";
 import { CtaProof } from "@/components/CtaProof";
 import { JsonLd } from "@/components/JsonLd";
+import { FREIE_SLOTS, KAPAZITAET_SLOTS } from "@/lib/config";
 import { baseURL } from "@/resources";
+
+const capacityTaken = KAPAZITAET_SLOTS - FREIE_SLOTS;
+const capacityLabel =
+  FREIE_SLOTS === 1
+    ? "1 Projekt diesen Monat noch frei"
+    : `${FREIE_SLOTS} Projekte diesen Monat noch frei`;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -116,22 +123,30 @@ export default function Home() {
             horizontal="start"
             align="left"
           >
-            <Column m={{ hide: true }} paddingBottom="24">
-              <RevealFx speed={400} horizontal="start">
-                <CapacityBadge taken={3} total={4} label="1 Projekt diesen Monat noch frei" />
-              </RevealFx>
-            </Column>
+            {FREIE_SLOTS > 0 && (
+              <Column m={{ hide: true }} paddingBottom="24">
+                <RevealFx speed={400} horizontal="start">
+                  <CapacityBadge
+                    taken={capacityTaken}
+                    total={KAPAZITAET_SLOTS}
+                    label={capacityLabel}
+                  />
+                </RevealFx>
+              </Column>
+            )}
 
-            <Column hide m={{ hide: false }} paddingBottom="16">
-              <RevealFx speed={400} horizontal="start">
-                <CapacityBadge
-                  compact
-                  taken={3}
-                  total={4}
-                  label="1 Projekt diesen Monat noch frei"
-                />
-              </RevealFx>
-            </Column>
+            {FREIE_SLOTS > 0 && (
+              <Column hide m={{ hide: false }} paddingBottom="16">
+                <RevealFx speed={400} horizontal="start">
+                  <CapacityBadge
+                    compact
+                    taken={capacityTaken}
+                    total={KAPAZITAET_SLOTS}
+                    label={capacityLabel}
+                  />
+                </RevealFx>
+              </Column>
+            )}
 
             <RevealFx speed={400} translateY="4" delay={0.05} horizontal="start" paddingBottom="20">
               <Heading
@@ -191,7 +206,7 @@ export default function Home() {
                     <span className={styles.heroAboutAvatar} aria-hidden="true">
                       <Image
                         src="/images/about/erik-avatar.webp"
-                        alt=""
+                        alt="Erik von Gregory, Gründer von EvgLab"
                         width={32}
                         height={32}
                       />
