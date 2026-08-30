@@ -20,6 +20,7 @@ import { BrandMark } from "@/components/BrandLogo";
 import { subscribeScroll } from "@/components/motion/SmoothScroll";
 
 const navLinks = [
+  { label: "Startseite", href: "/" },
   { label: "Projekte", href: "/#projekte" },
   { label: "Leistungen", href: "/#leistungen" },
   { label: "Ablauf", href: "/#ablauf" },
