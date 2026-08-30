@@ -53,7 +53,7 @@ const projects: CardContent[] = [
     image: "/images/projects/salon-liora/hero.png",
     url: "https://salon-liora.vercel.app",
   },
-  { title: "EvGlab", image: "/images/projects/evglab/hero-ki.png", url: "https://ki.evglab.com" },
+  { title: "EvGlab", image: "/images/projects/evglab/hero-ki.png", url: "https://brewai.de" },
   {
     title: "Kapitalanlagen Deutschland (Entwurf)",
     image: "/images/projects/kapitalanlagen/hero.png",

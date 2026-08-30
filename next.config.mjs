@@ -31,6 +31,12 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/:path*",
+        has: [{ type: "host", value: "ki.evglab.com" }],
+        destination: "https://brewai.de/:path*",
+        permanent: true,
+      },
+      {
         source: "/website-check",
         destination: "/festpreis",
         permanent: true,

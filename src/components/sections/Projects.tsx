@@ -58,12 +58,12 @@ const projects: Project[] = [
   },
   {
     title: "EvGlab",
-    chrome: chromeFromUrl("https://ki.evglab.com"),
+    chrome: chromeFromUrl("https://brewai.de"),
     category: "Eigene Marke · KI-Marketing",
     image: "/images/projects/evglab/hero-ki.png",
     video: "/videos/projects/evglab.mp4",
     body: "KI-Marketing für Brauereien: Produktfotos, Kampagnenmotive und Social-Content im eigenen Markenstil – ohne Studio.",
-    url: "https://ki.evglab.com",
+    url: "https://brewai.de",
     status: "live",
   },
   {

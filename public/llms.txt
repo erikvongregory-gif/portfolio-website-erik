@@ -34,7 +34,7 @@ Unternehmen und Selbstständige, die einen Auftritt mit Persönlichkeit wollen �
 - [Da Peppe](https://da-peppe.com): Website für Osteria & Pizzeria in Landsberg am Lech (öffentliche 5★ Google-Bewertung für die Zusammenarbeit)
 - [Lünebräu](https://luenebraeu.vercel.app): Markenauftritt Craft-Bier-Brauerei
 - [Ingenieurbüro Jungen](https://ib-jungen-web.vercel.app): Industrie / Automation
-- [EvGlab KI](https://ki.evglab.com): KI-Marketing für Brauereien
+- [EvGlab KI](https://brewai.de): KI-Marketing für Brauereien
 
 ## Kontakt
 Für Anfragen zum Erstgespräch: https://evglab.com/#kontakt · WhatsApp / Telefon über die Kontaktdaten oben · E-Mail info@evglab.com
