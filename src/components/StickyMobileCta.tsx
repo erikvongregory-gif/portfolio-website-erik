@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { Button, IconButton, Row, Text } from "@once-ui-system/core";
 import classNames from "classnames";
 import { ContactDialog } from "@/components/ContactDialog";
@@ -26,6 +26,8 @@ type StickyMobileCtaProps = {
   href?: string;
   /** Override WhatsApp link (e.g. partner prefills). */
   whatsappHref?: string;
+  /** Open Entwurf-Funnel instead of the short contact form. */
+  funnel?: boolean;
 };
 
 export function StickyMobileCta({
@@ -33,6 +35,7 @@ export function StickyMobileCta({
   buttonLabel = "Anfragen",
   href,
   whatsappHref = WHATSAPP_URL,
+  funnel = false,
 }: StickyMobileCtaProps = {}) {
   const [visible, setVisible] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
@@ -118,7 +121,17 @@ export function StickyMobileCta({
                 {buttonLabel}
               </Button>
             ) : (
-              <Button variant="primary" size="m" arrowIcon onClick={() => setFormOpen(true)}>
+              <Button
+                variant="primary"
+                size="m"
+                arrowIcon
+                data-open-contact=""
+                onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                  const el = e.currentTarget;
+                  el.setAttribute("data-funnel-origin", "1");
+                  setFormOpen(true);
+                }}
+              >
                 {buttonLabel}
               </Button>
             )}
@@ -129,6 +142,7 @@ export function StickyMobileCta({
       {!href && (
         <ContactDialog
           dialogOnly
+          funnel={funnel}
           open={formOpen}
           onOpenChange={setFormOpen}
           idPrefix="sticky-cta-"

@@ -5,22 +5,13 @@ import {
 } from "@/lib/contact";
 import { SITE_URL } from "@/lib/config";
 
-const WHATSAPP_HREF =
-  "https://wa.me/4915565602176?text=" +
-  encodeURIComponent("Hallo Erik, ich möchte mein Festpreis-Angebot besprechen.");
-
-const DELIVERABLES = [
-  "Schriftliches Festpreis-Angebot",
-  "Passende Lösung statt Bauchgefühl",
-  "Antwort innerhalb von 24 Stunden",
-] as const;
-
 export type OfferEmailInput = {
   email: string;
   name: string;
   company: string;
   goal?: string;
   budget?: string;
+  kind?: "festpreis" | "entwurf";
 };
 
 /** First token from email local-part, e.g. max.mueller@… → Max */
@@ -35,6 +26,28 @@ export function greetingNameFromEmail(email: string) {
 }
 
 export function buildCheckConfirmationEmail(input: OfferEmailInput) {
+  const isDraft = input.kind === "entwurf";
+  const product = isDraft ? "kostenlosen Entwurf" : "Festpreis-Angebot";
+  const productShort = isDraft ? "Entwurf" : "Festpreis-Angebot";
+  const whatsappHref =
+    "https://wa.me/4915565602176?text=" +
+    encodeURIComponent(
+      isDraft
+        ? "Hallo Erik, ich möchte den kostenlosen Entwurf besprechen."
+        : "Hallo Erik, ich möchte mein Festpreis-Angebot besprechen.",
+    );
+  const deliverables = isDraft
+    ? ([
+        "Kostenloser Entwurf für deine Website",
+        "Passende Richtung statt Bauchgefühl",
+        "Antwort innerhalb von 24 Stunden",
+      ] as const)
+    : ([
+        "Schriftliches Festpreis-Angebot",
+        "Passende Lösung statt Bauchgefühl",
+        "Antwort innerhalb von 24 Stunden",
+      ] as const);
+
   const displayName =
     input.name.trim().split(/\s+/)[0] || greetingNameFromEmail(input.email);
   const hello = displayName ? `Servus ${displayName},` : "Servus,";
@@ -43,23 +56,23 @@ export function buildCheckConfirmationEmail(input: OfferEmailInput) {
   const company = input.company.trim();
 
   const subject = displayName
-    ? `${displayName}, dein Festpreis-Angebot zu ${company} ist unterwegs`
-    : `Dein Festpreis-Angebot zu ${company} ist unterwegs`;
+    ? `${displayName}, dein ${productShort} zu ${company} ist unterwegs`
+    : `Dein ${productShort} zu ${company} ist unterwegs`;
 
   const text = `${hello}
 
-schön, dass du da bist – deine Anfrage für ein Festpreis-Angebot ist gerade bei mir eingegangen.
+schön, dass du da bist – deine Anfrage für einen ${product} ist gerade bei mir eingegangen.
 
 Firma / Projekt: ${company}
 ${input.goal ? `Ziel: ${input.goal}\n` : ""}${input.budget ? `Rahmen: ${input.budget}\n` : ""}
 Ich schaue mir alles in Ruhe an. Innerhalb von 24 Stunden bekommst du von mir persönlich:
 
-• ${DELIVERABLES[0]}
-• ${DELIVERABLES[1]}
-• ${DELIVERABLES[2]}
+• ${deliverables[0]}
+• ${deliverables[1]}
+• ${deliverables[2]}
 
 Du musst nichts weiter tun. Wenn etwas eilt: einfach antworten, anrufen (${CONTACT_PHONE_DISPLAY}) oder per WhatsApp schreiben:
-${WHATSAPP_HREF}
+${whatsappHref}
 
 Bis gleich
 Erik
@@ -71,8 +84,9 @@ ${CONTACT_EMAIL}
 ${CONTACT_PHONE_DISPLAY}
 `;
 
-  const deliverableRows = DELIVERABLES.map(
-    (item) => `
+  const deliverableRows = deliverables
+    .map(
+      (item) => `
               <tr>
                 <td style="padding:0 0 10px 0;vertical-align:top;width:22px;">
                   <span style="display:inline-block;width:18px;height:18px;border-radius:999px;background:#1a3a5c;color:#7eb6ff;font-size:11px;line-height:18px;text-align:center;">✓</span>
@@ -81,7 +95,8 @@ ${CONTACT_PHONE_DISPLAY}
                   ${item}
                 </td>
               </tr>`,
-  ).join("");
+    )
+    .join("");
 
   const metaBits = [
     input.goal ? `Ziel: ${input.goal}` : null,
@@ -125,7 +140,7 @@ ${CONTACT_PHONE_DISPLAY}
                       </tr>
                     </table>
                     <div style="color:#f5f5f5;font-size:22px;font-weight:600;letter-spacing:-0.03em;line-height:1.3;padding-bottom:16px;">
-                      Dein Festpreis-Angebot ist unterwegs.
+                      Dein ${productShort} ist unterwegs.
                     </div>
                     <div style="color:#a3a3a3;font-size:16px;line-height:1.6;padding-bottom:20px;">
                       ${hello}<br /><br />
@@ -133,7 +148,7 @@ ${CONTACT_PHONE_DISPLAY}
                       <strong style="color:#f5f5f5;">${company}</strong>
                       ist gerade bei mir eingegangen. Ich melde mich
                       <strong style="color:#f5f5f5;">innerhalb von 24 Stunden</strong>
-                      persönlich mit einem schriftlichen Festpreis.
+                      persönlich mit einem ${product}.
                     </div>
                   </td>
                 </tr>
@@ -163,7 +178,7 @@ ${CONTACT_PHONE_DISPLAY}
                 </tr>
                 <tr>
                   <td style="padding:0 32px 32px 32px;" align="left">
-                    <a href="${WHATSAPP_HREF}" style="display:inline-block;background:#25D366;color:#0a0a0a;font-size:14px;font-weight:600;text-decoration:none;padding:12px 20px;border-radius:10px;">
+                    <a href="${whatsappHref}" style="display:inline-block;background:#25D366;color:#0a0a0a;font-size:14px;font-weight:600;text-decoration:none;padding:12px 20px;border-radius:10px;">
                       Per WhatsApp schreiben
                     </a>
                     <div style="color:#525252;font-size:12px;padding-top:12px;">
@@ -190,8 +205,8 @@ ${CONTACT_PHONE_DISPLAY}
           <tr>
             <td align="center" style="padding:24px 8px 0 8px;color:#404040;font-size:11px;line-height:1.5;">
               Du bekommst diese Mail, weil du auf
-              <a href="${SITE_URL}/festpreis" style="color:#525252;text-decoration:underline;">evglab.com</a>
-              ein Festpreis-Angebot angefragt hast.
+              <a href="${SITE_URL}${isDraft ? "/" : "/festpreis"}" style="color:#525252;text-decoration:underline;">evglab.com</a>
+              ${isDraft ? "einen kostenlosen Entwurf" : "ein Festpreis-Angebot"} angefragt hast.
             </td>
           </tr>
         </table>

@@ -18,10 +18,6 @@ type Dir = "fwd" | "back";
 const WEB3FORMS_KEY =
   process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "1b75a706-3ef0-418c-99dc-87ff0b272e99";
 
-const WHATSAPP_URL =
-  "https://wa.me/4915565602176?text=" +
-  encodeURIComponent("Hallo Erik, ich möchte mein Festpreis-Angebot besprechen.");
-
 const TOTAL_STEPS = 5;
 const ADVANCE_MS = 240;
 
@@ -64,7 +60,50 @@ type BudgetId = (typeof BUDGETS)[number]["id"];
 
 type WebsiteCheckFormProps = {
   idPrefix?: string;
+  /** festpreis = /festpreis funnel; entwurf = free draft funnel (homepage). */
+  variant?: "festpreis" | "entwurf";
+  /** Strip card chrome when nested in a Dialog. */
+  embedded?: boolean;
 };
+
+const VARIANT = {
+  festpreis: {
+    whatsapp:
+      "https://wa.me/4915565602176?text=" +
+      encodeURIComponent("Hallo Erik, ich möchte mein Festpreis-Angebot besprechen."),
+    messageIntro: "Festpreis-Anfrage über den Kosten-Funnel.",
+    subject: (company: string) => `Festpreis-Anfrage: ${company} (${SITE_HOST})`,
+    successTitle: "Danke! Dein Angebot kommt.",
+    successConfirmed:
+      "Bestätigung ist unterwegs. Schriftliches Festpreis-Angebot innerhalb von 24 Stunden.",
+    successFallback:
+      "Schriftliches Festpreis-Angebot innerhalb von 24 Stunden – persönlich von mir.",
+    step1Hint: "Wähle dein Ziel — dann zeige ich dir, was möglich ist.",
+    step5Title: "Wohin schicken wir das Angebot?",
+    step5Desc: "Schriftlicher Festpreis innerhalb von 24 Stunden.",
+    submit: "Festpreis-Angebot anfordern",
+    footer: "Unverbindlich · Antwort in 24h · Kein Abo",
+    kind: "festpreis" as const,
+  },
+  entwurf: {
+    whatsapp:
+      "https://wa.me/4915565602176?text=" +
+      encodeURIComponent("Hallo Erik, ich möchte den kostenlosen Entwurf besprechen."),
+    messageIntro: "Anfrage kostenloser Entwurf über den Hero-Funnel.",
+    subject: (company: string) => `Entwurf-Anfrage: ${company} (${SITE_HOST})`,
+    successTitle: "Danke! Dein Entwurf ist angefragt.",
+    successConfirmed:
+      "Bestätigung ist unterwegs. Ich melde mich innerhalb von 24 Stunden mit dem kostenlosen Entwurf.",
+    successFallback:
+      "Ich melde mich innerhalb von 24 Stunden mit dem kostenlosen Entwurf – persönlich von mir.",
+    step1Hint: "Wähle dein Ziel — dann passe ich den Entwurf darauf an.",
+    step5Title: "Wohin schicken wir den Entwurf?",
+    step5Desc: "Kostenloser Entwurf – Antwort innerhalb von 24 Stunden.",
+    submit: "Kostenlosen Entwurf anfordern",
+    footer: "Unverbindlich · Antwort in 24h · Kostenloser Entwurf",
+    kind: "entwurf" as const,
+  },
+} as const;
 
 function ChoiceButton({
   selected,
@@ -116,7 +155,12 @@ function ChipButton({
   );
 }
 
-export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
+export function WebsiteCheckForm({
+  idPrefix = "",
+  variant = "festpreis",
+  embedded = false,
+}: WebsiteCheckFormProps) {
+  const copy = VARIANT[variant];
   const [step, setStep] = useState(1);
   const [dir, setDir] = useState<Dir>("fwd");
   const [goal, setGoal] = useState<GoalId | "">("");
@@ -229,7 +273,7 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
 
     const featureList = features.length > 0 ? features.join(", ") : "keine";
     const message = [
-      "Festpreis-Anfrage über den Kosten-Funnel.",
+      copy.messageIntro,
       "",
       `Ziel: ${goalLabel}`,
       `Firma / Projekt: ${company.trim()}`,
@@ -248,7 +292,7 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
-          subject: `Festpreis-Anfrage: ${company.trim()} (${SITE_HOST})`,
+          subject: copy.subject(company.trim()),
           from_name: name.trim(),
           email: email.trim(),
           message,
@@ -259,6 +303,7 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
           features: featureList,
           phone: phone.trim(),
           website: website.trim(),
+          kind: copy.kind,
         }),
       });
       const notifyData = await notify.json();
@@ -283,6 +328,7 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
             features: features.length > 0 ? features : undefined,
             phone: phone.trim() || undefined,
             website: website.trim() || undefined,
+            kind: copy.kind,
           }),
         });
         const confirmData = await confirm.json();
@@ -312,12 +358,12 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
         id={`${idPrefix}check-form`}
         fillWidth
         gap="24"
-        padding="32"
-        background="surface"
-        border="neutral-alpha-medium"
-        radius="xl"
+        padding={embedded ? "0" : "32"}
+        background={embedded ? undefined : "surface"}
+        border={embedded ? undefined : "neutral-alpha-medium"}
+        radius={embedded ? undefined : "xl"}
         className={styles.success}
-        style={{ boxShadow: "inset 0 1px 0 var(--evg-cta-inset)" }}
+        style={embedded ? undefined : { boxShadow: "inset 0 1px 0 var(--evg-cta-inset)" }}
       >
         <Column gap="12" fillWidth horizontal="center" align="center">
           <Row
@@ -330,7 +376,7 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
           </Row>
           <Column gap="4" fillWidth horizontal="center" align="center">
             <Text variant="heading-strong-m" onBackground="neutral-strong" align="center">
-              Danke! Dein Angebot kommt.
+              {copy.successTitle}
             </Text>
             <Text
               variant="body-default-m"
@@ -338,9 +384,7 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
               align="center"
               wrap="balance"
             >
-              {confirmationSent
-                ? "Bestätigung ist unterwegs. Schriftliches Festpreis-Angebot innerhalb von 24 Stunden."
-                : "Schriftliches Festpreis-Angebot innerhalb von 24 Stunden – persönlich von mir."}
+              {confirmationSent ? copy.successConfirmed : copy.successFallback}
             </Text>
           </Column>
         </Column>
@@ -350,7 +394,7 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
           </Text>
           <Row gap="8" wrap horizontal="center">
             <Button
-              href={WHATSAPP_URL}
+              href={copy.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               variant="primary"
@@ -374,11 +418,11 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
       className={funnelStyles.shell}
       fillWidth
       gap="20"
-      padding="32"
-      background="surface"
-      border="neutral-alpha-medium"
-      radius="xl"
-      style={{ boxShadow: "inset 0 1px 0 var(--evg-cta-inset)" }}
+      padding={embedded ? "0" : "32"}
+      background={embedded ? undefined : "surface"}
+      border={embedded ? undefined : "neutral-alpha-medium"}
+      radius={embedded ? undefined : "xl"}
+      style={embedded ? undefined : { boxShadow: "inset 0 1px 0 var(--evg-cta-inset)" }}
     >
       <Row fillWidth horizontal="between" vertical="center" gap="12">
         <Text variant="label-default-s" onBackground="neutral-medium">
@@ -404,7 +448,7 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
                 Was hast du vor?
               </Text>
               <Text variant="body-default-s" onBackground="neutral-medium">
-                Wähle dein Ziel — dann zeige ich dir, was möglich ist.
+                {copy.step1Hint}
               </Text>
             </Column>
             <Column gap="8" fillWidth role="radiogroup" aria-label="Ziel">
@@ -516,10 +560,10 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
           <Column gap="16" fillWidth>
             <Column gap="8">
               <Text variant="heading-strong-s" onBackground="neutral-strong">
-                Wohin schicken wir das Angebot?
+                {copy.step5Title}
               </Text>
               <Text variant="body-default-s" onBackground="neutral-medium">
-                Schriftlicher Festpreis innerhalb von 24 Stunden.
+                {copy.step5Desc}
               </Text>
             </Column>
             <Input
@@ -596,14 +640,14 @@ export function WebsiteCheckForm({ idPrefix = "" }: WebsiteCheckFormProps) {
               disabled={status === "sending"}
               onClick={() => void send()}
             >
-              {status === "sending" ? "Wird gesendet…" : "Festpreis-Angebot anfordern"}
+              {status === "sending" ? "Wird gesendet…" : copy.submit}
             </Button>
           )}
         </Row>
       )}
 
       <Text variant="label-default-xs" onBackground="neutral-medium" align="center">
-        Unverbindlich · Antwort in 24h · Kein Abo
+        {copy.footer}
       </Text>
     </Column>
   );

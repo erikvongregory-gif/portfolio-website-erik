@@ -149,7 +149,7 @@ export default function Home() {
               vertical="center"
               paddingBottom="8"
             >
-              <ContactDialog label="Kostenloser Entwurf" size="l" replaceGlobalHandler />
+                <ContactDialog label="Kostenloser Entwurf" size="l" replaceGlobalHandler funnel />
               <SmartLink href="#projekte" unstyled className={styles.heroSecondaryCta}>
                 <Text variant="label-strong-s" onBackground="neutral-strong">
                   Projekte ansehen
@@ -247,7 +247,7 @@ export default function Home() {
       <About />
       <Testimonials />
       <FinalCta />
-      <StickyMobileCta />
+      <StickyMobileCta label="Kostenloser Entwurf" buttonLabel="Starten" funnel />
       <SiteFooter />
     </Column>
   );

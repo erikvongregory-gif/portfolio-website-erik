@@ -1,0 +1,125 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  width: 100%;
+  height: 100dvh;
+  pointer-events: none;
+  background: var(--page-background);
+  clip-path: circle(0px at var(--ox, 50%) var(--oy, 70%));
+  transition: clip-path 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: clip-path;
+}
+
+.overlayOpen {
+  pointer-events: auto;
+  clip-path: circle(150vmax at var(--ox, 50%) var(--oy, 70%));
+}
+
+.overlayClosing {
+  pointer-events: none;
+  clip-path: circle(0px at var(--ox, 50%) var(--oy, 70%));
+  transition: clip-path 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.panel {
+  height: 100%;
+  max-width: 36rem;
+  margin-inline: auto;
+  padding: 1rem 1rem 2rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.topBar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-block: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  background: var(--page-background);
+}
+
+.title {
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.ende {
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+  height: 3.25rem;
+  padding: 0 1.25rem;
+  border: 1px solid var(--neutral-alpha-medium);
+  border-radius: 999px;
+  background: var(--page-background);
+  color: var(--neutral-on-background-strong);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.ende:hover {
+  background: var(--neutral-alpha-weak);
+}
+
+.ende:active {
+  transform: scale(0.97);
+}
+
+.body {
+  opacity: 0;
+  transform: translate3d(0, 1.25rem, 0);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0s;
+}
+
+.overlayOpen .body {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 0.28s;
+}
+
+.overlayClosing .body {
+  opacity: 0;
+  transform: translate3d(0, 0.75rem, 0);
+  transition-duration: 0.2s;
+  transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .overlayOpen,
+  .overlayClosing,
+  .body,
+  .ende {
+    transition: none !important;
+  }
+
+  .overlay {
+    clip-path: none;
+    opacity: 0;
+  }
+
+  .overlayOpen {
+    opacity: 1;
+  }
+
+  .overlayClosing {
+    opacity: 0;
+  }
+
+  .body {
+    opacity: 1;
+    transform: none;
+  }
+}
