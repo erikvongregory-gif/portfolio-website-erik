@@ -115,7 +115,7 @@ export default function Home() {
             horizontal="start"
             align="left"
           >
-            <Column className={heroEnter.badge} paddingBottom="24" m={{ paddingBottom: "28" }}>
+            <Column className={heroEnter.badge} paddingBottom="24" m={{ paddingBottom: "32" }}>
               <CapacityBadge />
             </Column>
 
@@ -130,7 +130,7 @@ export default function Home() {
               <HeroLine>die Kunden bringen – inklusive kostenlosem Entwurf.</HeroLine>
             </Heading>
 
-            <Column className={`${styles.heroLead} ${heroEnter.lead}`} paddingBottom="28">
+            <Column className={`${styles.heroLead} ${heroEnter.lead}`} paddingBottom="32">
               <Text
                 wrap="balance"
                 onBackground="neutral-medium"

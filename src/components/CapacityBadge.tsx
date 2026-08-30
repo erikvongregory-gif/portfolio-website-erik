@@ -17,11 +17,11 @@ export function CapacityBadge({
   return (
     <Row
       gap="8"
-      paddingX={compact ? "12" : "14"}
-      paddingY={compact ? "8" : "10"}
+      paddingX={compact ? "12" : "16"}
+      paddingY={compact ? "8" : "12"}
       radius="full"
       vertical="center"
-      width="fit"
+      style={{ width: "fit-content" }}
     >
       <span className={styles.dot} aria-hidden="true" />
       <Text variant="label-default-s" onBackground="neutral-strong">
