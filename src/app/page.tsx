@@ -1,4 +1,4 @@
-import { Column, Flex, Heading, Icon, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Heading, Icon, Row, SmartLink, Text } from "@once-ui-system/core";
 import Image from "next/image";
 import styles from "./page.module.scss";
 import {
@@ -6,11 +6,11 @@ import {
   Approach,
   CapacityBadge,
   FinalCta,
+  HeroDesktopStrip,
   HeroEntrance,
   HeroLine,
   HeroMarquee,
   HeroProof,
-  HeroShowcase,
   Investment,
   Marquee,
   Problem,
@@ -99,18 +99,11 @@ export default function Home() {
         vertical="center"
         style={{ minHeight: "100svh", position: "relative" }}
       >
-        <Row
-          fillWidth
-          maxWidth={68}
-          vertical="center"
-          gap="xl"
-          s={{ direction: "column", gap: "32" }}
-          style={{ position: "relative", zIndex: 1 }}
-        >
+        {/* ——— Mobile: unverändert ——— */}
+        <Column className={styles.heroMobile} fillWidth maxWidth={68} gap="0">
           <Column
             className={styles.heroCopy}
-            flex={5}
-            maxWidth={30}
+            fillWidth
             gap="0"
             horizontal="start"
             align="left"
@@ -149,77 +142,89 @@ export default function Home() {
               vertical="center"
               paddingBottom="8"
             >
-                <ContactDialog label="Kostenloser Entwurf" size="l" replaceGlobalHandler funnel />
+              <ContactDialog label="Kostenloser Entwurf" size="l" funnel />
               <SmartLink href="#projekte" unstyled className={styles.heroSecondaryCta}>
                 <Text variant="label-strong-s" onBackground="neutral-strong">
                   Projekte ansehen
                 </Text>
               </SmartLink>
             </Row>
-
-            <Column m={{ hide: true }}>
-              <Column className={heroEnter.proof} paddingBottom="20">
-                <CtaProof />
-              </Column>
-
-              <Column className={heroEnter.about} gap="20">
-                <HeroProof />
-                <SmartLink href="/ueber-uns" unstyled className={styles.heroAboutLink}>
-                  <Row gap="8" vertical="center">
-                    <span className={styles.heroAboutAvatar} aria-hidden="true">
-                      <Image
-                        src="/images/about/erik-avatar.webp"
-                        alt="Erik von Gregory, Gründer von EvgLab"
-                        width={32}
-                        height={32}
-                      />
-                    </span>
-                    <Text variant="label-strong-s" onBackground="neutral-strong">
-                      Erik · Wer dahintersteckt
-                    </Text>
-                    <Icon name="arrowRight" size="xs" onBackground="neutral-strong" />
-                  </Row>
-                </SmartLink>
-              </Column>
-            </Column>
           </Column>
 
-          <Flex className={heroEnter.visual} flex={6} fillWidth m={{ hide: true }}>
-            <HeroShowcase />
-          </Flex>
-        </Row>
+          <Column className={heroEnter.marquee} fillWidth>
+            <HeroMarquee />
+          </Column>
 
-        <Column className={heroEnter.marquee} fillWidth>
-          <HeroMarquee />
+          <Column
+            className={`${styles.heroBelow} ${heroEnter.mobileProof}`}
+            fillWidth
+            gap="20"
+            paddingTop="40"
+          >
+            <CtaProof />
+            <HeroProof />
+            <SmartLink href="/ueber-uns" unstyled className={styles.heroAboutLink}>
+              <Row gap="8" vertical="center">
+                <span className={styles.heroAboutAvatar} aria-hidden="true">
+                  <Image
+                    src="/images/about/erik-avatar.webp"
+                    alt="Erik von Gregory, Gründer von EvgLab"
+                    width={32}
+                    height={32}
+                  />
+                </span>
+                <Text variant="label-strong-s" onBackground="neutral-strong">
+                  Erik · Wer dahintersteckt
+                </Text>
+                <Icon name="arrowRight" size="xs" onBackground="neutral-strong" />
+              </Row>
+            </SmartLink>
+          </Column>
         </Column>
 
-        <Column
-          className={`${styles.heroBelow} ${heroEnter.mobileProof}`}
-          hide
-          m={{ hide: false }}
-          fillWidth
-          maxWidth={68}
-          gap="20"
-          paddingTop="40"
-        >
-          <CtaProof />
-          <HeroProof />
-          <SmartLink href="/ueber-uns" unstyled className={styles.heroAboutLink}>
-            <Row gap="8" vertical="center">
-              <span className={styles.heroAboutAvatar} aria-hidden="true">
-                <Image
-                  src="/images/about/erik-avatar.webp"
-                  alt="Erik von Gregory, Gründer von EvgLab"
-                  width={32}
-                  height={32}
-                />
-              </span>
-              <Text variant="label-strong-s" onBackground="neutral-strong">
-                Erik · Wer dahintersteckt
+        {/* ——— Desktop: Blink-Anordnung ——— */}
+        <Column className={styles.heroDesktop} fillWidth gap="0">
+          <Column className={heroEnter.badge} paddingBottom="20">
+            <CapacityBadge />
+          </Column>
+
+          <Row
+            className={styles.blinkRow}
+            fillWidth
+            gap="40"
+            vertical="end"
+            horizontal="between"
+            style={{ position: "relative", zIndex: 1 }}
+          >
+            <Heading
+              as="h1"
+              className={styles.blinkHeadline}
+              variant="display-strong-xl"
+              onBackground="neutral-strong"
+            >
+              <HeroLine>Websites mit Charakter,</HeroLine>
+              <HeroLine>die Kunden bringen.</HeroLine>
+            </Heading>
+
+            <Column className={styles.blinkAside} gap="20">
+              <Text
+                wrap="balance"
+                onBackground="neutral-medium"
+                variant="body-default-l"
+                className={styles.blinkLead}
+              >
+                Für Unternehmen, die genug davon haben, dass ihre Website wie von der Stange wirkt
+                und keine Anfragen bringt.
               </Text>
-              <Icon name="arrowRight" size="xs" onBackground="neutral-strong" />
-            </Row>
-          </SmartLink>
+              <Row className={styles.blinkActions} gap="16" vertical="center">
+                <ContactDialog label="Kostenloser Entwurf" size="l" replaceGlobalHandler funnel />
+              </Row>
+            </Column>
+          </Row>
+
+          <Column className={heroEnter.visual} fillWidth>
+            <HeroDesktopStrip />
+          </Column>
         </Column>
       </HeroEntrance>
 

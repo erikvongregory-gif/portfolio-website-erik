@@ -2,6 +2,7 @@ export { Providers } from "@/components/Providers";
 export { BrandLogo, BrandMark } from "@/components/BrandLogo";
 export { HeroShowcase } from "@/components/HeroShowcase";
 export { HeroMarquee } from "@/components/HeroMarquee";
+export { HeroDesktopStrip } from "@/components/HeroDesktopStrip";
 export { HeroEntrance, HeroLine, heroEnter } from "@/components/HeroEntrance";
 export { HeroProof } from "@/components/HeroProof";
 export { CtaProof } from "@/components/CtaProof";

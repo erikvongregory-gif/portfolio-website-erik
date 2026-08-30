@@ -1,10 +1,24 @@
-/* Mobile: no floating card — copy sits on the page, marquee is a quiet band below.
-   Desktop: copy beside the 3D carousel, no card treatment. */
+/* Mobile hero unchanged. Desktop = Blink arrangement: headline | aside+CTA, then strip. */
+
 .hero {
   overflow-x: clip;
   --spot-x: 62%;
   --spot-y: 38%;
   --spot-active: 0;
+}
+
+.heroMobile {
+  display: flex;
+  width: 100%;
+}
+
+.heroDesktop {
+  display: none;
+  width: 100%;
+  /* Blink: content near the edges — shared with slide strip */
+  --hero-inline: clamp(1.25rem, 3.5vw, 2.75rem);
+  padding-inline: var(--hero-inline);
+  max-width: none;
 }
 
 .heroCopy {
@@ -65,7 +79,8 @@
   z-index: 1;
 }
 
-.heroActions [data-open-contact] {
+.heroActions [data-open-contact],
+.blinkActions [data-open-contact] {
   border-radius: 0.75rem !important;
   min-height: 3.35rem;
   padding-block: 0.95rem !important;
@@ -89,7 +104,8 @@
     filter 0.18s ease;
 }
 
-.heroActions [data-open-contact]:hover {
+.heroActions [data-open-contact]:hover,
+.blinkActions [data-open-contact]:hover {
   filter: brightness(1.06);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.5),
@@ -98,7 +114,8 @@
     0 12px 28px -8px rgba(0, 0, 0, 0.58);
 }
 
-.heroActions [data-open-contact]:active {
+.heroActions [data-open-contact]:active,
+.blinkActions [data-open-contact]:active {
   transform: translateY(1px);
   filter: brightness(0.98);
   box-shadow:
@@ -107,10 +124,58 @@
     0 4px 14px -6px rgba(0, 0, 0, 0.45);
 }
 
-@media (max-width: 1024px) {
+/* Desktop Blink copy row — headline left ~2/3, aside flush right */
+.blinkRow {
+  align-items: flex-end;
+  justify-content: space-between !important;
+  width: 100%;
+  gap: clamp(2rem, 4vw, 4rem) !important;
+}
+
+.blinkHeadline {
+  flex: 1 1 58%;
+  min-width: 0;
+  max-width: none;
+  font-weight: 400 !important;
+  letter-spacing: -0.05em !important;
+  line-height: 1.02 !important;
+  font-size: clamp(3rem, 5.2vw, 5.5rem) !important;
+  padding-right: 0;
+}
+
+.blinkAside {
+  flex: 0 0 min(24rem, 30%);
+  width: min(24rem, 30%);
+  max-width: 24rem;
+  margin-left: auto;
+  padding-bottom: 0.5rem;
+  text-align: left;
+}
+
+.blinkLead {
+  font-family: var(--font-heading), var(--font-body), sans-serif !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.02em;
+  line-height: 1.45 !important;
+  opacity: 0.72;
+}
+
+.blinkActions [data-open-contact] {
+  width: fit-content;
+}
+
+@media (max-width: 1023px) {
   .hero {
     justify-content: flex-start !important;
     min-height: auto !important;
+  }
+
+  .heroDesktop {
+    display: none !important;
+  }
+
+  .heroMobile {
+    display: flex !important;
   }
 
   .heroHeadline {
@@ -150,5 +215,25 @@
   .heroBelow {
     padding-left: 0;
     padding-right: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroMobile {
+    display: none !important;
+  }
+
+  .heroDesktop {
+    display: flex !important;
+  }
+
+  .hero {
+    min-height: auto !important;
+    justify-content: flex-start !important;
+    padding-top: 14rem !important;
+    padding-bottom: 5rem !important;
+    /* Cancel Once UI paddingX="l" — desktop uses --hero-inline instead */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }

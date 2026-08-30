@@ -102,19 +102,11 @@ export function SiteHeader() {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeMenu();
     };
-    const onResize = () => {
-      if (window.innerWidth > 1024) {
-        if (closeTimer.current) clearTimeout(closeTimer.current);
-        setMenu("closed");
-      }
-    };
     window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("resize", onResize);
 
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("resize", onResize);
     };
   }, [menu]);
 
@@ -177,46 +169,79 @@ export function SiteHeader() {
         paddingY="12"
         aria-hidden={scrolledAway}
       >
-        <Row fillWidth maxWidth="xl" horizontal="between" vertical="center">
-          <Logo />
+        <Row className={styles.bar} fillWidth maxWidth="xl" horizontal="between" vertical="center">
+          <div className={styles.brand}>
+            <Logo />
+          </div>
 
-          <Row as="nav" aria-label="Hauptnavigation" vertical="center" gap="4">
-            <Flex m={{ hide: true }} gap="2" vertical="center">
+          {/* Desktop: Blink-style centered editorial links */}
+          <nav className={styles.desktopNav} aria-label="Hauptnavigation">
+            <ul className={styles.desktopList}>
               {navLinks.map((link) => (
-                <Button key={link.href} href={link.href} variant="tertiary" size="s">
-                  {link.label}
-                </Button>
+                <li key={link.href}>
+                  <SmartLink href={link.href} unstyled className={styles.desktopLink}>
+                    {link.label}
+                  </SmartLink>
+                </li>
               ))}
-              <ThemeToggle className={styles.iconLg} />
-              <ContactDialog label="Kostenlos anfragen" size="s" />
-            </Flex>
-            <Flex hide m={{ hide: false }} gap="4" vertical="center">
-              {!menuVisible && <ThemeToggle className={styles.iconLg} />}
-              {menuVisible ? (
-                <IconButton
-                  icon="close"
-                  variant="tertiary"
-                  size="l"
-                  className={styles.iconLg}
-                  aria-label="Menü schließen"
-                  aria-expanded={menuExpanded}
-                  aria-controls="site-menu"
-                  onClick={closeMenu}
-                />
-              ) : (
-                <IconButton
-                  icon="menu"
-                  variant="tertiary"
-                  size="l"
-                  className={styles.iconLg}
-                  aria-label="Menü öffnen"
-                  aria-expanded={false}
-                  aria-controls="site-menu"
-                  onClick={openMenu}
-                />
-              )}
-            </Flex>
+            </ul>
+          </nav>
+
+          <Row className={styles.desktopActions} vertical="center" gap="12">
+            <ThemeToggle className={styles.iconLg} />
+            {!menuVisible && <ContactDialog label="Kostenlos anfragen" size="s" />}
+            {menuVisible ? (
+              <IconButton
+                icon="close"
+                variant="tertiary"
+                size="l"
+                className={styles.iconLg}
+                aria-label="Menü schließen"
+                aria-expanded={menuExpanded}
+                aria-controls="site-menu"
+                onClick={closeMenu}
+              />
+            ) : (
+              <IconButton
+                icon="menu"
+                variant="tertiary"
+                size="l"
+                className={classNames(styles.iconLg, styles.menuBtn)}
+                aria-label="Menü öffnen"
+                aria-expanded={false}
+                aria-controls="site-menu"
+                onClick={openMenu}
+              />
+            )}
           </Row>
+
+          {/* Mobile: unchanged circular menu */}
+          <Flex className={styles.mobileActions} gap="4" vertical="center">
+            {!menuVisible && <ThemeToggle className={styles.iconLg} />}
+            {menuVisible ? (
+              <IconButton
+                icon="close"
+                variant="tertiary"
+                size="l"
+                className={styles.iconLg}
+                aria-label="Menü schließen"
+                aria-expanded={menuExpanded}
+                aria-controls="site-menu"
+                onClick={closeMenu}
+              />
+            ) : (
+              <IconButton
+                icon="menu"
+                variant="tertiary"
+                size="l"
+                className={styles.iconLg}
+                aria-label="Menü öffnen"
+                aria-expanded={false}
+                aria-controls="site-menu"
+                onClick={openMenu}
+              />
+            )}
+          </Flex>
         </Row>
       </Flex>
 
