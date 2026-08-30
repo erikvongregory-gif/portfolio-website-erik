@@ -1,14 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Column, Grid, Icon, Row, SmartLink, Tag, Text } from "@once-ui-system/core";
 import { Reveal, SpotlightCard } from "@/components/motion";
 import { ProjectPreview } from "./ProjectPreview";
 import { Section, SectionHeader } from "./Section";
 import styles from "./sections.module.scss";
-
-const MOBILE_INITIAL = 3;
-const MOBILE_MQ = "(max-width: 1024px)";
 
 type Project = {
   title: string;
@@ -238,26 +235,11 @@ function ProjectLink({ project: p, children }: { project: Project; children: Rea
 }
 
 export function Projects() {
-  const [showAll, setShowAll] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia(MOBILE_MQ);
-    const sync = () => {
-      const mobile = mq.matches;
-      setIsMobile(mobile);
-      if (!mobile) setShowAll(false);
-    };
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
+  const [expanded, setExpanded] = useState(false);
 
   const featured = projects.find((p) => p.latest) ?? projects[0];
   const rest = projects.filter((p) => p !== featured);
-  const visibleRest =
-    isMobile && !showAll ? rest.slice(0, MOBILE_INITIAL - 1) : rest;
-  const canExpand = isMobile && !showAll && rest.length > MOBILE_INITIAL - 1;
+  const moreCount = rest.length;
 
   return (
     <Section id="projekte">
@@ -271,7 +253,7 @@ export function Projects() {
             </Text>
           </>
         }
-        description="Fünf Auszüge aus meinen bisher umgesetzten Projekten."
+        description="Ein aktueller Auszug – weitere Projekte auf Wunsch."
       />
 
       <Column fillWidth gap="32">
@@ -281,19 +263,28 @@ export function Projects() {
           </ProjectLink>
         </Reveal>
 
-        <Grid columns="2" m={{ columns: "1" }} gap="32">
-          {visibleRest.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.1} y={32} scale={0.94}>
-              <ProjectLink project={p}>
-                <ProjectCard project={p} />
-              </ProjectLink>
-            </Reveal>
-          ))}
-        </Grid>
+        {expanded && (
+          <Grid columns="2" m={{ columns: "1" }} gap="32">
+            {rest.map((p, i) => (
+              <Reveal key={p.title} delay={i * 0.1} y={32} scale={0.94}>
+                <ProjectLink project={p}>
+                  <ProjectCard project={p} />
+                </ProjectLink>
+              </Reveal>
+            ))}
+          </Grid>
+        )}
 
-        {canExpand && (
-          <Button variant="secondary" size="m" fillWidth onClick={() => setShowAll(true)}>
-            Alle {projects.length} Projekte anzeigen
+        {moreCount > 0 && (
+          <Button
+            variant="secondary"
+            size="m"
+            fillWidth
+            arrowIcon={!expanded}
+            onClick={() => setExpanded((v) => !v)}
+            aria-expanded={expanded}
+          >
+            {expanded ? "Weniger anzeigen" : `${moreCount} weitere Projekte anzeigen`}
           </Button>
         )}
       </Column>

@@ -75,6 +75,26 @@ body {
   overscroll-behavior-x: none;
 }
 
+/* Alle Überschriften: Inter Tight, Weight 400 wie der Hero */
+:root {
+  --font-weight-display-strong: 400;
+  --font-weight-display-default: 400;
+  --font-weight-heading-strong: 400;
+  --font-weight-heading-default: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display,
+.font-heading {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 400;
+}
+
 /* ============================================================
    Theme-aware tokens (Light / Dark via [data-theme] on <html>)
    ============================================================ */

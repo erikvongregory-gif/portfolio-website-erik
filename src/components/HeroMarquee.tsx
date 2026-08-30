@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import Image from "next/image";
+import { StarBadge } from "@/components/StarBadge";
 import styles from "./HeroMarquee.module.scss";
 
 type CardContent = {
@@ -48,7 +49,11 @@ function MarqueeCard({ card }: { card: CardContent }) {
           fill
           sizes={MARQUEE_IMAGE_SIZES}
         />
-        <span className={styles.tag}>{card.tag}</span>
+        <span className={styles.tag}>
+          <StarBadge lightWidth={70} duration={3.2}>
+            {card.tag}
+          </StarBadge>
+        </span>
       </div>
     </figure>
   );

@@ -1,0 +1,100 @@
+/* StarButton look as non-interactive badge — mask fill + orbit light */
+
+.badge {
+  --duration: 3;
+  --light-width: 80px;
+  --light-color: #fafafa;
+  --border-width: 1.5px;
+
+  position: relative;
+  z-index: 3;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  padding: 0 0.85rem;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  white-space: nowrap;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  /* Surface comes from the evenodd SVG, not a flat fill */
+  background: transparent;
+}
+
+.light {
+  position: absolute;
+  inset: 0;
+  aspect-ratio: 1;
+  width: var(--light-width);
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    var(--light-color),
+    transparent,
+    transparent
+  );
+  animation: star-btn calc(var(--duration) * 1s) linear infinite;
+}
+
+.border {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  overflow: hidden;
+  border-radius: inherit;
+  border-style: solid;
+  border-width: var(--border-width);
+  border-color: rgba(255, 255, 255, 0.15);
+  /* Dark fill → star cutouts (matches StarButton dark:text-black) */
+  color: #0a0a0a;
+  pointer-events: none;
+}
+
+.label {
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+  background: linear-gradient(to top, #fff, #a3a3a3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+:global([data-theme="light"]) .border {
+  border-color: rgba(0, 0, 0, 0.1);
+  /* Light theme: white mask (StarButton text-white) */
+  color: #fff;
+}
+
+:global([data-theme="light"]) .badge {
+  --light-color: #ff2056;
+}
+
+:global([data-theme="light"]) .label {
+  background: linear-gradient(to top, #000, #a3a3a3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes star-btn {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light {
+    animation: none;
+    opacity: 0.4;
+  }
+}

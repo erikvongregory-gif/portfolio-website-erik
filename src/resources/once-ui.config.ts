@@ -11,7 +11,7 @@ import { Inter_Tight } from "next/font/google";
 const heading = Inter_Tight({
   variable: "--font-heading",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 

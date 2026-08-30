@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import { StarBadge } from "@/components/StarBadge";
 import { findMagneticHero, paintHeroSpotlight } from "@/lib/heroSpotlight";
 import styles from "./HeroShowcase.module.scss";
 
 type CardContent = {
   title: string;
   image: string;
+  /** Category chip on the slide (StarBadge). */
+  tag: string;
   /** Live site – makes the card clickable while it sits at the front. */
   url?: string;
   comingSoon?: boolean;
@@ -51,27 +54,37 @@ const projects: CardContent[] = [
   {
     title: "Salon Liora",
     image: "/images/projects/salon-liora/hero.png",
+    tag: "Webdesign",
     url: "https://salon-liora.vercel.app",
   },
-  { title: "EvGlab", image: "/images/projects/evglab/hero-ki.png", url: "https://brewai.de" },
+  {
+    title: "EvGlab",
+    image: "/images/projects/evglab/hero-ki.png",
+    tag: "KI · Brand",
+    url: "https://brewai.de",
+  },
   {
     title: "Kapitalanlagen Deutschland (Entwurf)",
     image: "/images/projects/kapitalanlagen/hero.png",
+    tag: "Entwurf",
     obscured: true,
   },
   {
     title: "Ingenieurbüro Jungen",
     image: "/images/projects/ib-jungen/hero.png",
+    tag: "Industrie",
     url: "https://ib-jungen-web.vercel.app",
   },
   {
     title: "Lünebräu",
     image: "/images/projects/lunebraeu/hero.png",
+    tag: "Brand",
     url: "https://luenebraeu.vercel.app",
   },
   {
     title: "Da Peppe",
     image: "/images/projects/da-peppe/hero-live.png",
+    tag: "Gastronomie",
     url: "https://da-peppe.com",
   },
 ];
@@ -292,6 +305,11 @@ export function HeroShowcase() {
                     </span>
                   </div>
                 )}
+                <span className={styles.tag}>
+                  <StarBadge lightWidth={70} duration={3.2}>
+                    {c.tag}
+                  </StarBadge>
+                </span>
               </div>
             </div>
           </figure>

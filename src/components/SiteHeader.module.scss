@@ -27,34 +27,6 @@
   pointer-events: none;
 }
 
-.ende {
-  font-family: inherit;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  line-height: 1;
-  height: 3.25rem;
-  padding: 0 1.25rem;
-  border: 1px solid var(--neutral-alpha-medium);
-  border-radius: 999px;
-  background: var(--page-background);
-  color: var(--neutral-on-background-strong);
-  cursor: pointer;
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease;
-}
-
-.ende:hover {
-  background: var(--neutral-alpha-weak);
-}
-
-.ende:active {
-  transform: scale(0.97);
-}
-
 .overlay {
   position: fixed;
   inset: 0;
@@ -212,8 +184,7 @@
   .overlayOpen,
   .overlayClosing,
   .navItem,
-  .footer,
-  .ende {
+  .footer {
     transition: none !important;
   }
 

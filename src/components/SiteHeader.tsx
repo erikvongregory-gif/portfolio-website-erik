@@ -192,15 +192,16 @@ export function SiteHeader() {
             <Flex hide m={{ hide: false }} gap="4" vertical="center">
               {!menuVisible && <ThemeToggle className={styles.iconLg} />}
               {menuVisible ? (
-                <button
-                  type="button"
-                  className={styles.ende}
+                <IconButton
+                  icon="close"
+                  variant="tertiary"
+                  size="l"
+                  className={styles.iconLg}
                   aria-label="Menü schließen"
                   aria-expanded={menuExpanded}
+                  aria-controls="site-menu"
                   onClick={closeMenu}
-                >
-                  Ende
-                </button>
+                />
               ) : (
                 <IconButton
                   icon="menu"
