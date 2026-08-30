@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   Button,
@@ -8,15 +8,16 @@ import {
   Flex,
   Icon,
   IconButton,
-  RevealFx,
   Row,
   SmartLink,
   Text,
 } from "@once-ui-system/core";
+import classNames from "classnames";
 import styles from "./SiteHeader.module.scss";
 import { ContactDialog } from "./ContactDialog";
 import { ThemeToggle } from "./ThemeToggle";
 import { BrandMark } from "@/components/BrandLogo";
+import { subscribeScroll } from "@/components/motion/SmoothScroll";
 
 const navLinks = [
   { label: "Projekte", href: "/#projekte" },
@@ -25,40 +26,86 @@ const navLinks = [
   { label: "Über mich", href: "/ueber-uns" },
 ];
 
-function Logo() {
+function Logo({ size = 44 }: { size?: number }) {
   return (
-    <SmartLink href="/" unstyled style={{ textDecoration: "none" }}>
-      <Row vertical="center" gap="8">
-        <BrandMark size={26} />
-        <Text
-          variant="label-strong-m"
-          onBackground="neutral-strong"
-          style={{ letterSpacing: "-0.01em" }}
-        >
-          Erik EvgLab
-        </Text>
-      </Row>
+    <SmartLink href="/" unstyled aria-label="Erik EvgLab – Startseite">
+      <BrandMark size={size} />
     </SmartLink>
   );
 }
 
+const TOP_SHOW_Y = 24;
+const DIRECTION_DELTA = 6;
+const CLOSE_MS = 480;
+
+type MenuState = "closed" | "opening" | "open" | "closing";
+
 export function SiteHeader() {
   const pathname = usePathname();
   const hideHeader = pathname === "/festpreis" || pathname === "/partner";
-  const [open, setOpen] = useState(false);
-  const closeMobileMenu = () => setOpen(false);
+  const [menu, setMenu] = useState<MenuState>("closed");
+  const [scrolledAway, setScrolledAway] = useState(false);
+  const lastY = useRef(0);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const menuExpanded = menu === "open";
+  const menuVisible = menu !== "closed";
+
+  const openMenu = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+    // Mount closed first, then flip to open so clip-path can transition.
+    setMenu("opening");
+  };
+
+  const closeMenu = () => {
+    setMenu((current) => {
+      if (current !== "open" && current !== "opening") return current;
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+      closeTimer.current = setTimeout(() => {
+        setMenu("closed");
+        closeTimer.current = null;
+      }, CLOSE_MS);
+      return "closing";
+    });
+  };
+
+  // After mount in "opening", promote to "open" on the next frames.
+  useEffect(() => {
+    if (menu !== "opening") return;
+    let cancelled = false;
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (!cancelled) setMenu("open");
+      });
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(id);
+    };
+  }, [menu]);
 
   useEffect(() => {
-    if (!open) return;
+    return () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (menu !== "open" && menu !== "opening") return;
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") closeMenu();
     };
     const onResize = () => {
-      if (window.innerWidth > 1024) setOpen(false);
+      if (window.innerWidth > 1024) {
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        setMenu("closed");
+      }
     };
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("resize", onResize);
@@ -68,7 +115,43 @@ export function SiteHeader() {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("resize", onResize);
     };
-  }, [open]);
+  }, [menu]);
+
+  // Hide on scroll down, reveal on scroll up — Blink-style smart header.
+  useEffect(() => {
+    if (hideHeader) return;
+
+    lastY.current = window.scrollY;
+
+    const sync = () => {
+      if (menuVisible) {
+        setScrolledAway(false);
+        return;
+      }
+
+      const y = window.scrollY;
+      const delta = y - lastY.current;
+
+      if (y <= TOP_SHOW_Y) {
+        setScrolledAway(false);
+      } else if (delta > DIRECTION_DELTA) {
+        setScrolledAway(true);
+      } else if (delta < -DIRECTION_DELTA) {
+        setScrolledAway(false);
+      }
+
+      lastY.current = y;
+    };
+
+    sync();
+    const unsubScroll = subscribeScroll(sync);
+    window.addEventListener("scroll", sync, { passive: true });
+
+    return () => {
+      unsubScroll();
+      window.removeEventListener("scroll", sync);
+    };
+  }, [hideHeader, menuVisible]);
 
   if (hideHeader) {
     return null;
@@ -78,6 +161,11 @@ export function SiteHeader() {
     <>
       <Flex
         as="header"
+        className={classNames(
+          styles.header,
+          scrolledAway && styles.hidden,
+          menuVisible && styles.headerOpen,
+        )}
         position="fixed"
         top="0"
         left="0"
@@ -86,8 +174,7 @@ export function SiteHeader() {
         zIndex={3}
         paddingX="l"
         paddingY="12"
-        background="page"
-        borderBottom="neutral-alpha-weak"
+        aria-hidden={scrolledAway}
       >
         <Row fillWidth maxWidth="xl" horizontal="between" vertical="center">
           <Logo />
@@ -99,94 +186,102 @@ export function SiteHeader() {
                   {link.label}
                 </Button>
               ))}
-              <ThemeToggle />
+              <ThemeToggle className={styles.iconLg} />
               <ContactDialog label="Kostenlos anfragen" size="s" />
             </Flex>
             <Flex hide m={{ hide: false }} gap="4" vertical="center">
-              <ThemeToggle />
-              <IconButton
-                icon="menu"
-                variant="tertiary"
-                size="m"
-                aria-label="Menü öffnen"
-                aria-expanded={open}
-                onClick={() => setOpen(true)}
-              />
+              {!menuVisible && <ThemeToggle className={styles.iconLg} />}
+              {menuVisible ? (
+                <button
+                  type="button"
+                  className={styles.ende}
+                  aria-label="Menü schließen"
+                  aria-expanded={menuExpanded}
+                  onClick={closeMenu}
+                >
+                  Ende
+                </button>
+              ) : (
+                <IconButton
+                  icon="menu"
+                  variant="tertiary"
+                  size="l"
+                  className={styles.iconLg}
+                  aria-label="Menü öffnen"
+                  aria-expanded={false}
+                  aria-controls="site-menu"
+                  onClick={openMenu}
+                />
+              )}
             </Flex>
           </Row>
         </Row>
       </Flex>
 
-      {open && (
-        <Column
-          className={styles.backdrop}
-          fillWidth
-          background="page"
-          position="fixed"
-          top="0"
-          left="0"
-          style={{ height: "100dvh" }}
+      {menuVisible && (
+        <div
+          id="site-menu"
+          className={classNames(
+            styles.overlay,
+            menuExpanded && styles.overlayOpen,
+            menu === "closing" && styles.overlayClosing,
+          )}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation"
         >
-          <Column className={styles.panel} fillWidth fillHeight padding="16">
-            <Row fillWidth horizontal="between" vertical="center">
-              <Logo />
-              <IconButton
-                icon="close"
-                variant="tertiary"
-                size="l"
-                aria-label="Menü schließen"
-                onClick={() => setOpen(false)}
-              />
-            </Row>
-
-            <Column
-              fillWidth
-              flex={1}
-              vertical="center"
-              gap="0"
-              paddingX="8"
-              paddingY="32"
-            >
-              {navLinks.map((link, i) => (
-                <RevealFx key={link.href} fillWidth translateY="8" delay={0.05 + i * 0.06}>
-                  <SmartLink
-                    href={link.href}
-                    unstyled
-                    fillWidth
-                    className={styles.link}
-                    onClick={closeMobileMenu}
-                    onClickCapture={closeMobileMenu}
-                  >
-                    <Row
+          <Column className={styles.panel} fillWidth fillHeight paddingX="16" paddingBottom="16">
+            <Column fillWidth flex={1} vertical="center" paddingX="8">
+              <ul className={styles.navList}>
+                {navLinks.map((link, i) => (
+                  <li key={link.href} className={styles.navItem}>
+                    <SmartLink
+                      href={link.href}
+                      unstyled
                       fillWidth
-                      horizontal="between"
-                      vertical="center"
-                      paddingY="20"
-                      borderBottom="neutral-alpha-weak"
+                      className={styles.link}
+                      onClick={closeMenu}
+                      onClickCapture={closeMenu}
                     >
-                      <Text
-                        variant="display-strong-xs"
-                        onBackground="neutral-strong"
-                        style={{ letterSpacing: "-0.02em" }}
+                      <Row
+                        className={styles.linkRow}
+                        horizontal="between"
+                        vertical="center"
+                        gap="16"
                       >
-                        {link.label}
-                      </Text>
-                      <Icon name="arrowUpRight" size="m" onBackground="neutral-weak" />
-                    </Row>
-                  </SmartLink>
-                </RevealFx>
-              ))}
+                        <Row vertical="center" gap="16" style={{ minWidth: 0 }}>
+                          <Text
+                            className={styles.index}
+                            variant="label-default-s"
+                            onBackground="neutral-weak"
+                          >
+                            ({String(i + 1).padStart(2, "0")})
+                          </Text>
+                          <Text
+                            className={styles.label}
+                            variant="display-strong-s"
+                            onBackground="neutral-strong"
+                          >
+                            {link.label}
+                          </Text>
+                        </Row>
+                        <Icon name="arrowUpRight" size="m" onBackground="neutral-weak" />
+                      </Row>
+                    </SmartLink>
+                  </li>
+                ))}
+              </ul>
             </Column>
 
-            <Column fillWidth gap="16" paddingX="8" paddingBottom="8">
+            <Column className={styles.footer} fillWidth gap="16" paddingX="8" paddingBottom="8">
               <Button
                 href="/#kontakt"
                 variant="primary"
                 size="l"
                 fillWidth
                 arrowIcon
-                onClick={closeMobileMenu}
-                onClickCapture={closeMobileMenu}
+                onClick={closeMenu}
+                onClickCapture={closeMenu}
               >
                 Kostenloses Erstgespräch
               </Button>
@@ -195,7 +290,7 @@ export function SiteHeader() {
               </Text>
             </Column>
           </Column>
-        </Column>
+        </div>
       )}
     </>
   );

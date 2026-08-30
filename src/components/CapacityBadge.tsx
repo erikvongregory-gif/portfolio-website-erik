@@ -1,75 +1,32 @@
-"use client";
-
-import { Column, Row, Text } from "@once-ui-system/core";
-import { useEffect, useState } from "react";
+import { Row, Text } from "@once-ui-system/core";
 import styles from "./CapacityBadge.module.scss";
 
 type CapacityBadgeProps = {
-  taken?: number;
-  total?: number;
   label?: string;
-  /** Single-line pill without the progress bar – for tight mobile layouts. */
+  /** Tighter padding – same pill on mobile & desktop. */
   compact?: boolean;
 };
 
-export function CapacityBadge({ taken = 3, total = 4, label, compact }: CapacityBadgeProps) {
-  const pct = Math.max(0, Math.min(100, Math.round((taken / total) * 100)));
-  const displayLabel = label ?? `${taken}/${total} Projekten diesen Monat belegt`;
-  const [width, setWidth] = useState(0);
-  const ariaLabel = `${taken} von ${total} Projekten diesen Monat belegt. Kapazität ${pct} Prozent ausgelastet.`;
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setWidth(pct);
-      return;
-    }
-    const t = setTimeout(() => setWidth(pct), 300);
-    return () => clearTimeout(t);
-  }, [pct]);
-
-  if (compact) {
-    return (
-      <Row
-        gap="8"
-        paddingX="12"
-        paddingY="8"
-        radius="full"
-        background="surface"
-        border="neutral-alpha-medium"
-        vertical="center"
-        role="status"
-        aria-label={ariaLabel}
-      >
-        <span className={styles.dot} aria-hidden="true" />
-        <Text variant="label-default-s" onBackground="neutral-strong">
-          {displayLabel}
-        </Text>
-      </Row>
-    );
-  }
-
+/**
+ * Quiet hero identity pill — role, not scarcity.
+ */
+export function CapacityBadge({
+  label = "Pro Designer & Entwickler",
+  compact,
+}: CapacityBadgeProps) {
   return (
-    <Column
+    <Row
       gap="8"
-      paddingX="16"
-      paddingY="12"
-      radius="l"
-      background="surface"
-      border="neutral-alpha-medium"
-      shadow="s"
-      maxWidth={20}
-      role="status"
-      aria-label={ariaLabel}
+      paddingX={compact ? "12" : "14"}
+      paddingY={compact ? "8" : "10"}
+      radius="full"
+      vertical="center"
+      width="fit"
     >
-      <Row gap="8" vertical="center">
-        <span className={styles.dot} aria-hidden="true" />
-        <Text variant="label-default-s" onBackground="neutral-strong" wrap="balance">
-          {displayLabel}
-        </Text>
-      </Row>
-      <div className={styles.track} aria-hidden="true">
-        <div className={styles.fill} style={{ width: `${width}%` }} />
-      </div>
-    </Column>
+      <span className={styles.dot} aria-hidden="true" />
+      <Text variant="label-default-s" onBackground="neutral-strong">
+        {label}
+      </Text>
+    </Row>
   );
 }

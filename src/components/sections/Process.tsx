@@ -57,7 +57,7 @@ export function Process() {
 
         <Column flex={7} fillWidth>
           {steps.map((s, i) => (
-            <Reveal key={s.no} delay={i * 0.06} y={16}>
+            <Reveal key={s.no} y={20}>
               <Row
                 fillWidth
                 gap="24"

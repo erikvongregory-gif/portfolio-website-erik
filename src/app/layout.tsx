@@ -8,7 +8,6 @@ import classNames from "classnames";
 
 import { Column, Flex } from "@once-ui-system/core";
 import {
-  Aurora,
   ConsentAnalytics,
   ConsentGoogleAnalytics,
   ConsentMetaPixel,
@@ -28,8 +27,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f3f2f0" },
-    { media: "(prefers-color-scheme: dark)", color: "#121410" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
 };
 
@@ -160,15 +159,6 @@ export default function RootLayout({
           padding="0"
           horizontal="center"
         >
-          <Aurora />
-          <Flex
-            position="fixed"
-            top="0"
-            left="0"
-            fill
-            zIndex={0}
-            className="pageNoise"
-          />
           <SmoothScroll />
           <ScrollProgress />
           <SiteHeader />

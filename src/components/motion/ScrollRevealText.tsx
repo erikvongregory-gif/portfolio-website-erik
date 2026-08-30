@@ -24,8 +24,9 @@ export function ScrollRevealText({ text }: ScrollRevealTextProps) {
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      const start = vh * 0.85;
-      const end = vh * 0.2;
+      // Start lighting only once the block is well into view (Blink-like).
+      const start = vh * 0.72;
+      const end = vh * 0.28;
       const progress = Math.min(1, Math.max(0, (start - rect.top) / (start - end)));
       const lit = progress * words.length;
       wordRefs.current.forEach((word, i) => {

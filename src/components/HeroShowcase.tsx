@@ -281,7 +281,7 @@ export function HeroShowcase() {
                         : `${c.title} – Website-Projekt von EvgLab`
                   }
                   fill
-                  sizes="(min-width: 1440px) 420px, 30vw"
+                  sizes="(min-width: 1440px) 520px, 40vw"
                   priority={i === 0}
                 />
                 {c.comingSoon && (

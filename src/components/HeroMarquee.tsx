@@ -1,27 +1,30 @@
 "use client";
 
+import { useCallback, useState } from "react";
 import Image from "next/image";
 import styles from "./HeroMarquee.module.scss";
 
 type CardContent = {
   title: string;
   image: string;
+  /** Short category chip on the card, Blink-style. */
+  tag: string;
   comingSoon?: boolean;
-  /** Blur the project name only (e.g. client opted out of being named). */
   obscured?: boolean;
 };
 
 const projects: CardContent[] = [
-  { title: "Salon Liora", image: "/images/projects/salon-liora/hero.png" },
-  { title: "EvGlab", image: "/images/projects/evglab/hero-ki.png" },
+  { title: "Salon Liora", image: "/images/projects/salon-liora/hero.png", tag: "Webdesign" },
+  { title: "EvGlab", image: "/images/projects/evglab/hero-ki.png", tag: "KI · Brand" },
   {
     title: "Kapitalanlagen Deutschland (Entwurf)",
     image: "/images/projects/kapitalanlagen/hero.png",
+    tag: "Entwurf",
     obscured: true,
   },
-  { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero.png" },
-  { title: "Lünebräu", image: "/images/projects/lunebraeu/hero.png" },
-  { title: "Da Peppe", image: "/images/projects/da-peppe/hero-live.png" },
+  { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero.png", tag: "Industrie" },
+  { title: "Lünebräu", image: "/images/projects/lunebraeu/hero.png", tag: "Brand" },
+  { title: "Da Peppe", image: "/images/projects/da-peppe/hero-live.png", tag: "Gastronomie" },
 ];
 
 function marqueeAlt(card: CardContent): string {
@@ -30,49 +33,53 @@ function marqueeAlt(card: CardContent): string {
   return `${card.title} – Website-Projekt von EvgLab`;
 }
 
+/** Mirrors `.card { width: 107vw }`. Must stay a static string (no window/media JS) or SSR/client hydrate will diverge. */
+const MARQUEE_IMAGE_SIZES = "107vw";
+
 function MarqueeCard({ card }: { card: CardContent }) {
   const blurImage = card.comingSoon;
   return (
-    <figure className={styles.card} aria-hidden="true">
+    <figure className={styles.card}>
       <div className={styles.inner} data-sheen>
         <Image
           className={`${styles.image}${blurImage ? ` ${styles.imageBlur}` : ""}`}
           src={card.image}
           alt={marqueeAlt(card)}
           fill
-          sizes="240px"
+          sizes={MARQUEE_IMAGE_SIZES}
         />
+        <span className={styles.tag}>{card.tag}</span>
       </div>
     </figure>
   );
 }
 
-// Two rows keep the band quiet; third row made the strip feel template-heavy.
-const rows: { items: CardContent[]; reverse: boolean; duration: number }[] = [
-  { items: projects, reverse: false, duration: 46 },
-  {
-    items: [projects[2], projects[4], projects[0], projects[3], projects[1]],
-    reverse: true,
-    duration: 38,
-  },
-];
-
+/**
+ * Mobile hero strip: landscape project shots in original card size,
+ * continuous scroll, pauses on hover/touch.
+ */
 export function HeroMarquee() {
+  const [paused, setPaused] = useState(false);
+  const onEnter = useCallback(() => setPaused(true), []);
+  const onLeave = useCallback(() => setPaused(false), []);
+
   return (
-    <div className={styles.root} aria-hidden="true">
-      <div className={styles.rows}>
-        {rows.map((row, i) => (
-          <div
-            key={i}
-            className={`${styles.track} ${row.reverse ? styles.reverse : ""}`}
-            style={{ ["--dur" as string]: `${row.duration}s` }}
-          >
-            {/* Duplicated set keeps the loop seamless at translateX(-50%). */}
-            {[...row.items, ...row.items].map((card, j) => (
-              <MarqueeCard key={j} card={card} />
-            ))}
-          </div>
-        ))}
+    <div
+      className={`${styles.root}${paused ? ` ${styles.paused}` : ""}`}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+      onTouchStart={onEnter}
+      onTouchEnd={onLeave}
+      role="region"
+      aria-label="Projektbeispiele"
+      aria-roledescription="carousel"
+    >
+      <div className={styles.viewport}>
+        <div className={styles.track}>
+          {[...projects, ...projects].map((card, j) => (
+            <MarqueeCard key={j} card={card} />
+          ))}
+        </div>
       </div>
     </div>
   );

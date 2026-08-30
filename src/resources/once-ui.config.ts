@@ -6,10 +6,12 @@ const baseURL: string = SITE_URL;
 
 import { Geist } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
+import { Inter_Tight } from "next/font/google";
 
-const heading = Geist({
+const heading = Inter_Tight({
   variable: "--font-heading",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 

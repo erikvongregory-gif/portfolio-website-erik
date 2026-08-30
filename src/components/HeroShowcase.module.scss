@@ -3,8 +3,8 @@
   width: 100%;
   /* rem-basierte Caps, damit das Visual auf großen Screens mit der
      hochskalierten Root-Schriftgröße mitwächst. */
-  height: min(82vh, 56.25rem);
-  min-height: 35rem;
+  height: min(88vh, 62rem);
+  min-height: 40rem;
   perspective: 212.5rem;
   overflow: hidden;
   cursor: grab;
@@ -87,7 +87,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 54%;
+  width: 66%;
   pointer-events: none;
   will-change: transform, opacity;
 }

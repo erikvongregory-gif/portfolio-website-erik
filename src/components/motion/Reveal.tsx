@@ -1,6 +1,14 @@
 "use client";
 
-import { cloneElement, isValidElement, useEffect, useRef, useState, type ReactElement } from "react";
+import {
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactElement,
+} from "react";
 import styles from "./motion.module.scss";
 
 type RevealProps = {
@@ -9,9 +17,33 @@ type RevealProps = {
   y?: number;
   x?: number;
   scale?: number;
+  /**
+   * How deep into the viewport before reveal.
+   * `late` (default) = Blink-style: wait until you're at the block.
+   * `early` = as soon as it peeks in (legacy).
+   */
+  when?: "late" | "early";
 };
 
-export function Reveal({ children, delay = 0, y = 24, x = 0, scale = 1 }: RevealProps) {
+/** Blink-like: bottom 36% of the viewport doesn't count — reveal when you're there. */
+const IO_LATE: IntersectionObserverInit = {
+  threshold: [0, 0.12, 0.25],
+  rootMargin: "0px 0px -36% 0px",
+};
+
+const IO_EARLY: IntersectionObserverInit = {
+  threshold: 0.12,
+  rootMargin: "0px 0px -8% 0px",
+};
+
+export function Reveal({
+  children,
+  delay = 0,
+  y = 28,
+  x = 0,
+  scale = 1,
+  when = "late",
+}: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [shown, setShown] = useState(false);
 
@@ -25,21 +57,21 @@ export function Reveal({ children, delay = 0, y = 24, x = 0, scale = 1 }: Reveal
       setShown(true);
       return;
     }
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            setShown(true);
-            io.disconnect();
-            break;
-          }
+
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        // Require a real hit inside the tightened root (not a 1px peek).
+        if (e.isIntersecting && e.intersectionRatio > 0) {
+          setShown(true);
+          io.disconnect();
+          break;
         }
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
-    );
+      }
+    }, when === "early" ? IO_EARLY : IO_LATE);
+
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [when]);
 
   if (!isValidElement(children)) return children;
 
@@ -52,10 +84,10 @@ export function Reveal({ children, delay = 0, y = 24, x = 0, scale = 1 }: Reveal
     className: `${prevClass}${styles.reveal}${shown ? ` ${styles.revealIn}` : ""}`,
     style: {
       ...(child.props.style || {}),
-      transitionDelay: `${delay}s`,
+      transitionDelay: shown ? `${delay}s` : "0s",
       ["--reveal-y" as string]: `${y}px`,
       ["--reveal-x" as string]: `${x}px`,
       ["--reveal-scale" as string]: `${scale}`,
-    } as React.CSSProperties,
+    } as CSSProperties,
   });
 }

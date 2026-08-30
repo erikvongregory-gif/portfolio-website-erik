@@ -1,4 +1,4 @@
-import { Column, Flex, Heading, Icon, RevealFx, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Flex, Heading, Icon, Row, SmartLink, Text } from "@once-ui-system/core";
 import Image from "next/image";
 import styles from "./page.module.scss";
 import {
@@ -6,33 +6,27 @@ import {
   Approach,
   CapacityBadge,
   FinalCta,
+  HeroEntrance,
+  HeroLine,
   HeroMarquee,
   HeroProof,
   HeroShowcase,
   Investment,
-  MagneticHeroFx,
   Marquee,
   Problem,
   Process,
   Projects,
-  RotatingWord,
   ScrollRevealText,
   Services,
   SiteFooter,
   Testimonials,
   StickyMobileCta,
+  heroEnter,
 } from "@/components";
 import { ContactDialog } from "@/components/ContactDialog";
 import { CtaProof } from "@/components/CtaProof";
 import { JsonLd } from "@/components/JsonLd";
-import { FREIE_SLOTS, KAPAZITAET_SLOTS } from "@/lib/config";
 import { baseURL } from "@/resources";
-
-const capacityTaken = KAPAZITAET_SLOTS - FREIE_SLOTS;
-const capacityLabel =
-  FREIE_SLOTS === 1
-    ? "1 Projekt diesen Monat noch frei"
-    : `${FREIE_SLOTS} Projekte diesen Monat noch frei`;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -92,27 +86,25 @@ export default function Home() {
   return (
     <Column fillWidth horizontal="center">
       <JsonLd data={structuredData} />
-      <Column
+      <HeroEntrance
         as="section"
         className={styles.hero}
         data-sticky-cta-hero
-        data-magnetic-hero
         fillWidth
         horizontal="center"
         paddingX="l"
         paddingTop="128"
         paddingBottom="80"
-        m={{ paddingTop: "104", paddingBottom: "64" }}
+        m={{ paddingTop: "88", paddingBottom: "48" }}
         vertical="center"
         style={{ minHeight: "100svh", position: "relative" }}
       >
-        <MagneticHeroFx />
         <Row
           fillWidth
           maxWidth={68}
           vertical="center"
           gap="xl"
-          s={{ direction: "column", gap: "40" }}
+          s={{ direction: "column", gap: "32" }}
           style={{ position: "relative", zIndex: 1 }}
         >
           <Column
@@ -123,83 +115,54 @@ export default function Home() {
             horizontal="start"
             align="left"
           >
-            {FREIE_SLOTS > 0 && (
-              <Column m={{ hide: true }} paddingBottom="24">
-                <RevealFx speed={400} horizontal="start">
-                  <CapacityBadge
-                    taken={capacityTaken}
-                    total={KAPAZITAET_SLOTS}
-                    label={capacityLabel}
-                  />
-                </RevealFx>
-              </Column>
-            )}
+            <Column className={heroEnter.badge} paddingBottom="24" m={{ paddingBottom: "28" }}>
+              <CapacityBadge />
+            </Column>
 
-            {FREIE_SLOTS > 0 && (
-              <Column hide m={{ hide: false }} paddingBottom="16">
-                <RevealFx speed={400} horizontal="start">
-                  <CapacityBadge
-                    compact
-                    taken={capacityTaken}
-                    total={KAPAZITAET_SLOTS}
-                    label={capacityLabel}
-                  />
-                </RevealFx>
-              </Column>
-            )}
+            <Heading
+              as="h1"
+              className={styles.heroHeadline}
+              variant="display-strong-xl"
+              onBackground="neutral-strong"
+              style={{ paddingBottom: "1.5rem" }}
+            >
+              <HeroLine>Websites mit Charakter,</HeroLine>
+              <HeroLine>die Kunden bringen – inklusive kostenlosem Entwurf.</HeroLine>
+            </Heading>
 
-            <RevealFx speed={400} translateY="4" delay={0.05} horizontal="start" paddingBottom="20">
-              <Heading
-                as="h1"
-                className={styles.heroHeadline}
-                variant="display-strong-xl"
-                onBackground="neutral-strong"
-                style={{ letterSpacing: "-0.04em", lineHeight: 0.98 }}
-              >
-                <Text as="span" className={styles.heroHeadlineLead} onBackground="neutral-medium">
-                  Websites mit Charakter,
-                </Text>{" "}
-                <span className={styles.heroHeadlineTail}>
-                  die <RotatingWord words={["Kunden", "Anfragen", "Aufträge", "Umsätze"]} />{" "}
-                  bringen.
-                </span>
-              </Heading>
-            </RevealFx>
-
-            <RevealFx speed={400} translateY="8" delay={0.12} horizontal="start" paddingBottom="32">
+            <Column className={`${styles.heroLead} ${heroEnter.lead}`} paddingBottom="28">
               <Text
                 wrap="balance"
                 onBackground="neutral-medium"
-                variant="body-default-l"
-                style={{ lineHeight: 1.55, maxWidth: "32rem" }}
+                variant="body-default-m"
+                className={styles.heroLeadText}
               >
-                Webdesign und Webentwicklung aus Landsberg am Lech – kein Vorlagen-Look, sondern
-                ein Auftritt mit Persönlichkeit, der Anfragen bringt.
+                Für Unternehmen, die genug davon haben, dass ihre Website wie von der Stange wirkt
+                und keine Anfragen bringt.
               </Text>
-            </RevealFx>
+            </Column>
 
-            <RevealFx speed={400} translateY="8" delay={0.18} horizontal="start" paddingBottom="12">
-              <Row
-                className={styles.heroActions}
-                gap="20"
-                wrap
-                vertical="center"
-              >
-                <ContactDialog label="Kostenlos anfragen" size="l" replaceGlobalHandler />
-                <SmartLink href="#projekte" unstyled>
-                  <Text variant="label-strong-s" onBackground="neutral-strong">
-                    Projekte ansehen
-                  </Text>
-                </SmartLink>
-              </Row>
-            </RevealFx>
+            <Row
+              className={`${styles.heroActions} ${heroEnter.actions}`}
+              gap="20"
+              wrap
+              vertical="center"
+              paddingBottom="8"
+            >
+              <ContactDialog label="Kostenloser Entwurf" size="l" replaceGlobalHandler />
+              <SmartLink href="#projekte" unstyled className={styles.heroSecondaryCta}>
+                <Text variant="label-strong-s" onBackground="neutral-strong">
+                  Projekte ansehen
+                </Text>
+              </SmartLink>
+            </Row>
 
-            <RevealFx speed={400} translateY="4" delay={0.2} horizontal="start" paddingBottom="20">
-              <CtaProof />
-            </RevealFx>
+            <Column m={{ hide: true }}>
+              <Column className={heroEnter.proof} paddingBottom="20">
+                <CtaProof />
+              </Column>
 
-            <RevealFx speed={400} translateY="8" delay={0.24} horizontal="start">
-              <Column gap="20">
+              <Column className={heroEnter.about} gap="20">
                 <HeroProof />
                 <SmartLink href="/ueber-uns" unstyled className={styles.heroAboutLink}>
                   <Row gap="8" vertical="center">
@@ -218,18 +181,47 @@ export default function Home() {
                   </Row>
                 </SmartLink>
               </Column>
-            </RevealFx>
+            </Column>
           </Column>
 
-          <Flex flex={6} fillWidth m={{ hide: true }}>
-            <RevealFx fillWidth speed={400} delay={0.2}>
-              <HeroShowcase />
-            </RevealFx>
+          <Flex className={heroEnter.visual} flex={6} fillWidth m={{ hide: true }}>
+            <HeroShowcase />
           </Flex>
         </Row>
 
-        <HeroMarquee />
-      </Column>
+        <Column className={heroEnter.marquee} fillWidth>
+          <HeroMarquee />
+        </Column>
+
+        <Column
+          className={`${styles.heroBelow} ${heroEnter.mobileProof}`}
+          hide
+          m={{ hide: false }}
+          fillWidth
+          maxWidth={68}
+          gap="20"
+          paddingTop="40"
+        >
+          <CtaProof />
+          <HeroProof />
+          <SmartLink href="/ueber-uns" unstyled className={styles.heroAboutLink}>
+            <Row gap="8" vertical="center">
+              <span className={styles.heroAboutAvatar} aria-hidden="true">
+                <Image
+                  src="/images/about/erik-avatar.webp"
+                  alt="Erik von Gregory, Gründer von EvgLab"
+                  width={32}
+                  height={32}
+                />
+              </span>
+              <Text variant="label-strong-s" onBackground="neutral-strong">
+                Erik · Wer dahintersteckt
+              </Text>
+              <Icon name="arrowRight" size="xs" onBackground="neutral-strong" />
+            </Row>
+          </SmartLink>
+        </Column>
+      </HeroEntrance>
 
       <Problem />
       <Projects />

@@ -1,46 +1,238 @@
-.backdrop {
+.header {
+  background: transparent;
+  border: none;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.headerOpen {
+  z-index: 12 !important;
+}
+
+.iconLg {
+  width: 3.25rem !important;
+  height: 3.25rem !important;
+  min-width: 3.25rem !important;
+  min-height: 3.25rem !important;
+}
+
+.iconLg :global(svg) {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.hidden {
+  transform: translate3d(0, calc(-100% - 1px), 0);
+  pointer-events: none;
+}
+
+.ende {
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+  height: 3.25rem;
+  padding: 0 1.25rem;
+  border: 1px solid var(--neutral-alpha-medium);
+  border-radius: 999px;
+  background: var(--page-background);
+  color: var(--neutral-on-background-strong);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.ende:hover {
+  background: var(--neutral-alpha-weak);
+}
+
+.ende:active {
+  transform: scale(0.97);
+}
+
+.overlay {
   position: fixed;
   inset: 0;
-  z-index: 8;
-  animation: fade 0.18s ease-out;
+  z-index: 10;
+  width: 100%;
+  height: 100dvh;
+  pointer-events: none;
+  background: var(--page-background);
+  /* px radius transitions more reliably than % across browsers */
+  clip-path: circle(0px at calc(100% - 2.75rem) 2.75rem);
+  transition: clip-path 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: clip-path;
+}
+
+.overlayOpen {
+  pointer-events: auto;
+  clip-path: circle(150vmax at calc(100% - 2.75rem) 2.75rem);
+}
+
+.overlayClosing {
+  pointer-events: none;
+  clip-path: circle(0px at calc(100% - 2.75rem) 2.75rem);
+  transition: clip-path 0.45s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .panel {
-  animation: slide 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 100%;
+  padding-top: 5.5rem;
+}
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.navItem {
+  opacity: 0;
+  transform: translate3d(0, 1.25rem, 0);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0s;
+}
+
+.overlayOpen .navItem {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.overlayOpen .navItem:nth-child(1) {
+  transition-delay: 0.22s;
+}
+.overlayOpen .navItem:nth-child(2) {
+  transition-delay: 0.3s;
+}
+.overlayOpen .navItem:nth-child(3) {
+  transition-delay: 0.38s;
+}
+.overlayOpen .navItem:nth-child(4) {
+  transition-delay: 0.46s;
+}
+.overlayOpen .navItem:nth-child(5) {
+  transition-delay: 0.54s;
+}
+
+.overlayClosing .navItem {
+  opacity: 0;
+  transform: translate3d(0, 0.75rem, 0);
+  transition-duration: 0.2s;
+  transition-delay: 0s;
 }
 
 .link {
+  display: block;
+  width: 100%;
   text-decoration: none;
-  transition: opacity 0.15s ease;
+  border-radius: 1rem;
+  transition: background 0.2s ease;
+}
+
+.link:hover {
+  background: var(--neutral-alpha-weak);
 }
 
 .link:active {
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
-@keyframes fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.linkRow {
+  width: 100%;
+  min-height: 4.5rem;
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid var(--neutral-alpha-weak);
 }
 
-@keyframes slide {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
+.index {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  min-width: 2.5rem;
+}
+
+.label {
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.footer {
+  opacity: 0;
+  transform: translate3d(0, 1rem, 0);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0s;
+}
+
+.overlayOpen .footer {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 0.5s;
+}
+
+.overlayClosing .footer {
+  opacity: 0;
+  transform: translate3d(0, 0.5rem, 0);
+  transition-duration: 0.18s;
+  transition-delay: 0s;
+}
+
+@media (max-width: 480px) {
+  .overlay {
+    clip-path: circle(0px at calc(100% - 2.1rem) 2.4rem);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .overlayOpen {
+    clip-path: circle(150vmax at calc(100% - 2.1rem) 2.4rem);
+  }
+
+  .overlayClosing {
+    clip-path: circle(0px at calc(100% - 2.1rem) 2.4rem);
+  }
+
+  .label {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .backdrop,
-  .panel {
-    animation: none;
+  .header {
+    transition: none;
+  }
+
+  .overlay,
+  .overlayOpen,
+  .overlayClosing,
+  .navItem,
+  .footer,
+  .ende {
+    transition: none !important;
+  }
+
+  .overlay {
+    clip-path: none;
+    opacity: 0;
+  }
+
+  .overlayOpen {
+    opacity: 1;
+  }
+
+  .overlayClosing {
+    opacity: 0;
+  }
+
+  .navItem,
+  .footer {
+    opacity: 1;
+    transform: none;
   }
 }
