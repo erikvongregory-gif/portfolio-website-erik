@@ -116,6 +116,24 @@ h6,
   --evg-portrait-shadow: rgba(0, 0, 0, 0.4);
 }
 
+@property --shift-ang {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 92deg;
+}
+
+@property --shift-s1 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --shift-s2 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+
 [data-theme="dark"] {
   --page-background: #000000;
   --evg-card-highlight: rgba(255, 255, 255, 0.07);

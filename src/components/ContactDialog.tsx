@@ -18,7 +18,7 @@ import {
   QUOTE_MESSAGE_STORAGE_KEY,
   registerContactOpenHandler,
 } from "@/lib/quoteContact";
-import successStyles from "./FormSuccess.module.scss";
+import { ShiftCta } from "@/components/ShiftCta";
 import styles from "./ContactDialog.module.scss";
 
 type ContactDialogProps = {
@@ -349,18 +349,23 @@ export function ContactDialog({
 
   return (
     <>
-      {!dialogOnly && (
-        <Button
-          variant={variant}
-          size={size}
-          arrowIcon={arrowIcon}
-          fillWidth={fillWidth}
-          data-open-contact=""
-          onClick={onTriggerClick}
-        >
-          {label}
-        </Button>
-      )}
+      {!dialogOnly &&
+        (size === "l" ? (
+          <ShiftCta fillWidth={fillWidth} onClick={onTriggerClick}>
+            {label}
+          </ShiftCta>
+        ) : (
+          <Button
+            variant={variant}
+            size={size}
+            arrowIcon={arrowIcon}
+            fillWidth={fillWidth}
+            data-open-contact=""
+            onClick={onTriggerClick}
+          >
+            {label}
+          </Button>
+        ))}
 
       {funnel ? (
         funnelOverlay

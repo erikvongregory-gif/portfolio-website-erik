@@ -155,15 +155,13 @@ export function CookieBanner() {
     >
       <Column
         fillWidth
-        background="surface"
         border="neutral-alpha-medium"
         radius="l"
         padding="20"
         gap="16"
         pointerEvents="auto"
         style={{
-          backdropFilter: "blur(14px) saturate(160%)",
-          WebkitBackdropFilter: "blur(14px) saturate(160%)",
+          backgroundColor: "var(--page-background)",
           transform: shown ? "translateY(0)" : "translateY(16px)",
           opacity: shown ? 1 : 0,
           transition: "transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease",
@@ -205,7 +203,7 @@ export function CookieBanner() {
           <>
             <Text
               variant="body-default-s"
-              onBackground="neutral-weak"
+              onBackground="neutral-strong"
               style={{ lineHeight: 1.6 }}
             >
               Technisch notwendige Cookies sind immer dabei. Statistik und Marketing laden wir nur,
@@ -236,7 +234,7 @@ export function CookieBanner() {
           <>
             <Text
               variant="body-default-s"
-              onBackground="neutral-weak"
+              onBackground="neutral-strong"
               style={{ lineHeight: 1.6 }}
             >
               Stell dir deinen Keksteller selbst zusammen. Notwendige Cookies bleiben drin, der Rest
@@ -259,7 +257,7 @@ export function CookieBanner() {
                       <Text variant="label-strong-s" onBackground="neutral-strong">
                         {cat.title}
                       </Text>
-                      <Text variant="body-default-xs" onBackground="neutral-weak">
+                      <Text variant="body-default-xs" onBackground="neutral-medium">
                         {cat.description}
                       </Text>
                     </Column>

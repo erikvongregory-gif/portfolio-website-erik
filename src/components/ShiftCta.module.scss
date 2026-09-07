@@ -1,0 +1,219 @@
+.root {
+  --shift-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --shift-ang: 92deg;
+  --shift-s1: 0%;
+  --shift-s2: 100%;
+  --shift-c1: color-mix(in srgb, var(--brand-solid-strong) 62%, #fff);
+  --shift-c2: color-mix(in srgb, var(--brand-solid-strong) 86%, #000);
+
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.35rem;
+  padding: 0.95rem 1.55rem;
+  overflow: hidden;
+  border: 0;
+  border-radius: 1.15rem;
+  cursor: pointer;
+  color: #fff;
+  font-family: var(--font-heading), var(--font-body), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  background: transparent;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 8px 22px -8px rgba(0, 0, 0, 0.5);
+  transition:
+    transform 0.28s var(--shift-ease),
+    box-shadow 0.4s var(--shift-ease);
+}
+
+.fill {
+  width: 100%;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background-image: linear-gradient(
+    var(--shift-ang),
+    var(--shift-c1) var(--shift-s1),
+    var(--shift-c2) var(--shift-s2)
+  );
+  animation: shiftIdle 7.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 32%,
+    rgba(255, 255, 255, 0.28) 48%,
+    transparent 64%
+  );
+  transform: translate3d(-70%, 0, 0);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.7s var(--shift-ease),
+    opacity 0.35s ease;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.52s var(--shift-ease);
+}
+
+.arrowClip {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1.7rem;
+  height: 1.7rem;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  transform: translate(-1.85rem, -50%);
+  pointer-events: none;
+}
+
+.arrowWell {
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translate3d(-1.7rem, 0, 0);
+  transition: transform 0.52s var(--shift-ease);
+}
+
+.arrowWell svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  display: block;
+}
+
+.text {
+  position: relative;
+  overflow: hidden;
+  line-height: 1;
+  padding-bottom: 0.06em;
+}
+
+.idle,
+.swap {
+  display: inline-block;
+  will-change: transform;
+  transition:
+    transform 0.52s var(--shift-ease),
+    filter 0.45s var(--shift-ease);
+}
+
+.idle {
+  transform: translateZ(0);
+}
+
+.swap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate3d(-1.15rem, 1.15rem, 0);
+  filter: blur(4px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .root:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      0 14px 32px -10px rgba(0, 0, 0, 0.55);
+  }
+
+  .root:hover .bg {
+    animation: none;
+    --shift-ang: 156deg;
+    --shift-s1: 28%;
+    --shift-s2: 78%;
+    --shift-c1: color-mix(in srgb, var(--brand-solid-strong) 48%, #fff);
+    --shift-c2: var(--brand-solid-strong);
+    transition:
+      --shift-ang 1.4s var(--shift-ease),
+      --shift-s1 1.4s var(--shift-ease),
+      --shift-s2 1.4s var(--shift-ease);
+  }
+
+  .root:hover .bg::after {
+    opacity: 1;
+    transform: translate3d(70%, 0, 0);
+  }
+
+  .root:hover .content {
+    transform: translate3d(1.05rem, 0, 0);
+  }
+
+  .root:hover .arrowWell {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .root:hover .idle {
+    transform: translate3d(1.15rem, -1.15rem, 0);
+    filter: blur(4px);
+  }
+
+  .root:hover .swap {
+    transform: translateZ(0);
+    filter: blur(0);
+  }
+}
+
+.root:active {
+  transform: scale(0.985);
+}
+
+.root:focus-visible {
+  outline: 2px solid var(--brand-solid-strong);
+  outline-offset: 3px;
+}
+
+@keyframes shiftIdle {
+  from {
+    --shift-ang: 88deg;
+  }
+  to {
+    --shift-ang: 118deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root,
+  .bg,
+  .bg::after,
+  .content,
+  .arrowWell,
+  .idle,
+  .swap {
+    animation: none !important;
+    transition: none !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .root:hover {
+    filter: brightness(1.06);
+  }
+}

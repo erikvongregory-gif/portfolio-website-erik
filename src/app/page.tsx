@@ -207,16 +207,18 @@ export default function Home() {
             </Heading>
 
             <Column className={styles.blinkAside} gap="20">
-              <Text
-                wrap="balance"
-                onBackground="neutral-medium"
-                variant="body-default-l"
-                className={styles.blinkLead}
-              >
-                Für Unternehmen, die genug davon haben, dass ihre Website wie von der Stange wirkt
-                und keine Anfragen bringt.
-              </Text>
-              <Row className={styles.blinkActions} gap="16" vertical="center">
+              <Column className={heroEnter.lead} fillWidth>
+                <Text
+                  wrap="balance"
+                  onBackground="neutral-medium"
+                  variant="body-default-l"
+                  className={styles.blinkLead}
+                >
+                  Für Unternehmen, die genug davon haben, dass ihre Website wie von der Stange wirkt
+                  und keine Anfragen bringt.
+                </Text>
+              </Column>
+              <Row className={`${styles.blinkActions} ${heroEnter.actions}`} gap="16" vertical="center">
                 <ContactDialog label="Kostenloser Entwurf" size="l" replaceGlobalHandler funnel />
               </Row>
             </Column>
