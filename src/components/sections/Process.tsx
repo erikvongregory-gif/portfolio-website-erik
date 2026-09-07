@@ -78,6 +78,7 @@ export function Process() {
     );
     scene.observe(el);
 
+    const mobile = window.matchMedia("(max-width: 1023px)").matches;
     const nodes = el.querySelectorAll<HTMLElement>("[data-step]");
     const stepIo = new IntersectionObserver(
       (entries) => {
@@ -95,7 +96,10 @@ export function Process() {
           return changed ? next : prev;
         });
       },
-      { threshold: 0.42, rootMargin: "0px 0px -18% 0px" },
+      {
+        threshold: mobile ? 0.2 : 0.42,
+        rootMargin: mobile ? "0px 0px -8% 0px" : "0px 0px -18% 0px",
+      },
     );
     nodes.forEach((n) => stepIo.observe(n));
 

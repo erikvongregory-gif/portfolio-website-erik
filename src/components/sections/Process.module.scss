@@ -169,26 +169,21 @@
   animation-delay: calc(0.28s + var(--i, 0) * 0.08s);
 }
 
-.on .idle,
-.step:hover .idle {
+.on .idle {
   transform: translate3d(0, -115%, 0);
 }
 
-.on .swap,
-.step:hover .swap {
+.on .swap {
   transform: translate3d(0, 0, 0);
 }
 
-.on .pill,
-.step:hover .pill {
+.on .pill {
   background: var(--neutral-on-background-strong);
   color: var(--page-background);
 }
 
 .on .body,
-.on .meta,
-.step:hover .body,
-.step:hover .meta {
+.on .meta {
   opacity: 1;
   transform: none;
   filter: none;
@@ -229,6 +224,26 @@
   .step:hover {
     background: var(--neutral-alpha-weak);
   }
+
+  .step:hover .idle {
+    transform: translate3d(0, -115%, 0);
+  }
+
+  .step:hover .swap {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .step:hover .pill {
+    background: var(--neutral-on-background-strong);
+    color: var(--page-background);
+  }
+
+  .step:hover .body,
+  .step:hover .meta {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }
 
 @media (max-width: 1023px) {
@@ -236,6 +251,25 @@
     position: static;
     top: auto;
     max-width: none;
+  }
+
+  .lead {
+    filter: none;
+  }
+
+  .in .lead {
+    animation-name: enterFade;
+  }
+
+  @keyframes enterFade {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 0.55rem, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   .num {
@@ -250,6 +284,45 @@
   .step::after {
     left: 3.35rem;
     right: 0;
+  }
+
+  .swap {
+    display: none;
+  }
+
+  .idle,
+  .on .idle {
+    transform: none;
+  }
+
+  .on .num,
+  .on .num .idle {
+    color: var(--neutral-on-background-strong);
+  }
+
+  .on .title .clip .idle {
+    color: var(--neutral-on-background-strong);
+  }
+
+  .body,
+  .meta {
+    filter: none;
+    transform: none;
+    opacity: 0.5;
+    transition: opacity 0.35s ease;
+  }
+
+  .on .body,
+  .on .meta {
+    opacity: 1;
+  }
+
+  .idle,
+  .swap,
+  .pill {
+    transition:
+      color 0.35s ease,
+      background-color 0.35s ease;
   }
 }
 
