@@ -39,46 +39,27 @@ const steps = [
   },
 ];
 
-function ClipSwap({ text }: { text: string }) {
+function prefersPlainMotion() {
   return (
-    <span className={styles.clip}>
-      <span className={styles.idle}>{text}</span>
-      <span className={styles.swap} aria-hidden="true">
-        {text}
-      </span>
-    </span>
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    window.matchMedia("(max-width: 1023px)").matches ||
+    window.matchMedia("(pointer: coarse)").matches ||
+    CSS.supports("-webkit-touch-callout", "none")
   );
 }
 
 export function Process() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
   const [lit, setLit] = useState<Set<number>>(() => new Set());
 
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setInView(true);
+    if (prefersPlainMotion()) {
       setLit(new Set(steps.map((_, i) => i)));
       return;
     }
 
-    const scene = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting && e.intersectionRatio > 0) {
-            setInView(true);
-            scene.disconnect();
-            break;
-          }
-        }
-      },
-      { threshold: [0, 0.12], rootMargin: "0px 0px -28% 0px" },
-    );
-    scene.observe(el);
-
-    const mobile = window.matchMedia("(max-width: 1023px)").matches;
     const nodes = el.querySelectorAll<HTMLElement>("[data-step]");
     const stepIo = new IntersectionObserver(
       (entries) => {
@@ -96,17 +77,10 @@ export function Process() {
           return changed ? next : prev;
         });
       },
-      {
-        threshold: mobile ? 0.2 : 0.42,
-        rootMargin: mobile ? "0px 0px -8% 0px" : "0px 0px -18% 0px",
-      },
+      { threshold: 0.35 },
     );
     nodes.forEach((n) => stepIo.observe(n));
-
-    return () => {
-      scene.disconnect();
-      stepIo.disconnect();
-    };
+    return () => stepIo.disconnect();
   }, []);
 
   return (
@@ -116,10 +90,12 @@ export function Process() {
         fillWidth
         gap="64"
         vertical="start"
-        className={classNames(styles.scene, inView && styles.in)}
+        className={styles.scene}
+        s={{ direction: "column", gap: "40" }}
         m={{ direction: "column", gap: "40" }}
+        l={{ direction: "row", gap: "64" }}
       >
-        <Column flex={5} className={styles.stickyHeader} maxWidth={28} gap="16">
+        <Column flex={5} className={styles.header} maxWidth={28} gap="16">
           <Heading
             as="h2"
             className={styles.headline}
@@ -128,30 +104,21 @@ export function Process() {
             style={{ letterSpacing: "-0.04em", lineHeight: 1.05 }}
           >
             <span className={styles.line}>
-              {["Fünf", "Schritte,"].map((w, i) => (
-                <span key={w} className={styles.word} style={{ "--w": i } as CSSProperties}>
-                  <span className={styles.wordInner}>{w}</span>
+              {["Fünf", "Schritte,"].map((w) => (
+                <span key={w} className={styles.word}>
+                  {w}
                 </span>
               ))}
             </span>
             <span className={styles.line}>
-              {["dann", "bist", "du", "live."].map((w, i) => (
-                <span
-                  key={w}
-                  className={styles.word}
-                  style={{ "--w": i + 2 } as CSSProperties}
-                >
-                  <span className={styles.wordInner}>{w}</span>
+              {["dann", "bist", "du", "live."].map((w) => (
+                <span key={w} className={styles.word}>
+                  {w}
                 </span>
               ))}
             </span>
           </Heading>
-          <Text
-            className={styles.lead}
-            variant="body-default-l"
-            onBackground="neutral-medium"
-            wrap="balance"
-          >
+          <Text variant="body-default-l" onBackground="neutral-medium" wrap="balance">
             Du brauchst kein Technik-Wissen. Ich führe dich durch alles.
           </Text>
         </Column>
@@ -168,14 +135,14 @@ export function Process() {
               style={{ "--i": i } as CSSProperties}
             >
               <span className={styles.num} aria-hidden="true">
-                <ClipSwap text={s.n} />
+                {s.n}
               </span>
               <Column gap="12" flex={1} paddingY="4">
                 <Row className={styles.pill} vertical="center">
-                  <ClipSwap text={`Schritt ${s.n}`} />
+                  Schritt {s.n}
                 </Row>
-                <Text className={styles.title} variant="heading-strong-m" onBackground="neutral-strong">
-                  <ClipSwap text={s.title} />
+                <Text className={styles.title} variant="heading-strong-m">
+                  {s.title}
                 </Text>
                 <Text className={styles.body} variant="body-default-m" onBackground="neutral-weak">
                   {s.body}
