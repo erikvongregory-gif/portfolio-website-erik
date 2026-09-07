@@ -1,151 +1,214 @@
-import { Column, Row, Text } from "@once-ui-system/core";
-import { Reveal } from "@/components/motion";
-import { Section, SectionHeader } from "./Section";
+"use client";
 
-type Testimonial = {
-  quote: string;
-  name: string;
-  meta: string;
-  /** Star rating from a public review (e.g. Google). */
-  rating?: number;
-  source?: "google" | "direkt";
-  /** Datum der öffentlichen Freigabe / letzten Verifikation (ISO YYYY-MM-DD). */
-  verifiedAt?: string;
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { Column, Heading, Icon, Row, SmartLink, Text } from "@once-ui-system/core";
+import classNames from "classnames";
+import Image from "next/image";
+import { Section } from "./Section";
+import styles from "./Testimonials.module.scss";
+
+const lead = {
+  name: "Da Peppe",
+  role: "Osteria & Pizzeria, Landsberg",
+  quoteLines: [
+    "Innerhalb von nur drei Tagen",
+    "waren wir mit einer komplett",
+    "neuen Website online.",
+  ],
+  tags: ["Gastronomie"],
+  result: "3 Tage live",
+  source: "Google, 5 von 5",
+  image: "/images/projects/da-peppe/hero-live.png",
+  url: "https://da-peppe.com",
 };
 
-const testimonials: Testimonial[] = [
+const more = [
   {
-    quote:
-      "Als Unternehmer habe ich schon immer großen Wert auf eine professionelle Internetseite gelegt. Allerdings war es für mich immer schwierig, einen Webdesigner zu finden, der meine Vorstellungen und Anforderungen wirklich versteht und umsetzt. Dann kam Erik: jung, dynamisch, kompetent und mit klaren Ideen! Innerhalb von nur drei Tagen waren wir mit einer komplett neuen Website online – mit einem modernen Erscheinungsbild, konkreten Lösungen und Bildern, die wirklich zeigen, wer wir sind und was wir machen. Vielen Dank, Erik!!",
-    name: "Da Peppe",
-    meta: "peppedelmar · Osteria & Pizzeria · Landsberg · da-peppe.com",
-    rating: 5,
-    source: "google",
-  },
-  // Freigabe offen – bitte bestätigen, sonst entfernen wir die Zitate.
-  {
-    quote:
-      "Erik hat unseren Auftritt komplett neu gedacht. Die Zusammenarbeit war direkt und unkompliziert – und das Ergebnis wirkt endlich so professionell wie unsere Arbeit.",
     name: "Ingenieurbüro Jungen",
-    meta: "Industrie · Automation · ib-jungen.de",
+    meta: "Industrie, Automation",
+    quote: "Direkt und unkompliziert. Das Ergebnis wirkt endlich so professionell wie unsere Arbeit.",
+    image: "/images/projects/ib-jungen/hero.png",
   },
   {
-    quote:
-      "Vom ersten Entwurf an hat man gemerkt, dass Erik unsere Marke verstanden hat. Die Seite hat Kante, genau wie unser Bier – und Bestellungen kommen jetzt direkt über die Website.",
     name: "Lünebräu",
-    meta: "Craft-Bier-Brauerei · Lüneburg",
+    meta: "Craft-Bier, Lüneburg",
+    quote: "Vom ersten Entwurf an hat man gemerkt, dass Erik unsere Marke verstanden hat.",
+    image: "/images/projects/lunebraeu/hero.png",
   },
 ];
 
-function ReviewStars({ rating, source }: { rating: number; source?: "google" | "direkt" }) {
-  const filled = Math.round(rating);
+function ClipSwap({ text }: { text: string }) {
   return (
-    <Column gap="4" horizontal="center" align="center">
-      <Text
-        variant="label-strong-s"
-        onBackground="brand-strong"
-        aria-label={`${rating} von 5 Sternen`}
-        style={{ letterSpacing: "0.12em" }}
-      >
-        {"★".repeat(filled)}
-        <Text as="span" onBackground="neutral-weak">
-          {"★".repeat(Math.max(0, 5 - filled))}
-        </Text>
-      </Text>
-      {source === "google" && (
-        <Text variant="label-default-xs" onBackground="neutral-weak" align="center">
-          Google-Bewertung
-        </Text>
-      )}
-    </Column>
+    <span className={styles.clip}>
+      <span className={styles.idle}>{text}</span>
+      <span className={styles.swap} aria-hidden="true">
+        {text}
+      </span>
+    </span>
   );
 }
 
 export function Testimonials() {
-  const [lead, ...rest] = testimonials;
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setInView(true);
+      return;
+    }
+
+    const scene = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting && e.intersectionRatio > 0) {
+            setInView(true);
+            scene.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: [0, 0.12], rootMargin: "0px 0px -28% 0px" },
+    );
+    scene.observe(el);
+    return () => scene.disconnect();
+  }, []);
 
   return (
-    <Section id="stimmen" background="surface" gap="56">
-      <SectionHeader
-        align="center"
-        eyebrow="Stimmen"
-        title={
-          <>
-            Was Kunden{" "}
-            <Text as="span" onBackground="neutral-weak">
-              sagen.
-            </Text>
-          </>
-        }
-        description="Echte Stimmen aus Projekten – inklusive öffentlicher Google-Bewertung."
-      />
-
-      <Reveal y={24}>
-        <Column
-          fillWidth
-          maxWidth={44}
-          gap="24"
-          horizontal="center"
-          align="center"
-          style={{ marginInline: "auto" }}
+    <Section id="stimmen" background="surface" paddingY="128" maxWidth={72} gap="48">
+      <Column
+        ref={rootRef}
+        fillWidth
+        gap="48"
+        className={classNames(styles.scene, inView && styles.in)}
+      >
+        <Heading
+          as="h2"
+          className={styles.headline}
+          variant="display-strong-m"
+          onBackground="neutral-strong"
+          style={{ letterSpacing: "-0.04em", lineHeight: 1.05 }}
         >
-          {lead.rating != null && <ReviewStars rating={lead.rating} source={lead.source} />}
-          <Text
-            as="blockquote"
-            variant="body-default-l"
-            onBackground="neutral-strong"
-            wrap="balance"
-            align="center"
-            style={{ lineHeight: 1.55, margin: 0, letterSpacing: "-0.01em" }}
-          >
-            „{lead.quote}“
-          </Text>
-          <Column gap="4" horizontal="center" align="center">
-            <Text variant="label-strong-s" onBackground="neutral-strong">
-              {lead.name}
-            </Text>
-            <Text variant="body-default-xs" onBackground="neutral-weak">
-              {lead.meta}
-            </Text>
-          </Column>
-        </Column>
-      </Reveal>
+          <span className={styles.line}>
+            {["Was", "Kunden"].map((w, i) => (
+              <span key={w} className={styles.word} style={{ "--w": i } as CSSProperties}>
+                <span className={styles.wordInner}>{w}</span>
+              </span>
+            ))}
+          </span>
+          <span className={styles.line}>
+            <span className={styles.word} style={{ "--w": 2 } as CSSProperties}>
+              <span className={styles.wordInner}>sagen.</span>
+            </span>
+          </span>
+        </Heading>
 
-      {rest.length > 0 && (
-        <Column fillWidth maxWidth={40} gap="0" style={{ marginInline: "auto" }}>
-          {rest.map((t, i) => (
-            <Reveal key={t.name} delay={0.08 + i * 0.08}>
-              <Column
-                gap="16"
-                paddingTop="32"
-                borderTop="neutral-alpha-medium"
-                horizontal="center"
-                align="center"
-              >
-                {t.rating != null && <ReviewStars rating={t.rating} source={t.source} />}
+        <Row fillWidth gap="48" vertical="center" m={{ direction: "column", gap: "28" }}>
+          <Column flex={6} gap="20" minWidth={0}>
+            <Text className={styles.leadName} variant="display-strong-s" onBackground="neutral-strong">
+              <span className={styles.leadNameInner}>{lead.name}</span>
+            </Text>
+            <Text as="blockquote" className={styles.quote}>
+              {lead.quoteLines.map((line, i) => {
+                const last = i === lead.quoteLines.length - 1;
+                const text = `${i === 0 ? "„" : ""}${line}${last ? "“" : ""}`;
+                return (
+                  <span key={line} className={styles.qLine} style={{ "--q": i } as CSSProperties}>
+                    <span className={styles.qInner}>{text}</span>
+                  </span>
+                );
+              })}
+            </Text>
+            <Column className={styles.meta} gap="12">
+              <Text variant="label-strong-s" onBackground="neutral-strong">
+                {lead.role}
+              </Text>
+              <Row gap="8" wrap vertical="center">
+                <span className={styles.pill}>{lead.source}</span>
+                <span className={styles.pill}>{lead.result}</span>
+                {lead.tags.map((tag) => (
+                  <span key={tag} className={styles.pill}>
+                    {tag}
+                  </span>
+                ))}
+              </Row>
+            </Column>
+          </Column>
+
+          <Column flex={6} minWidth={0} fillWidth>
+            <SmartLink
+              href={lead.url}
+              unstyled
+              fillWidth
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.shotLink}
+              aria-label={`${lead.name}: Website live in neuem Tab ansehen`}
+            >
+              <Column className={styles.shot}>
+                <Image
+                  className={styles.shotImg}
+                  src={lead.image}
+                  alt={`Website von ${lead.name}`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 520px"
+                />
+              </Column>
+              <Row gap="4" vertical="center" paddingTop="12">
+                <Text variant="label-strong-s" onBackground="neutral-strong">
+                  Live ansehen
+                </Text>
+                <Icon name="arrowUpRight" size="xs" onBackground="neutral-strong" />
+              </Row>
+            </SmartLink>
+          </Column>
+        </Row>
+
+        <Row fillWidth gap="24" m={{ direction: "column", gap: "8" }}>
+          {more.map((t, i) => (
+            <Row
+              key={t.name}
+              flex={1}
+              minWidth={0}
+              gap="16"
+              vertical="center"
+              className={styles.side}
+              style={{ "--i": i } as CSSProperties}
+            >
+              <Column className={styles.thumb}>
+                <Image
+                  className={styles.thumbImg}
+                  src={t.image}
+                  alt=""
+                  fill
+                  sizes="72px"
+                />
+              </Column>
+              <Column gap="8" flex={1} minWidth={0}>
                 <Text
                   as="blockquote"
-                  variant="body-default-l"
-                  onBackground="neutral-medium"
-                  wrap="balance"
-                  align="center"
-                  style={{ lineHeight: 1.6, margin: 0 }}
+                  className={styles.sideBody}
+                  variant="body-default-m"
+                  onBackground="neutral-strong"
+                  style={{ margin: 0 }}
                 >
                   „{t.quote}“
                 </Text>
-                <Row gap="8" vertical="center" wrap horizontal="center">
-                  <Text variant="label-strong-s" onBackground="neutral-strong">
-                    {t.name}
+                <Column gap="2">
+                  <Text className={styles.sideName} variant="label-strong-s">
+                    <ClipSwap text={t.name} />
                   </Text>
-                  <Text variant="body-default-xs" onBackground="neutral-weak">
-                    · {t.meta}
+                  <Text variant="label-default-s" onBackground="neutral-weak">
+                    {t.meta}
                   </Text>
-                </Row>
+                </Column>
               </Column>
-            </Reveal>
+            </Row>
           ))}
-        </Column>
-      )}
+        </Row>
+      </Column>
     </Section>
   );
 }

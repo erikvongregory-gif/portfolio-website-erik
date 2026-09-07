@@ -20,6 +20,7 @@ import {
 } from "@/lib/quoteContact";
 import { ShiftCta } from "@/components/ShiftCta";
 import styles from "./ContactDialog.module.scss";
+import successStyles from "./FormSuccess.module.scss";
 
 type ContactDialogProps = {
   label?: string;

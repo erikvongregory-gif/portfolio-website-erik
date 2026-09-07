@@ -1,17 +1,282 @@
+.scene {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .stickyHeader {
   position: sticky;
   top: 7rem;
 }
 
-@media (max-width: 1024px) {
+.headline {
+  display: block;
+}
+
+.line {
+  display: block;
+}
+
+.word {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.08em;
+  margin-right: 0.28em;
+  vertical-align: baseline;
+}
+
+.wordInner {
+  display: block;
+  transform: translate3d(0, 115%, 0);
+}
+
+.lead {
+  opacity: 0;
+  transform: translate3d(0, 1rem, 0);
+  filter: blur(8px);
+}
+
+.list {
+  position: relative;
+}
+
+.step {
+  position: relative;
+  padding: 1.5rem 0.85rem 1.5rem 0;
+  border-radius: 1.2rem;
+  transition: background-color 0.45s var(--ease);
+}
+
+.step::after {
+  content: "";
+  position: absolute;
+  left: 4.25rem;
+  right: 0.5rem;
+  top: 0;
+  height: 1px;
+  background: var(--neutral-alpha-medium);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.step:first-child::after {
+  display: none;
+}
+
+.clip {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  overflow-y: clip;
+  line-height: 1.05;
+}
+
+.idle,
+.swap {
+  display: block;
+  transition:
+    transform 0.7s var(--ease),
+    color 0.5s ease,
+    opacity 0.45s ease;
+}
+
+.swap {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(0, 115%, 0);
+}
+
+.num {
+  flex-shrink: 0;
+  width: 3.5rem;
+  font-family: var(--font-heading), var(--font-body), sans-serif;
+  font-size: clamp(3.2rem, 6vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.85;
+  color: var(--neutral-on-background-weak);
+}
+
+.num .idle {
+  color: var(--neutral-on-background-weak);
+}
+
+.num .swap {
+  color: var(--neutral-on-background-strong);
+}
+
+.pill {
+  width: fit-content;
+  min-height: 2.15rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  background: var(--neutral-alpha-weak);
+  overflow: hidden;
+  color: var(--neutral-on-background-strong);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.5s var(--ease),
+    color 0.5s ease;
+}
+
+.pill .clip {
+  height: 1.15em;
+}
+
+.pill .idle,
+.pill .swap {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.title .clip {
+  padding-bottom: 0.06em;
+}
+
+.title .clip .idle {
+  color: var(--neutral-on-background-weak);
+}
+
+.title .clip .swap {
+  color: var(--neutral-on-background-strong);
+}
+
+.body,
+.meta {
+  opacity: 0.45;
+  transform: translate3d(0, 0.55rem, 0);
+  filter: blur(5px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease),
+    filter 0.55s ease;
+}
+
+.in .wordInner {
+  animation: lineRise 0.95s var(--ease) both;
+  animation-delay: calc(var(--w, 0) * 0.07s);
+}
+
+.in .lead {
+  animation: enterRise 0.9s var(--ease) 0.38s both;
+}
+
+.in .step::after {
+  animation: drawX 0.7s var(--ease) both;
+  animation-delay: calc(0.28s + var(--i, 0) * 0.08s);
+}
+
+.on .idle,
+.step:hover .idle {
+  transform: translate3d(0, -115%, 0);
+}
+
+.on .swap,
+.step:hover .swap {
+  transform: translate3d(0, 0, 0);
+}
+
+.on .pill,
+.step:hover .pill {
+  background: var(--neutral-on-background-strong);
+  color: var(--page-background);
+}
+
+.on .body,
+.on .meta,
+.step:hover .body,
+.step:hover .meta {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+@keyframes lineRise {
+  from {
+    transform: translate3d(0, 115%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes enterRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1rem, 0);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes drawX {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .step:hover {
+    background: var(--neutral-alpha-weak);
+  }
+}
+
+@media (max-width: 1023px) {
   .stickyHeader {
     position: static;
     top: auto;
+    max-width: none;
+  }
+
+  .num {
+    width: 2.6rem;
+    font-size: clamp(2.4rem, 12vw, 3.4rem);
+  }
+
+  .step {
+    padding-right: 0;
+  }
+
+  .step::after {
+    left: 3.35rem;
+    right: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .stickyHeader {
     position: static;
+  }
+
+  .wordInner,
+  .lead,
+  .step::after,
+  .idle,
+  .swap,
+  .body,
+  .meta {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .swap {
+    position: static;
+  }
+
+  .idle {
+    display: none;
   }
 }
