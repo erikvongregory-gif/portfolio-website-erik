@@ -3,6 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Button, Column, Grid, Icon, Line, Row, Tag, Text } from "@once-ui-system/core";
 import { Reveal, SpotlightCard } from "@/components/motion";
+import type { QuoteBase } from "@/lib/calculateQuote";
 import styles from "./Services.module.scss";
 
 const COMPACT_FEATURES = 3;
@@ -17,7 +18,15 @@ export type ServicePackage = {
 
 type ServicePackagesGridProps = {
   packages: ServicePackage[];
+  activeBase?: QuoteBase;
+  onPickBase?: (base: QuoteBase) => void;
 };
+
+function packageBase(title: string): QuoteBase | null {
+  if (title === "Landingpage") return "landingpage";
+  if (title === "Komplette Website") return "website";
+  return null;
+}
 
 function Expandable({ open, children }: { open: boolean; children: ReactNode }) {
   return (
@@ -29,7 +38,11 @@ function Expandable({ open, children }: { open: boolean; children: ReactNode }) 
   );
 }
 
-export function ServicePackagesGrid({ packages }: ServicePackagesGridProps) {
+export function ServicePackagesGrid({
+  packages,
+  activeBase,
+  onPickBase,
+}: ServicePackagesGridProps) {
   const [detailed, setDetailed] = useState(false);
 
   useEffect(() => {
@@ -78,6 +91,8 @@ export function ServicePackagesGrid({ packages }: ServicePackagesGridProps) {
         {packages.map((s, i) => {
           const isCustom = i === packages.length - 1 && s.title === "Individuell auf Anfrage";
           const showAll = detailed || isCustom;
+          const base = packageBase(s.title);
+          const selected = Boolean(base && activeBase === base);
           const primaryFeatures = s.features.slice(0, COMPACT_FEATURES);
           const extraFeatures = s.features.slice(COMPACT_FEATURES);
 
@@ -85,9 +100,10 @@ export function ServicePackagesGrid({ packages }: ServicePackagesGridProps) {
             <Reveal key={s.title} delay={i * 0.1} scale={0.95}>
               <Column fillHeight>
                 <SpotlightCard
-                  tiltStrength={4}
-                  background={s.featured ? "neutral-alpha-weak" : "surface"}
-                  border={s.featured ? "neutral-alpha-medium" : "neutral-alpha-weak"}
+                  tilt={false}
+                  glow={false}
+                  background={selected || s.featured ? "neutral-alpha-weak" : "surface"}
+                  border={selected || s.featured ? "neutral-alpha-medium" : "neutral-alpha-weak"}
                   radius="l"
                   padding={showAll ? "32" : "24"}
                   gap={showAll ? "20" : "16"}
@@ -144,13 +160,14 @@ export function ServicePackagesGrid({ packages }: ServicePackagesGridProps) {
 
                   <Row fillWidth style={{ marginTop: "auto" }} paddingTop="4">
                     <Button
-                      href="#kontakt"
-                      variant={s.featured ? "primary" : "secondary"}
+                      href={base ? "#rechner" : "#kontakt"}
+                      variant={selected || s.featured ? "primary" : "secondary"}
                       size="m"
                       fillWidth
                       arrowIcon
+                      onClick={base && onPickBase ? () => onPickBase(base) : undefined}
                     >
-                      Anfragen
+                      {base ? "Zusammenstellen" : "Anfragen"}
                     </Button>
                   </Row>
                 </SpotlightCard>

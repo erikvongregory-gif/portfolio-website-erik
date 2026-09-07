@@ -1,6 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import { PriceCalculator } from "@/components/PriceCalculator";
 import { Section, SectionHeader } from "./Section";
 import { ServicePackagesGrid } from "./ServicePackagesGrid";
+import type { QuoteBase } from "@/lib/calculateQuote";
 import { Text } from "@once-ui-system/core";
 
 const services = [
@@ -35,6 +39,8 @@ const services = [
 ];
 
 export function Services() {
+  const [base, setBase] = useState<QuoteBase>("website");
+
   return (
     <Section id="leistungen">
       <SectionHeader
@@ -47,12 +53,12 @@ export function Services() {
             </Text>
           </>
         }
-        description="Transparente Richtpreise – und für individuelle Lösungen ein persönliches Gespräch."
+        description="Transparente Richtpreise. Für individuelle Lösungen ein persönliches Gespräch."
       />
 
-      <ServicePackagesGrid packages={services} />
+      <ServicePackagesGrid packages={services} activeBase={base} onPickBase={setBase} />
 
-      <PriceCalculator />
+      <PriceCalculator base={base} onBaseChange={setBase} />
     </Section>
   );
 }

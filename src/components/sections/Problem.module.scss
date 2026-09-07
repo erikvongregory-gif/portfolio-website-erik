@@ -1,47 +1,154 @@
-.item {
-  transform-origin: left center;
-  transition:
-    opacity 0.5s ease,
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.5s ease,
-    border-color 0.5s ease;
+.scene {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.num {
-  font-variant-numeric: tabular-nums;
-  transition: color 0.5s ease;
+.line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
 }
 
-/* Stepper (pinned) mode: dim everything, lift the active one. */
-.stepper .item {
-  opacity: 0.28;
-  transform: scale(0.97);
-}
-
-.stepper .item.active {
-  opacity: 1;
-  transform: scale(1.05);
-}
-
-/* Mobile: gentler focus – the centred problem lights up while scrolling,
-   no scaling so nothing pokes out of the viewport. */
-.mobileStepper .item {
-  opacity: 0.46;
-}
-
-.mobileStepper .item.active {
-  opacity: 1;
+.lineInner {
+  display: block;
+  transform: translate3d(0, 115%, 0);
 }
 
 .lead {
-  animation: leadIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  opacity: 0;
+  transform: translate3d(0, 1rem, 0);
+  filter: blur(8px);
 }
 
-@keyframes leadIn {
+.headLabel {
+  opacity: 0;
+  transform: translate3d(0, 0.6rem, 0);
+}
+
+.today {
+  opacity: 0;
+  transform: translate3d(-1.4rem, 0, 0);
+}
+
+.next {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.wipe {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: var(--page-background);
+  transform: translate3d(0, 0, 0);
+}
+
+.board {
+  width: 100%;
+}
+
+.colHead,
+.pair {
+  width: 100%;
+  padding: 1.5rem 1rem;
+}
+
+.colHead {
+  padding-bottom: 0.75rem;
+  padding-top: 0;
+}
+
+.pair {
+  position: relative;
+  border-radius: 1rem;
+  transition: background-color 0.4s var(--ease);
+}
+
+.pair::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  top: 0;
+  height: 1px;
+  background: var(--neutral-alpha-medium);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.nextLabel,
+.next {
+  padding-left: 0.5rem;
+}
+
+.next::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  width: 1px;
+  background: var(--neutral-alpha-medium);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.kicker {
+  display: none;
+}
+
+.in .lineInner {
+  animation: lineRise 1.05s var(--ease) both;
+}
+
+.in .line:nth-child(2) .lineInner {
+  animation-delay: 0.14s;
+}
+
+.in .lead {
+  animation: enterRise 0.9s var(--ease) 0.28s both;
+}
+
+.in .headLabel {
+  animation: enterRise 0.7s var(--ease) 0.4s both;
+}
+
+.in .today {
+  animation: fromLeft 0.75s var(--ease) both;
+  animation-delay: calc(0.48s + var(--i, 0) * 0.11s);
+}
+
+.in .wipe {
+  animation: wipeAway 0.72s var(--ease) both;
+  animation-delay: calc(0.58s + var(--i, 0) * 0.11s);
+}
+
+.in .pair::before {
+  animation: drawX 0.7s var(--ease) both;
+  animation-delay: calc(0.42s + var(--i, 0) * 0.11s);
+}
+
+.in .next::before {
+  animation: drawY 0.65s var(--ease) both;
+  animation-delay: calc(0.62s + var(--i, 0) * 0.11s);
+}
+
+@keyframes lineRise {
+  from {
+    transform: translate3d(0, 115%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes enterRise {
   from {
     opacity: 0;
-    transform: translateY(10px);
-    filter: blur(5px);
+    transform: translate3d(0, 1rem, 0);
+    filter: blur(8px);
   }
   to {
     opacity: 1;
@@ -50,47 +157,99 @@
   }
 }
 
-.quote {
-  padding-left: 16px;
-  border-left: 2px solid var(--neutral-alpha-medium);
+@keyframes fromLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-1.4rem, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-/* Keep the changing lead visible while scrolling the problem list on mobile.
-   Must be opaque: --surface-background is translucent in this project. */
-.mobileLead {
-  position: sticky;
-  top: 4.25rem;
-  z-index: 2;
-  margin-inline: -1.25rem;
-  padding: 0.75rem 1.25rem 1rem;
-  background-color: var(--page-background);
-  border: 1px solid var(--neutral-alpha-weak);
-  border-radius: 0 0 var(--radius-l) var(--radius-l);
-  box-shadow: 0 16px 28px -12px var(--evg-card-shadow-md);
+@keyframes wipeAway {
+  to {
+    transform: translate3d(101%, 0, 0);
+  }
 }
 
-@media (max-width: 1024px) {
-  .mobileLead :global(h2) {
-    font-size: clamp(1.25rem, 4.6vw, 1.55rem);
-    line-height: 1.15;
+@keyframes drawX {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes drawY {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pair:hover {
+    background: var(--neutral-alpha-weak);
+  }
+}
+
+@media (max-width: 1023px) {
+  .colHead {
+    display: none !important;
+  }
+
+  .colHead,
+  .pair {
+    padding-inline: 0;
+  }
+
+  .pair::before {
+    left: 0;
+    right: 0;
+  }
+
+  .nextLabel,
+  .next {
+    padding-left: 0;
+  }
+
+  .next::before {
+    display: none;
+  }
+
+  .kicker {
+    display: block;
+  }
+
+  .today {
+    transform: translate3d(0, 1.1rem, 0);
+  }
+
+  .in .today {
+    animation-name: enterRise;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .item,
-  .lead {
-    transition: none;
-    animation: none;
+  .lineInner,
+  .lead,
+  .headLabel,
+  .today,
+  .wipe,
+  .pair::before,
+  .next::before {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
-  .mobileStepper .item {
-    opacity: 1;
-  }
-  .mobileLead {
-    position: static;
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
-    margin-inline: 0;
-    padding: 0;
+
+  .wipe {
+    display: none;
   }
 }

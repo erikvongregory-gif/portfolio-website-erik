@@ -3,7 +3,6 @@ import Image from "next/image";
 import styles from "./page.module.scss";
 import {
   About,
-  Approach,
   CapacityBadge,
   FinalCta,
   HeroDesktopStrip,
@@ -12,7 +11,6 @@ import {
   HeroMarquee,
   HeroProof,
   Investment,
-  Marquee,
   Problem,
   Process,
   Projects,
@@ -237,17 +235,14 @@ export default function Home() {
         as="section"
         fillWidth
         horizontal="center"
-        paddingY="160"
-        gap="64"
-        m={{ paddingY: "80", gap: "40" }}
+        paddingY="104"
+        m={{ paddingY: "64" }}
       >
-        <Marquee />
         <Column maxWidth={48} fillWidth horizontal="center" paddingX="l">
           <ScrollRevealText text="Deine Website ist der erste Eindruck deiner Marke. Ich sorge dafür, dass er auffällt, Vertrauen schafft und Kunden bringt." />
         </Column>
       </Column>
 
-      <Approach />
       <Investment />
       <Services />
       <Process />

@@ -31,7 +31,6 @@ export {
   SectionHeader,
   Problem,
   Projects,
-  Approach,
   Investment,
   Services,
   Process,

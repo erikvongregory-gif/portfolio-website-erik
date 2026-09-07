@@ -396,7 +396,7 @@ export default function PartnerPage() {
         </Reveal>
         <Reveal delay={0.06}>
           <Column className={styles.calcWrap} fillWidth>
-            <PriceCalculator variant="partner" defaultOpen />
+            <PriceCalculator variant="partner" />
           </Column>
         </Reveal>
       </Section>

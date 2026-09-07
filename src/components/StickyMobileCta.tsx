@@ -10,12 +10,17 @@ import styles from "./StickyMobileCta.module.scss";
 
 const MOBILE_MQ = "(max-width: 1024px)";
 
-function shouldShowBar(hero: Element, kontakt: Element) {
+function shouldShowBar(hero: Element, kontakt: Element, rechner: Element | null) {
   const heroRect = hero.getBoundingClientRect();
   const kontaktRect = kontakt.getBoundingClientRect();
   const heroVisible = heroRect.bottom > 0 && heroRect.top < window.innerHeight;
   const kontaktVisible =
     kontaktRect.top < window.innerHeight * 0.88 && kontaktRect.bottom > 0;
+  if (rechner) {
+    const r = rechner.getBoundingClientRect();
+    const rechnerVisible = r.top < window.innerHeight - 40 && r.bottom > 80;
+    if (rechnerVisible) return false;
+  }
   return !heroVisible && !kontaktVisible;
 }
 
@@ -47,6 +52,7 @@ export function StickyMobileCta({
       document.getElementById("check") ??
       document.getElementById("abschluss");
     if (!hero || !kontakt) return;
+    const rechner = document.getElementById("rechner");
 
     const mq = window.matchMedia(MOBILE_MQ);
 
@@ -55,7 +61,7 @@ export function StickyMobileCta({
         setVisible(false);
         return;
       }
-      setVisible(shouldShowBar(hero, kontakt));
+      setVisible(shouldShowBar(hero, kontakt, rechner));
     };
 
     sync();

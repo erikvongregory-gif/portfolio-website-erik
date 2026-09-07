@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Button, Column, Grid, Icon, Row, SmartLink, Tag, Text } from "@once-ui-system/core";
-import { Reveal, SpotlightCard } from "@/components/motion";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { Column, Grid, Heading, Icon, Row, SmartLink, Tag, Text } from "@once-ui-system/core";
+import classNames from "classnames";
 import { ProjectPreview } from "./ProjectPreview";
-import { Section, SectionHeader } from "./Section";
+import { Section } from "./Section";
+import scene from "./Projects.module.scss";
 import styles from "./sections.module.scss";
 
 type Project = {
@@ -94,7 +95,7 @@ const projects: Project[] = [
   },
 ];
 
-function ProjectShot({ project: p }: { project: Project }) {
+function ProjectShot({ project: p, featured }: { project: Project; featured?: boolean }) {
   const blurImage = p.comingSoon;
   const chromeLabel =
     p.status === "entwurf" && !p.url ? "Entwurf" : p.chrome || chromeFromUrl(p.url);
@@ -117,18 +118,23 @@ function ProjectShot({ project: p }: { project: Project }) {
           </Text>
         ) : null}
       </div>
-      <div className={styles.imageWrap}>
+      <div className={classNames(styles.imageWrap, featured && scene.featuredMedia)}>
         <ProjectPreview
           image={p.image}
           video={blurImage ? undefined : p.video}
           alt={
             p.comingSoon
-              ? "Projekt – bald verfügbar"
+              ? "Projekt, bald verfügbar"
               : p.obscured
                 ? "Website-Entwurf für einen Kunden von EvgLab"
-                : `${p.title} – Website-Projekt von EvgLab`
+                : `${p.title}: Website-Projekt von EvgLab`
           }
           blur={blurImage}
+          sizes={
+            featured
+              ? "(max-width: 1024px) 100vw, 900px"
+              : "(max-width: 1024px) 100vw, 480px"
+          }
         />
         {p.comingSoon && (
           <div className={styles.teaser}>
@@ -171,7 +177,7 @@ function ProjectMeta({ project: p, featured }: { project: Project; featured?: bo
         {p.body}
       </Text>
       {p.url && (
-        <Row gap="4" vertical="center" paddingTop="4">
+        <Row gap="4" vertical="center" paddingTop="4" className={styles.live}>
           <Text variant="label-strong-s" onBackground="neutral-strong">
             Live ansehen
           </Text>
@@ -182,42 +188,51 @@ function ProjectMeta({ project: p, featured }: { project: Project; featured?: bo
   );
 }
 
-function ProjectCard({ project: p, featured }: { project: Project; featured?: boolean }) {
+function ProjectCard({
+  project: p,
+  featured,
+  className,
+  style,
+}: {
+  project: Project;
+  featured?: boolean;
+  className?: string;
+  style?: CSSProperties;
+}) {
   if (featured) {
     return (
-      <SpotlightCard
-        className={styles.card}
-        glow={false}
-        tilt={false}
+      <Column
+        className={classNames(styles.card, className)}
         data-project-card
         fillWidth
+        style={style}
       >
         <Row fillWidth gap="40" vertical="center" m={{ direction: "column", gap: "20" }}>
           <Column flex={7} fillWidth>
-            <ProjectShot project={p} />
+            <ProjectShot project={p} featured />
           </Column>
-          <Column flex={5} fillWidth paddingY="12">
+          <Column flex={5} fillWidth paddingY="12" className={scene.featuredMeta}>
             <ProjectMeta project={p} featured />
           </Column>
         </Row>
-      </SpotlightCard>
+      </Column>
     );
   }
   return (
-    <SpotlightCard
-      className={styles.card}
+    <Column
+      className={classNames(styles.card, className)}
       gap="20"
-      glow={false}
-      tiltStrength={5}
       data-project-card
+      fillWidth
+      style={style}
     >
       <ProjectShot project={p} />
       <ProjectMeta project={p} />
-    </SpotlightCard>
+    </Column>
   );
 }
 
-function ProjectLink({ project: p, children }: { project: Project; children: React.ReactNode }) {
+function ProjectLink({ project: p, children }: { project: Project; children: ReactNode }) {
   if (!p.url) return <Column fillWidth>{children}</Column>;
   return (
     <SmartLink
@@ -227,7 +242,7 @@ function ProjectLink({ project: p, children }: { project: Project; children: Rea
       target="_blank"
       rel="noopener noreferrer"
       style={{ textDecoration: "none" }}
-      aria-label={`${p.title} – Website live in neuem Tab ansehen`}
+      aria-label={`${p.title}: Website live in neuem Tab ansehen`}
     >
       {children}
     </SmartLink>
@@ -235,58 +250,74 @@ function ProjectLink({ project: p, children }: { project: Project; children: Rea
 }
 
 export function Projects() {
-  const [expanded, setExpanded] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setInView(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting && e.intersectionRatio > 0) {
+            setInView(true);
+            io.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: [0, 0.12, 0.25], rootMargin: "0px 0px -36% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const featured = projects.find((p) => p.latest) ?? projects[0];
   const rest = projects.filter((p) => p !== featured);
-  const moreCount = rest.length;
 
   return (
-    <Section id="projekte">
-      <SectionHeader
-        eyebrow="Projekte"
-        title={
-          <>
-            Ausgewählte{" "}
-            <Text as="span" onBackground="neutral-weak">
-              Arbeiten.
-            </Text>
-          </>
-        }
-        description="Ein aktueller Auszug – weitere Projekte auf Wunsch."
-      />
+    <Section id="projekte" paddingY="128" maxWidth={72} gap="48">
+      <Column
+        ref={rootRef}
+        fillWidth
+        gap="48"
+        className={classNames(scene.scene, inView && scene.in)}
+      >
+        <Heading
+          as="h2"
+          variant="display-strong-m"
+          onBackground="neutral-strong"
+          style={{ letterSpacing: "-0.04em", lineHeight: 1.05 }}
+        >
+          <span className={scene.line}>
+            <span className={scene.lineInner}>Arbeiten,</span>
+          </span>
+          <span className={scene.line}>
+            <span className={scene.lineInner}>die man merkt.</span>
+          </span>
+        </Heading>
 
-      <Column fillWidth gap="32">
-        <Reveal y={32} scale={0.97}>
+        <Column fillWidth gap="32">
           <ProjectLink project={featured}>
             <ProjectCard project={featured} featured />
           </ProjectLink>
-        </Reveal>
 
-        {expanded && (
           <Grid columns="2" m={{ columns: "1" }} gap="32">
             {rest.map((p, i) => (
-              <Reveal key={p.title} delay={i * 0.1} y={32} scale={0.94}>
-                <ProjectLink project={p}>
-                  <ProjectCard project={p} />
-                </ProjectLink>
-              </Reveal>
+              <ProjectLink key={p.title} project={p}>
+                <ProjectCard
+                  project={p}
+                  className={scene.gridCard}
+                  style={{ "--i": i } as CSSProperties}
+                />
+              </ProjectLink>
             ))}
           </Grid>
-        )}
-
-        {moreCount > 0 && (
-          <Button
-            variant="secondary"
-            size="m"
-            fillWidth
-            arrowIcon={!expanded}
-            onClick={() => setExpanded((v) => !v)}
-            aria-expanded={expanded}
-          >
-            {expanded ? "Weniger anzeigen" : `${moreCount} weitere Projekte anzeigen`}
-          </Button>
-        )}
+        </Column>
       </Column>
     </Section>
   );

@@ -10,9 +10,16 @@ type ProjectPreviewProps = {
   video?: string;
   alt: string;
   blur?: boolean;
+  sizes?: string;
 };
 
-export function ProjectPreview({ image, video, alt, blur }: ProjectPreviewProps) {
+export function ProjectPreview({
+  image,
+  video,
+  alt,
+  blur,
+  sizes = "(max-width: 1024px) 100vw, 640px",
+}: ProjectPreviewProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [active, setActive] = useState(false);
@@ -57,7 +64,7 @@ export function ProjectPreview({ image, video, alt, blur }: ProjectPreviewProps)
         src={image}
         alt={alt}
         fill
-        sizes="(max-width: 1024px) 100vw, 640px"
+        sizes={sizes}
       />
       {video && (
         <video

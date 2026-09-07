@@ -131,6 +131,11 @@ export function formatPriceRange(range: PriceRange): string {
   return `${formatEuro(range.min)} – ${formatEuro(range.max)}`;
 }
 
+export function formatPriceRangeCompact(range: PriceRange): string {
+  if (range.min === range.max) return formatEuro(range.min);
+  return `${range.min.toLocaleString("de-DE")}–${range.max.toLocaleString("de-DE")} €`;
+}
+
 export function buildQuoteMessage(state: QuoteState, range: PriceRange): string {
   const baseLabel = BASE_OPTIONS.find((b) => b.id === state.base)?.title ?? state.base;
   const lines = [

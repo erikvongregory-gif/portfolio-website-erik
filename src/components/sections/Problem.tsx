@@ -1,239 +1,148 @@
 "use client";
 
-import { Column, Heading, Row, Tag, Text } from "@once-ui-system/core";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { Column, Grid, Heading, Text } from "@once-ui-system/core";
+import classNames from "classnames";
 import { Section } from "./Section";
 import styles from "./Problem.module.scss";
 
-const problems = [
+const pairs = [
   {
-    no: "01",
-    title: "Sieht aus wie eine Vorlage",
-    body: "Baukasten-Optik ohne Charakter. Deine Marke geht in der Masse unter, statt aufzufallen.",
-    lead: "Wie alle auszusehen kostet dich Vertrauen.",
-    quote: "„Sieht aus wie ein Baukasten.“ – genau das denkt dein Besucher in den ersten Sekunden.",
+    today: "Sieht aus wie eine Vorlage",
+    todayBody: "Baukasten-Optik. Deine Marke geht in der Masse unter.",
+    next: "Sieht aus wie deine Marke",
+    nextBody: "Eigene Form, die man wiedererkennt. Kein Template.",
   },
   {
-    no: "02",
-    title: "Bringt keine Anfragen",
-    body: "Besucher kommen und gehen. Ohne klare Führung wird aus Interesse keine Anfrage.",
-    lead: "Besuche, die zu nichts führen, sind verlorenes Geld.",
-    quote: "Ohne klare Führung klicken die Leute weg, statt dich anzufragen.",
+    today: "Besucher kommen und gehen",
+    todayBody: "Kein klarer nächster Schritt. Interesse verpufft.",
+    next: "Interesse wird zur Anfrage",
+    nextBody: "Führung bis zur Nachricht. Ohne Umwege.",
   },
   {
-    no: "03",
-    title: "Langsam und nicht mobil",
-    body: "Lange Ladezeiten und eine schwache Mobil-Ansicht kosten dich täglich Kunden.",
-    lead: "Jede Sekunde Ladezeit kostet dich Kunden.",
-    quote: "Die meisten surfen mobil. Wer da warten muss, ist sofort wieder weg.",
+    today: "Langsam und auf dem Handy verloren",
+    todayBody: "Ladezeiten und eine schwache Mobil-Ansicht kosten Kunden.",
+    next: "Schnell. Auch mobil.",
+    nextBody: "Leicht, suchmaschinenfreundlich, auf dem Handy zuerst.",
   },
   {
-    no: "04",
-    title: "Kein direkter Ansprechpartner",
-    body: "Agentur-Pingpong und wechselnde Juniors. Niemand fühlt sich wirklich verantwortlich.",
-    lead: "Du willst Ergebnisse, kein Agentur-Pingpong.",
-    quote: "Wechselnde Juniors, niemand verantwortlich – das frustriert und kostet Zeit.",
+    today: "Agentur-Pingpong, niemand verantwortlich",
+    todayBody: "Wechselnde Juniors. Du jagst Updates hinterher.",
+    next: "Du sprichst direkt mit mir",
+    nextBody: "Eine Person. Von der Idee bis zum Launch.",
   },
 ];
 
-/** Ignore near-ties so active index doesn't flicker at boundaries. */
-const MOBILE_HYSTERESIS_PX = 56;
-
 export function Problem() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLDivElement>(null);
-  const mobileActiveRef = useRef(0);
-  const [enabled, setEnabled] = useState(false);
-  const [active, setActive] = useState(0);
-  const [mobileActive, setMobileActive] = useState(0);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const rm = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setEnabled(mq.matches && !rm.matches);
-    update();
-    mq.addEventListener("change", update);
-    rm.addEventListener("change", update);
-    return () => {
-      mq.removeEventListener("change", update);
-      rm.removeEventListener("change", update);
-    };
+    const el = rootRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setInView(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting && e.intersectionRatio > 0) {
+            setInView(true);
+            io.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: [0, 0.12, 0.25], rootMargin: "0px 0px -36% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
-  // Mobile: light up whichever problem is closest to the centre of the screen
-  // as you scroll – the touch-friendly counterpart to the desktop stepper.
-  useEffect(() => {
-    if (enabled) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const list = listRef.current;
-    if (!list) return;
-    let raf = 0;
-    const apply = () => {
-      raf = 0;
-      const items = Array.from(list.children) as HTMLElement[];
-      if (!items.length) return;
-      const focus = window.innerHeight * 0.58;
-      let best = 0;
-      let bestDist = Infinity;
-      items.forEach((el, i) => {
-        const r = el.getBoundingClientRect();
-        const center = r.top + r.height / 2;
-        const dist = Math.abs(center - focus);
-        if (dist < bestDist) {
-          bestDist = dist;
-          best = i;
-        }
-      });
-
-      const prev = mobileActiveRef.current;
-      if (best !== prev) {
-        const prevEl = items[prev];
-        if (prevEl) {
-          const r = prevEl.getBoundingClientRect();
-          const prevDist = Math.abs(r.top + r.height / 2 - focus);
-          // Stay on the current item until the new one is clearly closer.
-          if (prevDist - bestDist < MOBILE_HYSTERESIS_PX) return;
-        }
-        mobileActiveRef.current = best;
-        setMobileActive(best);
-      }
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(apply);
-    };
-    apply();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [enabled]);
-
-  useEffect(() => {
-    if (!enabled) return;
-    let raf = 0;
-    const apply = () => {
-      raf = 0;
-      const el = trackRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const distance = rect.height - window.innerHeight;
-      const scrolled = Math.min(Math.max(-rect.top, 0), Math.max(distance, 1));
-      const p = distance > 0 ? scrolled / distance : 0;
-      const idx = Math.min(problems.length - 1, Math.max(0, Math.floor(p * problems.length)));
-      setActive(idx);
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(apply);
-    };
-    apply();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [enabled]);
-
-  const step = enabled ? active : mobileActive;
-  const current = problems[step];
-
-  const content = (
-    <Section id="problem" paddingY="56" background={enabled ? undefined : "surface"}>
-      <Row fillWidth gap="64" vertical="center" m={{ direction: "column", gap: "24" }}>
-        <Column flex={4} maxWidth={26} gap="16" className={enabled ? undefined : styles.mobileLead}>
-          <Tag size="s" variant="neutral">
-            Das Problem
-          </Tag>
-
-          <Column key={step} className={styles.lead} gap="12">
-            <Heading
-              as="h2"
-              variant="display-strong-xs"
-              onBackground="neutral-strong"
-              wrap="balance"
-              style={{ letterSpacing: "-0.03em", lineHeight: 1.08 }}
-            >
-              {current.lead}
-            </Heading>
-            <Text
-              className={styles.quote}
-              variant="body-default-m"
-              onBackground="neutral-weak"
-              wrap="balance"
-            >
-              {current.quote}
-            </Text>
-          </Column>
-
-          <Text variant="label-default-s" onBackground="neutral-weak">
-            {String(step + 1).padStart(2, "0")} / {String(problems.length).padStart(2, "0")}
+  return (
+    <Section id="problem" paddingY="128" maxWidth={72} gap="48">
+      <Column
+        ref={rootRef}
+        fillWidth
+        gap="48"
+        className={classNames(styles.scene, inView && styles.in)}
+      >
+        <Column gap="16" maxWidth={48}>
+          <Heading
+            as="h2"
+            className={styles.title}
+            variant="display-strong-m"
+            onBackground="neutral-strong"
+            style={{ letterSpacing: "-0.04em", lineHeight: 1.05 }}
+          >
+            <span className={styles.line}>
+              <span className={styles.lineInner}>Wenn deine Website</span>
+            </span>
+            <span className={styles.line}>
+              <span className={styles.lineInner}>dich bremst</span>
+            </span>
+          </Heading>
+          <Text
+            className={styles.lead}
+            variant="body-default-l"
+            onBackground="neutral-medium"
+            wrap="balance"
+          >
+            Baukasten-Optik, keine Anfragen, niemand verantwortlich. Kommt dir bekannt vor?
           </Text>
         </Column>
 
-        <Column
-          ref={listRef}
-          flex={6}
-          fillWidth
-          gap="8"
-          className={enabled ? styles.stepper : styles.mobileStepper}
-        >
-          {problems.map((p, i) => {
-            const isActive = step === i;
-            return (
-              <Row
-                key={p.no}
-                className={`${styles.item} ${isActive ? styles.active : ""}`}
-                gap="24"
-                padding="20"
-                radius="l"
-                vertical="start"
-                background={isActive ? "page" : undefined}
-                border={isActive ? "neutral-alpha-medium" : "transparent"}
-              >
-                <Text className={styles.num} variant="heading-strong-l" onBackground="neutral-weak">
-                  {p.no}
+        <Column fillWidth className={styles.board} gap="-1">
+          <Grid columns="2" m={{ columns: "1" }} className={styles.colHead} gap="32">
+            <Text className={styles.headLabel} variant="label-strong-s" onBackground="neutral-weak">
+              Heute
+            </Text>
+            <Text
+              className={`${styles.nextLabel} ${styles.headLabel}`}
+              variant="label-strong-s"
+              onBackground="neutral-strong"
+            >
+              Mit EvgLab
+            </Text>
+          </Grid>
+
+          {pairs.map((p, i) => (
+            <Grid
+              key={p.today}
+              columns="2"
+              m={{ columns: "1" }}
+              className={styles.pair}
+              gap="32"
+              style={{ "--i": i } as CSSProperties}
+            >
+              <Column className={styles.today} gap="8">
+                <Text className={styles.kicker} variant="label-default-xs" onBackground="neutral-weak">
+                  Heute
                 </Text>
-                <Column gap="8">
-                  <Text variant="heading-strong-s" onBackground="neutral-strong">
-                    {p.title}
-                  </Text>
-                  <Text variant="body-default-m" onBackground="neutral-weak">
-                    {p.body}
-                  </Text>
-                </Column>
-              </Row>
-            );
-          })}
+                <Text variant="heading-strong-m" onBackground="neutral-medium">
+                  {p.today}
+                </Text>
+                <Text variant="body-default-s" onBackground="neutral-weak">
+                  {p.todayBody}
+                </Text>
+              </Column>
+              <Column className={styles.next} gap="8">
+                <span className={styles.wipe} aria-hidden="true" />
+                <Text className={styles.kicker} variant="label-default-xs" onBackground="neutral-strong">
+                  Mit EvgLab
+                </Text>
+                <Text variant="heading-strong-m" onBackground="neutral-strong">
+                  {p.next}
+                </Text>
+                <Text variant="body-default-s" onBackground="neutral-medium">
+                  {p.nextBody}
+                </Text>
+              </Column>
+            </Grid>
+          ))}
         </Column>
-      </Row>
+      </Column>
     </Section>
-  );
-
-  if (!enabled) return content;
-
-  return (
-    <div
-      ref={trackRef}
-      style={{ position: "relative", width: "100%", height: `${problems.length * 100}vh` }}
-    >
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          height: "100vh",
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "var(--surface-background)",
-        }}
-      >
-        {content}
-      </div>
-    </div>
   );
 }
