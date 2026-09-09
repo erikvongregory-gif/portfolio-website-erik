@@ -4,6 +4,7 @@ import styles from "./page.module.scss";
 import {
   About,
   CapacityBadge,
+  FaqSection,
   FinalCta,
   HeroDesktopStrip,
   HeroEntrance,
@@ -248,6 +249,7 @@ export default function Home() {
       <Process />
       <About />
       <Testimonials />
+      <FaqSection />
       <FinalCta />
       <StickyMobileCta label="Kostenloser Entwurf" buttonLabel="Starten" funnel />
       <SiteFooter />

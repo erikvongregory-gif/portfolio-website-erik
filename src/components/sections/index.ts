@@ -6,6 +6,8 @@ export { Services } from "./Services";
 export { Process } from "./Process";
 export { About } from "./About";
 export { Testimonials } from "./Testimonials";
+export { Faq } from "./Faq";
+export { FaqSection } from "./FaqSection";
 export { FinalCta } from "./FinalCta";
 export { SiteFooter } from "./SiteFooter";
 export { LegalLayout, LegalBlock, LegalSubheading, LegalText } from "./LegalLayout";

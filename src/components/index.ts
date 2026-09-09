@@ -36,6 +36,8 @@ export {
   Process,
   About,
   Testimonials,
+  Faq,
+  FaqSection,
   FinalCta,
   SiteFooter,
   LegalLayout,
