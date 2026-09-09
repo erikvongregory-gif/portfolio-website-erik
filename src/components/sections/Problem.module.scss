@@ -1,5 +1,6 @@
 .scene {
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --flip: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .line {
@@ -20,83 +21,98 @@
   filter: blur(8px);
 }
 
-.headLabel {
-  opacity: 0;
-  transform: translate3d(0, 0.6rem, 0);
-}
-
-.today {
-  opacity: 0;
-  transform: translate3d(-1.4rem, 0, 0);
-}
-
-.next {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.wipe {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: var(--page-background);
-  transform: translate3d(0, 0, 0);
-}
-
 .board {
   width: 100%;
+  overflow: visible;
+  grid-template-columns: 1fr 1fr !important;
 }
 
-.colHead,
-.pair {
-  width: 100%;
-  padding: 1.5rem 1rem;
-}
-
-.colHead {
-  padding-bottom: 0.75rem;
-  padding-top: 0;
-}
-
-.pair {
+.trigger {
   position: relative;
-  border-radius: 1rem;
-  transition: background-color 0.4s var(--ease);
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  perspective: 1600px;
+  border-radius: 1.25rem;
+  opacity: 0;
+  transform: translate3d(0, 1.1rem, 0);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.pair::before {
-  content: "";
-  position: absolute;
-  left: 1rem;
-  right: 1rem;
-  top: 0;
-  height: 1px;
-  background: var(--neutral-alpha-medium);
-  transform: scaleX(0);
-  transform-origin: left;
+.trigger:focus-visible {
+  outline: 2px solid var(--brand-solid-strong);
+  outline-offset: 3px;
 }
 
-.nextLabel,
-.next {
-  padding-left: 0.5rem;
+.sizer {
+  display: grid !important;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.next::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.35rem;
-  bottom: 0.35rem;
-  width: 1px;
-  background: var(--neutral-alpha-medium);
-  transform: scaleY(0);
-  transform-origin: top;
+.sizer > * {
+  grid-area: 1 / 1;
+}
+
+.lift {
+  position: absolute !important;
+  inset: 0;
+  transition: transform 0.5s var(--ease);
+}
+
+.card {
+  position: absolute !important;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.86s var(--flip);
+  border-radius: 1.25rem;
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.face {
+  position: absolute !important;
+  inset: 0;
+  display: flex !important;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: inset 0 1px 0 var(--neutral-alpha-medium);
+}
+
+.front {
+  background: var(--neutral-alpha-weak);
+  transform: translateZ(1px);
+}
+
+.back {
+  background: var(--neutral-alpha-weak);
+  transform: rotateY(180deg) translateZ(1px);
+  box-shadow: inset 0 0 0 2px var(--brand-on-background-weak);
+}
+
+.faceInner {
+  padding: 1.35rem 1.4rem 1.45rem;
+  height: 100%;
+}
+
+.faceNext {
+  padding-left: 1.55rem;
 }
 
 .kicker {
-  display: none;
+  letter-spacing: 0.04em;
 }
 
 .in .lineInner {
@@ -111,28 +127,9 @@
   animation: enterRise 0.9s var(--ease) 0.28s both;
 }
 
-.in .headLabel {
-  animation: enterRise 0.7s var(--ease) 0.4s both;
-}
-
-.in .today {
-  animation: fromLeft 0.75s var(--ease) both;
-  animation-delay: calc(0.48s + var(--i, 0) * 0.11s);
-}
-
-.in .wipe {
-  animation: wipeAway 0.72s var(--ease) both;
-  animation-delay: calc(0.58s + var(--i, 0) * 0.11s);
-}
-
-.in .pair::before {
-  animation: drawX 0.7s var(--ease) both;
-  animation-delay: calc(0.42s + var(--i, 0) * 0.11s);
-}
-
-.in .next::before {
-  animation: drawY 0.65s var(--ease) both;
-  animation-delay: calc(0.62s + var(--i, 0) * 0.11s);
+.in .trigger {
+  animation: cardIn 0.75s var(--ease) both;
+  animation-delay: calc(0.42s + var(--i, 0) * 0.1s);
 }
 
 @keyframes lineRise {
@@ -157,10 +154,10 @@
   }
 }
 
-@keyframes fromLeft {
+@keyframes cardIn {
   from {
     opacity: 0;
-    transform: translate3d(-1.4rem, 0, 0);
+    transform: translate3d(0, 1.1rem, 0);
   }
   to {
     opacity: 1;
@@ -168,88 +165,58 @@
   }
 }
 
-@keyframes wipeAway {
-  to {
-    transform: translate3d(101%, 0, 0);
-  }
-}
-
-@keyframes drawX {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-@keyframes drawY {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(1);
-  }
-}
-
 @media (hover: hover) and (pointer: fine) {
-  .pair:hover {
-    background: var(--neutral-alpha-weak);
+  .trigger:hover .lift {
+    transform: translateY(-5px);
   }
 }
 
 @media (max-width: 1023px) {
-  .colHead {
-    display: none !important;
+  .board {
+    grid-template-columns: 1fr !important;
   }
 
-  .colHead,
-  .pair {
-    padding-inline: 0;
-  }
-
-  .pair::before {
-    left: 0;
-    right: 0;
-  }
-
-  .nextLabel,
-  .next {
-    padding-left: 0;
-  }
-
-  .next::before {
-    display: none;
-  }
-
-  .kicker {
-    display: block;
-  }
-
-  .today {
-    transform: translate3d(0, 1.1rem, 0);
-  }
-
-  .in .today {
-    animation-name: enterRise;
+  .faceInner,
+  .faceNext {
+    padding: 1.2rem 1.15rem 1.3rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .lineInner,
   .lead,
-  .headLabel,
-  .today,
-  .wipe,
-  .pair::before,
-  .next::before {
+  .board,
+  .trigger {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
   }
 
-  .wipe {
+  .static .lift,
+  .static .card {
+    position: relative !important;
+    inset: auto;
+    transform: none !important;
+    transition: none;
+  }
+
+  .static .sizer {
     display: none;
+  }
+
+  .static .face {
+    position: relative !important;
+    transform: none !important;
+    backface-visibility: visible;
+  }
+
+  .static .front {
+    border-radius: 1.25rem 1.25rem 0 0;
+  }
+
+  .static .back {
+    border-radius: 0 0 1.25rem 1.25rem;
+    box-shadow: inset 0 0 0 2px var(--brand-on-background-weak);
   }
 }
