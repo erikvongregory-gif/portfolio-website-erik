@@ -4,7 +4,11 @@ import { useState } from "react";
 import { Text } from "@once-ui-system/core";
 import { COOKIE_SETTINGS_EVENT } from "@/components/CookieBanner";
 
-export function CookieSettingsButton() {
+type CookieSettingsButtonProps = {
+  className?: string;
+};
+
+export function CookieSettingsButton({ className }: CookieSettingsButtonProps) {
   const [hover, setHover] = useState(false);
 
   return (
@@ -15,6 +19,7 @@ export function CookieSettingsButton() {
       onMouseLeave={() => setHover(false)}
       onFocus={() => setHover(true)}
       onBlur={() => setHover(false)}
+      className={className}
       style={{
         background: "none",
         border: "none",

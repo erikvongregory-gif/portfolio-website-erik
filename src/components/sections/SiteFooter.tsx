@@ -1,7 +1,17 @@
-import { Column, Flex, Line, Row, SmartLink, Text } from "@once-ui-system/core";
-import { BrandMark } from "@/components/BrandLogo";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Column, Flex, Line, Row, Text } from "@once-ui-system/core";
+import classNames from "classnames";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_TEL,
+} from "@/lib/contact";
 import styles from "./SiteFooter.module.scss";
+
+const WORDMARK = "EvgLab";
 
 const navLinks = [
   { label: "Projekte", href: "/#projekte" },
@@ -12,8 +22,8 @@ const navLinks = [
 ];
 
 const contactLinks = [
-  { label: "info@evglab.com", href: "mailto:info@evglab.com" },
-  { label: "01556 5602176", href: "tel:+4915565602176" },
+  { label: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
+  { label: CONTACT_PHONE_DISPLAY, href: CONTACT_PHONE_TEL },
   { label: "Landsberg am Lech", href: "/webdesign-landsberg" },
 ];
 
@@ -27,12 +37,57 @@ type SiteFooterProps = {
   minimal?: boolean;
 };
 
+function FooterWordmark() {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setInView(true);
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -12% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <p
+      ref={ref}
+      className={classNames(styles.wordmark, inView && styles.wordmarkIn)}
+      aria-label="EvgLab"
+    >
+      {WORDMARK.split("").map((letter, index) => (
+        <span key={`${letter}-${index}`} className={styles.letterClip}>
+          <span className={styles.letter} style={{ animationDelay: `${index * 0.07}s` }}>
+            {letter}
+          </span>
+        </span>
+      ))}
+    </p>
+  );
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 export function SiteFooter({ minimal = false }: SiteFooterProps) {
   if (minimal) {
     return (
       <Flex
         as="footer"
-        className={styles.footer}
+        className={styles.minimal}
         fillWidth
         horizontal="center"
         paddingX="l"
@@ -69,77 +124,69 @@ export function SiteFooter({ minimal = false }: SiteFooterProps) {
   }
 
   return (
-    <Flex
-      as="footer"
-      className={styles.footer}
-      fillWidth
-      horizontal="center"
-      paddingX="l"
-      paddingTop="64"
-      paddingBottom="40"
-    >
-      <Column fillWidth maxWidth={68} gap="40">
-        <Row fillWidth gap="40" horizontal="between" wrap s={{ direction: "column", gap: "32" }}>
-          <Column gap="12" maxWidth={22}>
-            <Row vertical="center" gap="8">
-              <BrandMark size={28} />
-              <Text variant="heading-strong-s" onBackground="neutral-strong" style={{ letterSpacing: "-0.01em" }}>
-                Erik EvgLab
-              </Text>
-            </Row>
-            <Text variant="body-default-s" onBackground="neutral-weak">
+    <footer className={styles.footer}>
+      <div className={styles.inner}>
+        <Row
+          className={styles.top}
+          fillWidth
+          horizontal="between"
+          gap="48"
+          s={{ direction: "column", gap: "40" }}
+        >
+          <Column className={styles.intro} gap="12" maxWidth={28}>
+            <Text className={styles.kicker}>Erik EvgLab</Text>
+            <Text className={styles.lead}>
               Webentwicklung und Design aus Landsberg am Lech. Auftritte mit Persönlichkeit, die
               Anfragen bringen.
             </Text>
           </Column>
 
-          <Row gap="64" wrap s={{ gap: "32" }}>
+          <Row className={styles.cols} gap="48" wrap s={{ gap: "32" }}>
             <Column gap="12">
-              <Text variant="label-default-s" onBackground="neutral-weak">
-                Navigation
-              </Text>
+              <Text className={styles.colTitle}>Navigation</Text>
               {navLinks.map((l) => (
-                <SmartLink key={l.label} href={l.href}>
-                  <Text variant="body-default-s" onBackground="neutral-medium">
-                    {l.label}
-                  </Text>
-                </SmartLink>
-              ))}
-            </Column>
-
-            <Column gap="12">
-              <Text variant="label-default-s" onBackground="neutral-weak">
-                Kontakt
-              </Text>
-              {contactLinks.map((l) => (
-                <SmartLink key={l.label} href={l.href}>
-                  <Text variant="body-default-s" onBackground="neutral-medium">
-                    {l.label}
-                  </Text>
-                </SmartLink>
-              ))}
-            </Column>
-          </Row>
-        </Row>
-
-        <Line background="neutral-alpha-weak" />
-
-        <Row fillWidth horizontal="between" vertical="center" gap="16" wrap s={{ direction: "column", gap: "12" }}>
-          <Text variant="body-default-xs" onBackground="neutral-weak">
-            © 2026 Erik EvgLab · Landsberg am Lech
-          </Text>
-          <Row gap="20" vertical="center" wrap>
-            {legalLinks.map((l) => (
-              <SmartLink key={l.label} href={l.href}>
-                <Text variant="body-default-xs" onBackground="neutral-weak">
+                <a key={l.label} href={l.href} className={styles.link}>
                   {l.label}
-                </Text>
-              </SmartLink>
-            ))}
-            <CookieSettingsButton />
+                </a>
+              ))}
+            </Column>
+            <Column gap="12">
+              <Text className={styles.colTitle}>Kontakt</Text>
+              {contactLinks.map((l) => (
+                <a key={l.label} href={l.href} className={styles.link}>
+                  {l.label}
+                </a>
+              ))}
+            </Column>
+            <Column gap="12">
+              <Text className={styles.colTitle}>Legal</Text>
+              {legalLinks.map((l) => (
+                <a key={l.label} href={l.href} className={styles.link}>
+                  {l.label}
+                </a>
+              ))}
+              <CookieSettingsButton className={styles.cookie} />
+            </Column>
           </Row>
+
+          <button type="button" className={styles.toTop} onClick={scrollToTop} aria-label="Nach oben">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 19V6M6.5 11.5 12 6l5.5 5.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
         </Row>
-      </Column>
-    </Flex>
+
+        <FooterWordmark />
+
+        <Text className={styles.copy}>© 2026 Erik EvgLab · Landsberg am Lech</Text>
+      </div>
+    </footer>
   );
 }

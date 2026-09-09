@@ -204,7 +204,7 @@ export function Problem() {
   }, []);
 
   return (
-    <Section id="problem" paddingY="128" maxWidth={72} gap="48">
+    <Section id="problem" className={styles.band} paddingY="128" maxWidth={72} gap="48">
       <Column
         ref={rootRef}
         fillWidth
