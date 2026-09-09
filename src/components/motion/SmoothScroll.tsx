@@ -9,6 +9,11 @@ let lenisInstance: Lenis | null = null;
 type ScrollListener = () => void;
 const scrollListeners = new Set<ScrollListener>();
 
+export function getScrollY() {
+  const lenis = lenisInstance as { scroll?: number } | null;
+  return typeof lenis?.scroll === "number" ? lenis.scroll : window.scrollY;
+}
+
 export function subscribeScroll(listener: ScrollListener) {
   scrollListeners.add(listener);
   return () => scrollListeners.delete(listener);

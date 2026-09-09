@@ -19,12 +19,16 @@ type FaqProps = {
 function FaqKicker() {
   return (
     <Row className={styles.kicker} gap="12" vertical="center">
-      <svg className={styles.kickerIcon} viewBox="0 0 15 16" aria-hidden="true">
+      <svg className={styles.kickerIcon} viewBox="0 0 24 24" aria-hidden="true">
         <path
-          fill="currentColor"
-          d="M0 4.25 3.75.5 7.5 4.25 3.75 8zM7.5 4.25 11.25.5 15 4.25 11.25 8zM0 11.75 3.75 8l3.75 3.75-3.75 3.75z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.35"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M8.15 8.2c.4-2.35 2.35-3.85 4.35-3.85 2.35 0 4.2 1.5 4.2 3.55 0 1.85-1.15 2.75-2.7 3.55-1.2.65-1.85 1.3-1.85 2.7"
         />
-        <path fill="currentColor" d="M7.5 11.75 11.25 8 15 11.75l-3.75 3.75z" />
+        <circle cx="12.15" cy="18.55" r="1.45" fill="currentColor" />
       </svg>
       <span>FAQ</span>
     </Row>

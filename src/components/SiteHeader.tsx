@@ -17,7 +17,7 @@ import styles from "./SiteHeader.module.scss";
 import { ContactDialog } from "./ContactDialog";
 import { ThemeToggle } from "./ThemeToggle";
 import { BrandMark } from "@/components/BrandLogo";
-import { subscribeScroll } from "@/components/motion/SmoothScroll";
+import { getScrollY, subscribeScroll } from "@/components/motion/SmoothScroll";
 
 const navLinks = [
   { label: "Startseite", href: "/" },
@@ -46,6 +46,7 @@ export function SiteHeader() {
   const hideHeader = pathname === "/festpreis" || pathname === "/partner";
   const [menu, setMenu] = useState<MenuState>("closed");
   const [scrolledAway, setScrolledAway] = useState(false);
+  const [solid, setSolid] = useState(false);
   const lastY = useRef(0);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const menuExpanded = menu === "open";
@@ -114,7 +115,7 @@ export function SiteHeader() {
   useEffect(() => {
     if (hideHeader) return;
 
-    lastY.current = window.scrollY;
+    lastY.current = getScrollY();
 
     const sync = () => {
       if (menuVisible) {
@@ -122,15 +123,19 @@ export function SiteHeader() {
         return;
       }
 
-      const y = window.scrollY;
+      const y = getScrollY();
       const delta = y - lastY.current;
 
       if (y <= TOP_SHOW_Y) {
         setScrolledAway(false);
-      } else if (delta > DIRECTION_DELTA) {
-        setScrolledAway(true);
-      } else if (delta < -DIRECTION_DELTA) {
-        setScrolledAway(false);
+        setSolid(false);
+      } else {
+        setSolid(true);
+        if (delta > DIRECTION_DELTA) {
+          setScrolledAway(true);
+        } else if (delta < -DIRECTION_DELTA) {
+          setScrolledAway(false);
+        }
       }
 
       lastY.current = y;
@@ -157,8 +162,10 @@ export function SiteHeader() {
         className={classNames(
           styles.header,
           scrolledAway && styles.hidden,
+          solid && styles.solid,
           menuVisible && styles.headerOpen,
         )}
+        background={solid ? "page" : undefined}
         position="fixed"
         top="0"
         left="0"
@@ -169,6 +176,7 @@ export function SiteHeader() {
         paddingY="12"
         aria-hidden={scrolledAway}
       >
+        <div className={styles.backdrop} aria-hidden="true" />
         <Row className={styles.bar} fillWidth maxWidth="xl" horizontal="between" vertical="center">
           <div className={styles.brand}>
             <Logo />
