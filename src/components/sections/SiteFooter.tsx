@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Column, Flex, Line, Row, Text } from "@once-ui-system/core";
+import { Column, Flex, Line, Row, SmartLink, Text } from "@once-ui-system/core";
 import classNames from "classnames";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
 import {
