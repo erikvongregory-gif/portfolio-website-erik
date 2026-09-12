@@ -5,6 +5,7 @@
   --shift-s2: 100%;
   --shift-c1: color-mix(in srgb, var(--brand-solid-strong) 62%, #fff);
   --shift-c2: color-mix(in srgb, var(--brand-solid-strong) 86%, #000);
+  --shift-ink: #fff;
 
   position: relative;
   isolation: isolate;
@@ -17,7 +18,7 @@
   border: 0;
   border-radius: 1.15rem;
   cursor: pointer;
-  color: #fff;
+  color: var(--shift-ink);
   font-family: var(--font-heading), var(--font-body), sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
@@ -272,6 +273,11 @@
 .root:focus-visible {
   outline: 2px solid var(--brand-solid-strong);
   outline-offset: 3px;
+}
+
+/* Dark + solid:contrast → pale brand fill; white label washes out → use dark ink. */
+:global(html[data-theme="dark"]) .root:not(.solid) {
+  --shift-ink: #0a0a0a;
 }
 
 @keyframes shiftIdle {
