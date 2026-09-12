@@ -37,6 +37,12 @@ type ContactDialogProps = {
   replaceGlobalHandler?: boolean;
   /** Multi-step Entwurf-Funnel (wie /festpreis) statt Kurzformular. */
   funnel?: boolean;
+  /** Force ShiftCta trigger (same as size="l"). */
+  shift?: boolean;
+  /** Compact ShiftCta for header. */
+  shiftCompact?: boolean;
+  /** Flat single-color ShiftCta instead of hero gradient. */
+  shiftTone?: "gradient" | "solid";
 };
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -79,6 +85,9 @@ export function ContactDialog({
   idPrefix = "",
   replaceGlobalHandler = false,
   funnel = false,
+  shift = false,
+  shiftCompact = false,
+  shiftTone = "gradient",
 }: ContactDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const isControlled = openProp !== undefined;
@@ -351,8 +360,13 @@ export function ContactDialog({
   return (
     <>
       {!dialogOnly &&
-        (size === "l" ? (
-          <ShiftCta fillWidth={fillWidth} onClick={onTriggerClick}>
+        (size === "l" || shift ? (
+          <ShiftCta
+            fillWidth={fillWidth}
+            compact={shiftCompact}
+            tone={shiftTone}
+            onClick={onTriggerClick}
+          >
             {label}
           </ShiftCta>
         ) : (

@@ -126,8 +126,8 @@ function ProjectShot({ project: p, featured }: { project: Project; featured?: bo
             p.comingSoon
               ? "Projekt, bald verfügbar"
               : p.obscured
-                ? "Website-Entwurf für einen Kunden von EvgLab"
-                : `${p.title}: Website-Projekt von EvgLab`
+                ? "Website-Entwurf für einen Kunden von EvGlab"
+                : `${p.title}: Website-Projekt von EvGlab`
           }
           blur={blurImage}
           sizes={

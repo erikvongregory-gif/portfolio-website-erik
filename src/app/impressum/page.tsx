@@ -4,7 +4,7 @@ import { LegalBlock, LegalLayout, LegalSubheading, LegalText } from "@/component
 import { createPageOpenGraph, createPageTwitter } from "@/resources";
 
 const title = "Impressum";
-const description = "Impressum und Anbieterkennzeichnung gemäß § 5 DDG für die Website von Erik EvgLab.";
+const description = "Impressum und Anbieterkennzeichnung gemäß § 5 DDG für die Website von Erik EvGlab.";
 
 export const metadata: Metadata = {
   title,

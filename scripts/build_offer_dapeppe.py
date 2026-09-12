@@ -151,7 +151,7 @@ def bullet(cell, text, *, bold_word=None):
 doc = Document()
 doc.core_properties.title = "Angebot Website – Da Peppe"
 doc.core_properties.author = "Erik von Gregory"
-doc.core_properties.company = "Erik EvgLab"
+doc.core_properties.company = "Erik EvGlab"
 
 normal = doc.styles['Normal']
 normal.font.name = FONT; normal.font.size = Pt(11); normal.font.color.rgb = INK
@@ -176,7 +176,7 @@ fp = footer.paragraphs[0]
 fp.alignment = WD_ALIGN_PARAGRAPH.CENTER; fp.paragraph_format.space_before = Pt(6)
 hairline(fp, color=LINE, size=4, space_after=4)
 fp2 = footer.add_paragraph(); fp2.alignment = WD_ALIGN_PARAGRAPH.CENTER; fp2.paragraph_format.space_after = Pt(2)
-set_run(fp2.add_run("Erik EvgLab  ·  Hauptstraße 18, 86925 Fuchstal  ·  info@evglab.com  ·  +49 173 170 6012  ·  evglab.com"),
+set_run(fp2.add_run("Erik EvGlab  ·  Hauptstraße 18, 86925 Fuchstal  ·  info@evglab.com  ·  +49 173 170 6012  ·  evglab.com"),
         size=8, color=SECONDARY)
 fp3 = footer.add_paragraph(); fp3.alignment = WD_ALIGN_PARAGRAPH.CENTER; fp3.paragraph_format.space_after = Pt(0)
 add_page_number(fp3)
@@ -191,7 +191,7 @@ badge = head.cell(0, 0); shade_cell(badge, DARK_HEX)
 set_cell_margins(badge, top=60, bottom=60, left=60, right=60)
 cell_text(badge, "E", size=13, color=WHITE, bold=True, align=WD_ALIGN_PARAGRAPH.CENTER, valign=WD_ALIGN_VERTICAL.CENTER)
 nm = head.cell(0, 1); set_cell_margins(nm, top=60, bottom=60, left=160, right=80)
-cell_text(nm, "Erik EvgLab", size=13, bold=True, valign=WD_ALIGN_VERTICAL.CENTER)
+cell_text(nm, "Erik EvGlab", size=13, bold=True, valign=WD_ALIGN_VERTICAL.CENTER)
 rt = head.cell(0, 2)
 cell_text(rt, "ANGEBOT", size=12, color=SECONDARY, bold=True, align=WD_ALIGN_PARAGRAPH.RIGHT,
           caps=True, spacing=60, valign=WD_ALIGN_VERTICAL.CENTER)
@@ -226,7 +226,7 @@ for line, b in [("Da Peppe", True), ("z. Hd. Inhaber", False),
 c_from = party.cell(0, 1); set_cell_margins(c_from, top=140, bottom=140, left=140, right=140)
 cell_borders(c_from, top=(LINE, 8), bottom=(LINE, 8), left=(LINE, 8), right=(LINE, 8))
 cell_text(c_from, "ANBIETER", size=8, color=FAINT, caps=True, spacing=60, space_after=6)
-for line, b in [("Erik von Gregory · EvgLab", True), ("Hauptstraße 18", False),
+for line, b in [("Erik von Gregory · EvGlab", True), ("Hauptstraße 18", False),
                 ("86925 Fuchstal", False), ("info@evglab.com", False), ("+49 173 170 6012", False)]:
     p = c_from.add_paragraph(); p.paragraph_format.space_after = Pt(2); p.paragraph_format.line_spacing = 1.3
     set_run(p.add_run(line), size=11, bold=b, color=INK if b else SECONDARY)
@@ -423,7 +423,7 @@ for o in ["Option A – Komplett · 2.500 € einmalig",
 spacer(doc, 28)
 sign = doc.add_table(rows=2, cols=2); remove_table_borders(sign)
 sign.columns[0].width = CONTENT_W // 2; sign.columns[1].width = CONTENT_W // 2
-for col, label in [(0, "Da Peppe"), (1, "Erik von Gregory · EvgLab")]:
+for col, label in [(0, "Da Peppe"), (1, "Erik von Gregory · EvGlab")]:
     lcell = sign.cell(0, col); set_cell_margins(lcell, top=200, bottom=20, left=0, right=200)
     cell_borders(lcell, bottom=(DARK_HEX, 8)); lcell.text = ""
     labcell = sign.cell(1, col); set_cell_margins(labcell, top=20, bottom=0, left=0, right=200)

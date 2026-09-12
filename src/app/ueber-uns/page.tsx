@@ -23,19 +23,19 @@ import {
 export const metadata: Metadata = {
   title: "Über mich",
   description:
-    "Hinter EvgLab steht eine Person: Erik. Webentwicklung und Design aus Landsberg am Lech – direkt, ehrlich und ohne Umwege.",
+    "Hinter EvGlab steht eine Person: Erik. Webentwicklung und Design aus Landsberg am Lech – direkt, ehrlich und ohne Umwege.",
   alternates: { canonical: "/ueber-uns" },
   openGraph: createPageOpenGraph({
     title: "Über mich",
     description:
-      "Hinter EvgLab steht eine Person: Erik. Webentwicklung und Design aus Landsberg am Lech – direkt, ehrlich und ohne Umwege.",
+      "Hinter EvGlab steht eine Person: Erik. Webentwicklung und Design aus Landsberg am Lech – direkt, ehrlich und ohne Umwege.",
     path: "/ueber-uns",
     type: "profile",
     image: aboutOgImage,
   }),
   twitter: createPageTwitter(
     "Über mich",
-    "Hinter EvgLab steht eine Person: Erik. Webentwicklung und Design aus Landsberg am Lech – direkt, ehrlich und ohne Umwege.",
+    "Hinter EvGlab steht eine Person: Erik. Webentwicklung und Design aus Landsberg am Lech – direkt, ehrlich und ohne Umwege.",
     aboutOgImage,
   ),
 };
@@ -108,7 +108,7 @@ export default function UeberUns() {
                 wrap="balance"
                 style={{ maxWidth: "40rem", lineHeight: 1.5 }}
               >
-                Hinter EvgLab steht eine Person: Erik. Ich gestalte und entwickle Websites, die
+                Hinter EvGlab steht eine Person: Erik. Ich gestalte und entwickle Websites, die
                 auffallen und Anfragen bringen – direkt, ehrlich und ohne Umwege, aus Landsberg am
                 Lech.
               </Text>
@@ -135,7 +135,7 @@ export default function UeberUns() {
                 >
                   <Image
                     src="/images/about/erik.png"
-                    alt="Porträt von Erik von Gregory, Gründer von EvgLab"
+                    alt="Porträt von Erik von Gregory, Gründer von EvGlab"
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 416px"
@@ -149,7 +149,7 @@ export default function UeberUns() {
             </Reveal>
             <Reveal delay={0.2}>
               <Text variant="label-default-s" onBackground="neutral-weak" align="center">
-                Erik · Gründer von EvgLab · Landsberg am Lech
+                Erik · Gründer von EvGlab · Landsberg am Lech
               </Text>
             </Reveal>
           </Column>
@@ -161,7 +161,7 @@ export default function UeberUns() {
           eyebrow="Werte"
           title={
             <>
-              Wofür EvgLab{" "}
+              Wofür EvGlab{" "}
               <Text as="span" onBackground="neutral-weak">
                 steht.
               </Text>

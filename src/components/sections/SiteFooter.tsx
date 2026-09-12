@@ -11,7 +11,7 @@ import {
 } from "@/lib/contact";
 import styles from "./SiteFooter.module.scss";
 
-const WORDMARK = "EvgLab";
+const WORDMARK = "EvGlab";
 
 const navLinks = [
   { label: "Projekte", href: "/#projekte" },
@@ -65,7 +65,7 @@ function FooterWordmark() {
     <p
       ref={ref}
       className={classNames(styles.wordmark, inView && styles.wordmarkIn)}
-      aria-label="EvgLab"
+      aria-label="EvGlab"
     >
       {WORDMARK.split("").map((letter, index) => (
         <span key={`${letter}-${index}`} className={styles.letterClip}>
@@ -105,7 +105,7 @@ export function SiteFooter({ minimal = false }: SiteFooterProps) {
             s={{ direction: "column", gap: "12" }}
           >
             <Text variant="body-default-xs" onBackground="neutral-weak">
-              © 2026 Erik EvgLab · Landsberg am Lech
+              © 2026 Erik EvGlab · Landsberg am Lech
             </Text>
             <Row gap="20" vertical="center" wrap>
               {legalLinks.map((l) => (
@@ -134,7 +134,7 @@ export function SiteFooter({ minimal = false }: SiteFooterProps) {
           s={{ direction: "column", gap: "40" }}
         >
           <Column className={styles.intro} gap="12" maxWidth={28}>
-            <Text className={styles.kicker}>Erik EvgLab</Text>
+            <Text className={styles.kicker}>Erik EvGlab</Text>
             <Text className={styles.lead}>
               Webentwicklung und Design aus Landsberg am Lech. Auftritte mit Persönlichkeit, die
               Anfragen bringen.
@@ -185,7 +185,7 @@ export function SiteFooter({ minimal = false }: SiteFooterProps) {
 
         <FooterWordmark />
 
-        <Text className={styles.copy}>© 2026 Erik EvgLab · Landsberg am Lech</Text>
+        <Text className={styles.copy}>© 2026 Erik EvGlab · Landsberg am Lech</Text>
       </div>
     </footer>
   );

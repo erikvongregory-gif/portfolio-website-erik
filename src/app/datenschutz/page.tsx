@@ -5,7 +5,7 @@ import { createPageOpenGraph, createPageTwitter } from "@/resources";
 
 const title = "Datenschutzerklärung";
 const description =
-  "Informationen zur Verarbeitung personenbezogener Daten auf der Website von Erik EvgLab gemäß DSGVO.";
+  "Informationen zur Verarbeitung personenbezogener Daten auf der Website von Erik EvGlab gemäß DSGVO.";
 
 export const metadata: Metadata = {
   title,

@@ -29,7 +29,7 @@ import {
 const PAGE_PATH = "/webdesign-landsberg";
 const PAGE_TITLE = "Webdesign Landsberg am Lech";
 const PAGE_DESCRIPTION =
-  "Webdesign Landsberg am Lech: individuelle Websites & Landingpages von Erik EvgLab. Lokal erreichbar, ohne Template-Look – Anfragen, die wirklich kommen.";
+  "Webdesign Landsberg am Lech: individuelle Websites & Landingpages von Erik EvGlab. Lokal erreichbar, ohne Template-Look – Anfragen, die wirklich kommen.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -107,7 +107,7 @@ const faqs: { question: string; answer: string }[] = [
   {
     question: "Bietest du Webdesign in Landsberg am Lech an?",
     answer:
-      "Ja. EvgLab steht für Webdesign und Webentwicklung für Unternehmen in Landsberg am Lech und der Region. Ich gestalte individuelle Websites und Landingpages – ohne Template-Look, mit Fokus auf Anfragen.",
+      "Ja. EvGlab steht für Webdesign und Webentwicklung für Unternehmen in Landsberg am Lech und der Region. Ich gestalte individuelle Websites und Landingpages – ohne Template-Look, mit Fokus auf Anfragen.",
   },
   {
     question: "Kann man sich vor Ort in Landsberg treffen?",
@@ -138,7 +138,7 @@ const structuredData = {
       "@type": "WebSite",
       "@id": `${baseURL}/#website`,
       url: baseURL,
-      name: "Erik EvgLab",
+      name: "Erik EvGlab",
       inLanguage: "de-DE",
       publisher: { "@id": `${baseURL}/#business` },
     },
@@ -178,8 +178,8 @@ const structuredData = {
     {
       "@type": "ProfessionalService",
       "@id": `${baseURL}/#business`,
-      name: "EvgLab",
-      alternateName: "Erik EvgLab",
+      name: "EvGlab",
+      alternateName: "Erik EvGlab",
       url: baseURL,
       image: `${baseURL}/opengraph-image`,
       email: "info@evglab.com",
@@ -322,7 +322,7 @@ export default function WebdesignLandsbergPage() {
 
       <Section id="warum" background="surface">
         <SectionHeader
-          eyebrow="Warum EvgLab"
+          eyebrow="Warum EvGlab"
           title={
             <>
               Webdesign aus der Region –{" "}
@@ -485,7 +485,7 @@ export default function WebdesignLandsbergPage() {
 
         <Reveal delay={0.1}>
           <Text variant="body-default-m" onBackground="neutral-weak">
-            Mehr über die Person hinter EvgLab:{" "}
+            Mehr über die Person hinter EvGlab:{" "}
             <SmartLink href="/ueber-uns">
               <Text as="span" variant="body-default-m">
                 Über mich

@@ -31,8 +31,8 @@ const structuredData = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "@id": `${baseURL}/#business`,
-  name: "EvgLab",
-  alternateName: "Erik EvgLab",
+  name: "EvGlab",
+  alternateName: "Erik EvGlab",
   description:
     "Webdesign und Webentwicklung aus Landsberg am Lech. Individuelle Websites und Landingpages mit Persönlichkeit, die Anfragen bringen.",
   serviceType: ["Webdesign", "Webentwicklung", "Landingpage-Design", "Website-Betreuung"],
@@ -167,7 +167,7 @@ export default function Home() {
                 <span className={styles.heroAboutAvatar} aria-hidden="true">
                   <Image
                     src="/images/about/erik-avatar.webp"
-                    alt="Erik von Gregory, Gründer von EvgLab"
+                    alt="Erik von Gregory, Gründer von EvGlab"
                     width={32}
                     height={32}
                   />

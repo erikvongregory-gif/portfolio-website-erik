@@ -290,8 +290,8 @@ export function HeroShowcase() {
                     c.comingSoon
                       ? "Projekt – bald verfügbar"
                       : c.obscured
-                        ? "Website-Entwurf für einen Kunden von EvgLab"
-                        : `${c.title} – Website-Projekt von EvgLab`
+                        ? "Website-Entwurf für einen Kunden von EvGlab"
+                        : `${c.title} – Website-Projekt von EvGlab`
                   }
                   fill
                   sizes="(min-width: 1440px) 520px, 40vw"

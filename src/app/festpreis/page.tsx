@@ -431,7 +431,7 @@ export default function WebsiteCheckPage() {
             <Column className={styles.portrait} overflow="hidden">
               <Image
                 src="/images/about/erik.png"
-                alt="Porträt von Erik von Gregory, Gründer von EvgLab"
+                alt="Porträt von Erik von Gregory, Gründer von EvGlab"
                 width={280}
                 height={340}
                 className={styles.portraitImg}

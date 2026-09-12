@@ -1,0 +1,220 @@
+.section {
+  overflow: visible !important;
+}
+
+.stage {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --copy: 0;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: clamp(30rem, 82vh, 44rem);
+  padding-block: clamp(3.5rem, 8vw, 6.5rem);
+  overflow: visible;
+}
+
+.shots {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.shot {
+  --tx: 0px;
+  --ty: 0px;
+  --rot: 0deg;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(8.75rem, 16.5vw, 15.25rem);
+  margin: 0;
+  transform: translate(-50%, -50%) translate3d(var(--tx), var(--ty), 0) rotate(var(--rot));
+  will-change: transform;
+  filter: drop-shadow(0 28px 40px rgba(0, 0, 0, 0.28));
+}
+
+.stage[data-spread="open"] .shot {
+  animation: floatY 5.8s var(--ease) infinite alternate;
+}
+
+.stage[data-spread="open"] .shot:nth-child(2) {
+  animation-delay: 0.35s;
+}
+
+.stage[data-spread="open"] .shot:nth-child(3) {
+  animation-delay: 0.7s;
+}
+
+.stage[data-spread="open"] .shot:nth-child(4) {
+  animation-delay: 1.05s;
+}
+
+.phone {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 682 / 1024;
+}
+
+.phoneShot {
+  object-fit: contain;
+  object-position: center;
+  opacity: 1;
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 52rem);
+  padding-inline: 1rem;
+  opacity: var(--copy);
+  transform: translate3d(0, calc((1 - var(--copy)) * 1.35rem), 0);
+  filter: blur(calc((1 - var(--copy)) * 10px));
+  pointer-events: none;
+  will-change: opacity, transform, filter;
+}
+
+.stage[data-copy="on"] .copy {
+  pointer-events: auto;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  font-family: var(--font-label), var(--font-body), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--neutral-on-background-medium);
+}
+
+.dots {
+  width: 0.62rem;
+  height: 0.62rem;
+  flex-shrink: 0;
+  background:
+    radial-gradient(circle closest-side, var(--brand-solid-strong) 55%, transparent 56%) 0 0 / 48% 48%
+      no-repeat,
+    radial-gradient(circle closest-side, var(--brand-solid-strong) 55%, transparent 56%) 100% 0 / 48%
+      48% no-repeat,
+    radial-gradient(circle closest-side, var(--brand-solid-strong) 55%, transparent 56%) 0 100% / 48%
+      48% no-repeat,
+    radial-gradient(circle closest-side, var(--brand-solid-strong) 55%, transparent 56%) 100% 100% /
+      48% 48% no-repeat;
+}
+
+.title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 7vw, 6.1rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  color: var(--neutral-on-background-strong);
+  text-wrap: balance;
+}
+
+.line {
+  display: block;
+}
+
+@media (min-width: 901px) {
+  .line:nth-child(2) {
+    white-space: nowrap;
+  }
+}
+
+.serif {
+  display: block;
+  margin-top: 0.08em;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+}
+
+.sparkle {
+  display: inline-block;
+  width: 0.72em;
+  height: 0.72em;
+  margin-inline: 0.06em;
+  vertical-align: -0.08em;
+  animation: sparkleSpin 12s linear infinite;
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.35rem;
+}
+
+.linkFallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.35rem;
+  padding: 0.95rem 1.55rem;
+  border-radius: 1.15rem;
+  background: var(--brand-solid-strong);
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 600;
+}
+
+@keyframes floatY {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -0.55rem;
+  }
+}
+
+@keyframes sparkleSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .stage {
+    min-height: clamp(26rem, 74vh, 36rem);
+    padding-block: clamp(2.5rem, 8vw, 4rem);
+  }
+
+  .shot {
+    width: clamp(6.5rem, 28vw, 10rem);
+  }
+
+  .copy {
+    width: min(100%, 28rem);
+  }
+
+  .title {
+    font-size: clamp(2.1rem, 9.5vw, 3.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shot,
+  .sparkle {
+    animation: none !important;
+  }
+
+  .copy {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    pointer-events: auto !important;
+  }
+}

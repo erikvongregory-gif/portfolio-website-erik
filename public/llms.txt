@@ -1,10 +1,10 @@
-# EvgLab
+# EvGlab
 > Webdesign und Webentwicklung aus Landsberg am Lech. Individuelle Websites und Landingpages mit Charakter, die Anfragen bringen.
 
-EvgLab ist das Studio von Erik Freiherr von Gregory. Fokus: Webdesign, Webentwicklung und Landingpages für Unternehmen in Landsberg am Lech, Bayern und darüber hinaus – ohne Template-Look, mit klarem Fokus auf Anfragen.
+EvGlab ist das Studio von Erik Freiherr von Gregory. Fokus: Webdesign, Webentwicklung und Landingpages für Unternehmen in Landsberg am Lech, Bayern und darüber hinaus – ohne Template-Look, mit klarem Fokus auf Anfragen.
 
 ## Kernfakten
-- Name: EvgLab / Erik EvgLab
+- Name: EvGlab / Erik EvGlab
 - Person: Erik Freiherr von Gregory
 - Standort: Hauptstraße 18, 86925 Fuchstal (bei Landsberg am Lech), Bayern, Deutschland
 - E-Mail: info@evglab.com
@@ -26,7 +26,7 @@ Unternehmen und Selbstständige, die einen Auftritt mit Persönlichkeit wollen �
 ## Wichtige Seiten
 - [Startseite](https://evglab.com/): Überblick, Projekte, Leistungen, Kontakt
 - [Webdesign Landsberg am Lech](https://evglab.com/webdesign-landsberg): lokale Leistungsseite mit FAQ und Preisen
-- [Über mich](https://evglab.com/ueber-uns): Person hinter EvgLab
+- [Über mich](https://evglab.com/ueber-uns): Person hinter EvGlab
 - [Impressum](https://evglab.com/impressum): Anbieterkennzeichnung
 - [Datenschutz](https://evglab.com/datenschutz): Datenschutzhinweise
 

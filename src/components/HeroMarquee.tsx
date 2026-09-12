@@ -30,8 +30,8 @@ const projects: CardContent[] = [
 
 function marqueeAlt(card: CardContent): string {
   if (card.comingSoon) return "Projekt – bald verfügbar";
-  if (card.obscured) return "Website-Entwurf für einen Kunden von EvgLab";
-  return `${card.title} – Website-Projekt von EvgLab`;
+  if (card.obscured) return "Website-Entwurf für einen Kunden von EvGlab";
+  return `${card.title} – Website-Projekt von EvGlab`;
 }
 
 /** Mirrors `.card { width: 107vw }`. Must stay a static string (no window/media JS) or SSR/client hydrate will diverge. */

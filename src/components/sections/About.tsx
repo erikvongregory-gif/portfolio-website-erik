@@ -23,7 +23,7 @@ export function About() {
         <Reveal>
         <Column flex={1} gap="24">
           <Tag size="s" variant="neutral">
-            Warum EvgLab
+            Warum EvGlab
           </Tag>
           <Heading
             as="h2"
@@ -38,7 +38,7 @@ export function About() {
             </Text>
           </Heading>
           <Text variant="body-default-l" onBackground="neutral-weak">
-            Hinter EvgLab steckt eine Person: ich, Erik. Du sprichst direkt mit mir, von der ersten
+            Hinter EvGlab steckt eine Person: ich, Erik. Du sprichst direkt mit mir, von der ersten
             Idee bis nach dem Launch – aus Landsberg am Lech, für Kunden in Bayern und
             deutschlandweit. Ich kenne jedes Detail deines Projekts und bin dafür verantwortlich.
           </Text>

@@ -1,6 +1,6 @@
 "use client";
 
-import type { MouseEventHandler } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 import classNames from "classnames";
 import styles from "./ShiftCta.module.scss";
 
@@ -8,15 +8,38 @@ type ShiftCtaProps = {
   children: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   fillWidth?: boolean;
+  /** Compact header size (same motion, smaller chrome). */
+  compact?: boolean;
+  /** Flat single fill instead of the hero gradient. */
+  tone?: "gradient" | "solid";
+  /** Optional mark after the label (e.g. brand icon). Stays outside the text swap. */
+  suffix?: ReactNode;
   className?: string;
+  "aria-label"?: string;
 };
 
-export function ShiftCta({ children, onClick, fillWidth, className }: ShiftCtaProps) {
+export function ShiftCta({
+  children,
+  onClick,
+  fillWidth,
+  compact = false,
+  tone = "gradient",
+  suffix,
+  className,
+  "aria-label": ariaLabel,
+}: ShiftCtaProps) {
   return (
     <button
       type="button"
-      className={classNames(styles.root, fillWidth && styles.fill, className)}
+      className={classNames(
+        styles.root,
+        fillWidth && styles.fill,
+        compact && styles.compact,
+        tone === "solid" && styles.solid,
+        className,
+      )}
       data-open-contact=""
+      aria-label={ariaLabel}
       onClick={onClick}
     >
       <span className={styles.bg} aria-hidden="true" />
@@ -41,6 +64,11 @@ export function ShiftCta({ children, onClick, fillWidth, className }: ShiftCtaPr
             {children}
           </span>
         </span>
+        {suffix ? (
+          <span className={styles.suffix} aria-hidden>
+            {suffix}
+          </span>
+        ) : null}
       </span>
     </button>
   );

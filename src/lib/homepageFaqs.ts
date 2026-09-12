@@ -10,7 +10,7 @@ export const homepageFaqs: FaqItem[] = [
       "Du bekommst vor der Beauftragung einen echten Design-Entwurf für deine Website – kein Mockup von der Stange. So siehst du, wie das Ergebnis aussehen kann, bevor du dich entscheidest.",
   },
   {
-    question: "Was kostet eine Website bei EvgLab?",
+    question: "Was kostet eine Website bei EvGlab?",
     answer:
       "Richtpreise: komplette Website ab 2.500 €, Landingpage ab 1.500 €, Betreuung ab 99 € monatlich. Den genauen Festpreis klären wir im Erstgespräch – transparent und schriftlich.",
   },

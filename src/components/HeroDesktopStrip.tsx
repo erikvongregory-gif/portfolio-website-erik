@@ -62,8 +62,8 @@ function StripCard({ card }: { card: CardContent }) {
         src={card.image}
         alt={
           card.obscured
-            ? "Website-Entwurf für einen Kunden von EvgLab"
-            : `${card.title} – Website-Projekt von EvgLab`
+            ? "Website-Entwurf für einen Kunden von EvGlab"
+            : `${card.title} – Website-Projekt von EvGlab`
         }
         fill
         sizes={DESKTOP_IMAGE_SIZES}

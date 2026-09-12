@@ -14,6 +14,10 @@ export const WHATSAPP_PARTNER_URL =
   "https://wa.me/4915565602176?text=" +
   encodeURIComponent("Hallo Erik, ich habe jemanden, der eine Website braucht.");
 
+/** LinkedIn profile. */
+export const LINKEDIN_URL =
+  "https://www.linkedin.com/in/erik-freiherr-von-gregory-22852b329";
+
 /** Compact social proof used next to primary CTAs. */
 export const CTA_PROOF = {
   quote: "Innerhalb von nur drei Tagen waren wir mit einer komplett neuen Website online.",

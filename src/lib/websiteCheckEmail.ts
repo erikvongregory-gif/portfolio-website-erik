@@ -78,7 +78,7 @@ Bis gleich
 Erik
 
 —
-Erik von Gregory · EvgLab
+Erik von Gregory · EvGlab
 Websites mit Charakter aus Landsberg am Lech
 ${CONTACT_EMAIL}
 ${CONTACT_PHONE_DISPLAY}
@@ -119,7 +119,7 @@ ${CONTACT_PHONE_DISPLAY}
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:540px;">
           <tr>
             <td align="center" style="padding-bottom:24px;">
-              <img src="${logoUrl}" alt="EvgLab" width="120" height="auto" style="display:block;max-width:120px;height:auto;border:0;" />
+              <img src="${logoUrl}" alt="EvGlab" width="120" height="auto" style="display:block;max-width:120px;height:auto;border:0;" />
             </td>
           </tr>
           <tr>
@@ -193,7 +193,7 @@ ${CONTACT_PHONE_DISPLAY}
                       <strong>Erik</strong>
                     </div>
                     <div style="color:#525252;font-size:12px;line-height:1.5;padding-top:10px;">
-                      Erik von Gregory · EvgLab<br />
+                      Erik von Gregory · EvGlab<br />
                       Websites mit Charakter aus Landsberg am Lech<br />
                       <a href="mailto:${CONTACT_EMAIL}" style="color:#737373;text-decoration:none;">${CONTACT_EMAIL}</a>
                     </div>

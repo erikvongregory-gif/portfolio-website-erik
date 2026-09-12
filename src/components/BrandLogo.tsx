@@ -11,7 +11,7 @@ interface BrandMarkProps extends Omit<RowProps, "size"> {
 }
 
 /**
- * The EvgLab mark: an "E" monogram built from three stacked layout blocks,
+ * The EvGlab mark: an "E" monogram built from three stacked layout blocks,
  * representing assembled website sections crafted in the "lab".
  */
 export function BrandMark({ size = 26, radius = "m", ...rest }: BrandMarkProps) {
@@ -57,7 +57,7 @@ interface BrandLogoProps extends RowProps {
 export function BrandLogo({
   markSize = 26,
   iconOnly = false,
-  wordmark = "Erik EvgLab",
+  wordmark = "Erik EvGlab",
   ...rest
 }: BrandLogoProps) {
   return (

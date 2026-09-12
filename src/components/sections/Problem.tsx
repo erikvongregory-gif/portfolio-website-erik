@@ -94,7 +94,7 @@ function FlipCard({
       className={classNames(styles.trigger, reduced && styles.static)}
       style={{ "--i": delay } as CSSProperties}
       aria-pressed={flipped}
-      aria-label={`Heute: ${pair.today}. Mit EvgLab: ${pair.next}`}
+      aria-label={`Heute: ${pair.today}. Mit EvGlab: ${pair.next}`}
       onClick={onToggle}
       onMouseEnter={() => onPause(true)}
       onMouseLeave={() => onPause(false)}
@@ -103,7 +103,7 @@ function FlipCard({
     >
       <Column className={styles.sizer} aria-hidden="true">
         <Face kicker="Heute" title={pair.today} body={pair.todayBody} tone="today" />
-        <Face kicker="Mit EvgLab" title={pair.next} body={pair.nextBody} tone="next" />
+        <Face kicker="Mit EvGlab" title={pair.next} body={pair.nextBody} tone="next" />
       </Column>
       <Column className={styles.lift} aria-hidden="true">
         <Column className={classNames(styles.card, flipped && styles.flipped)}>
@@ -111,7 +111,7 @@ function FlipCard({
             <Face kicker="Heute" title={pair.today} body={pair.todayBody} tone="today" />
           </Column>
           <Column className={`${styles.face} ${styles.back}`}>
-            <Face kicker="Mit EvgLab" title={pair.next} body={pair.nextBody} tone="next" />
+            <Face kicker="Mit EvGlab" title={pair.next} body={pair.nextBody} tone="next" />
           </Column>
         </Column>
       </Column>

@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { SITE_HOST } from "@/lib/config";
 
-export const alt = "Partnerprogramm EvgLab – 30 % Provision bei Auftrag.";
+export const alt = "Partnerprogramm EvGlab – 30 % Provision bei Auftrag.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -103,7 +103,7 @@ export default async function Image() {
                 </div>
               </div>
               <div style={{ display: "flex", fontSize: 30, fontWeight: 500, letterSpacing: "-0.03em" }}>
-                EvgLab
+                EvGlab
               </div>
             </div>
 

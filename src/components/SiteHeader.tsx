@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
-  Button,
   Column,
   Flex,
   Icon,
@@ -15,6 +14,7 @@ import {
 import classNames from "classnames";
 import styles from "./SiteHeader.module.scss";
 import { ContactDialog } from "./ContactDialog";
+import { ShiftCta } from "./ShiftCta";
 import { ThemeToggle } from "./ThemeToggle";
 import { BrandMark } from "@/components/BrandLogo";
 import { getScrollY, subscribeScroll } from "@/components/motion/SmoothScroll";
@@ -29,7 +29,7 @@ const navLinks = [
 
 function Logo({ size = 44 }: { size?: number }) {
   return (
-    <SmartLink href="/" unstyled aria-label="Erik EvgLab – Startseite">
+    <SmartLink href="/" unstyled aria-label="Erik EvGlab – Startseite">
       <BrandMark size={size} />
     </SmartLink>
   );
@@ -45,6 +45,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const hideHeader = pathname === "/festpreis" || pathname === "/partner";
   const [menu, setMenu] = useState<MenuState>("closed");
+  const [menuFunnelOpen, setMenuFunnelOpen] = useState(false);
   const [scrolledAway, setScrolledAway] = useState(false);
   const [solid, setSolid] = useState(false);
   const lastY = useRef(0);
@@ -197,7 +198,15 @@ export function SiteHeader() {
 
           <Row className={styles.desktopActions} vertical="center" gap="12">
             <ThemeToggle className={styles.iconLg} />
-            {!menuVisible && <ContactDialog label="Kostenlos anfragen" size="s" />}
+            {!menuVisible && (
+              <ContactDialog
+                label="Kostenloser Entwurf"
+                funnel
+                shift
+                shiftCompact
+                shiftTone="solid"
+              />
+            )}
             {menuVisible ? (
               <IconButton
                 icon="close"
@@ -309,17 +318,16 @@ export function SiteHeader() {
             </Column>
 
             <Column className={styles.footer} fillWidth gap="16" paddingX="8" paddingBottom="8">
-              <Button
-                href="/#kontakt"
-                variant="primary"
-                size="l"
+              <ShiftCta
                 fillWidth
-                arrowIcon
-                onClick={closeMenu}
-                onClickCapture={closeMenu}
+                tone="solid"
+                onClick={() => {
+                  closeMenu();
+                  setMenuFunnelOpen(true);
+                }}
               >
-                Kostenloses Erstgespräch
-              </Button>
+                Kostenloser Entwurf
+              </ShiftCta>
               <Text variant="label-default-s" onBackground="neutral-weak" align="center">
                 Antwort innerhalb 24h
               </Text>
@@ -327,6 +335,14 @@ export function SiteHeader() {
           </Column>
         </div>
       )}
+
+      <ContactDialog
+        dialogOnly
+        funnel
+        open={menuFunnelOpen}
+        onOpenChange={setMenuFunnelOpen}
+        idPrefix="menu-"
+      />
     </>
   );
 }

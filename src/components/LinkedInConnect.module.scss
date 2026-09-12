@@ -1,0 +1,75 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.layerVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--page-background) 55%, transparent);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  max-width: min(26rem, calc(100vw - 2.5rem));
+  transform: translateY(1rem) scale(0.96);
+  opacity: 0;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease;
+}
+
+.layerVisible .card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.cta {
+  white-space: nowrap;
+}
+
+.close {
+  position: absolute;
+  top: -0.55rem;
+  right: -0.55rem;
+  z-index: 1;
+}
+
+@media (max-width: 480px) {
+  .cta {
+    font-size: 0.84rem;
+    padding-inline: 1.15rem;
+    min-height: 3.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer,
+  .card {
+    transition: none;
+  }
+
+  .card {
+    transform: none;
+  }
+}

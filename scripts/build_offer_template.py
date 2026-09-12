@@ -167,9 +167,9 @@ def spacer(container, pts=12):
 doc = Document()
 
 # Core properties
-doc.core_properties.title = "Angebot – Erik EvgLab"
+doc.core_properties.title = "Angebot – Erik EvGlab"
 doc.core_properties.author = "Erik von Gregory"
-doc.core_properties.company = "Erik EvgLab"
+doc.core_properties.company = "Erik EvGlab"
 
 # Normal style
 normal = doc.styles['Normal']
@@ -211,7 +211,7 @@ def build_footer(sec):
     p2 = footer.add_paragraph()
     p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p2.paragraph_format.space_after = Pt(2)
-    set_run(p2.add_run("Erik EvgLab  ·  Hauptstraße 18, 86925 Fuchstal  ·  info@evglab.com  ·  +49 173 170 6012  ·  evglab.com"),
+    set_run(p2.add_run("Erik EvGlab  ·  Hauptstraße 18, 86925 Fuchstal  ·  info@evglab.com  ·  +49 173 170 6012  ·  evglab.com"),
             size=8, color=SECONDARY)
     p3 = footer.add_paragraph()
     p3.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -242,7 +242,7 @@ cell_text(badge, "E", size=13, color=WHITE, bold=True, align=WD_ALIGN_PARAGRAPH.
 nm = head.cell(0, 1)
 nm.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
 set_cell_margins(nm, top=60, bottom=60, left=160, right=80)
-cell_text(nm, "Erik EvgLab", size=13, bold=True, valign=WD_ALIGN_VERTICAL.CENTER)
+cell_text(nm, "Erik EvGlab", size=13, bold=True, valign=WD_ALIGN_VERTICAL.CENTER)
 
 right = head.cell(0, 2)
 right.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
@@ -304,7 +304,7 @@ c_from = party.cell(0, 1)
 set_cell_margins(c_from, top=140, bottom=140, left=140, right=140)
 cell_borders(c_from, top=(LINE, 8), bottom=(LINE, 8), left=(LINE, 8), right=(LINE, 8))
 cell_text(c_from, "ANBIETER", size=8, color=FAINT, caps=True, spacing=60, space_after=6)
-for line, b in [("Erik von Gregory · EvgLab", True), ("Hauptstraße 18", False),
+for line, b in [("Erik von Gregory · EvGlab", True), ("Hauptstraße 18", False),
                 ("86925 Fuchstal", False), ("info@evglab.com", False),
                 ("+49 173 170 6012", False)]:
     p = c_from.add_paragraph(); p.paragraph_format.space_after = Pt(2); p.paragraph_format.line_spacing = 1.3
@@ -532,7 +532,7 @@ remove_table_borders(sign)
 sign.columns[0].width = CONTENT_W // 2
 sign.columns[1].width = CONTENT_W // 2
 
-for col, label in [(0, "Auftraggeber:in"), (1, "Erik von Gregory · EvgLab")]:
+for col, label in [(0, "Auftraggeber:in"), (1, "Erik von Gregory · EvGlab")]:
     line_cell = sign.cell(0, col)
     set_cell_margins(line_cell, top=200, bottom=20, left=0, right=200)
     cell_borders(line_cell, bottom=(DARK_HEX, 8))
@@ -559,6 +559,6 @@ set_run(p.add_run("info@evglab.com   ·   +49 173 170 6012   ·   evglab.com"),
 
 
 # ---------------------------------------------------------------- Save --------
-out = "Angebotsvorlage_EvgLab.docx"
+out = "Angebotsvorlage_EvGlab.docx"
 doc.save(out)
 print("OK ->", out)

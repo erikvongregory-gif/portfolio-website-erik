@@ -1,4 +1,4 @@
-# Portfolio Website Erik EvgLab
+# Portfolio Website Erik EvGlab
 
 Eigene Website auf Basis von Next.js und [Once UI](https://once-ui.com). Von Grund auf neu aufgebaut.
 

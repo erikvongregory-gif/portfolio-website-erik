@@ -110,7 +110,7 @@ export function Faq({
               <span className={styles.ctaImage}>
                 <Image
                   src="/images/about/erik-faq.png"
-                  alt="Erik von Gregory, Gründer von EvgLab"
+                  alt="Erik von Gregory, Gründer von EvGlab"
                   width={1024}
                   height={1024}
                   quality={100}

@@ -1,7 +1,7 @@
 # Installiert Geist als Desktop-Schrift pro Benutzer (ohne Admin-Rechte)
 Add-Type -AssemblyName System.Drawing
 
-$src = "C:\Users\erikv\Documents\GitHub\Portfolio Website Erik EvgLab\src\app\og-assets"
+$src = "C:\Users\erikv\Documents\GitHub\Portfolio Website Erik EvGlab\src\app\og-assets"
 $files = @("Geist-Regular.ttf", "Geist-Bold.ttf")
 
 $fontDir = Join-Path $env:LOCALAPPDATA "Microsoft\Windows\Fonts"

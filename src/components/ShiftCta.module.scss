@@ -36,6 +36,66 @@
   width: 100%;
 }
 
+/* Header: same Shift motion, tighter chrome */
+.compact {
+  min-height: 2.45rem;
+  padding: 0.55rem 1.05rem;
+  border-radius: 0.95rem;
+  font-size: 0.8125rem;
+  letter-spacing: -0.015em;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    0 6px 16px -8px rgba(0, 0, 0, 0.4);
+}
+
+.compact .arrowClip {
+  width: 1.35rem;
+  height: 1.35rem;
+  transform: translate(-1.45rem, -50%);
+}
+
+.compact .arrowWell {
+  width: 1.25rem;
+  height: 1.25rem;
+  transform: translate3d(-1.4rem, 0, 0);
+}
+
+.compact .arrowWell svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .compact:hover .content {
+    transform: translate3d(0.85rem, 0, 0);
+  }
+
+  .compact:hover .idle {
+    transform: translate3d(0.9rem, -0.9rem, 0);
+  }
+
+  .compact:hover .swap {
+    transform: translateZ(0);
+  }
+}
+
+/* Flat sky fill — pairs with EvGlab indigo, brings color into the header */
+.solid {
+  --shift-c1: #4aa3f0;
+  --shift-c2: #4aa3f0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 8px 20px -10px color-mix(in srgb, #4aa3f0 55%, transparent);
+}
+
+.solid .bg {
+  animation: none;
+}
+
+.solid:focus-visible {
+  outline-color: #4aa3f0;
+}
+
 .bg {
   position: absolute;
   inset: 0;
@@ -75,6 +135,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.4rem;
   transition: transform 0.52s var(--shift-ease);
 }
 
@@ -137,6 +198,14 @@
   filter: blur(4px);
 }
 
+.suffix {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
+  color: inherit;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .root:hover {
     box-shadow:
@@ -146,15 +215,19 @@
 
   .root:hover .bg {
     animation: none;
+    transition:
+      --shift-ang 1.4s var(--shift-ease),
+      --shift-s1 1.4s var(--shift-ease),
+      --shift-s2 1.4s var(--shift-ease);
+  }
+
+  /* Gradient tone only — don't wash out the solid sky fill */
+  .root:not(.solid):hover .bg {
     --shift-ang: 156deg;
     --shift-s1: 28%;
     --shift-s2: 78%;
     --shift-c1: color-mix(in srgb, var(--brand-solid-strong) 48%, #fff);
     --shift-c2: var(--brand-solid-strong);
-    transition:
-      --shift-ang 1.4s var(--shift-ease),
-      --shift-s1 1.4s var(--shift-ease),
-      --shift-s2 1.4s var(--shift-ease);
   }
 
   .root:hover .bg::after {
@@ -178,6 +251,17 @@
   .root:hover .swap {
     transform: translateZ(0);
     filter: blur(0);
+  }
+
+  .solid:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      0 12px 28px -10px color-mix(in srgb, #4aa3f0 65%, transparent);
+  }
+
+  .solid:hover .bg {
+    --shift-c1: #5bb0f5;
+    --shift-c2: #5bb0f5;
   }
 }
 

@@ -12,6 +12,7 @@ import {
   ConsentGoogleAnalytics,
   ConsentMetaPixel,
   CookieBanner,
+  LinkedInConnect,
   Providers,
   ScrollProgress,
   SiteHeader,
@@ -19,7 +20,7 @@ import {
 } from "@/components";
 import { fonts, style, dataStyle, baseURL, createPageOpenGraph, createPageTwitter } from "@/resources";
 
-const title = "Webdesign Landsberg am Lech · Erik EvgLab";
+const title = "Webdesign Landsberg am Lech · Erik EvGlab";
 const description =
   "Webdesign & Webentwicklung aus Landsberg am Lech. Individuelle Websites und Landingpages mit Charakter, die Anfragen bringen.";
 
@@ -36,13 +37,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseURL),
   title: {
     default: title,
-    template: "%s · Erik EvgLab",
+    template: "%s · Erik EvGlab",
   },
   description,
-  applicationName: "Erik EvgLab",
+  applicationName: "Erik EvGlab",
   authors: [{ name: "Erik von Gregory", url: baseURL }],
   creator: "Erik von Gregory",
-  publisher: "Erik EvgLab",
+  publisher: "Erik EvGlab",
   keywords: [
     "Webdesign",
     "Webentwicklung",
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
     "Freelancer Webentwicklung",
     "Branding",
     "Next.js Entwickler",
-    "Erik EvgLab",
+    "Erik EvGlab",
   ],
   alternates: {
     canonical: "/",
@@ -174,6 +175,7 @@ export default function RootLayout({
             {children}
           </Flex>
           <CookieBanner />
+          <LinkedInConnect />
           <ConsentAnalytics />
           <ConsentGoogleAnalytics />
           <ConsentMetaPixel />

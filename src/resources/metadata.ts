@@ -1,17 +1,17 @@
-export const siteName = "Erik EvgLab";
+export const siteName = "Erik EvGlab";
 
 export const defaultOgImage = {
   url: "/opengraph-image",
   width: 1200,
   height: 630,
-  alt: "Erik EvgLab – Websites mit Charakter, die Kunden bringen.",
+  alt: "Erik EvGlab – Websites mit Charakter, die Kunden bringen.",
 } as const;
 
 export const aboutOgImage = {
   url: "/images/about/erik.png",
   width: 800,
   height: 1000,
-  alt: "Erik von Gregory – Gründer von EvgLab",
+  alt: "Erik von Gregory – Gründer von EvGlab",
 } as const;
 
 export const festpreisOgImage = {
@@ -25,7 +25,7 @@ export const partnerOgImage = {
   url: "/partner/opengraph-image",
   width: 1200,
   height: 630,
-  alt: "Partnerprogramm EvgLab – 30 % Provision bei Auftrag.",
+  alt: "Partnerprogramm EvGlab – 30 % Provision bei Auftrag.",
 } as const;
 
 type PageOgImage =

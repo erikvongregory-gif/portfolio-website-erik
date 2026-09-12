@@ -31,7 +31,7 @@ import styles from "./page.module.scss";
 const PAGE_PATH = "/partner";
 const PAGE_TITLE = "Partnerprogramm – 30 % Provision";
 const PAGE_DESCRIPTION =
-  "Empfiehl EvgLab weiter und verdiene 30 % vom Auftragsvolumen. So verkaufst du Websites, Landingpages und Betreuung – klar, ehrlich, ohne Agentur-Theater.";
+  "Empfiehl EvGlab weiter und verdiene 30 % vom Auftragsvolumen. So verkaufst du Websites, Landingpages und Betreuung – klar, ehrlich, ohne Agentur-Theater.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   keywords: [
     "Partnerprogramm Webdesign",
     "Provision Website Empfehlung",
-    "EvgLab Partner",
+    "EvGlab Partner",
     "Website vermitteln",
   ],
   alternates: { canonical: PAGE_PATH },
@@ -210,7 +210,7 @@ export default function PartnerPage() {
           <Reveal delay={0.06} y={12}>
             <Column className={styles.heroCopy} fillWidth gap="12" horizontal="start">
               <Tag size="s" variant="neutral">
-                EvgLab · Empfehlungsprogramm
+                EvGlab · Empfehlungsprogramm
               </Tag>
               <span className={styles.accentRule} aria-hidden="true" />
               <Heading

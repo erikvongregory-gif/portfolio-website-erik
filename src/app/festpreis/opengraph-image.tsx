@@ -103,7 +103,7 @@ export default async function Image() {
                 </div>
               </div>
               <div style={{ display: "flex", fontSize: 30, fontWeight: 500, letterSpacing: "-0.03em" }}>
-                EvgLab
+                EvGlab
               </div>
             </div>
 
