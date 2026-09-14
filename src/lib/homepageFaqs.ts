@@ -27,7 +27,7 @@ export const homepageFaqs: FaqItem[] = [
   {
     question: "Arbeitest du auch remote oder nur vor Ort?",
     answer:
-      "Beides. Viele Projekte laufen komplett remote. Für Kundinnen und Kunden aus Landsberg am Lech und Umgebung sind persönliche Treffen natürlich auch möglich.",
+      "Beides. Viele Projekte laufen komplett remote. Für Kunden aus Landsberg am Lech und Umgebung sind persönliche Treffen natürlich auch möglich.",
   },
   {
     question: "Was passiert nach dem Go-Live?",

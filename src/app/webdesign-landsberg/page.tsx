@@ -112,7 +112,7 @@ const faqs: { question: string; answer: string }[] = [
   {
     question: "Kann man sich vor Ort in Landsberg treffen?",
     answer:
-      "Gerne. Für Kundinnen und Kunden aus Landsberg am Lech und Umgebung sind persönliche Treffen möglich. Viele Projekte laufen aber auch komplett remote – je nachdem, was für dich praktischer ist.",
+      "Gerne. Für Kunden aus Landsberg am Lech und Umgebung sind persönliche Treffen möglich. Viele Projekte laufen aber auch komplett remote – je nachdem, was für dich praktischer ist.",
   },
   {
     question: "Was kostet eine Website bei dir?",
@@ -444,7 +444,7 @@ export default function WebdesignLandsbergPage() {
 
         <Text variant="body-default-m" onBackground="neutral-weak" style={{ maxWidth: "42rem" }}>
           Rechtlicher Sitz: Fuchstal. Servicegebiet und Fokus: Landsberg am Lech sowie die Region –
-          damit Name, Ort und Angebot für Google und Kundinnen klar zusammenpassen.
+          damit Name, Ort und Angebot für Google und Kunden klar zusammenpassen.
         </Text>
       </Section>
 
