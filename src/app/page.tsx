@@ -15,8 +15,8 @@ import {
   Problem,
   Process,
   Projects,
-  ScrollRevealText,
   Services,
+  Statement,
   SiteFooter,
   Testimonials,
   StickyMobileCta,
@@ -232,17 +232,10 @@ export default function Home() {
       <Problem />
       <Projects />
 
-      <Column
-        as="section"
-        fillWidth
-        horizontal="center"
-        paddingY="104"
-        m={{ paddingY: "64" }}
-      >
-        <Column maxWidth={48} fillWidth horizontal="center" paddingX="l">
-          <ScrollRevealText text="Deine Website ist der erste Eindruck deiner Marke. Ich sorge dafür, dass er auffällt, Vertrauen schafft und Kunden bringt." />
-        </Column>
-      </Column>
+      <Statement
+        text="Deine Website ist der erste Eindruck deiner Marke. Ich sorge dafür, dass er auffällt, Vertrauen schafft und Kunden bringt."
+        highlights={["auffällt", "Vertrauen", "Kunden"]}
+      />
 
       <Investment />
       <Services />

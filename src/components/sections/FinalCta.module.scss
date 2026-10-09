@@ -218,3 +218,24 @@
     pointer-events: auto !important;
   }
 }
+
+// ——— GSAP-Akzente ———
+.sparklePop {
+  display: inline-block;
+}
+
+.ctaBtn {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  border-radius: 1.15rem;
+}
+
+.ctaShine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+  mix-blend-mode: soft-light;
+  transform: translateX(-120%);
+}

@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
-import { Column, Grid, Heading, Text } from "@once-ui-system/core";
-import classNames from "classnames";
+import { useRef } from "react";
+import { Column, Heading, Row, Text } from "@once-ui-system/core";
+import { gsap, useGsapScene } from "@/components/motion/gsap";
 import { Section } from "./Section";
 import styles from "./Problem.module.scss";
 
@@ -33,185 +33,120 @@ const pairs = [
   },
 ];
 
-function Face({
-  kicker,
-  title,
-  body,
-  tone,
-}: {
-  kicker: string;
-  title: string;
-  body: string;
-  tone: "today" | "next";
-}) {
-  return (
-    <Column
-      className={classNames(styles.faceInner, tone === "next" && styles.faceNext)}
-      gap="8"
-      fillWidth
-    >
-      <Text
-        className={styles.kicker}
-        variant="label-default-xs"
-        onBackground={tone === "next" ? "neutral-strong" : "neutral-weak"}
-      >
-        {kicker}
-      </Text>
-      <Text
-        variant="heading-strong-m"
-        onBackground={tone === "next" ? "neutral-strong" : "neutral-medium"}
-      >
-        {title}
-      </Text>
-      <Text
-        variant="body-default-s"
-        onBackground={tone === "next" ? "neutral-medium" : "neutral-weak"}
-      >
-        {body}
-      </Text>
-    </Column>
-  );
-}
-
-function FlipCard({
-  pair,
-  flipped,
-  delay,
-  reduced,
-  onToggle,
-  onPause,
-}: {
-  pair: (typeof pairs)[number];
-  flipped: boolean;
-  delay: number;
-  reduced: boolean;
-  onToggle: () => void;
-  onPause: (paused: boolean) => void;
-}) {
-  return (
-    <button
-      type="button"
-      className={classNames(styles.trigger, reduced && styles.static)}
-      style={{ "--i": delay } as CSSProperties}
-      aria-pressed={flipped}
-      aria-label={`Heute: ${pair.today}. Mit EvGlab: ${pair.next}`}
-      onClick={onToggle}
-      onMouseEnter={() => onPause(true)}
-      onMouseLeave={() => onPause(false)}
-      onFocus={() => onPause(true)}
-      onBlur={() => onPause(false)}
-    >
-      <Column className={styles.sizer} aria-hidden="true">
-        <Face kicker="Heute" title={pair.today} body={pair.todayBody} tone="today" />
-        <Face kicker="Mit EvGlab" title={pair.next} body={pair.nextBody} tone="next" />
-      </Column>
-      <Column className={styles.lift} aria-hidden="true">
-        <Column className={classNames(styles.card, flipped && styles.flipped)}>
-          <Column className={`${styles.face} ${styles.front}`}>
-            <Face kicker="Heute" title={pair.today} body={pair.todayBody} tone="today" />
-          </Column>
-          <Column className={`${styles.face} ${styles.back}`}>
-            <Face kicker="Mit EvGlab" title={pair.next} body={pair.nextBody} tone="next" />
-          </Column>
-        </Column>
-      </Column>
-    </button>
-  );
-}
+const BRAKE_WORD = "bremst";
 
 export function Problem() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const pausedRef = useRef<Set<number>>(new Set());
-  const [inView, setInView] = useState(false);
-  const [reduced, setReduced] = useState(false);
-  const [flipped, setFlipped] = useState(() => pairs.map(() => false));
 
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
+  useGsapScene(rootRef, ({ motion, desktop }, scope) => {
+    const q = gsap.utils.selector(scope);
+    const rows = q("[data-row]");
+    const count = q("[data-count]")[0] as HTMLElement | undefined;
+    const fill = q("[data-fill]");
+    const total = rows.length;
 
-  useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
-    if (reduced) {
-      setInView(true);
-      setFlipped(pairs.map(() => true));
+    const setCount = (resolved: number) => {
+      if (count) count.textContent = `${String(Math.max(1, resolved)).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+    };
+
+    if (!motion) {
+      gsap.set(fill, { scaleX: 1 });
+      setCount(total);
       return;
     }
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting && e.intersectionRatio > 0) {
-            setInView(true);
-            io.disconnect();
-            break;
-          }
-        }
-      },
-      { threshold: [0, 0.12, 0.25], rootMargin: "0px 0px -28% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [reduced]);
 
-  useEffect(() => {
-    if (!inView || reduced) return;
+    scope.classList.add(styles.live);
 
-    const introTimers = pairs.map((_, i) =>
-      window.setTimeout(() => {
-        setFlipped((prev) => prev.map((v, j) => (j === i ? true : v)));
-      }, 720 + i * 220),
-    );
+    // ——— Auftritt: Zeilen steigen, „bremst“ fährt mit Bremsweg ein ———
+    gsap.set(q("[data-line]"), { yPercent: 115 });
+    gsap.set(q("[data-char]"), { x: 140, skewX: -32, opacity: 0 });
+    gsap.set(q("[data-fade]"), { y: 18, opacity: 0, filter: "blur(8px)" });
+    gsap.set(rows, { y: 28, opacity: 0 });
 
-    let last = -1;
-    let loop: number | undefined;
-    const startLoop = window.setTimeout(() => {
-      loop = window.setInterval(() => {
-        setFlipped((prev) => {
-          const open = prev.map((_, i) => i).filter((i) => !pausedRef.current.has(i));
-          if (open.length === 0) return prev;
-          let idx = open[Math.floor(Math.random() * open.length)];
-          if (open.length > 1) {
-            let guard = 0;
-            while (idx === last && guard++ < 8) {
-              idx = open[Math.floor(Math.random() * open.length)];
-            }
-          }
-          last = idx;
-          return prev.map((v, i) => (i === idx ? !v : v));
-        });
-      }, 1800);
-    }, 720 + pairs.length * 220 + 1100);
+    gsap
+      .timeline({ scrollTrigger: { trigger: scope, start: "top 72%", once: true } })
+      .to(q("[data-line]"), { yPercent: 0, duration: 1.05, ease: "expo.out", stagger: 0.14 })
+      .to(
+        q("[data-char]"),
+        { x: 0, skewX: 0, opacity: 1, duration: 1.5, ease: "expo.out", stagger: 0.035 },
+        0.2,
+      )
+      .to(q("[data-fade]"), { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.9, ease: "expo.out", stagger: 0.1 }, 0.35)
+      .to(rows, { y: 0, opacity: 1, duration: 0.8, ease: "expo.out", stagger: 0.08 }, 0.45);
 
-    return () => {
-      introTimers.forEach(clearTimeout);
-      clearTimeout(startLoop);
-      if (loop) clearInterval(loop);
+    // ——— Pro Zeile: durchstreichen, wegkippen, Lösung rollt rein ———
+    const resolveRow = (tl: gsap.core.Timeline, row: Element, at: number) => {
+      const r = gsap.utils.selector(row);
+      tl.fromTo(r("[data-strike]"), { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power2.inOut" }, at)
+        .to(r("[data-today]"), { opacity: 0.35, duration: 0.2, ease: "none" }, at + 0.1)
+        .to(r("[data-today]"), { yPercent: -110, opacity: 0, duration: 0.4, ease: "power3.in" }, at + 0.45)
+        .fromTo(
+          r("[data-next]"),
+          { yPercent: 110, opacity: 0 },
+          { yPercent: 0, opacity: 1, duration: 0.45, ease: "power3.out" },
+          at + 0.65,
+        )
+        .fromTo(r("[data-bar]"), { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "power2.out" }, at + 0.7)
+        .to(r("[data-index]"), { color: "#9aa6ff", duration: 0.2 }, at + 0.7);
     };
-  }, [inView, reduced]);
 
-  const toggle = useCallback((i: number) => {
-    setFlipped((prev) => prev.map((v, j) => (j === i ? !v : v)));
-  }, []);
+    setCount(1);
 
-  const pause = useCallback((i: number, on: boolean) => {
-    if (on) pausedRef.current.add(i);
-    else pausedRef.current.delete(i);
-  }, []);
+    if (desktop) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: scope,
+          start: () => (scope.offsetHeight < window.innerHeight - 140 ? "center center" : "top 96px"),
+          end: () => `+=${total * window.innerHeight * 0.7}`,
+          pin: true,
+          // Eltern-Container ist flex – dort schaltet ScrollTrigger das Spacing sonst ab.
+          pinSpacing: true,
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => setCount(Math.ceil(self.progress * total)),
+        },
+      });
+      rows.forEach((row, i) => resolveRow(tl, row, i * 1.2));
+      tl.fromTo(fill, { scaleX: 1 / total }, { scaleX: 1, duration: (total - 1) * 1.2 + 1.1, ease: "none" }, 0);
+      tl.to({}, { duration: 0.4 });
+    } else {
+      rows.forEach((row) => {
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: row, start: "top 78%", end: "top 38%", scrub: 0.6 },
+        });
+        resolveRow(tl, row, 0);
+      });
+      gsap.fromTo(
+        fill,
+        { scaleX: 1 / total },
+        {
+          scaleX: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: q("[data-rows]")[0],
+            start: "top 78%",
+            end: "bottom 60%",
+            scrub: true,
+            onUpdate: (self) => setCount(Math.ceil(self.progress * total)),
+          },
+        },
+      );
+    }
+
+    return () => scope.classList.remove(styles.live);
+  });
 
   return (
     <Section id="problem" className={styles.band} paddingY="128" maxWidth={72} gap="48">
-      <Column
+      <Row
         ref={rootRef}
         fillWidth
-        gap="48"
-        className={classNames(styles.scene, inView && styles.in)}
+        gap="64"
+        vertical="center"
+        className={styles.scene}
+        m={{ direction: "column", gap: "40" }}
       >
-        <Column gap="16" maxWidth={48}>
+        <Column flex={5} gap="24" fillWidth className={styles.aside}>
           <Heading
             as="h2"
             className={styles.title}
@@ -220,10 +155,21 @@ export function Problem() {
             style={{ letterSpacing: "-0.04em", lineHeight: 1.05 }}
           >
             <span className={styles.line}>
-              <span className={styles.lineInner}>Wenn deine Website</span>
+              <span className={styles.lineInner} data-line>
+                Wenn deine Website
+              </span>
             </span>
             <span className={styles.line}>
-              <span className={styles.lineInner}>dich bremst</span>
+              <span className={styles.lineInner} data-line>
+                dich{" "}
+                <span className={styles.brake} aria-label={BRAKE_WORD}>
+                  {BRAKE_WORD.split("").map((ch, i) => (
+                    <span key={i} className={styles.char} data-char aria-hidden="true">
+                      {ch}
+                    </span>
+                  ))}
+                </span>
+              </span>
             </span>
           </Heading>
           <Text
@@ -231,25 +177,63 @@ export function Problem() {
             variant="body-default-l"
             onBackground="neutral-medium"
             wrap="balance"
+            data-fade
           >
             Baukasten-Optik, keine Anfragen, niemand verantwortlich. Kommt dir bekannt vor?
           </Text>
+          <Column gap="12" className={styles.meter} data-fade aria-hidden="true">
+            <Row horizontal="between" vertical="center">
+              <Text variant="label-default-xs" className={styles.kicker}>
+                Bremsen lösen
+              </Text>
+              <Text variant="label-default-xs" className={styles.count} data-count>
+                01 / 04
+              </Text>
+            </Row>
+            <span className={styles.track}>
+              <span className={styles.fill} data-fill />
+            </span>
+          </Column>
         </Column>
 
-        <Grid columns="2" m={{ columns: "1" }} gap="8" className={styles.board}>
+        <Column flex={7} fillWidth className={styles.rows} data-rows>
           {pairs.map((pair, i) => (
-            <FlipCard
-              key={pair.today}
-              pair={pair}
-              flipped={flipped[i]}
-              delay={i}
-              reduced={reduced}
-              onToggle={() => toggle(i)}
-              onPause={(on) => pause(i, on)}
-            />
+            <Row key={pair.today} className={styles.row} gap="24" fillWidth data-row>
+              <span className={styles.bar} data-bar aria-hidden="true" />
+              <Text variant="label-default-s" className={styles.index} data-index aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </Text>
+              <span className={styles.stage}>
+                <Column gap="8" className={styles.today} data-today>
+                  <Text variant="label-default-xs" className={styles.kicker}>
+                    Heute
+                  </Text>
+                  <Text variant="heading-strong-m" className={styles.todayTitle}>
+                    <span className={styles.strikeWrap}>
+                      {pair.today}
+                      <span className={styles.strike} data-strike aria-hidden="true" />
+                    </span>
+                  </Text>
+                  <Text variant="body-default-s" className={styles.body}>
+                    {pair.todayBody}
+                  </Text>
+                </Column>
+                <Column gap="8" className={styles.next} data-next>
+                  <Text variant="label-default-xs" className={styles.nextKicker}>
+                    Mit EvGlab
+                  </Text>
+                  <Text variant="heading-strong-m" className={styles.nextTitle}>
+                    {pair.next}
+                  </Text>
+                  <Text variant="body-default-s" className={styles.body}>
+                    {pair.nextBody}
+                  </Text>
+                </Column>
+              </span>
+            </Row>
           ))}
-        </Grid>
-      </Column>
+        </Column>
+      </Row>
     </Section>
   );
 }

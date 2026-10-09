@@ -1,0 +1,30 @@
+.mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+  vertical-align: top;
+}
+
+.word {
+  display: inline-block;
+}
+
+.accent {
+  color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    var(--neutral-on-background-strong) 0%,
+    var(--neutral-on-background-strong) 45%,
+    var(--neutral-on-background-weak) 55%,
+    var(--neutral-on-background-weak) 100%
+  );
+  background-size: 220% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.icon {
+  display: inline-flex;
+}

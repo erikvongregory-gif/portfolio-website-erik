@@ -7,7 +7,7 @@ import styles from "./HeroProof.module.scss";
 // Gemessen mit Lighthouse 13 gegen die Live-Domain – SEO steht auf Mobil und
 // Desktop bei 100. Performance liegt aktuell bei 98 (Desktop) / 72 (Mobil).
 const SCORE = 100;
-const PROJECTS = 6;
+const PROJECTS = 10;
 const RESPONSE_HOURS = 24;
 
 /** Animated Lighthouse ring – the stroke fills in sync with the counter. */
@@ -40,7 +40,7 @@ export function HeroProof() {
 
       <Column gap="2">
         <Text variant="label-strong-s" onBackground="neutral-strong">
-          <Counter value={PROJECTS} />
+          <Counter value={PROJECTS} suffix="+" />
         </Text>
         <Text variant="label-default-xs" onBackground="neutral-weak">
           Projekte im Portfolio

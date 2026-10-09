@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { Column, Grid, Heading, Icon, Row, SmartLink, Tag, Text } from "@once-ui-system/core";
+import { useRef, type CSSProperties, type ReactNode } from "react";
+import { Column, Heading, Icon, Row, SmartLink, Tag, Text } from "@once-ui-system/core";
 import classNames from "classnames";
+import { gsap, useGsapScene } from "@/components/motion/gsap";
 import { ProjectPreview } from "./ProjectPreview";
 import { Section } from "./Section";
 import scene from "./Projects.module.scss";
@@ -55,7 +56,7 @@ const projects: Project[] = [
     status: "live",
   },
   {
-    title: "EvGlab",
+    title: "BrewAI",
     chrome: chromeFromUrl("https://brewai.de"),
     category: "Eigene Marke · KI-Marketing",
     image: "/images/projects/evglab/hero-ki.png",
@@ -118,7 +119,7 @@ function ProjectShot({ project: p, featured }: { project: Project; featured?: bo
           </Text>
         ) : null}
       </div>
-      <div className={classNames(styles.imageWrap, featured && scene.featuredMedia)}>
+      <div className={styles.imageWrap}>
         <ProjectPreview
           image={p.image}
           video={blurImage ? undefined : p.video}
@@ -188,50 +189,6 @@ function ProjectMeta({ project: p, featured }: { project: Project; featured?: bo
   );
 }
 
-function ProjectCard({
-  project: p,
-  featured,
-  className,
-  style,
-}: {
-  project: Project;
-  featured?: boolean;
-  className?: string;
-  style?: CSSProperties;
-}) {
-  if (featured) {
-    return (
-      <Column
-        className={classNames(styles.card, className)}
-        data-project-card
-        fillWidth
-        style={style}
-      >
-        <Row fillWidth gap="40" vertical="center" m={{ direction: "column", gap: "20" }}>
-          <Column flex={7} fillWidth>
-            <ProjectShot project={p} featured />
-          </Column>
-          <Column flex={5} fillWidth paddingY="12" className={scene.featuredMeta}>
-            <ProjectMeta project={p} featured />
-          </Column>
-        </Row>
-      </Column>
-    );
-  }
-  return (
-    <Column
-      className={classNames(styles.card, className)}
-      gap="20"
-      data-project-card
-      fillWidth
-      style={style}
-    >
-      <ProjectShot project={p} />
-      <ProjectMeta project={p} />
-    </Column>
-  );
-}
-
 function ProjectLink({ project: p, children }: { project: Project; children: ReactNode }) {
   if (!p.url) return <Column fillWidth>{children}</Column>;
   return (
@@ -251,42 +208,70 @@ function ProjectLink({ project: p, children }: { project: Project; children: Rea
 
 export function Projects() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
 
-  useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setInView(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting && e.intersectionRatio > 0) {
-            setInView(true);
-            io.disconnect();
-            break;
-          }
-        }
-      },
-      { threshold: [0, 0.12, 0.25], rootMargin: "0px 0px -36% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+  useGsapScene(rootRef, ({ motion }, scope) => {
+    const q = gsap.utils.selector(scope);
+    const lines = q("[data-line]");
+    if (!motion) return;
 
-  const featured = projects.find((p) => p.latest) ?? projects[0];
-  const rest = projects.filter((p) => p !== featured);
+    gsap.set(lines, { yPercent: 115 });
+    gsap.to(lines, {
+      yPercent: 0,
+      duration: 1.05,
+      ease: "expo.out",
+      stagger: 0.14,
+      scrollTrigger: { trigger: scope, start: "top 70%", once: true },
+    });
+
+    const slots = q("[data-slot]") as HTMLElement[];
+    const cards = q("[data-card]") as HTMLElement[];
+    const stack = q("[data-stack]")[0] as HTMLElement;
+    const last = slots.length - 1;
+
+    slots.forEach((slot, i) => {
+      const card = cards[i];
+      const inner = card.querySelector("[data-card-inner]");
+
+      // Karte fährt beim Eintreffen leicht gekippt und skaliert auf den Stapel.
+      gsap.fromTo(
+        card,
+        { y: 60, rotateX: -8, transformPerspective: 1400 },
+        {
+          y: 0,
+          rotateX: 0,
+          ease: "power2.out",
+          scrollTrigger: { trigger: slot, start: "top bottom", end: "top 55%", scrub: 0.6 },
+        },
+      );
+
+      if (i === last) return;
+
+      // Liegt sie im Stapel, schrumpft sie, je mehr Karten darüber kommen.
+      const depth = last - i;
+      gsap.to(card, {
+        scale: 1 - depth * 0.035,
+        ease: "none",
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: slots[i + 1],
+          start: "top bottom",
+          endTrigger: stack,
+          end: "bottom bottom",
+          scrub: true,
+        },
+      });
+      gsap.to(inner, {
+        opacity: 0.35,
+        filter: "blur(2px)",
+        ease: "none",
+        scrollTrigger: { trigger: slots[i + 1], start: "top 85%", end: "top 30%", scrub: true },
+      });
+    });
+  });
 
   return (
     <Section id="projekte" paddingY="128" maxWidth={72} gap="48">
-      <Column
-        ref={rootRef}
-        fillWidth
-        gap="48"
-        className={classNames(scene.scene, inView && scene.in)}
-      >
+      <Column ref={rootRef} fillWidth gap="48" className={scene.scene}>
         <Heading
           as="h2"
           variant="display-strong-m"
@@ -294,29 +279,64 @@ export function Projects() {
           style={{ letterSpacing: "-0.04em", lineHeight: 1.05 }}
         >
           <span className={scene.line}>
-            <span className={scene.lineInner}>Arbeiten,</span>
+            <span className={scene.lineInner} data-line>
+              Arbeiten,
+            </span>
           </span>
           <span className={scene.line}>
-            <span className={scene.lineInner}>die man merkt.</span>
+            <span className={scene.lineInner} data-line>
+              die man merkt.
+            </span>
           </span>
         </Heading>
 
-        <Column fillWidth gap="32">
-          <ProjectLink project={featured}>
-            <ProjectCard project={featured} featured />
-          </ProjectLink>
-
-          <Grid columns="2" m={{ columns: "1" }} gap="32">
-            {rest.map((p, i) => (
-              <ProjectLink key={p.title} project={p}>
-                <ProjectCard
-                  project={p}
-                  className={scene.gridCard}
-                  style={{ "--i": i } as CSSProperties}
-                />
-              </ProjectLink>
-            ))}
-          </Grid>
+        <Column fillWidth className={scene.stack} data-stack>
+          {projects.map((p, i) => (
+            <Column
+              key={p.title}
+              fillWidth
+              className={scene.slot}
+              style={{ "--i": i } as CSSProperties}
+              data-slot
+            >
+              <Column
+                fillWidth
+                className={classNames(scene.card, styles.card)}
+                background="surface"
+                border="neutral-alpha-weak"
+                radius="xl"
+                padding="32"
+                m={{ padding: "16" }}
+                data-card
+                data-project-card
+              >
+                <ProjectLink project={p}>
+                  <Row
+                    fillWidth
+                    gap="40"
+                    vertical="center"
+                    m={{ direction: "column", gap: "20" }}
+                    data-card-inner
+                  >
+                    <Column flex={5} fillWidth gap="24" m={{ gap: "12" }}>
+                      <Row gap="8" vertical="center" paddingX="4">
+                        <Text variant="label-strong-s" onBackground="neutral-strong">
+                          {String(i + 1).padStart(2, "0")}
+                        </Text>
+                        <Text variant="label-default-s" onBackground="neutral-weak">
+                          / {String(projects.length).padStart(2, "0")}
+                        </Text>
+                      </Row>
+                      <ProjectMeta project={p} featured />
+                    </Column>
+                    <Column flex={7} fillWidth>
+                      <ProjectShot project={p} featured />
+                    </Column>
+                  </Row>
+                </ProjectLink>
+              </Column>
+            </Column>
+          ))}
         </Column>
       </Column>
     </Section>

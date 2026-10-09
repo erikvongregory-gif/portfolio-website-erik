@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { Button, Column, Grid, Icon, Line, Row, Tag, Text } from "@once-ui-system/core";
-import { Reveal, SpotlightCard } from "@/components/motion";
+import { SpotlightCard } from "@/components/motion";
 import type { QuoteBase } from "@/lib/calculateQuote";
 import styles from "./Services.module.scss";
 
@@ -97,8 +97,7 @@ export function ServicePackagesGrid({
           const extraFeatures = s.features.slice(COMPACT_FEATURES);
 
           return (
-            <Reveal key={s.title} delay={i * 0.1} scale={0.95}>
-              <Column fillHeight>
+            <Column key={s.title} fillHeight data-pack style={{ zIndex: s.featured ? 2 : 1 }}>
                 <SpotlightCard
                   tilt={false}
                   glow={false}
@@ -120,7 +119,7 @@ export function ServicePackagesGrid({
                     )}
                   </Row>
 
-                  <Text variant="display-strong-xs" onBackground="neutral-strong">
+                  <Text variant="display-strong-xs" onBackground="neutral-strong" data-price>
                     {s.price}
                   </Text>
 
@@ -171,8 +170,7 @@ export function ServicePackagesGrid({
                     </Button>
                   </Row>
                 </SpotlightCard>
-              </Column>
-            </Reveal>
+            </Column>
           );
         })}
       </Grid>

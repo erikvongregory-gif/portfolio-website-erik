@@ -6,6 +6,7 @@ import { Instrument_Serif } from "next/font/google";
 import { Column, Text } from "@once-ui-system/core";
 import { ContactDialog } from "@/components/ContactDialog";
 import { subscribeScroll } from "@/components/motion/SmoothScroll";
+import { gsap, useGsapScene } from "@/components/motion/gsap";
 import { Section } from "./Section";
 import styles from "./FinalCta.module.scss";
 
@@ -105,6 +106,46 @@ export function FinalCta({
   const pointer = useRef({ x: 0, y: 0 });
   const raf = useRef(0);
 
+  // Text-Akzente, sobald die Kopie sichtbar wird (Fächer-Logik oben bleibt unberührt).
+  useGsapScene(stageRef, ({ motion }, stage) => {
+    if (!motion) return;
+    const q = gsap.utils.selector(stage);
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: stage.closest("section") ?? stage,
+          start: "top 30%",
+          toggleActions: "play none none reverse",
+        },
+      })
+      .from(q("[data-cta-line]"), {
+        yPercent: 60,
+        opacity: 0,
+        filter: "blur(10px)",
+        duration: 0.9,
+        ease: "expo.out",
+        stagger: 0.1,
+      })
+      .from(
+        q("[data-sparkle-pop]"),
+        { scale: 0, rotate: -180, duration: 0.9, ease: "back.out(2.2)" },
+        0.15,
+      )
+      .fromTo(
+        q("[data-serif]"),
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: 1.1, ease: "power3.inOut" },
+        0.35,
+      )
+      .from(q("[data-cta-btn]"), { y: 16, opacity: 0, duration: 0.7, ease: "expo.out" }, 0.55)
+      .fromTo(
+        q("[data-cta-shine]"),
+        { xPercent: -120 },
+        { xPercent: 120, duration: 1.1, ease: "power2.inOut" },
+        1.1,
+      );
+  });
+
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
@@ -197,20 +238,31 @@ export function FinalCta({
           </Text>
 
           <h2 className={styles.title}>
-            <span className={styles.line}>
-              Hol dir jetzt <Sparkle className={styles.sparkle} /> deinen
+            <span className={styles.line} data-cta-line>
+              Hol dir jetzt{" "}
+              <span className={styles.sparklePop} data-sparkle-pop>
+                <Sparkle className={styles.sparkle} />
+              </span>{" "}
+              deinen
             </span>
-            <span className={styles.line}>unfairen Website-Vorteil</span>
-            <em className={`${styles.serif} ${instrument.className}`}>*mit EvGlab</em>
+            <span className={styles.line} data-cta-line>
+              unfairen Website-Vorteil
+            </span>
+            <em className={`${styles.serif} ${instrument.className}`} data-serif>
+              *mit EvGlab
+            </em>
           </h2>
 
-          <div className={styles.cta}>
+          <div className={styles.cta} data-cta-btn>
             {href ? (
               <a className={styles.linkFallback} href={href}>
                 {buttonLabel}
               </a>
             ) : (
-              <ContactDialog label={buttonLabel} size="l" funnel />
+              <span className={styles.ctaBtn}>
+                <ContactDialog label={buttonLabel} size="l" funnel />
+                <span className={styles.ctaShine} data-cta-shine aria-hidden="true" />
+              </span>
             )}
           </div>
         </Column>

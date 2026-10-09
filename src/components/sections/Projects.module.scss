@@ -1,5 +1,6 @@
 .scene {
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --stack-top: 6rem;
+  --stack-step: 1rem;
 }
 
 .line {
@@ -11,94 +12,39 @@
 
 .lineInner {
   display: block;
-  transform: translate3d(0, 115%, 0);
 }
 
-.featuredMedia {
-  clip-path: inset(11% 8% round 0.75rem);
-  transform: scale(1.08);
+// ——— Stacking Cards ———
+.stack {
+  gap: 2.5rem;
+  padding-bottom: 4rem;
 }
 
-.featuredMeta {
-  opacity: 0;
-  transform: translate3d(0, 1.2rem, 0);
+.slot {
+  position: sticky !important;
+  top: calc(var(--stack-top) + var(--i, 0) * var(--stack-step));
 }
 
-.gridCard {
-  opacity: 0;
-  transform: translate3d(0, 2rem, 0);
+.card {
+  transform-origin: 50% 0%;
+  will-change: transform;
+  box-shadow: 0 -24px 60px -30px rgba(0, 0, 0, 0.45);
 }
 
-.in .lineInner {
-  animation: lineRise 1.05s var(--ease) both;
-}
-
-.in .line:nth-child(2) .lineInner {
-  animation-delay: 0.14s;
-}
-
-.in .featuredMedia {
-  animation: shotSettle 1.2s var(--ease) 0.22s both;
-}
-
-.in .featuredMeta {
-  animation: enterRise 0.85s var(--ease) 0.38s both;
-}
-
-.in .gridCard {
-  animation: enterUp 0.8s var(--ease) both;
-  animation-delay: calc(0.5s + var(--i, 0) * 0.1s);
-}
-
-@keyframes lineRise {
-  from {
-    transform: translate3d(0, 115%, 0);
+@media (max-width: 1023px) {
+  .scene {
+    --stack-top: 4.75rem;
+    --stack-step: 0.6rem;
   }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
-}
 
-@keyframes shotSettle {
-  to {
-    clip-path: inset(0 round 0);
-    transform: scale(1);
-  }
-}
-
-@keyframes enterRise {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 1.2rem, 0);
-    filter: blur(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-}
-
-@keyframes enterUp {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 2rem, 0);
-  }
-  to {
-    opacity: 1;
-    transform: none;
+  .stack {
+    gap: 1.5rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lineInner,
-  .featuredMedia,
-  .featuredMeta,
-  .gridCard {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-    clip-path: none !important;
+  .slot {
+    position: relative !important;
+    top: auto;
   }
 }

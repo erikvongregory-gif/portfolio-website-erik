@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Column, Grid, Heading, Icon, type IconName, Row, Tag, Text } from "@once-ui-system/core";
@@ -6,13 +7,14 @@ import {
   FinalCta,
   Marquee,
   Parallax,
-  Reveal,
-  ScrollRevealText,
   Section,
   SectionHeader,
   SiteFooter,
   SpotlightCard,
+  Statement,
 } from "@/components";
+import { HeroMotion, ValuesMotion } from "./_components/UeberUnsMotion";
+import styles from "./ueber-uns.module.scss";
 
 import {
   aboutOgImage,
@@ -63,6 +65,23 @@ const values: { icon: IconName; title: string; body: string }[] = [
   },
 ];
 
+function Words({ text, accent }: { text: string; accent?: boolean }) {
+  return text.split(" ").map((w, i, arr) => (
+    <Fragment key={`${w}-${i}`}>
+      <span className={styles.mask}>
+        <span
+          className={accent ? `${styles.word} ${styles.accent}` : styles.word}
+          data-hero-word
+          {...(accent ? { "data-hero-accent": true } : {})}
+        >
+          {w}
+        </span>
+      </span>
+      {i < arr.length - 1 ? " " : ""}
+    </Fragment>
+  ));
+}
+
 export default function UeberUns() {
   return (
     <Column fillWidth horizontal="center">
@@ -74,6 +93,7 @@ export default function UeberUns() {
         paddingTop="160"
         paddingBottom="64"
       >
+        <HeroMotion>
         <Row
           fillWidth
           maxWidth={64}
@@ -82,26 +102,20 @@ export default function UeberUns() {
           m={{ direction: "column-reverse", gap: "48" }}
         >
           <Column flex={6} gap="24" horizontal="start" align="left">
-            <Reveal y={16}>
-              <Tag size="s" variant="neutral">
-                Über mich
-              </Tag>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <Heading
-                as="h1"
-                variant="display-strong-l"
-                onBackground="neutral-strong"
-                wrap="balance"
-                style={{ letterSpacing: "-0.035em", lineHeight: 1.02 }}
-              >
-                Eine Person.{" "}
-                <Text as="span" onBackground="neutral-weak">
-                  Voller Einsatz für deinen Auftritt.
-                </Text>
-              </Heading>
-            </Reveal>
-            <Reveal delay={0.16}>
+            <Tag size="s" variant="neutral" data-hero-fade>
+              Über mich
+            </Tag>
+            <Heading
+              as="h1"
+              variant="display-strong-l"
+              onBackground="neutral-strong"
+              wrap="balance"
+              style={{ letterSpacing: "-0.035em", lineHeight: 1.02 }}
+            >
+              <Words text="Eine Person." />{" "}
+              <Words text="Voller Einsatz für deinen Auftritt." accent />
+            </Heading>
+            <Column data-hero-fade>
               <Text
                 variant="body-default-xl"
                 onBackground="neutral-weak"
@@ -112,12 +126,12 @@ export default function UeberUns() {
                 auffallen und Anfragen bringen – direkt, ehrlich und ohne Umwege, aus Landsberg am
                 Lech.
               </Text>
-            </Reveal>
+            </Column>
           </Column>
 
           <Column flex={5} fillWidth horizontal="center" gap="12" style={{ maxWidth: "26rem" }}>
-            <Reveal delay={0.12}>
               <Column
+                data-portrait
                 fillWidth
                 radius="l"
                 border="neutral-alpha-medium"
@@ -133,6 +147,7 @@ export default function UeberUns() {
                   speed={0.05}
                   style={{ position: "absolute", top: "-10%", left: 0, width: "100%", height: "120%" }}
                 >
+                  <span data-portrait-img style={{ position: "absolute", inset: 0, display: "block" }}>
                   <Image
                     src="/images/about/erik.png"
                     alt="Porträt von Erik von Gregory, Gründer von EvGlab"
@@ -144,16 +159,15 @@ export default function UeberUns() {
                       objectPosition: "center 28%",
                     }}
                   />
+                  </span>
                 </Parallax>
               </Column>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <Text variant="label-default-s" onBackground="neutral-weak" align="center">
-                Erik · Gründer von EvGlab · Landsberg am Lech
-              </Text>
-            </Reveal>
+            <Text variant="label-default-s" onBackground="neutral-weak" align="center" data-hero-fade>
+              Erik · Gründer von EvGlab · Landsberg am Lech
+            </Text>
           </Column>
         </Row>
+        </HeroMotion>
       </Column>
 
       <Section id="werte">
@@ -170,10 +184,10 @@ export default function UeberUns() {
           description="Vier Prinzipien, nach denen ich arbeite – bei jedem Projekt."
         />
 
+        <ValuesMotion>
         <Grid columns="2" m={{ columns: "1" }} gap="16">
-          {values.map((v, i) => (
-            <Reveal key={v.title} delay={i * 0.08}>
-              <Column fillHeight>
+          {values.map((v) => (
+              <Column key={v.title} fillHeight data-value>
                 <SpotlightCard
                   background="surface"
                   border="neutral-alpha-weak"
@@ -182,7 +196,9 @@ export default function UeberUns() {
                   gap="16"
                   fillHeight
                 >
-                  <Icon name={v.icon} size="m" onBackground="neutral-strong" />
+                  <span className={styles.icon} data-value-icon>
+                    <Icon name={v.icon} size="m" onBackground="neutral-strong" />
+                  </span>
                   <Text variant="heading-strong-s" onBackground="neutral-strong">
                     {v.title}
                   </Text>
@@ -191,17 +207,19 @@ export default function UeberUns() {
                   </Text>
                 </SpotlightCard>
               </Column>
-            </Reveal>
           ))}
         </Grid>
+        </ValuesMotion>
       </Section>
 
-      <Column as="section" fillWidth horizontal="center" paddingY="160" gap="64">
+      <Column as="section" fillWidth horizontal="center" paddingTop="160">
         <Marquee />
-        <Column maxWidth={48} fillWidth horizontal="center" paddingX="l">
-          <ScrollRevealText text="Hinter jedem Projekt steckt echte Handarbeit – kein Template, keine Warteschleife, nur ich und dein Auftritt." />
-        </Column>
       </Column>
+      <Statement
+        text="Hinter jedem Projekt steckt echte Handarbeit – kein Template, keine Warteschleife, nur ich und dein Auftritt."
+        highlights={["Handarbeit", "Auftritt"]}
+        proofs={false}
+      />
 
       <About />
       <FinalCta />

@@ -32,6 +32,7 @@ export {
   SectionHeader,
   Problem,
   Projects,
+  Statement,
   Investment,
   Services,
   Process,

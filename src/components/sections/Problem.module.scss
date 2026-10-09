@@ -14,36 +14,6 @@
   color: rgba(255, 255, 255, 0.62) !important;
 }
 
-.band .front,
-.band .back {
-  background: rgba(255, 255, 255, 0.07);
-}
-
-.band .back {
-  box-shadow: inset 0 0 0 2px rgba(91, 108, 255, 0.5);
-}
-
-.band .face {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-.band .faceInner :global(*) {
-  color: rgba(255, 255, 255, 0.82) !important;
-}
-
-.band .kicker {
-  color: rgba(255, 255, 255, 0.42) !important;
-}
-
-.band .faceNext .kicker {
-  color: #9aa6ff !important;
-}
-
-.scene {
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --flip: cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-
 .line {
   display: block;
   overflow: hidden;
@@ -53,211 +23,166 @@
 
 .lineInner {
   display: block;
-  transform: translate3d(0, 115%, 0);
 }
 
-.lead {
-  opacity: 0;
-  transform: translate3d(0, 1rem, 0);
-  filter: blur(8px);
+.brake {
+  display: inline-block;
+  white-space: nowrap;
 }
 
-.board {
-  width: 100%;
-  overflow: visible;
-  grid-template-columns: 1fr 1fr !important;
+.char {
+  display: inline-block;
+  will-change: transform;
 }
 
-.trigger {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  perspective: 1600px;
-  border-radius: 1.25rem;
-  opacity: 0;
-  transform: translate3d(0, 1.1rem, 0);
-  -webkit-tap-highlight-color: transparent;
-}
-
-.trigger:focus-visible {
-  outline: 2px solid var(--brand-solid-strong);
-  outline-offset: 3px;
-}
-
-.sizer {
-  display: grid !important;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.sizer > * {
-  grid-area: 1 / 1;
-}
-
-.lift {
-  position: absolute !important;
-  inset: 0;
-  transition: transform 0.5s var(--ease);
-}
-
-.card {
-  position: absolute !important;
-  inset: 0;
-  transform-style: preserve-3d;
-  transition: transform 0.86s var(--flip);
-  border-radius: 1.25rem;
-}
-
-.flipped {
-  transform: rotateY(180deg);
-}
-
-.face {
-  position: absolute !important;
-  inset: 0;
-  display: flex !important;
-  overflow: hidden;
-  border-radius: 1.25rem;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  box-shadow: inset 0 1px 0 var(--neutral-alpha-medium);
-}
-
-.front {
-  background: var(--neutral-alpha-weak);
-  transform: translateZ(1px);
-}
-
-.back {
-  background: var(--neutral-alpha-weak);
-  transform: rotateY(180deg) translateZ(1px);
-  box-shadow: inset 0 0 0 2px var(--brand-on-background-weak);
-}
-
-.faceInner {
-  padding: 1.35rem 1.4rem 1.45rem;
-  height: 100%;
-}
-
-.faceNext {
-  padding-left: 1.55rem;
+// ——— Fortschritt ———
+.meter {
+  max-width: 22rem;
+  padding-top: 0.5rem;
 }
 
 .kicker {
   letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.42) !important;
 }
 
-.in .lineInner {
-  animation: lineRise 1.05s var(--ease) both;
+.count {
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.82) !important;
 }
 
-.in .line:nth-child(2) .lineInner {
-  animation-delay: 0.14s;
+.track {
+  position: relative;
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
 }
 
-.in .lead {
-  animation: enterRise 0.9s var(--ease) 0.28s both;
+.fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(91, 108, 255, 0.6), #9aa6ff);
+  transform-origin: left center;
+  transform: scaleX(0.25);
 }
 
-.in .trigger {
-  animation: cardIn 0.75s var(--ease) both;
-  animation-delay: calc(0.42s + var(--i, 0) * 0.1s);
+// ——— Zeilen ———
+.rows {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-@keyframes lineRise {
-  from {
-    transform: translate3d(0, 115%, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
+.row {
+  position: relative;
+  padding: 1.6rem 0 1.6rem 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-@keyframes enterRise {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 1rem, 0);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
+.bar {
+  position: absolute;
+  left: 0;
+  top: 1.6rem;
+  bottom: 1.6rem;
+  width: 2px;
+  border-radius: 2px;
+  background: rgba(91, 108, 255, 0.9);
+  transform-origin: top center;
 }
 
-@keyframes cardIn {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 1.1rem, 0);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+.index {
+  flex: 0 0 auto;
+  min-width: 1.75rem;
+  padding-top: 0.15rem;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.32) !important;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .trigger:hover .lift {
-    transform: translateY(-5px);
-  }
+// Ohne Motion: beide Zustände untereinander, Problem durchgestrichen.
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.today :global(*),
+.body {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.today .kicker {
+  color: rgba(255, 255, 255, 0.42) !important;
+}
+
+.todayTitle {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.strikeWrap {
+  position: relative;
+  display: inline;
+}
+
+.strike {
+  position: absolute;
+  left: -0.15em;
+  right: -0.15em;
+  top: 55%;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  transform-origin: left center;
+}
+
+.nextKicker {
+  letter-spacing: 0.04em;
+  color: #9aa6ff !important;
+}
+
+.nextTitle {
+  color: #f4f4f4 !important;
+}
+
+.next .body {
+  color: rgba(255, 255, 255, 0.66) !important;
+}
+
+// Mit Motion: Zustände übereinander, Wechsel per Maske.
+.live .stage {
+  display: grid;
+  overflow: hidden;
+  padding-bottom: 0.1rem;
+}
+
+.live .stage > * {
+  grid-area: 1 / 1;
+}
+
+.live .next {
+  opacity: 0;
+}
+
+.live .strike {
+  transform: scaleX(0);
+}
+
+.live .bar {
+  transform: scaleY(0);
 }
 
 @media (max-width: 1023px) {
-  .board {
-    grid-template-columns: 1fr !important;
+  .row {
+    padding: 1.3rem 0 1.3rem 1rem;
   }
 
-  .faceInner,
-  .faceNext {
-    padding: 1.2rem 1.15rem 1.3rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lineInner,
-  .lead,
-  .board,
-  .trigger {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
+  .bar {
+    top: 1.3rem;
+    bottom: 1.3rem;
   }
 
-  .static .lift,
-  .static .card {
-    position: relative !important;
-    inset: auto;
-    transform: none !important;
-    transition: none;
-  }
-
-  .static .sizer {
-    display: none;
-  }
-
-  .static .face {
-    position: relative !important;
-    transform: none !important;
-    backface-visibility: visible;
-  }
-
-  .static .front {
-    border-radius: 1.25rem 1.25rem 0 0;
-  }
-
-  .static .back {
-    border-radius: 0 0 1.25rem 1.25rem;
-    box-shadow: inset 0 0 0 2px var(--brand-on-background-weak);
+  .meter {
+    max-width: none;
   }
 }

@@ -1,0 +1,150 @@
+.text {
+  margin: 0;
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.75rem, 4.4vw, 3.4rem);
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+  text-align: center;
+  text-wrap: balance;
+  transform-origin: 50% 50%;
+}
+
+.word {
+  display: inline-block;
+  color: var(--neutral-on-background-strong);
+  white-space: pre;
+  will-change: transform, filter, opacity;
+}
+
+.marked {
+  position: relative;
+  display: inline-block;
+}
+
+.mark {
+  position: absolute;
+  left: -0.12em;
+  right: -0.12em;
+  bottom: 0.08em;
+  height: 0.42em;
+  border-radius: 0.12em;
+  background: rgba(91, 108, 255, 0.5);
+  transform-origin: left center;
+  z-index: -1;
+}
+
+// ——— Belege rund um den Satz ———
+.copy {
+  position: relative;
+  z-index: 1;
+}
+
+.floats {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .scene {
+    min-height: 100svh;
+    justify-content: center;
+  }
+
+  .floats {
+    display: block;
+  }
+}
+
+.slotShotA,
+.slotShotB,
+.slotQuote,
+.slotToast {
+  position: absolute;
+  display: block;
+}
+
+.slotShotA {
+  left: max(4rem, calc(50% - 41rem));
+  top: 14%;
+}
+
+.slotShotB {
+  right: max(4rem, calc(50% - 41rem));
+  bottom: 8%;
+}
+
+.slotQuote {
+  right: max(3.5rem, calc(50% - 40rem));
+  top: 12%;
+}
+
+.slotToast {
+  left: max(3.5rem, calc(50% - 40rem));
+  bottom: 12%;
+}
+
+.shot {
+  position: relative;
+  display: block;
+  width: clamp(13rem, 18vw, 19rem);
+  aspect-ratio: 1200 / 840;
+  border-radius: 0.875rem;
+  overflow: hidden;
+  background: var(--neutral-background-medium);
+  box-shadow:
+    0 0 0 1px var(--neutral-alpha-weak),
+    0 30px 60px -28px rgba(0, 0, 0, 0.45);
+
+  img {
+    object-fit: cover;
+    object-position: top center;
+  }
+}
+
+.slotShotB .shot {
+  width: clamp(14rem, 20vw, 20rem);
+}
+
+.card {
+  width: clamp(14rem, 18vw, 18.5rem);
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  background: var(--page-background);
+  box-shadow:
+    0 0 0 1px var(--neutral-alpha-medium),
+    0 24px 50px -24px rgba(0, 0, 0, 0.4);
+}
+
+.stars {
+  color: #f5b700 !important;
+  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+}
+
+.avatar {
+  position: relative;
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  overflow: hidden;
+  flex: 0 0 auto;
+
+  img {
+    object-fit: cover;
+  }
+}
+
+.toastIcon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.65rem;
+  color: #fff;
+  background: rgb(91, 108, 255);
+}

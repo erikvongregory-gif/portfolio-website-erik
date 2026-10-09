@@ -341,3 +341,37 @@
     transform: none;
   }
 }
+
+// ——— GSAP-Ebene ———
+.titleMask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+  margin-right: 0.25em;
+  vertical-align: top;
+}
+
+.titleWord {
+  display: inline-block;
+}
+
+.ctaBtnWrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.15rem;
+}
+
+.ctaShine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 70%
+  );
+  mix-blend-mode: soft-light;
+  transform: translateX(-120%);
+}

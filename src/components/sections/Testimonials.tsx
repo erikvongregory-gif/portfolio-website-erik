@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Column, Heading, Icon, Row, SmartLink, Text } from "@once-ui-system/core";
 import classNames from "classnames";
 import Image from "next/image";
+import { gsap, useGsapScene } from "@/components/motion/gsap";
 import { Section } from "./Section";
 import styles from "./Testimonials.module.scss";
 
@@ -76,6 +77,71 @@ export function Testimonials() {
     return () => scene.disconnect();
   }, []);
 
+  useGsapScene(rootRef, ({ motion, desktop }, scope) => {
+    if (!motion) return;
+    const q = gsap.utils.selector(scope);
+
+    // Zitat liest sich Wort für Wort mit.
+    gsap.fromTo(
+      q("[data-qword]"),
+      { opacity: 0.22 },
+      {
+        opacity: 1,
+        ease: "none",
+        stagger: 0.1,
+        scrollTrigger: { trigger: q("[data-quote]")[0], start: "top 75%", end: "bottom 40%", scrub: 0.6 },
+      },
+    );
+
+    // Großes Anführungszeichen wandert und dreht leicht.
+    gsap.fromTo(
+      q("[data-qmark]"),
+      { yPercent: 30, rotate: -12, opacity: 0 },
+      {
+        yPercent: -20,
+        rotate: 4,
+        opacity: 1,
+        ease: "none",
+        scrollTrigger: { trigger: scope, start: "top 80%", end: "bottom 30%", scrub: true },
+      },
+    );
+
+    // Sterne ploppen nacheinander auf.
+    gsap.from(q("[data-star]"), {
+      scale: 0,
+      rotate: -90,
+      opacity: 0,
+      duration: 0.5,
+      ease: "back.out(3)",
+      stagger: 0.08,
+      scrollTrigger: { trigger: q("[data-stars]")[0], start: "top 80%", once: true },
+    });
+
+    // Screenshot-Parallaxe.
+    gsap.fromTo(
+      q("[data-parallax]"),
+      { yPercent: -6 },
+      {
+        yPercent: 6,
+        ease: "none",
+        scrollTrigger: { trigger: q("[data-parallax]")[0], start: "top bottom", end: "bottom top", scrub: true },
+      },
+    );
+
+    // Weitere Stimmen gleiten von den Seiten ein.
+    if (desktop) {
+      gsap.fromTo(
+        q("[data-side]"),
+        { x: (i: number) => (i === 0 ? -60 : 60) },
+        {
+          x: 0,
+          ease: "power2.out",
+          scrollTrigger: { trigger: q("[data-side]")[0], start: "top 95%", end: "top 60%", scrub: 0.6 },
+        },
+      );
+    }
+  });
+
   return (
     <Section id="stimmen" background="surface" paddingY="128" maxWidth={72} gap="48">
       <Column
@@ -106,17 +172,34 @@ export function Testimonials() {
         </Heading>
 
         <Row fillWidth gap="48" vertical="center" m={{ direction: "column", gap: "28" }}>
-          <Column flex={6} gap="20" minWidth={0}>
+          <Column flex={6} gap="20" minWidth={0} className={styles.leadCol}>
+            <span className={styles.qmark} data-qmark aria-hidden="true">
+              “
+            </span>
+            <Row gap="4" className={styles.stars} data-stars aria-label="5 von 5 Sternen">
+              {[0, 1, 2, 3, 4].map((s) => (
+                <span key={s} className={styles.star} data-star aria-hidden="true">
+                  ★
+                </span>
+              ))}
+            </Row>
             <Text className={styles.leadName} variant="display-strong-s" onBackground="neutral-strong">
               <span className={styles.leadNameInner}>{lead.name}</span>
             </Text>
-            <Text as="blockquote" className={styles.quote}>
+            <Text as="blockquote" className={styles.quote} data-quote>
               {lead.quoteLines.map((line, i) => {
                 const last = i === lead.quoteLines.length - 1;
                 const text = `${i === 0 ? "„" : ""}${line}${last ? "“" : ""}`;
                 return (
                   <span key={line} className={styles.qLine} style={{ "--q": i } as CSSProperties}>
-                    <span className={styles.qInner}>{text}</span>
+                    <span className={styles.qInner}>
+                      {text.split(" ").map((w, j, arr) => (
+                        <span key={j} className={styles.qWord} data-qword>
+                          {w}
+                          {j < arr.length - 1 ? " " : ""}
+                        </span>
+                      ))}
+                    </span>
                   </span>
                 );
               })}
@@ -148,13 +231,15 @@ export function Testimonials() {
               aria-label={`${lead.name}: Website live in neuem Tab ansehen`}
             >
               <Column className={styles.shot}>
-                <Image
-                  className={styles.shotImg}
-                  src={lead.image}
-                  alt={`Website von ${lead.name}`}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 520px"
-                />
+                <span className={styles.parallax} data-parallax>
+                  <Image
+                    className={styles.shotImg}
+                    src={lead.image}
+                    alt={`Website von ${lead.name}`}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 520px"
+                  />
+                </span>
               </Column>
               <Row gap="4" vertical="center" paddingTop="12">
                 <Text variant="label-strong-s" onBackground="neutral-strong">
@@ -176,6 +261,7 @@ export function Testimonials() {
               vertical="center"
               className={styles.side}
               style={{ "--i": i } as CSSProperties}
+              data-side
             >
               <Column className={styles.thumb}>
                 <Image
