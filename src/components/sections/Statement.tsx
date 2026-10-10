@@ -129,7 +129,7 @@ export function Statement({ text, highlights = [], proofs = true }: StatementPro
         </span>
         <span className={styles.slotShotB}>
           <span className={styles.shot} data-float="shotB" data-for="0" data-rotate="5" data-drift="-12">
-            <Image src="/images/projects/lunebraeu/hero.webp" alt="" fill sizes="(min-width: 1921px) 16.7vw, 320px" />
+            <Image src="/images/projects/lunebraeu/hero-card.webp" alt="" fill sizes="(min-width: 1921px) 16.7vw, 320px" />
           </span>
         </span>
         <span className={styles.slotQuote}>
@@ -140,7 +140,7 @@ export function Statement({ text, highlights = [], proofs = true }: StatementPro
             </Text>
             <Row gap="8" vertical="center">
               <span className={styles.avatar}>
-                <Image src="/images/projects/da-peppe/hero-live.webp" alt="" fill sizes="(min-width: 1921px) 1.5vw, 28px" />
+                <Image src="/images/projects/da-peppe/hero-card.webp" alt="" fill sizes="(min-width: 1921px) 1.5vw, 28px" />
               </span>
               <Column gap="2">
                 <Text variant="label-strong-s" onBackground="neutral-strong">

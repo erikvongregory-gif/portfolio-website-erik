@@ -16,16 +16,16 @@ type CardContent = {
 
 const projects: CardContent[] = [
   { title: "Salon Liora", image: "/images/projects/salon-liora/hero.png", tag: "Webdesign" },
-  { title: "EvGlab", image: "/images/projects/evglab/hero-ki.webp", tag: "KI · Brand" },
+  { title: "EvGlab", image: "/images/projects/evglab/hero-ki-card.webp", tag: "KI · Brand" },
   {
     title: "Kapitalanlagen Deutschland (Entwurf)",
     image: "/images/projects/kapitalanlagen/hero.png",
     tag: "Entwurf",
     obscured: true,
   },
-  { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero.webp", tag: "Industrie" },
-  { title: "Lünebräu", image: "/images/projects/lunebraeu/hero.webp", tag: "Brand" },
-  { title: "Da Peppe", image: "/images/projects/da-peppe/hero-live.webp", tag: "Gastronomie" },
+  { title: "Ingenieurbüro Jungen", image: "/images/projects/ib-jungen/hero-card.webp", tag: "Industrie" },
+  { title: "Lünebräu", image: "/images/projects/lunebraeu/hero-card.webp", tag: "Brand" },
+  { title: "Da Peppe", image: "/images/projects/da-peppe/hero-card.webp", tag: "Gastronomie" },
 ];
 
 function marqueeAlt(card: CardContent): string {

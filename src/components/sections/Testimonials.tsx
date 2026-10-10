@@ -19,7 +19,7 @@ const lead = {
   tags: ["Gastronomie"],
   result: "3 Tage live",
   source: "Google, 5 von 5",
-  image: "/images/projects/da-peppe/hero-live.webp",
+  image: "/images/projects/da-peppe/hero-card.webp",
   url: "https://da-peppe.com",
 };
 
@@ -28,13 +28,13 @@ const more = [
     name: "Ingenieurbüro Jungen",
     meta: "Industrie, Automation",
     quote: "Direkt und unkompliziert. Das Ergebnis wirkt endlich so professionell wie unsere Arbeit.",
-    image: "/images/projects/ib-jungen/hero.webp",
+    image: "/images/projects/ib-jungen/hero-card.webp",
   },
   {
     name: "Lünebräu",
     meta: "Craft-Bier, Lüneburg",
     quote: "Vom ersten Entwurf an hat man gemerkt, dass Erik unsere Marke verstanden hat.",
-    image: "/images/projects/lunebraeu/hero.webp",
+    image: "/images/projects/lunebraeu/hero-card.webp",
   },
 ];
 
