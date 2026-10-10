@@ -282,7 +282,7 @@ export function FinalCta({
                   src={shot.src}
                   alt={shot.alt}
                   fill
-                  sizes="(max-width: 768px) 50vw, 320px"
+                  sizes="(max-width: 768px) 50vw, (min-width: 1921px) 16.7vw, 320px"
                   className={styles.phoneShot}
                   priority
                   unoptimized

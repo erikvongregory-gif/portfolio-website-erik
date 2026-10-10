@@ -56,7 +56,7 @@
   height: 3.25rem;
   padding: 0 1.25rem;
   border: 1px solid var(--neutral-alpha-medium);
-  border-radius: 999px;
+  border-radius: calc(999 * var(--px));
   background: var(--page-background);
   color: var(--neutral-on-background-strong);
   cursor: pointer;

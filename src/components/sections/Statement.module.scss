@@ -96,7 +96,7 @@
   background: var(--neutral-background-medium);
   box-shadow:
     0 0 0 1px var(--neutral-alpha-weak),
-    0 30px 60px -28px rgba(0, 0, 0, 0.45);
+    0 calc(30 * var(--px)) calc(60 * var(--px)) calc(-28 * var(--px)) rgba(0, 0, 0, 0.45);
 
   img {
     object-fit: cover;
@@ -115,7 +115,7 @@
   background: var(--page-background);
   box-shadow:
     0 0 0 1px var(--neutral-alpha-medium),
-    0 24px 50px -24px rgba(0, 0, 0, 0.4);
+    0 calc(24 * var(--px)) calc(50 * var(--px)) calc(-24 * var(--px)) rgba(0, 0, 0, 0.4);
 }
 
 .stars {

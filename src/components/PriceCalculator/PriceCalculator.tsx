@@ -280,7 +280,7 @@ export function PriceCalculator({
       fillWidth
       gap="24"
       className={classNames(styles.scene, inView && styles.in)}
-      style={{ scrollMarginTop: "96px" }}
+      style={{ scrollMarginTop: "calc(96 * var(--px))" }}
     >
       <Row
         fillWidth

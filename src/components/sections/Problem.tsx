@@ -96,7 +96,11 @@ export function Problem() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: scope,
-          start: () => (scope.offsetHeight < window.innerHeight - 140 ? "center center" : "top 96px"),
+          start: () => {
+            // --px ist 1px bis 1920px Breite und wächst darüber mit (Header wird größer).
+            const px = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--px")) || 1;
+            return scope.offsetHeight < window.innerHeight - 140 * px ? "center center" : `top ${96 * px}px`;
+          },
           end: () => `+=${total * window.innerHeight * 0.7}`,
           pin: true,
           // Eltern-Container ist flex – dort schaltet ScrollTrigger das Spacing sonst ab.

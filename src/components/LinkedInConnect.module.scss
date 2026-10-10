@@ -24,8 +24,8 @@
   margin: 0;
   cursor: pointer;
   background: color-mix(in srgb, var(--page-background) 55%, transparent);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(calc(28 * var(--px)));
+  -webkit-backdrop-filter: blur(calc(28 * var(--px)));
 }
 
 .card {

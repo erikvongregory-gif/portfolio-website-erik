@@ -53,8 +53,8 @@
 
 .choice:hover {
   border-color: var(--neutral-alpha-medium);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px -14px rgba(22, 21, 15, 0.35);
+  transform: translateY(calc(-2 * var(--px)));
+  box-shadow: 0 calc(8 * var(--px)) calc(20 * var(--px)) calc(-14 * var(--px)) rgba(22, 21, 15, 0.35);
 }
 
 .choice:active {
@@ -72,7 +72,7 @@
   place-items: center;
   width: 1.35rem;
   height: 1.35rem;
-  border-radius: 999px;
+  border-radius: calc(999 * var(--px));
   background: var(--brand-alpha-weak, transparent);
   opacity: 0;
   transform: scale(0.6);
@@ -87,8 +87,8 @@
 }
 
 .choice:focus-visible {
-  outline: 2px solid var(--neutral-border-strong);
-  outline-offset: 2px;
+  outline: calc(2 * var(--px)) solid var(--neutral-border-strong);
+  outline-offset: calc(2 * var(--px));
 }
 
 .chip {
@@ -96,7 +96,7 @@
   cursor: pointer;
   padding: 0.55rem 0.95rem;
   min-height: 2.25rem;
-  border-radius: 999px;
+  border-radius: calc(999 * var(--px));
   border: 1px solid var(--neutral-alpha-weak);
   background: transparent;
   transition:
@@ -120,15 +120,15 @@
 }
 
 .chip:focus-visible {
-  outline: 2px solid var(--neutral-border-strong);
-  outline-offset: 2px;
+  outline: calc(2 * var(--px)) solid var(--neutral-border-strong);
+  outline-offset: calc(2 * var(--px));
 }
 
 .progressTrack {
   flex: 1;
   max-width: 8.5rem;
-  height: 4px;
-  border-radius: 999px;
+  height: calc(4 * var(--px));
+  border-radius: calc(999 * var(--px));
   background: var(--neutral-alpha-weak);
   overflow: hidden;
 }
@@ -152,7 +152,7 @@
 @keyframes stepInFwd {
   from {
     opacity: 0;
-    transform: translate3d(14px, 6px, 0);
+    transform: translate3d(calc(14 * var(--px)), calc(6 * var(--px)), 0);
   }
   to {
     opacity: 1;
@@ -163,7 +163,7 @@
 @keyframes stepInBack {
   from {
     opacity: 0;
-    transform: translate3d(-14px, 6px, 0);
+    transform: translate3d(calc(-14 * var(--px)), calc(6 * var(--px)), 0);
   }
   to {
     opacity: 1;
@@ -174,7 +174,7 @@
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(calc(8 * var(--px)));
   }
   to {
     opacity: 1;
@@ -185,13 +185,13 @@
 @keyframes shakeIn {
   0% {
     opacity: 0;
-    transform: translateX(-4px);
+    transform: translateX(calc(-4 * var(--px)));
   }
   40% {
-    transform: translateX(4px);
+    transform: translateX(calc(4 * var(--px)));
   }
   70% {
-    transform: translateX(-2px);
+    transform: translateX(calc(-2 * var(--px)));
   }
   100% {
     opacity: 1;

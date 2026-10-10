@@ -1,8 +1,8 @@
 .dot {
   position: relative;
   flex: 0 0 auto;
-  width: 7px;
-  height: 7px;
+  width: calc(7 * var(--px));
+  height: calc(7 * var(--px));
   border-radius: 50%;
   background: var(--brand-solid-strong, var(--neutral-solid-strong));
 }

@@ -55,9 +55,9 @@
 }
 
 .heroAboutAvatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
+  width: calc(32 * var(--px));
+  height: calc(32 * var(--px));
+  border-radius: calc(999 * var(--px));
   overflow: hidden;
   flex-shrink: 0;
   border: 1px solid var(--neutral-alpha-medium);
@@ -140,7 +140,7 @@
   }
 
   .heroLead {
-    padding-bottom: 32px !important;
+    padding-bottom: calc(32 * var(--px)) !important;
   }
 
   .heroLeadText {
@@ -152,7 +152,7 @@
 
   .heroActions {
     width: 100%;
-    padding-bottom: 8px;
+    padding-bottom: calc(8 * var(--px));
   }
 
   .heroActions [data-open-contact] {

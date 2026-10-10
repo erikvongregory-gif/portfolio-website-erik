@@ -33,7 +33,7 @@
 
 .curveDot {
   fill: #9aa6ff;
-  filter: drop-shadow(0 0 8px rgba(154, 166, 255, 0.9));
+  filter: drop-shadow(0 0 calc(8 * var(--px)) rgba(154, 166, 255, 0.9));
 }
 
 // ——— Titel ———
@@ -59,7 +59,7 @@
   right: -0.06em;
   top: 54%;
   height: 0.07em;
-  min-height: 2px;
+  min-height: calc(2 * var(--px));
   border-radius: 1em;
   background: currentColor;
   transform-origin: left center;

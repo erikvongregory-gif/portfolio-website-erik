@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import styles from "./motion.module.scss";
 
 export function ScrollProgress() {
   const ref = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     let raf = 0;
@@ -30,5 +32,6 @@ export function ScrollProgress() {
     };
   }, []);
 
+  if (pathname === "/neueseite") return null;
   return <div ref={ref} className={styles.progress} aria-hidden="true" />;
 }

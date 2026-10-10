@@ -7,6 +7,7 @@ import {
   HiEnvelope,
   HiCalendarDays,
   HiArrowRight,
+  HiMagnifyingGlass,
   HiOutlineEye,
   HiOutlineEyeSlash,
   HiOutlineDocument,
@@ -42,6 +43,7 @@ import { FaDiscord, FaGithub, FaLinkedin, FaX, FaThreads, FaInstagram, FaXTwitte
 export const iconLibrary: Record<string, IconType> = {
   arrowUpRight: HiArrowUpRight,
   arrowRight: HiArrowRight,
+  search: HiMagnifyingGlass,
   menu: HiBars3,
   close: HiXMark,
   sun: HiSun,

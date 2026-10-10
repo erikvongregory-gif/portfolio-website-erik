@@ -18,7 +18,7 @@
   background: var(--neutral-background-medium);
   box-shadow:
     inset 0 1px 0 var(--evg-card-highlight),
-    0 18px 40px -32px var(--evg-card-shadow-md);
+    0 calc(18 * var(--px)) calc(40 * var(--px)) calc(-32 * var(--px)) var(--evg-card-shadow-md);
   opacity: 0;
   transform: translate3d(0, 1.25rem, 0);
 }
@@ -44,7 +44,7 @@
   background: var(--page-background);
   box-shadow:
     inset 0 1px 0 var(--evg-card-highlight),
-    0 10px 28px -18px var(--evg-card-shadow-md);
+    0 calc(10 * var(--px)) calc(28 * var(--px)) calc(-18 * var(--px)) var(--evg-card-shadow-md);
   transition: transform 0.55s var(--ease);
   pointer-events: none;
 }
@@ -68,8 +68,8 @@
 }
 
 .baseBtn:focus-visible {
-  outline: 2px solid var(--neutral-border-strong);
-  outline-offset: 2px;
+  outline: calc(2 * var(--px)) solid var(--neutral-border-strong);
+  outline-offset: calc(2 * var(--px));
 }
 
 .pages {
@@ -120,8 +120,8 @@
 }
 
 .item:focus-visible {
-  outline: 2px solid var(--neutral-border-strong);
-  outline-offset: 2px;
+  outline: calc(2 * var(--px)) solid var(--neutral-border-strong);
+  outline-offset: calc(2 * var(--px));
 }
 
 .item::before {
@@ -228,8 +228,8 @@
   border-radius: 1.5rem;
   box-shadow:
     inset 0 1px 0 var(--evg-card-highlight),
-    0 2px 1px var(--evg-card-shadow-sm),
-    0 28px 56px -36px var(--evg-card-shadow-lg);
+    0 calc(2 * var(--px)) 1px var(--evg-card-shadow-sm),
+    0 calc(28 * var(--px)) calc(56 * var(--px)) calc(-36 * var(--px)) var(--evg-card-shadow-lg);
   transition: box-shadow 0.5s var(--ease);
 }
 
@@ -271,7 +271,7 @@
 @keyframes priceRise {
   from {
     transform: translate3d(0, 115%, 0);
-    filter: blur(8px);
+    filter: blur(calc(8 * var(--px)));
   }
   to {
     transform: translate3d(0, 0, 0);
@@ -282,7 +282,7 @@
 @keyframes priceTick {
   from {
     transform: translate3d(0, 0.4em, 0);
-    filter: blur(4px);
+    filter: blur(calc(4 * var(--px)));
     opacity: 0.55;
   }
   to {
@@ -321,7 +321,7 @@
     padding: 0.85rem 1rem;
     box-shadow:
       inset 0 1px 0 var(--evg-card-highlight),
-      0 16px 40px -20px var(--evg-card-shadow-lg);
+      0 calc(16 * var(--px)) calc(40 * var(--px)) calc(-20 * var(--px)) var(--evg-card-shadow-lg);
   }
 
   .summaryDocked .price {

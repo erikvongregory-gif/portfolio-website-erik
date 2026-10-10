@@ -170,6 +170,7 @@ export default function Home() {
                     alt="Erik von Gregory, Gründer von EvGlab"
                     width={32}
                     height={32}
+                    sizes="(min-width: 1921px) 1.7vw, 32px"
                   />
                 </span>
                 <Text variant="label-strong-s" onBackground="neutral-strong">

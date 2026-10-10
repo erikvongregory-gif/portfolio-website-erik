@@ -50,7 +50,7 @@ const projects: Project[] = [
     title: "Da Peppe",
     chrome: chromeFromUrl("https://da-peppe.com"),
     category: "Gastronomie · Restaurant",
-    image: "/images/projects/da-peppe/hero-live.png",
+    image: "/images/projects/da-peppe/hero-live.webp",
     body: "Website für eine italienische Osteria & Pizzeria: appetitlich, warm und einladend, mit klarer Speisekarte und Reservierung.",
     url: "https://da-peppe.com",
     status: "live",
@@ -59,8 +59,7 @@ const projects: Project[] = [
     title: "BrewAI",
     chrome: chromeFromUrl("https://brewai.de"),
     category: "Eigene Marke · KI-Marketing",
-    image: "/images/projects/evglab/hero-ki.png",
-    video: "/videos/projects/evglab.mp4",
+    image: "/images/projects/evglab/hero-ki.webp",
     body: "KI-Marketing für Brauereien: Produktfotos, Kampagnenmotive und Social-Content im eigenen Markenstil – ohne Studio.",
     url: "https://brewai.de",
     status: "live",
@@ -78,8 +77,7 @@ const projects: Project[] = [
     title: "Ingenieurbüro Jungen",
     chrome: chromeFromUrl("https://ib-jungen-web.vercel.app"),
     category: "Industrie · Automation",
-    image: "/images/projects/ib-jungen/hero.png",
-    video: "/videos/projects/ib-jungen.mp4",
+    image: "/images/projects/ib-jungen/hero.webp",
     body: "Auftritt für Automation und Retrofit: technisch präzise, klar strukturiert und seriös.",
     url: "https://ib-jungen-web.vercel.app",
     // status: noch offen – bitte bestätigen
@@ -88,8 +86,7 @@ const projects: Project[] = [
     title: "Lünebräu",
     chrome: chromeFromUrl("https://luenebraeu.vercel.app"),
     category: "Craft-Bier · Brauerei",
-    image: "/images/projects/lunebraeu/hero.png",
-    video: "/videos/projects/lunebraeu.mp4",
+    image: "/images/projects/lunebraeu/hero.webp",
     body: "Markenauftritt für eine Craft-Bier-Brauerei aus Lüneburg: kantig, handwerklich und mit Haltung – vom Sortiment bis zur Bestellung.",
     url: "https://luenebraeu.vercel.app",
     // status: noch offen – bitte bestätigen
@@ -133,8 +130,8 @@ function ProjectShot({ project: p, featured }: { project: Project; featured?: bo
           blur={blurImage}
           sizes={
             featured
-              ? "(max-width: 1024px) 100vw, 900px"
-              : "(max-width: 1024px) 100vw, 480px"
+              ? "(max-width: 1024px) 100vw, (min-width: 1921px) 46.9vw, 900px"
+              : "(max-width: 1024px) 100vw, (min-width: 1921px) 25vw, 480px"
           }
         />
         {p.comingSoon && (

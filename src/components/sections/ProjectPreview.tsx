@@ -18,7 +18,7 @@ export function ProjectPreview({
   video,
   alt,
   blur,
-  sizes = "(max-width: 1024px) 100vw, 640px",
+  sizes = "(max-width: 1024px) 100vw, (min-width: 1921px) 33.4vw, 640px",
 }: ProjectPreviewProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);

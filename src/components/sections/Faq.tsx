@@ -141,7 +141,7 @@ export function Faq({
                   height={1024}
                   quality={100}
                   unoptimized
-                  sizes="(min-width: 1024px) 12rem, 7.25rem"
+                  sizes="(min-width: 1921px) 10vw, (min-width: 1024px) 12rem, 7.25rem"
                 />
               </span>
               <Column gap="24" fillWidth>

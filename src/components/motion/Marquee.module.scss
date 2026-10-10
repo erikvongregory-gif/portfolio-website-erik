@@ -19,8 +19,8 @@
 .item {
   display: inline-flex;
   align-items: center;
-  gap: 18px;
-  padding-right: 18px;
+  gap: calc(18 * var(--px));
+  padding-right: calc(18 * var(--px));
   font-size: clamp(1.25rem, 2.4vw, 1.9rem);
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -29,8 +29,8 @@
 }
 
 .dot {
-  width: 6px;
-  height: 6px;
+  width: calc(6 * var(--px));
+  height: calc(6 * var(--px));
   border-radius: 50%;
   background: var(--brand-solid-strong);
   flex: 0 0 auto;

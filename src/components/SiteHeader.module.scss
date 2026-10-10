@@ -24,7 +24,7 @@
 .solid .backdrop {
   opacity: 1;
   border-bottom-color: var(--neutral-alpha-weak);
-  box-shadow: 0 10px 28px -22px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 calc(10 * var(--px)) calc(28 * var(--px)) calc(-22 * var(--px)) rgba(0, 0, 0, 0.35);
 }
 
 .solid {
@@ -86,7 +86,7 @@
   left: 0;
   bottom: -0.3rem;
   width: 0;
-  height: 1.5px;
+  height: calc(1.5 * var(--px));
   background: color-mix(in srgb, var(--neutral-on-background-strong) 55%, transparent);
   transition: width 0.35s cubic-bezier(0.76, 0, 0.24, 1);
 }

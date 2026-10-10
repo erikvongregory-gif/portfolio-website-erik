@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { usePathname } from "next/navigation";
 import { Icon, IconButton } from "@once-ui-system/core";
 import classNames from "classnames";
 import { ShiftCta } from "@/components/ShiftCta";
@@ -29,6 +30,7 @@ export function LinkedInConnect() {
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [shown, setShown] = useState(false);
+  const hidden = usePathname() === "/neueseite";
 
   useEffect(() => setMounted(true), []);
 
@@ -109,7 +111,7 @@ export function LinkedInConnect() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, dismiss]);
 
-  if (!mounted || !open) return null;
+  if (hidden || !mounted || !open) return null;
 
   return createPortal(
     <div

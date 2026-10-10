@@ -2,9 +2,9 @@
 
 .badge {
   --duration: 3;
-  --light-width: 80px;
+  --light-width: calc(80 * var(--px));
   --light-color: #fafafa;
-  --border-width: 1.5px;
+  --border-width: calc(1.5 * var(--px));
 
   position: relative;
   z-index: 3;

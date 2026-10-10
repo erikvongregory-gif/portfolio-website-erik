@@ -1,9 +1,9 @@
 /* ---------- Scroll reveal (Blink-style: fires late via IO rootMargin) ---------- */
 .reveal {
   opacity: 0;
-  transform: translate3d(var(--reveal-x, 0px), var(--reveal-y, 28px), 0)
+  transform: translate3d(var(--reveal-x, 0px), var(--reveal-y, calc(28 * var(--px))), 0)
     scale(var(--reveal-scale, 1));
-  filter: blur(6px);
+  filter: blur(calc(6 * var(--px)));
   transition:
     opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
@@ -19,7 +19,7 @@
 
 /* ---------- Spotlight + tilt card ---------- */
 .spotlight {
-  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform: perspective(calc(1000 * var(--px))) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transform-style: preserve-3d;
   transition:
     transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
@@ -34,7 +34,7 @@
   inset: 0;
   border-radius: inherit;
   background: radial-gradient(
-    440px circle at var(--mx, 50%) var(--my, 50%),
+    calc(440 * var(--px)) circle at var(--mx, 50%) var(--my, 50%),
     var(--evg-spotlight-brand),
     var(--evg-spotlight-fade) 35%,
     transparent 60%
@@ -49,7 +49,7 @@
 }
 
 .spotlight:hover {
-  box-shadow: 0 38px 72px -34px var(--evg-spotlight-shadow);
+  box-shadow: 0 calc(38 * var(--px)) calc(72 * var(--px)) calc(-34 * var(--px)) var(--evg-spotlight-shadow);
 }
 
 /* Touch devices have no hover/tilt – give a crisp press feedback instead. */
@@ -61,7 +61,7 @@
       border-color 0.3s ease;
   }
   .spotlight:active {
-    transform: perspective(1000px) scale(0.97);
+    transform: perspective(calc(1000 * var(--px))) scale(0.97);
   }
 }
 
@@ -77,7 +77,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 3px;
+  height: calc(3 * var(--px));
   width: 100%;
   transform-origin: 0 50%;
   transform: scaleX(0);
@@ -100,7 +100,7 @@
   content: "";
   position: absolute;
   border-radius: 50%;
-  filter: blur(70px);
+  filter: blur(calc(70 * var(--px)));
   will-change: transform;
 }
 
@@ -129,7 +129,7 @@
   left: 28vw;
   bottom: -22vw;
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(calc(80 * var(--px)));
   background: radial-gradient(circle, var(--evg-aurora-blob-c), transparent 60%);
   animation: drift3 38s ease-in-out infinite alternate;
 }

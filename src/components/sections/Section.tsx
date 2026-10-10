@@ -33,7 +33,7 @@ export function Section({
       paddingY={paddingY}
       m={{ paddingY: "64" }}
       background={background}
-      style={{ scrollMarginTop: "96px" }}
+      style={{ scrollMarginTop: "calc(96 * var(--px))" }}
     >
       <Column fillWidth maxWidth={maxWidth} gap={gap} m={{ gap: "32" }}>
         {children}

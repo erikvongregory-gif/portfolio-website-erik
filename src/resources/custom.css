@@ -152,19 +152,27 @@ h6,
 }
 
 /* ============================================================
-   Einheitliche relative Größe auf allen Monitoren
+   Große Monitore (QHD, 4K, 5K)
    ------------------------------------------------------------
-   Ziel: Die rem-basierte UI (Once UI) soll auf Laptop, QHD und
-   4K denselben Anteil am Viewport einnehmen — nicht „winzig auf
-   dem großen Screen“.
-
-   Referenz: bei ~1512px Breite → 16px Root (wie bisher).
-   Formel: 100vw / 94.5  ⇒  68rem Content ≈ 72% der Breite.
-   Mobile/Tablet (<1025px): Once-UI-eigene Skalierung unverändert.
+   Bis 1920px Breite ändert sich nichts: --px ist exakt 1px und
+   der Root bleibt bei Once UIs 16px (Tablet/Mobile: 16/15px).
+   Darüber wächst beides linear mit der Viewport-Breite, das
+   Layout behält also die Proportionen von Full HD:
+     2560px (QHD)       → Faktor 1.33 (Root ~21px)
+     3840px (4K, 100 %) → Faktor 2    (Root 32px)
+     max. Faktor 2.75 (5K und breiter)
+   Eigene Styles nutzen calc(N * var(--px)) statt Npx, damit sie
+   mitwachsen. 1px-Haarlinien bleiben bewusst px.
+   :root statt html: Once UI setzt --font-scaling-desktop auf
+   :root, ein html-Selektor verliert die Spezifität.
    ============================================================ */
-@media (min-width: 1025px) {
-  html {
-    --font-scaling-desktop: clamp(15px, calc(100vw / 94.5), 42px);
-    font-size: var(--font-scaling-desktop);
+:root {
+  --px: 1px;
+}
+
+@media (min-width: 1921px) {
+  :root {
+    --px: min(calc(100vw / 1920), 2.75px);
+    --font-scaling-desktop: calc(16 * var(--px));
   }
 }

@@ -37,7 +37,7 @@
   margin: 0;
   transform: translate(-50%, -50%) translate3d(var(--tx), var(--ty), 0) rotate(var(--rot));
   will-change: transform;
-  filter: drop-shadow(0 28px 40px rgba(0, 0, 0, 0.28));
+  filter: drop-shadow(0 calc(28 * var(--px)) calc(40 * var(--px)) rgba(0, 0, 0, 0.28));
 }
 
 .stage[data-spread="open"] .shot {
@@ -75,7 +75,7 @@
   padding-inline: 1rem;
   opacity: var(--copy);
   transform: translate3d(0, calc((1 - var(--copy)) * 1.35rem), 0);
-  filter: blur(calc((1 - var(--copy)) * 10px));
+  filter: blur(calc((1 - var(--copy)) * calc(10 * var(--px))));
   pointer-events: none;
   will-change: opacity, transform, filter;
 }

@@ -38,8 +38,8 @@ const nextConfig = {
       },
       {
         source: "/website-check",
-        destination: "/festpreis",
-        permanent: true,
+        destination: "/",
+        permanent: false,
       },
       // Legacy URLs still crawled by Google Search Console
       {

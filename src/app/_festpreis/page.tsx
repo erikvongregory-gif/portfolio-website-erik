@@ -234,7 +234,7 @@ export default function WebsiteCheckPage() {
               className={styles.funnelCol}
               fillWidth
               id="funnel"
-              style={{ scrollMarginTop: "24px" }}
+              style={{ scrollMarginTop: "1.5rem" }}
             >
               <WebsiteCheckForm />
             </Column>
@@ -434,6 +434,7 @@ export default function WebsiteCheckPage() {
                 alt="Porträt von Erik von Gregory, Gründer von EvGlab"
                 width={280}
                 height={340}
+                sizes="(min-width: 1921px) 14.6vw, 280px"
                 className={styles.portraitImg}
               />
               <span className={styles.portraitFrame} aria-hidden="true" />

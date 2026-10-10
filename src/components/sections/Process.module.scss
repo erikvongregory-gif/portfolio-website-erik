@@ -78,7 +78,7 @@
   width: fit-content;
   min-height: 2.15rem;
   padding: 0.35rem 0.95rem;
-  border-radius: 999px;
+  border-radius: calc(999 * var(--px));
   background: var(--neutral-alpha-weak);
   color: var(--neutral-on-background-strong);
   font-size: 0.8125rem;
@@ -141,14 +141,14 @@
   position: absolute;
   left: 50%;
   top: 0;
-  width: 9px;
-  height: 9px;
-  margin: -4.5px 0 0 -4.5px;
+  width: calc(9 * var(--px));
+  height: calc(9 * var(--px));
+  margin: calc(-4.5 * var(--px)) 0 0 calc(-4.5 * var(--px));
   border-radius: 50%;
   background: #9aa6ff;
   box-shadow:
-    0 0 0 4px rgba(91, 108, 255, 0.18),
-    0 0 14px rgba(154, 166, 255, 0.9);
+    0 0 0 calc(4 * var(--px)) rgba(91, 108, 255, 0.18),
+    0 0 calc(14 * var(--px)) rgba(154, 166, 255, 0.9);
 }
 
 // ——— Live-Badge ———
@@ -156,7 +156,7 @@
   width: fit-content;
   margin-top: 0.5rem;
   padding: 0.35rem 0.8rem 0.35rem 0.65rem;
-  border-radius: 999px;
+  border-radius: calc(999 * var(--px));
   font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -169,8 +169,8 @@
 
 .liveDot {
   position: relative;
-  width: 8px;
-  height: 8px;
+  width: calc(8 * var(--px));
+  height: calc(8 * var(--px));
   border-radius: 50%;
   background: #22c55e;
 

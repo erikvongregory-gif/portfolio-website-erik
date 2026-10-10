@@ -15,8 +15,8 @@
   transition:
     transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.32s ease;
-  backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(calc(14 * var(--px))) saturate(160%);
+  -webkit-backdrop-filter: blur(calc(14 * var(--px))) saturate(160%);
   box-shadow: 0 -1px 0 var(--neutral-border-medium);
   padding-bottom: env(safe-area-inset-bottom, 0);
 }

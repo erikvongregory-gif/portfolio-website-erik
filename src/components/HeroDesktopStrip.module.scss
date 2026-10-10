@@ -61,7 +61,7 @@
   overflow: hidden;
   border-radius: 1rem;
   background: transparent;
-  box-shadow: 0 24px 48px -28px var(--evg-card-shadow-md, rgba(0, 0, 0, 0.35));
+  box-shadow: 0 calc(24 * var(--px)) calc(48 * var(--px)) calc(-28 * var(--px)) var(--evg-card-shadow-md, rgba(0, 0, 0, 0.35));
 }
 
 .image {

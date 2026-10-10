@@ -13,7 +13,7 @@
 }
 
 .blur {
-  filter: blur(16px) saturate(0.92);
+  filter: blur(calc(16 * var(--px))) saturate(0.92);
   transform: scale(1.14);
 }
 

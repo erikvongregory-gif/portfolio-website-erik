@@ -102,9 +102,9 @@
   background: linear-gradient(158deg, var(--neutral-background-weak), var(--neutral-background-medium));
   box-shadow:
     inset 0 1px 0 var(--evg-card-highlight),
-    0 2px 1px var(--evg-card-shadow-sm),
-    0 50px 90px -40px var(--evg-card-shadow-hover),
-    0 22px 44px -26px var(--evg-card-shadow-md);
+    0 calc(2 * var(--px)) 1px var(--evg-card-shadow-sm),
+    0 calc(50 * var(--px)) calc(90 * var(--px)) calc(-40 * var(--px)) var(--evg-card-shadow-hover),
+    0 calc(22 * var(--px)) calc(44 * var(--px)) calc(-26 * var(--px)) var(--evg-card-shadow-md);
   --mx: 0.5;
   --my: 0.35;
   --sheen: 0;
@@ -121,7 +121,7 @@
   opacity: calc(var(--sheen, 0) * 0.95);
   background:
     radial-gradient(
-      160px circle at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.35) * 100%),
+      calc(160 * var(--px)) circle at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.35) * 100%),
       rgba(255, 255, 255, 0.34),
       rgba(255, 255, 255, 0.08) 38%,
       transparent 68%
@@ -203,12 +203,12 @@
 }
 
 .imageBlur {
-  filter: blur(18px) saturate(0.92);
+  filter: blur(calc(18 * var(--px))) saturate(0.92);
   transform: scale(1.16);
 }
 
 .blurText {
-  filter: blur(5px);
+  filter: blur(calc(5 * var(--px)));
   user-select: none;
 }
 
@@ -218,7 +218,7 @@
   flex: 0 0 auto;
   margin-left: auto;
   padding: 0.25rem 0.5rem;
-  border-radius: 999px;
+  border-radius: calc(999 * var(--px));
   background: var(--neutral-solid-strong);
   color: var(--neutral-on-solid-strong);
   font-size: 0.6875rem;
@@ -249,8 +249,8 @@
   align-items: center;
   justify-content: center;
   background: rgba(10, 10, 10, 0.16);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(calc(2 * var(--px)));
+  -webkit-backdrop-filter: blur(calc(2 * var(--px)));
 }
 
 .teaserBadge {
@@ -258,7 +258,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.9rem;
-  border-radius: 999px;
+  border-radius: calc(999 * var(--px));
   background: rgba(10, 10, 10, 0.82);
   color: #fff;
   font-size: 0.8125rem;
@@ -266,13 +266,13 @@
   letter-spacing: 0.01em;
   white-space: nowrap;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 10px 28px -12px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 calc(10 * var(--px)) calc(28 * var(--px)) calc(-12 * var(--px)) rgba(0, 0, 0, 0.55);
 }
 
 .teaserDot {
   width: 0.5rem;
   height: 0.5rem;
-  border-radius: 999px;
+  border-radius: calc(999 * var(--px));
   background: #fff;
   animation: teaserPulse 1.8s ease-in-out infinite;
 }

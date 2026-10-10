@@ -28,7 +28,7 @@
 .card {
   transform-origin: 50% 0%;
   will-change: transform;
-  box-shadow: 0 -24px 60px -30px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 calc(-24 * var(--px)) calc(60 * var(--px)) calc(-30 * var(--px)) rgba(0, 0, 0, 0.45);
 }
 
 @media (max-width: 1023px) {

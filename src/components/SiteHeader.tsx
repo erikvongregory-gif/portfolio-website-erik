@@ -43,7 +43,7 @@ type MenuState = "closed" | "opening" | "open" | "closing";
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const hideHeader = pathname === "/festpreis" || pathname === "/partner";
+  const hideHeader = pathname === "/neueseite";
   const [menu, setMenu] = useState<MenuState>("closed");
   const [menuFunnelOpen, setMenuFunnelOpen] = useState(false);
   const [scrolledAway, setScrolledAway] = useState(false);

@@ -59,7 +59,7 @@ const projects: CardContent[] = [
   },
   {
     title: "EvGlab",
-    image: "/images/projects/evglab/hero-ki.png",
+    image: "/images/projects/evglab/hero-ki.webp",
     tag: "KI · Brand",
     url: "https://brewai.de",
   },
@@ -71,19 +71,19 @@ const projects: CardContent[] = [
   },
   {
     title: "Ingenieurbüro Jungen",
-    image: "/images/projects/ib-jungen/hero.png",
+    image: "/images/projects/ib-jungen/hero.webp",
     tag: "Industrie",
     url: "https://ib-jungen-web.vercel.app",
   },
   {
     title: "Lünebräu",
-    image: "/images/projects/lunebraeu/hero.png",
+    image: "/images/projects/lunebraeu/hero.webp",
     tag: "Brand",
     url: "https://luenebraeu.vercel.app",
   },
   {
     title: "Da Peppe",
-    image: "/images/projects/da-peppe/hero-live.png",
+    image: "/images/projects/da-peppe/hero-live.webp",
     tag: "Gastronomie",
     url: "https://da-peppe.com",
   },
@@ -294,7 +294,7 @@ export function HeroShowcase() {
                         : `${c.title} – Website-Projekt von EvGlab`
                   }
                   fill
-                  sizes="(min-width: 1440px) 520px, 40vw"
+                  sizes="(min-width: 1921px) 27.1vw, (min-width: 1440px) 520px, 40vw"
                   priority={i === 0}
                 />
                 {c.comingSoon && (

@@ -35,10 +35,10 @@
   padding: 1.75rem 1.5rem;
   border-radius: 2rem;
   background: #fffcf8;
-  border: 1.5px solid rgba(22, 21, 15, 0.1);
+  border: calc(1.5 * var(--px)) solid rgba(22, 21, 15, 0.1);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.85) inset,
-    0 18px 40px -28px rgba(22, 21, 15, 0.4);
+    0 calc(18 * var(--px)) calc(40 * var(--px)) calc(-28 * var(--px)) rgba(22, 21, 15, 0.4);
   overflow: hidden;
 }
 
@@ -127,11 +127,11 @@
 .illustCard {
   position: relative;
   background: #fffcf8;
-  border: 1.5px solid rgba(22, 21, 15, 0.1);
+  border: calc(1.5 * var(--px)) solid rgba(22, 21, 15, 0.1);
   border-radius: 1.75rem;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.85) inset,
-    0 10px 28px -22px rgba(22, 21, 15, 0.28);
+    0 calc(10 * var(--px)) calc(28 * var(--px)) calc(-22 * var(--px)) rgba(22, 21, 15, 0.28);
   overflow: hidden;
   transition:
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
@@ -139,10 +139,10 @@
 }
 
 .illustCard:hover {
-  transform: translateY(-3px);
+  transform: translateY(calc(-3 * var(--px)));
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.85) inset,
-    0 18px 36px -24px rgba(22, 21, 15, 0.35);
+    0 calc(18 * var(--px)) calc(36 * var(--px)) calc(-24 * var(--px)) rgba(22, 21, 15, 0.35);
 }
 
 .illustCard::before {
@@ -151,7 +151,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: calc(4 * var(--px));
   background: linear-gradient(90deg, #4a7c59 0%, #f5e4a6 55%, #6ba3c4 100%);
   opacity: 0.85;
 }
@@ -208,8 +208,8 @@
 
 .accentRule {
   width: 2.5rem;
-  height: 3px;
-  border-radius: 999px;
+  height: calc(3 * var(--px));
+  border-radius: calc(999 * var(--px));
   background: #4a7c59;
 }
 

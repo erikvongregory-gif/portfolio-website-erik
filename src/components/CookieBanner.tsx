@@ -165,7 +165,7 @@ export function CookieBanner() {
           transform: shown ? "translateY(0)" : "translateY(16px)",
           opacity: shown ? 1 : 0,
           transition: "transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease",
-          boxShadow: "0 28px 60px -28px rgba(0,0,0,0.5)",
+          boxShadow: "0 calc(28 * var(--px)) calc(60 * var(--px)) calc(-28 * var(--px)) rgba(0,0,0,0.5)",
           maxHeight: "calc(100vh - 2rem)",
           overflowY: "auto",
         }}

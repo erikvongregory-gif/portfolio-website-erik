@@ -19,7 +19,7 @@ const lead = {
   tags: ["Gastronomie"],
   result: "3 Tage live",
   source: "Google, 5 von 5",
-  image: "/images/projects/da-peppe/hero-live.png",
+  image: "/images/projects/da-peppe/hero-live.webp",
   url: "https://da-peppe.com",
 };
 
@@ -28,13 +28,13 @@ const more = [
     name: "Ingenieurbüro Jungen",
     meta: "Industrie, Automation",
     quote: "Direkt und unkompliziert. Das Ergebnis wirkt endlich so professionell wie unsere Arbeit.",
-    image: "/images/projects/ib-jungen/hero.png",
+    image: "/images/projects/ib-jungen/hero.webp",
   },
   {
     name: "Lünebräu",
     meta: "Craft-Bier, Lüneburg",
     quote: "Vom ersten Entwurf an hat man gemerkt, dass Erik unsere Marke verstanden hat.",
-    image: "/images/projects/lunebraeu/hero.png",
+    image: "/images/projects/lunebraeu/hero.webp",
   },
 ];
 
@@ -237,7 +237,7 @@ export function Testimonials() {
                     src={lead.image}
                     alt={`Website von ${lead.name}`}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 520px"
+                    sizes="(max-width: 1024px) 100vw, (min-width: 1921px) 31vw, 600px"
                   />
                 </span>
               </Column>
@@ -269,7 +269,7 @@ export function Testimonials() {
                   src={t.image}
                   alt=""
                   fill
-                  sizes="72px"
+                  sizes="(min-width: 1921px) 3.75vw, 72px"
                 />
               </Column>
               <Column gap="8" flex={1} minWidth={0}>

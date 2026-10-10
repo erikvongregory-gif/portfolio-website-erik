@@ -58,13 +58,13 @@
 .meta {
   opacity: 0;
   transform: translate3d(0, 0.7rem, 0);
-  filter: blur(6px);
+  filter: blur(calc(6 * var(--px)));
 }
 
 .pill {
   width: fit-content;
   padding: 0.3rem 0.85rem;
-  border-radius: 999px;
+  border-radius: calc(999 * var(--px));
   background: var(--neutral-alpha-weak);
   color: var(--neutral-on-background-strong);
   font-size: 0.75rem;
@@ -158,7 +158,7 @@
 .sideBody {
   opacity: 0.45;
   transform: translate3d(0, 0.4rem, 0);
-  filter: blur(4px);
+  filter: blur(calc(4 * var(--px)));
   transition:
     opacity 0.65s var(--ease),
     transform 0.65s var(--ease),
@@ -234,7 +234,7 @@
   from {
     opacity: 0;
     transform: translate3d(0, 0.7rem, 0);
-    filter: blur(6px);
+    filter: blur(calc(6 * var(--px)));
   }
   to {
     opacity: 1;

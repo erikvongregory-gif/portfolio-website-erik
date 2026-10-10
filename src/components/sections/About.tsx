@@ -150,7 +150,7 @@ export function About() {
             ))}
             <Row className={styles.me} gap="12" vertical="center" data-me>
               <span className={styles.meAvatar}>
-                <Image src="/images/about/erik-avatar.webp" alt="" width={48} height={48} />
+                <Image src="/images/about/erik-avatar.webp" alt="" width={48} height={48} sizes="(min-width: 1921px) 2.5vw, 48px" />
               </span>
               <Column gap="2">
                 <Text variant="label-strong-m" onBackground="neutral-strong">

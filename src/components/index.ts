@@ -23,6 +23,7 @@ export { ShiftCta } from "@/components/ShiftCta";
 export { CookieBanner } from "@/components/CookieBanner";
 export { LinkedInConnect } from "@/components/LinkedInConnect";
 export { StickyMobileCta } from "@/components/StickyMobileCta";
+export { NotFoundSearch } from "@/components/NotFoundSearch";
 export { ConsentAnalytics } from "@/components/ConsentAnalytics";
 export { ConsentGoogleAnalytics } from "@/components/ConsentGoogleAnalytics";
 export { ConsentMetaPixel } from "@/components/ConsentMetaPixel";

@@ -22,25 +22,25 @@ const projects: CardContent[] = [
   },
   {
     title: "EvGlab",
-    image: "/images/projects/evglab/hero-ki.png",
+    image: "/images/projects/evglab/hero-ki.webp",
     tag: "KI · Brand",
     url: "https://brewai.de",
   },
   {
     title: "Da Peppe",
-    image: "/images/projects/da-peppe/hero-live.png",
+    image: "/images/projects/da-peppe/hero-live.webp",
     tag: "Gastronomie",
     url: "https://da-peppe.com",
   },
   {
     title: "Ingenieurbüro Jungen",
-    image: "/images/projects/ib-jungen/hero.png",
+    image: "/images/projects/ib-jungen/hero.webp",
     tag: "Industrie",
     url: "https://ib-jungen-web.vercel.app",
   },
   {
     title: "Lünebräu",
-    image: "/images/projects/lunebraeu/hero.png",
+    image: "/images/projects/lunebraeu/hero.webp",
     tag: "Brand",
     url: "https://luenebraeu.vercel.app",
   },
@@ -52,7 +52,7 @@ const projects: CardContent[] = [
   },
 ];
 
-const DESKTOP_IMAGE_SIZES = "(min-width: 1024px) 1024px, 100vw";
+const DESKTOP_IMAGE_SIZES = "(min-width: 1921px) 53.4vw, (min-width: 1024px) 1024px, 100vw";
 
 function StripCard({ card }: { card: CardContent }) {
   const content = (

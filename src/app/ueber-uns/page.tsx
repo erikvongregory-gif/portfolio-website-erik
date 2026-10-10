@@ -140,7 +140,7 @@ export default function UeberUns() {
                   overflow: "hidden",
                   aspectRatio: "4 / 5",
                   background: "var(--neutral-background-medium)",
-                  boxShadow: "0 44px 90px -44px var(--evg-portrait-shadow)",
+                  boxShadow: "0 calc(44 * var(--px)) calc(90 * var(--px)) calc(-44 * var(--px)) var(--evg-portrait-shadow)",
                 }}
               >
                 <Parallax
@@ -153,7 +153,7 @@ export default function UeberUns() {
                     alt="Porträt von Erik von Gregory, Gründer von EvGlab"
                     fill
                     priority
-                    sizes="(max-width: 1024px) 100vw, 416px"
+                    sizes="(max-width: 1024px) 100vw, (min-width: 1921px) 21.7vw, 416px"
                     style={{
                       objectFit: "cover",
                       objectPosition: "center 28%",
