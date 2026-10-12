@@ -37,6 +37,16 @@ function chromeFromUrl(url?: string): string {
 
 const projects: Project[] = [
   {
+    title: "Nonna Benedetta",
+    chrome: chromeFromUrl("https://nonna-benedetta.vercel.app"),
+    category: "Entwurf · Pizzeria",
+    image: "/images/projects/nonna-benedetta/hero-card.webp",
+    body: "Entwurf für eine neapolitanische Pizzeria am See: warm, verspielt und appetitlich – mit Storia, Speisekarte, Colazione und Tischreservierung.",
+    url: "https://nonna-benedetta.vercel.app",
+    status: "entwurf",
+    latest: true,
+  },
+  {
     title: "Salon Liora",
     chrome: chromeFromUrl("https://salon-liora.vercel.app"),
     category: "Entwurf · Friseursalon",
@@ -44,7 +54,6 @@ const projects: Project[] = [
     body: "Demo-Entwurf für einen fiktiven Friseursalon: warm, elegant und einladend – mit Geschichte, Leistungen und Terminbuchung.",
     url: "https://salon-liora.vercel.app",
     status: "entwurf",
-    latest: true,
   },
   {
     title: "Da Peppe",

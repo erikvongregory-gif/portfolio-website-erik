@@ -15,6 +15,12 @@ type CardContent = {
 
 const projects: CardContent[] = [
   {
+    title: "Nonna Benedetta",
+    image: "/images/projects/nonna-benedetta/hero-card.webp",
+    tag: "Gastronomie",
+    url: "https://nonna-benedetta.vercel.app",
+  },
+  {
     title: "Salon Liora",
     image: "/images/projects/salon-liora/hero.png",
     tag: "Webdesign",

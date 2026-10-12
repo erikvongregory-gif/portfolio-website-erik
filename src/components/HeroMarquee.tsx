@@ -15,6 +15,7 @@ type CardContent = {
 };
 
 const projects: CardContent[] = [
+  { title: "Nonna Benedetta", image: "/images/projects/nonna-benedetta/hero-card.webp", tag: "Gastronomie" },
   { title: "Salon Liora", image: "/images/projects/salon-liora/hero.png", tag: "Webdesign" },
   { title: "EvGlab", image: "/images/projects/evglab/hero-ki-card.webp", tag: "KI · Brand" },
   {
