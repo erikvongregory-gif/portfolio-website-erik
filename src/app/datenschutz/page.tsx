@@ -223,6 +223,21 @@ export default function Datenschutz() {
           Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.
         </LegalText>
 
+        <LegalSubheading>Kostenloses PDF und E-Mail-Tipps (Double-Opt-in)</LegalSubheading>
+        <LegalText>
+          Auf der Seite /fenster kannst du ein kostenloses PDF anfordern. Dafür erfassen wir deine
+          E-Mail-Adresse und den Zeitpunkt deiner Anmeldung und Bestätigung. Nach dem Absenden
+          bekommst du eine E-Mail mit einem Bestätigungslink (Double-Opt-in); erst nach dem Klick
+          darauf schicken wir dir das PDF und nehmen dich in unsere Kontaktliste auf, um dir
+          gelegentlich Tipps zu KI-Videos zu senden.
+        </LegalText>
+        <LegalText>
+          Rechtsgrundlage ist deine Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO. Du kannst sie
+          jederzeit mit Wirkung für die Zukunft widerrufen, z. B. per E-Mail an info@evglab.com;
+          deine Adresse wird dann aus der Liste gelöscht. Versand und Speicherung der Kontaktliste
+          erfolgen über Resend Inc. (USA); eine Übermittlung in die USA ist möglich.
+        </LegalText>
+
         <LegalSubheading>WhatsApp-Kontakt</LegalSubheading>
         <LegalText>
           Auf dieser Website findest du Links zu WhatsApp (wa.me). Wenn du einen solchen Link

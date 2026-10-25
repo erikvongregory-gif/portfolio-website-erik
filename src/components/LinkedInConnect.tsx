@@ -30,7 +30,8 @@ export function LinkedInConnect() {
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [shown, setShown] = useState(false);
-  const hidden = usePathname() === "/neueseite";
+  const pathname = usePathname();
+  const hidden = pathname === "/neueseite" || pathname === "/fenster";
 
   useEffect(() => setMounted(true), []);
 
