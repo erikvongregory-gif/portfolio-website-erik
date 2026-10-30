@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { seoPages } from "@/lib/seoPages";
 import { baseURL } from "@/resources";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -11,6 +12,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/impressum", priority: 0.3, changeFrequency: "yearly" },
     { path: "/datenschutz", priority: 0.3, changeFrequency: "yearly" },
   ];
+
+  for (const page of seoPages) {
+    routes.push({ path: `/${page.slug}`, priority: 0.7, changeFrequency: "monthly" });
+  }
 
   return routes.map((route) => ({
     url: `${baseURL}${route.path === "/" ? "" : route.path}`,

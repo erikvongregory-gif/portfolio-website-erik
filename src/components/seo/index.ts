@@ -1,0 +1,1 @@
+export { SeoLandingPage } from "./SeoLandingPage";
