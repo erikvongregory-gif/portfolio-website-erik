@@ -37,6 +37,21 @@
   max-width: 32ch;
 }
 
+.seoLinks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem;
+  padding-block: 2.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 640px) {
+  .seoLinks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1.5rem;
+  }
+}
+
 .colTitle {
   font-size: 0.75rem;
   font-weight: 500;

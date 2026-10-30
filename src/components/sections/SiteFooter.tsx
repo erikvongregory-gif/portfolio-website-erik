@@ -9,6 +9,7 @@ import {
   CONTACT_PHONE_DISPLAY,
   CONTACT_PHONE_TEL,
 } from "@/lib/contact";
+import { brancheLinks, leistungLinks, regionLinks } from "@/lib/seoPages/nav";
 import styles from "./SiteFooter.module.scss";
 
 const WORDMARK = "EvGlab";
@@ -18,7 +19,12 @@ const navLinks = [
   { label: "Leistungen", href: "/#leistungen" },
   { label: "Ablauf", href: "/#ablauf" },
   { label: "Über mich", href: "/ueber-uns" },
-  { label: "Webdesign Landsberg", href: "/webdesign-landsberg" },
+];
+
+const seoLinkGroups = [
+  { title: "Leistungen", links: leistungLinks },
+  { title: "Branchen", links: brancheLinks },
+  { title: "Regionen", links: regionLinks },
 ];
 
 const contactLinks = [
@@ -182,6 +188,19 @@ export function SiteFooter({ minimal = false }: SiteFooterProps) {
             </svg>
           </button>
         </Row>
+
+        <nav className={styles.seoLinks} aria-label="Leistungen, Branchen und Regionen">
+          {seoLinkGroups.map((group) => (
+            <Column key={group.title} gap="12">
+              <Text className={styles.colTitle}>{group.title}</Text>
+              {group.links.map((l) => (
+                <a key={l.href} href={l.href} className={styles.link}>
+                  {l.label}
+                </a>
+              ))}
+            </Column>
+          ))}
+        </nav>
 
         <FooterWordmark />
 
