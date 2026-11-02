@@ -17,6 +17,7 @@ const WORDMARK = "EvGlab";
 const navLinks = [
   { label: "Projekte", href: "/#projekte" },
   { label: "Leistungen", href: "/#leistungen" },
+  { label: "Videos & 3D", href: "/videos" },
   { label: "Ablauf", href: "/#ablauf" },
   { label: "Über mich", href: "/ueber-uns" },
 ];
