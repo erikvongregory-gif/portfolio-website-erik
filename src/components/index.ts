@@ -21,7 +21,6 @@ export { CapacityBadge } from "@/components/CapacityBadge";
 export { StarBadge } from "@/components/StarBadge";
 export { ShiftCta } from "@/components/ShiftCta";
 export { CookieBanner } from "@/components/CookieBanner";
-export { LinkedInConnect } from "@/components/LinkedInConnect";
 export { StickyMobileCta } from "@/components/StickyMobileCta";
 export { NotFoundSearch } from "@/components/NotFoundSearch";
 export { ConsentAnalytics } from "@/components/ConsentAnalytics";

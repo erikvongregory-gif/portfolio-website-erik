@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { Column, Heading, Tag, Text } from "@once-ui-system/core";
 import { PriceCalculator } from "@/components/PriceCalculator";
+import { StartOffer } from "@/components/StartOffer";
 import { gsap, useGsapScene } from "@/components/motion/gsap";
 import { Section } from "./Section";
 import { ServicePackagesGrid } from "./ServicePackagesGrid";
@@ -182,6 +183,8 @@ export function Services() {
             Transparente Richtpreise. Für individuelle Lösungen ein persönliches Gespräch.
           </Text>
         </Column>
+
+        <StartOffer />
 
         <ServicePackagesGrid packages={services} activeBase={base} onPickBase={setBase} />
 

@@ -25,6 +25,7 @@ import {
 import { ContactDialog } from "@/components/ContactDialog";
 import { CtaProof } from "@/components/CtaProof";
 import { JsonLd } from "@/components/JsonLd";
+import { START_OFFER, isStartOfferActive } from "@/lib/startOffer";
 import { baseURL } from "@/resources";
 
 const structuredData = {
@@ -71,6 +72,17 @@ const structuredData = {
         price: "1500",
         itemOffered: { "@type": "Service", name: "Landingpage" },
       },
+      ...(isStartOfferActive()
+        ? [
+            {
+              "@type": "Offer",
+              priceCurrency: "EUR",
+              price: String(START_OFFER.price),
+              validThrough: START_OFFER.validUntil,
+              itemOffered: { "@type": "Service", name: START_OFFER.title },
+            },
+          ]
+        : []),
       {
         "@type": "Offer",
         priceCurrency: "EUR",

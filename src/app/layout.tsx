@@ -12,7 +12,6 @@ import {
   ConsentGoogleAnalytics,
   ConsentMetaPixel,
   CookieBanner,
-  LinkedInConnect,
   Providers,
   ScrollProgress,
   SiteHeader,
@@ -175,7 +174,6 @@ export default function RootLayout({
             {children}
           </Flex>
           <CookieBanner />
-          <LinkedInConnect />
           <ConsentAnalytics />
           <ConsentGoogleAnalytics />
           <ConsentMetaPixel />

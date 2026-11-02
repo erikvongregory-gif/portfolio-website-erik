@@ -21,6 +21,8 @@ import {
 } from "@/components";
 import { ContactDialog } from "@/components/ContactDialog";
 import { JsonLd } from "@/components/JsonLd";
+import { StartOffer } from "@/components/StartOffer";
+import { startOfferFaqSentence } from "@/lib/startOffer";
 import {
   getSeoPageLabel,
   type SeoPage,
@@ -32,7 +34,8 @@ import { baseURL } from "@/resources";
 const priceFaq = {
   question: "Was kostet eine Website bei EvGlab?",
   answer:
-    "Richtpreise: komplette Website ab 2.500 €, Landingpage ab 1.500 €, Betreuung ab 99 € monatlich. Den genauen Festpreis klären wir im Erstgespräch. Den Entwurf siehst du vor der Beauftragung kostenlos.",
+    "Richtpreise: komplette Website ab 2.500 €, Landingpage ab 1.500 €, Betreuung ab 99 € monatlich. Den genauen Festpreis klären wir im Erstgespräch. Den Entwurf siehst du vor der Beauftragung kostenlos." +
+    startOfferFaqSentence(),
 };
 
 function buildStructuredData(page: SeoPage, faqs: SeoPage["faqs"]) {
@@ -289,6 +292,7 @@ export function SeoLandingPage({ page }: { page: SeoPage }) {
             </>
           }
         />
+        <StartOffer />
         <Grid columns="3" m={{ columns: "1" }} gap="16">
           {seoServices.map((service) => (
             <SmartLink key={service.title} href={service.href} unstyled fillWidth>

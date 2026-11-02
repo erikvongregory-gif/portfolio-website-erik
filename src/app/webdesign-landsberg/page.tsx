@@ -20,6 +20,8 @@ import {
 } from "@/components";
 import { ContactDialog } from "@/components/ContactDialog";
 import { JsonLd } from "@/components/JsonLd";
+import { StartOffer } from "@/components/StartOffer";
+import { startOfferFaqSentence } from "@/lib/startOffer";
 import {
   baseURL,
   createPageOpenGraph,
@@ -117,7 +119,8 @@ const faqs: { question: string; answer: string }[] = [
   {
     question: "Was kostet eine Website bei dir?",
     answer:
-      "Richtpreise: komplette Website ab 2.500 €, Landingpage ab 1.500 €, Betreuung ab 99 € monatlich. Den genauen Umfang klären wir im kostenlosen Erstgespräch.",
+      "Richtpreise: komplette Website ab 2.500 €, Landingpage ab 1.500 €, Betreuung ab 99 € monatlich. Den genauen Umfang klären wir im kostenlosen Erstgespräch." +
+      startOfferFaqSentence(),
   },
   {
     question: "Wie lange dauert ein typisches Projekt?",
@@ -373,6 +376,8 @@ export default function WebdesignLandsbergPage() {
           }
           description="Transparente Richtpreise. Den konkreten Umfang klären wir im Gespräch – ehrlich und ohne Druck."
         />
+
+        <StartOffer />
 
         <Grid columns="3" m={{ columns: "1" }} gap="16">
           {services.map((service, index) => (
