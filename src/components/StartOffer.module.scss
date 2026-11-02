@@ -1,0 +1,7 @@
+// Preisblock: rechts neben dem Titel, auf schmalen Screens linksbündig darunter.
+@media (max-width: 1024px) {
+  .price {
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+}

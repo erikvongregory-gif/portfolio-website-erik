@@ -1,3 +1,5 @@
+import { startOfferFaqSentence } from "@/lib/startOffer";
+
 export type FaqItem = {
   question: string;
   answer: string;
@@ -12,7 +14,8 @@ export const homepageFaqs: FaqItem[] = [
   {
     question: "Was kostet eine Website bei EvGlab?",
     answer:
-      "Richtpreise: komplette Website ab 2.500 €, Landingpage ab 1.500 €, Betreuung ab 99 € monatlich. Den genauen Festpreis klären wir im Erstgespräch – transparent und schriftlich.",
+      "Richtpreise: komplette Website ab 2.500 €, Landingpage ab 1.500 €, Betreuung ab 99 € monatlich. Den genauen Festpreis klären wir im Erstgespräch – transparent und schriftlich." +
+      startOfferFaqSentence(),
   },
   {
     question: "Wie lange dauert ein typisches Projekt?",
