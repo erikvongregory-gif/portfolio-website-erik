@@ -1,7 +1,3 @@
-#!/usr/bin/env bash
-# Encodes showreel renders for /videos: short muted preview loop, full web version, poster.
-# Usage: bash scripts/encode-showreel.sh
-set -e
 SRC="E:/Videos/Showreels/video-projects"
 OUT="$(dirname "$0")/../public/videos"
 mkdir -p "$OUT"
@@ -24,9 +20,19 @@ evglab-reel|evglab-reel-916/renders/evglab-reel-9x16.mp4|0
 evglab-cut|evglab-cut/renders/evglab-cut.mp4|0
 brewai-film|brewai-film-916/renders/brewai-film-9x16.mp4|0
 evglab-flyover|evglab-flyover/renders/evglab-flyover-music.mp4|0
+brewai-gold|brewai-gold/renders/brewai-gold.mp4|4
+brewai-desk|brewai-desk/renders/brewai-desk-final.mp4|2
+brewai-flow|brewai-flow-916/renders/brewai-flow-916.mp4|8
+brewai-studio|brewai-ref-916/renders/brewai-studio-9x16.mp4|4
+brewai-saas|brewai-saas/renders/brewai-saas-final.mp4|2
+evglab-landsberg|evglab-landsberg-v2/renders/evglab-landsberg-v2-4x5.mp4|2
+kontext|kontext-saas/renders/kontext-saas.mp4|6
+risebeyond-saas|risebeyond-saas/renders/risebeyond.mp4|4
+ibjungen|ibjungen-reel/renders/ibjungen-reel-final.mp4|6
+herzblut-ki|herzblut-ki/renders/herzblut-ki-v2.mp4|2
 "
 
-echo "$LIST" | while IFS='|' read -r id src start; do
+echo "$LIST" | grep -E "${ONLY:-.}" | while IFS='|' read -r id src start; do
   [ -z "$id" ] && continue
   in="$SRC/$src"
   # 720 px on the short side for the full file, 540 for the preview loop

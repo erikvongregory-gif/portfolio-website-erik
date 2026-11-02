@@ -7,7 +7,7 @@ export type ShowreelItem = {
   kind: string;
   category: ShowreelCategory;
   /** Width / height, used for the card ratio. */
-  ratio: "9 / 16" | "16 / 9" | "5 / 4";
+  ratio: "9 / 16" | "16 / 9" | "5 / 4" | "4 / 5";
 };
 
 export const showreelCategories: { value: ShowreelCategory | "alle"; label: string }[] = [
@@ -22,18 +22,24 @@ export const showreel: ShowreelItem[] = [
   { id: "risebeyond-3d", title: "Rise Beyond", kind: "3D-Logo & Launchfilm", category: "3d", ratio: "16 / 9" },
   { id: "evglab-reel", title: "EvGlab", kind: "Social Reel", category: "social", ratio: "9 / 16" },
   { id: "brewai-glass", title: "BrewAI", kind: "Produktfilm", category: "produkt", ratio: "9 / 16" },
-  { id: "radebeul", title: "Radebeuler Versicherungsmakler", kind: "Werbespot", category: "spot", ratio: "16 / 9" },
+  { id: "brewai-gold", title: "BrewAI", kind: "Werbespot", category: "spot", ratio: "16 / 9" },
   { id: "evglab-scalez", title: "EvGlab", kind: "Logo-Ident", category: "3d", ratio: "9 / 16" },
+  { id: "herzblut-ki", title: "Herzblut Business Training", kind: "Werbespot · 4:5", category: "spot", ratio: "4 / 5" },
   { id: "tidely", title: "Tidely", kind: "App-Launch · Konzept", category: "produkt", ratio: "16 / 9" },
-  { id: "holzbau-ried", title: "Holzbau Ried", kind: "Imagefilm", category: "spot", ratio: "16 / 9" },
+  { id: "brewai-desk", title: "BrewAI", kind: "Produktfilm", category: "produkt", ratio: "9 / 16" },
+  { id: "ibjungen", title: "Ingenieurbüro Jungen", kind: "Imagefilm", category: "spot", ratio: "16 / 9" },
   { id: "brewai-logo", title: "BrewAI", kind: "Logo-Film", category: "3d", ratio: "9 / 16" },
+  { id: "evglab-landsberg", title: "EvGlab", kind: "Feed-Spot · 4:5", category: "social", ratio: "4 / 5" },
+  { id: "risebeyond-saas", title: "Rise Beyond", kind: "Produktfilm", category: "produkt", ratio: "16 / 9" },
   { id: "evglab-cut", title: "EvGlab", kind: "Brand-Reel", category: "social", ratio: "9 / 16" },
-  { id: "vm-zierer", title: "VM Zierer", kind: "Werbespot", category: "spot", ratio: "16 / 9" },
-  { id: "dn-impact", title: "DN Impact", kind: "Fintech-Reel", category: "produkt", ratio: "9 / 16" },
+  { id: "kontext", title: "Kontext", kind: "SaaS-Launch · Konzept", category: "produkt", ratio: "16 / 9" },
+  { id: "brewai-studio", title: "BrewAI", kind: "App-Film", category: "produkt", ratio: "9 / 16" },
   { id: "veyra", title: "Veyra", kind: "SaaS-Teaser · Konzept", category: "produkt", ratio: "16 / 9" },
   { id: "evglab-pendel", title: "EvGlab", kind: "3D-Loop", category: "3d", ratio: "9 / 16" },
   { id: "gold-noir", title: "Gold Noir", kind: "Kinetic Type · Demo", category: "spot", ratio: "16 / 9" },
+  { id: "brewai-saas", title: "BrewAI", kind: "Feature-Reel", category: "social", ratio: "9 / 16" },
   { id: "brewai-film", title: "BrewAI", kind: "Teaser-Reel", category: "social", ratio: "9 / 16" },
+  { id: "brewai-flow", title: "BrewAI", kind: "Erklär-Reel", category: "social", ratio: "9 / 16" },
   { id: "evglab-flyover", title: "EvGlab", kind: "Website-Flyover", category: "social", ratio: "5 / 4" },
 ];
 
