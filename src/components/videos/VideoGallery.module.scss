@@ -1,0 +1,118 @@
+// Masonry via CSS columns: mixed 9:16 and 16:9 cards pack without gaps.
+.masonry {
+  display: block !important;
+  columns: 3;
+  column-gap: 1rem;
+
+  @media (max-width: 1023px) {
+    columns: 2;
+  }
+
+  // Two columns on phones too, otherwise a 9:16 card fills more than a screen.
+  @media (max-width: 559px) {
+    column-gap: 0.625rem;
+
+    .card {
+      margin-bottom: 0.625rem;
+    }
+
+    .caption {
+      padding: 2rem 0.625rem 0.625rem;
+    }
+  }
+}
+
+.card {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0 0 1rem;
+  padding: 0;
+  border: 1px solid var(--neutral-alpha-weak);
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: var(--neutral-background-medium);
+  cursor: pointer;
+  break-inside: avoid;
+  isolation: isolate;
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.3s ease;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-3px);
+    border-color: var(--neutral-alpha-strong);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--brand-solid-strong);
+    outline-offset: 2px;
+  }
+
+  &:hover .play,
+  &:focus-visible .play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.85);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+
+  @media (hover: none) {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 2.5rem 1rem 0.9rem;
+  color: #fff;
+  text-align: left;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent);
+}
+
+.kind {
+  opacity: 0.72;
+}
+
+.player {
+  display: block;
+  width: 100%;
+  max-height: 78vh;
+  border-radius: var(--radius-m);
+  background: #000;
+}

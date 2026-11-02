@@ -20,6 +20,10 @@ import {
   HiMinus,
   HiPlus,
   HiCheck,
+  HiPlay,
+  HiOutlineFilm,
+  HiOutlineCube,
+  HiOutlineDevicePhoneMobile,
 } from "react-icons/hi2";
 
 import {
@@ -38,7 +42,7 @@ import {
   SiSupabase,
 } from "react-icons/si";
 
-import { FaDiscord, FaGithub, FaLinkedin, FaX, FaThreads, FaInstagram, FaXTwitter, FaFacebook, FaPinterest, FaWhatsapp, FaReddit, FaTelegram, } from "react-icons/fa6";
+import { FaDiscord, FaGithub, FaLinkedin, FaX, FaThreads, FaInstagram, FaXTwitter, FaFacebook, FaPinterest, FaWhatsapp, FaReddit, FaTelegram, FaTiktok, } from "react-icons/fa6";
 
 export const iconLibrary: Record<string, IconType> = {
   arrowUpRight: HiArrowUpRight,
@@ -82,6 +86,11 @@ export const iconLibrary: Record<string, IconType> = {
   reddit: FaReddit,
   telegram: FaTelegram,
   instagram: FaInstagram,
+  tiktok: FaTiktok,
+  play: HiPlay,
+  film: HiOutlineFilm,
+  cube: HiOutlineCube,
+  phone: HiOutlineDevicePhoneMobile,
 };
 
 export type IconLibrary = typeof iconLibrary;

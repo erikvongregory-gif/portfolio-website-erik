@@ -23,6 +23,7 @@ const navLinks = [
   { label: "Startseite", href: "/" },
   { label: "Projekte", href: "/#projekte" },
   { label: "Leistungen", href: "/#leistungen" },
+  { label: "Videos", href: "/videos" },
   { label: "Ablauf", href: "/#ablauf" },
   { label: "Über mich", href: "/ueber-uns" },
 ];

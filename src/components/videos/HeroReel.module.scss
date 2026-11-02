@@ -1,0 +1,39 @@
+.stage {
+  height: clamp(22rem, 46vw, 34rem);
+}
+
+.frame {
+  position: relative;
+  display: block;
+  flex: none;
+  height: 88%;
+  aspect-ratio: 9 / 16;
+  border-radius: var(--radius-l);
+  border: 1px solid var(--neutral-alpha-medium);
+  overflow: hidden;
+  background: var(--neutral-background-medium);
+  box-shadow: 0 2rem 4rem -2rem rgba(0, 0, 0, 0.55);
+
+  &[data-pos="0"] {
+    transform: translateX(18%) rotate(-6deg);
+    z-index: 1;
+  }
+
+  &[data-pos="1"] {
+    height: 100%;
+    z-index: 2;
+  }
+
+  &[data-pos="2"] {
+    transform: translateX(-18%) rotate(6deg);
+    z-index: 1;
+  }
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
