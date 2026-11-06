@@ -1,0 +1,50 @@
+/* ═══════════════════════════════════════════
+   BRAND ASSETS
+   Schrift- und Größenwerte übernommen von kemnitzer.com
+═══════════════════════════════════════════ */
+
+/* Libre Baskerville — Headlines */
+@font-face { font-family: 'Libre Baskerville'; font-style: normal; font-weight: 400; font-display: swap; src: url('../fonts/libre-baskerville-regular.woff2') format('woff2'); }
+@font-face { font-family: 'Libre Baskerville'; font-style: italic; font-weight: 400; font-display: swap; src: url('../fonts/libre-baskerville-italic.woff2') format('woff2'); }
+@font-face { font-family: 'Libre Baskerville'; font-style: normal; font-weight: 500; font-display: swap; src: url('../fonts/libre-baskerville-500.woff2') format('woff2'); }
+@font-face { font-family: 'Libre Baskerville'; font-style: italic; font-weight: 500; font-display: swap; src: url('../fonts/libre-baskerville-500italic.woff2') format('woff2'); }
+@font-face { font-family: 'Libre Baskerville'; font-style: normal; font-weight: 600; font-display: swap; src: url('../fonts/libre-baskerville-600.woff2') format('woff2'); }
+@font-face { font-family: 'Libre Baskerville'; font-style: italic; font-weight: 600; font-display: swap; src: url('../fonts/libre-baskerville-600italic.woff2') format('woff2'); }
+@font-face { font-family: 'Libre Baskerville'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/libre-baskerville-700.woff2') format('woff2'); }
+@font-face { font-family: 'Libre Baskerville'; font-style: italic; font-weight: 700; font-display: swap; src: url('../fonts/libre-baskerville-700italic.woff2') format('woff2'); }
+
+:root {
+  /* Schriften */
+  --font-header: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  --font-text: -apple-system, "SF Pro Text", system-ui, "Helvetica Neue", "Calibri Light", Roboto, sans-serif;
+
+  /* Headline */
+  --header-weight: 400;
+  --header-weight-bold: 700;
+  --header-line-height: 1.2;
+  --header-letter-spacing: 0;
+
+  /* Fließtext */
+  --text-weight: 400;
+  --text-weight-bold: 600;
+  --text-line-height: 1.5;
+  --text-letter-spacing: 0;
+
+  /* Größen */
+  --size-h1: 2.0625rem;          /* Hero-Headline, Zeilenhöhe 1.1 */
+  --size-h1-line: 1.1;
+  --size-h2: 2.5rem;          /* Sektions-Headlines (Desktop 48 → max 40) */
+  --size-h3: 1.5rem;
+  --size-text: 1rem;
+
+  /* Farben — Schwarz / Weiß */
+  --black: #000000;
+  --ink: #070707;
+  --gray-900: #0f0f0f;
+  --gray-800: #1a1a1a;
+  --gray-700: #2a2a2a;
+  --gray-500: #6b6b6b;
+  --gray-300: #b4b4b4;
+  --gray-100: #ececec;
+  --white: #ffffff;
+}

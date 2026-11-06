@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <title>EvGlab | 3D-Produktfilme für Messen</title>
+  <meta name="description" content="3D-Produktfilme für Ihren Messeauftritt. Gemacht, damit Besucher stehen bleiben.">
+  <link rel="canonical" href="https://evglab.com/3d-produktanimation">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-icon.png">
+  <meta property="og:title" content="EvGlab | 3D-Produktfilme für Messen">
+  <meta property="og:description" content="3D-Produktfilme für Ihren Messeauftritt. Gemacht, damit Besucher stehen bleiben.">
+  <meta property="og:url" content="https://evglab.com/3d-produktanimation">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <link rel="preload" href="/3d-produktanimation/fonts/libre-baskerville-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/3d-produktanimation/fonts/libre-baskerville-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/3d-produktanimation/images/discus-statue.png" as="image">
+  <link rel="stylesheet" href="/3d-produktanimation/css/brand.css">
+  <link rel="stylesheet" href="/3d-produktanimation/css/sections.css">
+  <link rel="stylesheet" href="/3d-produktanimation/css/legal.css">
+  <script>
+    /* Hero bis zum GSAP-Start verbergen, damit nichts aufblitzt (Notbremse nach 3 s) */
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('motion-pending');
+      setTimeout(function () { document.documentElement.classList.remove('motion-pending'); }, 3000);
+    }
+  </script>
+  <style>
+    .motion-pending .site-header,
+    .motion-pending .hero-inner,
+    .motion-pending .hero-statue { visibility: hidden; }
+    /* Mit GSAP übernehmen die Timelines das Einblenden */
+    .has-motion [data-reveal] { opacity: 1; transform: none; transition: none; }
+    /* Masken für Zeilen: Platz für Ober- und Unterlängen */
+    .m-line-mask { padding: .1em 0 .16em; margin: -.1em 0 -.16em; }
+  </style>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      -webkit-text-size-adjust: 100%;
+      /* Kein Zoomen: iOS ignoriert user-scalable=no, touch-action sperrt Pinch und Doppeltipp */
+      touch-action: pan-x pan-y;
+      overflow-x: clip;
+      overscroll-behavior-x: none;
+      /* Alle Maße in rem: ab Full HD wächst die Seite proportional mit
+         (Bezug 1920 × 1080, also 2560 px ≈ 1,33×, 4K ≈ 2×) */
+      font-size: 100%;
+    }
+    @media (min-width: 1921px) {
+      html { font-size: max(16px, min(100vw / 120, 100vh / 67.5)); }
+    }
+    body { overflow-x: clip; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-text);
+      font-weight: var(--text-weight);
+      font-size: var(--size-text);
+      line-height: var(--text-line-height);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 1.5rem;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 60% 55% at 50% 45%, #0b0b0b 0%, #050505 55%, #000 100%);
+      isolation: isolate;
+    }
+
+    /* Reaktiver Glas-Hintergrund — nur links und rechts */
+    .hero-light {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: clip;
+      -webkit-mask-image:
+        linear-gradient(90deg, #000 0%, #000 22%, transparent 34%, transparent 66%, #000 78%, #000 100%),
+        linear-gradient(180deg, #000 50%, transparent 96%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(90deg, #000 0%, #000 22%, transparent 34%, transparent 66%, #000 78%, #000 100%),
+        linear-gradient(180deg, #000 50%, transparent 96%);
+      mask-composite: intersect;
+    }
+    .hl-panels, .hl-stage { position: absolute; inset: 0; }
+    .hl-panel {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0.035) 0,
+        rgba(255,255,255,0.012) 0.375rem,
+        rgba(255,255,255,0.028) 1.375rem calc(100% - 1rem),
+        rgba(255,255,255,0.012) 100%);
+      box-shadow:
+        inset 0.0625rem 0 rgba(255,255,255,0.16),
+        inset -0.0625rem 0 rgba(255,255,255,0.09),
+        -0.0625rem 0 rgba(0,0,0,0.8),
+        0.0625rem 0 rgba(0,0,0,0.8);
+    }
+    .hl-stage {
+      opacity: 0;
+      overflow: hidden;
+      transition: opacity .9s cubic-bezier(.22,1,.36,1);
+    }
+    .hl-stage[data-on] { opacity: 1; }
+    .hl-win { position: absolute; top: 0; bottom: 0; overflow: hidden; }
+    .hl-stage canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      opacity: 0;
+      transform-origin: 0 0;
+      will-change: transform, opacity;
+    }
+
+    /* Statuen — gespiegelt links und rechts */
+    .hero-statue {
+      position: absolute;
+      bottom: -2vh;
+      z-index: 1;
+      width: min(40vw, 90vh, 47.5rem);
+      height: auto;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      filter: drop-shadow(0 1.875rem 3.75rem rgba(0,0,0,0.9));
+    }
+    .hero-statue--left  { left: -5vw; }
+    .hero-statue--right { right: -5vw; scale: -1 1; } /* eigene Eigenschaft: GSAP-Transforms heben die Spiegelung nicht auf */
+
+    /* Copy — mittig */
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 38.75rem;
+      text-align: center;
+    }
+    .hero-title {
+      font-family: var(--font-header);
+      font-weight: var(--header-weight);
+      font-size: var(--size-h1);
+      line-height: var(--size-h1-line);
+      letter-spacing: var(--header-letter-spacing);
+      color: var(--white);
+    }
+    .hero-title strong { font-weight: var(--header-weight-bold); }
+    .hero-sub {
+      margin: 1.75rem auto 0;
+      max-width: 32.5rem;
+      font-family: var(--font-text);
+      font-size: var(--size-text);
+      line-height: var(--text-line-height);
+      color: var(--gray-300);
+      text-wrap: pretty;
+    }
+    /* Header ohne eigene Leiste, liegt im Hero */
+    .site-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 1.75rem clamp(1rem, 4vw, 3rem);
+    }
+    .nav-link {
+      font-size: 0.9375rem;
+      white-space: nowrap;
+      color: var(--gray-300);
+      text-decoration: none;
+      transition: color .3s ease;
+    }
+    .nav-link:hover { color: var(--white); }
+    .nav-link:first-child { justify-self: end; }
+    .nav-link:last-child { justify-self: start; }
+    .logo {
+      font-family: var(--font-header);
+      font-size: 1.625rem;
+      line-height: 1;
+      letter-spacing: 0.01em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .hero-teaser {
+      margin: 1.5rem auto 0;
+      max-width: 32.5rem;
+      font-size: var(--size-text);
+      line-height: var(--text-line-height);
+      color: var(--white);
+      text-wrap: pretty;
+    }
+    .hero-teaser u {
+      text-decoration-thickness: 0.0625rem;
+      text-underline-offset: 0.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero-statue { width: 62vw; opacity: 0.55; bottom: -4vh; }
+      .hero-statue--left  { left: -22vw; }
+      .hero-statue--right { right: -22vw; }
+    }
+    @media (max-width: 600px) {
+      .site-header { padding: 1.25rem 1rem; gap: 0.875rem; }
+      .nav-link { white-space: normal; line-height: 1.3; }
+      .nav-link:first-child { text-align: right; }
+      .nav-link { font-size: 0.8125rem; }
+      .logo { font-size: 1.375rem; }
+      #hero { align-items: flex-start; padding-top: 18vh; }
+      .hero-statue { width: 80vw; opacity: 0.4; bottom: -10vh; }
+      .hero-statue--left  { left: -38vw; }
+      .hero-statue--right { right: -38vw; }
+    }
+  </style>
+</head>
+<body>
+
+  <section id="hero">
+    <header class="site-header">
+      <a class="nav-link" href="#">Beispiele</a>
+      <a class="logo" href="#hero" aria-label="EvGlab Startseite">EvGlab</a>
+      <a class="nav-link" href="#analyse">Potenzialanalyse</a>
+    </header>
+    <div class="hero-light" data-hero-light aria-hidden="true"></div>
+
+    <img class="hero-statue hero-statue--left" src="/3d-produktanimation/images/discus-statue.png" alt="" aria-hidden="true" draggable="false">
+    <img class="hero-statue hero-statue--right" src="/3d-produktanimation/images/discus-statue.png" alt="" aria-hidden="true" draggable="false">
+
+    <div class="hero-inner">
+      <h1 class="hero-title">3D-Produktfilme, die aus Messe-Laufkundschaft echte Gespräche für Ihren Vertrieb machen.</h1>
+      <p class="hero-sub">Wir zeigen auf Ihrem Standscreen, was in Ihrem Produkt steckt, stumm verständlich und in Sekunden erfasst. Besucher bleiben stehen, verstehen den Nutzen und fragen nach. Ihr Vertrieb steigt dann mitten im Gespräch ein. Von der Standanalyse über die technische Freigabe bis zu allen Formaten: alles aus einer Hand.</p>
+      <p class="hero-teaser">Erfahren Sie, warum die meisten Messevideos in der Halle untergehen und was wir <u>grundlegend anders</u> machen.</p>
+    </div>
+  </section>
+
+  <main class="page">
+    <!-- Hintergrund-Muster über alle Sections (technische Zeichnung) -->
+    <div class="bp" aria-hidden="true">
+      <span class="bp-v" style="left:calc(50% - 36.75rem)"></span>
+      <span class="bp-v" style="left:50%"></span>
+      <span class="bp-v" style="left:calc(50% + 36.75rem)"></span>
+      <span class="bp-h" style="top:15%"></span>
+      <span class="bp-h" style="top:42%"></span>
+      <span class="bp-h" style="top:64%"></span>
+      <span class="bp-h" style="top:87%"></span>
+      <span class="bp-x" style="left:calc(50% - 36.75rem);top:15%"></span>
+      <span class="bp-x" style="left:calc(50% + 36.75rem);top:42%"></span>
+      <span class="bp-x" style="left:50%;top:64%"></span>
+      <span class="bp-x" style="left:calc(50% - 36.75rem);top:87%"></span>
+
+      <!-- Konstruktionskreis -->
+      <svg class="bp-el" data-speed="-0.06" data-rot="0.02" style="top:4%;right:-17.5rem;width:47.5rem" viewBox="0 0 760 760">
+        <g fill="none" stroke="currentColor">
+          <circle cx="380" cy="380" r="300"/>
+          <circle cx="380" cy="380" r="200" stroke-dasharray="2 6"/>
+          <circle cx="380" cy="380" r="330" stroke-width="10" stroke-dasharray="1 27.8" opacity=".6"/>
+          <path d="M40 380 H720 M380 40 V720" stroke-dasharray="6 6"/>
+          <path d="M168 168 L592 592 M592 168 L168 592" stroke-dasharray="1 7" opacity=".7"/>
+          <circle cx="380" cy="380" r="4" fill="currentColor"/>
+          <circle cx="580" cy="380" r="3"/>
+        </g>
+        <text x="392" y="370" fill="currentColor" font-size="13" font-family="-apple-system, system-ui, sans-serif">Ø 600</text>
+      </svg>
+
+      <!-- Drahtgitter-Würfel -->
+      <svg class="bp-el" data-speed="0.05" style="top:24%;left:-12.5rem;width:35rem" viewBox="0 0 560 560">
+        <g fill="none" stroke="currentColor" stroke-linejoin="round">
+          <path d="M280 60 L480 175 L480 405 L280 520 L80 405 L80 175 Z"/>
+          <path d="M80 175 L280 290 L480 175 M280 290 V520"/>
+          <path d="M280 60 V290 M80 405 L280 290 L480 405" stroke-dasharray="4 6" opacity=".6"/>
+          <circle cx="280" cy="290" r="3" fill="currentColor"/>
+        </g>
+      </svg>
+
+      <!-- Maßkette, läuft über die Section-Grenze -->
+      <div class="bp-dim" data-speed="0.02" style="top:46%">
+        <span style="flex:420"><em>420</em></span>
+        <span style="flex:756"><em>756</em></span>
+      </div>
+
+      <!-- Explosionsdarstellung -->
+      <svg class="bp-el" data-speed="-0.04" style="top:66%;right:-10rem;width:33.75rem" viewBox="0 0 540 540">
+        <g fill="none" stroke="currentColor" stroke-linejoin="round">
+          <path d="M270 70 L470 185 L270 300 L70 185 Z"/>
+          <path d="M270 150 L470 265 L270 380 L70 265 Z"/>
+          <path d="M270 230 L470 345 L270 460 L70 345 Z"/>
+          <path d="M70 185 V196 L270 311 L470 196 V185 M70 345 V356 L270 471 L470 356 V345" opacity=".6"/>
+          <path d="M270 20 V520" stroke-dasharray="1 7"/>
+          <circle cx="270" cy="70" r="3" fill="currentColor"/>
+        </g>
+      </svg>
+
+      <!-- Kleiner Kreis -->
+      <svg class="bp-el" data-speed="0.07" data-rot="-0.03" style="top:88%;left:-9.375rem;width:27.5rem" viewBox="0 0 440 440">
+        <g fill="none" stroke="currentColor">
+          <circle cx="220" cy="220" r="170"/>
+          <circle cx="220" cy="220" r="190" stroke-width="8" stroke-dasharray="1 18.9" opacity=".6"/>
+          <path d="M20 220 H420 M220 20 V420" stroke-dasharray="6 6"/>
+          <circle cx="220" cy="220" r="60" stroke-dasharray="2 5"/>
+        </g>
+      </svg>
+    </div>
+
+  <!-- ═══════════ 1 — DREI FAKTOREN ═══════════ -->
+  <section class="section" id="faktoren">
+    <div class="container">
+      <div class="factors-head" data-reveal>
+        <h2 class="h2">Drei Dinge, die ein Messevideo <strong>leisten muss</strong>.</h2>
+        <p>Am Stand gelten andere Regeln als auf der Website: kein Ton, wenig Zeit, viel Ablenkung. Diese drei Punkte entscheiden, ob jemand stehen bleibt.</p>
+      </div>
+
+      <div class="factors">
+        <article class="factor" data-reveal style="--d:0s">
+          <div class="factor-media">
+            <span class="factor-num">01</span>
+            <img src="/3d-produktanimation/images/line-lens-dark.svg" alt="" width="1200" height="1200" loading="lazy">
+          </div>
+          <div class="factor-body">
+            <h3 class="factor-title">Der Stopp-Moment</h3>
+            <p class="factor-text">Besucher laufen vorbei. Sie haben drei Sekunden, um einen Blick zu fangen. Das gelingt mit einem klaren Motiv statt einer langen Einleitung.</p>
+            <div class="factor-meta"><span>Aufmerksamkeit</span><span>Die ersten 3 Sekunden</span></div>
+          </div>
+        </article>
+
+        <article class="factor" data-reveal style="--d:.12s">
+          <div class="factor-media">
+            <span class="factor-num">02</span>
+            <img class="is-mono" src="/3d-produktanimation/images/line-slabs-dark.svg" alt="" width="1200" height="1200" loading="lazy">
+          </div>
+          <div class="factor-body">
+            <h3 class="factor-title">Das Unsichtbare zeigen</h3>
+            <p class="factor-text">Schnitte, Explosionsansichten, Schicht für Schicht: 3D zeigt, was im Inneren Ihres Produkts passiert. Auch ohne Ton verständlich.</p>
+            <div class="factor-meta"><span>Verständnis</span><span>Ohne Ton erklärt</span></div>
+          </div>
+        </article>
+
+        <article class="factor" data-reveal style="--d:.24s">
+          <div class="factor-media">
+            <span class="factor-num">03</span>
+            <img src="/3d-produktanimation/images/line-cubes-dark.svg" alt="" width="1200" height="1200" loading="lazy">
+          </div>
+          <div class="factor-body">
+            <h3 class="factor-title">Die Brücke zum Gespräch</h3>
+            <p class="factor-text">Der Film ersetzt nicht Ihren Vertrieb, er öffnet ihm die Tür. Er liefert den Anlass, damit am Stand das richtige Gespräch beginnt.</p>
+            <div class="factor-meta"><span>Verbindung</span><span>Vom Blick zum Lead</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 2 — BENTO ═══════════ -->
+  <section class="section" id="ablauf">
+    <div class="container bento">
+
+      <!-- A: Projekt-Chat -->
+      <div class="bcard bcard--wide" data-reveal>
+        <div class="bcard-copy">
+          <h3 class="bcard-title">Ein Kanal für Ihr ganzes Projekt</h3>
+          <p class="bcard-text">Briefing, Feedback und Freigaben laufen über einen gemeinsamen Projekt-Chat. So sehen Sie jederzeit, wo Ihr Film steht.</p>
+          <a class="btn-pill" href="#">Projekt anfragen</a>
+        </div>
+        <div class="bcard-stage" data-sequence="750">
+          <div class="win win--chat">
+            <div class="win-bar">Projekt-Chat</div>
+            <div class="win-head">
+              <div>
+                <div class="win-channel">#messe-hannover-2027</div>
+                <div class="win-members">5 Mitglieder</div>
+              </div>
+              <div class="avatars"><span class="av">MK</span><span class="av">JB</span><span class="av">SW</span><span class="av">TL</span></div>
+            </div>
+            <div class="win-body">
+              <div class="msg" data-step="0">
+                <span class="av">MK</span>
+                <div>
+                  <div><span class="msg-name">M. Krüger</span><span class="msg-time">09:41</span></div>
+                  <p class="msg-text">Im April stehen wir auf der Hannover Messe. Die neue Anlage ist bis dahin aber nicht fertig.</p>
+                </div>
+              </div>
+              <div class="msg" data-step="1">
+                <span class="av">JB</span>
+                <div>
+                  <div><span class="msg-name">J. Brandt</span><span class="msg-time">09:42</span></div>
+                  <p class="msg-text">Wir haben nur die CAD-Daten.</p>
+                  <p class="msg-text"><span class="mention">@evglab</span> geht das trotzdem?</p>
+                </div>
+              </div>
+              <div class="msg" data-step="2">
+                <span class="studio-mark"></span>
+                <div>
+                  <div><span class="msg-name">EvGlab</span><span class="msg-app">TEAM</span><span class="msg-time">09:44</span></div>
+                  <span class="typing" data-step="2" data-hide="7"><i></i><i></i><i></i></span>
+                  <p class="msg-text" data-step="7">Geht. Wir bauen die Anlage aus Ihren CAD-Daten in 3D nach, inklusive Schnittansicht. Das Storyboard liegt schon im Ordner.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="win win--task">
+            <div class="task-body">
+              <span class="task-via" data-step="2">J. Brandt via Projekt-Chat</span>
+              <span class="task-req" data-step="2">Messefilm für die Hannover Messe 2027</span>
+              <div class="task-reply" data-step="3">
+                <span class="studio-mark"></span>
+                <span>Läuft. Erste Szene in 10 Tagen.</span>
+              </div>
+              <ul class="task-steps" data-step="3">
+                <li data-step="4"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>CAD-Daten importiert · 14 Baugruppen</li>
+                <li data-step="5"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>Storyboard für 45-Sek.-Loop erstellt</li>
+                <li data-step="6"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>Vorschau an das Team gesendet</li>
+                <li data-step="7"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>Geantwortet in #messe-hannover-2027</li>
+              </ul>
+              <div class="composer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                <span class="composer-input">Nachricht an EvGlab …</span>
+                <span class="composer-model">4K<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+                <span class="send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B: Messe-Countdown -->
+      <div class="bcard bcard--wide is-flipped" data-reveal>
+        <div class="bcard-copy">
+          <h3 class="bcard-title">Pünktlich zum ersten Messetag</h3>
+          <p class="bcard-text">Mit dem Messe-Countdown planen wir rückwärts von Ihrem Messetermin. Sie wissen ab Tag 1, wann was freigegeben wird.</p>
+          <a class="btn-pill" href="#">Zeitplan für meine Messe anfragen</a>
+        </div>
+        <div class="bcard-stage" data-sequence="550">
+          <div class="win win--plan">
+            <div class="win-bar">Messe-Countdown</div>
+            <div class="win-head">
+              <div>
+                <div class="win-channel">Ihr Messeauftritt</div>
+                <div class="win-members">Rückwärts geplant ab Messetag 1</div>
+              </div>
+              <div class="plan-count"><span class="odo" data-odo="42">42</span><small>Tage bis<br>Messetag 1</small></div>
+            </div>
+            <div class="gantt">
+              <div class="ghead">
+                <span></span><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span class="gfair">Messe</span>
+              </div>
+                <div class="grow" data-step="1">
+                  <span class="gname">Story &amp; Standanalyse</span>
+                  <span class="gbar" style="grid-column:2 / 3"><i></i></span>
+                  <span class="gok">Freigabe: Kernbotschaft</span>
+                </div>
+                <div class="grow" data-step="2">
+                  <span class="gname">Styleframes</span>
+                  <span class="gbar" style="grid-column:3 / 4"><i></i></span>
+                  <span class="gok">Freigabe: Look</span>
+                </div>
+                <div class="grow" data-step="3">
+                  <span class="gname">Animatic &amp; Technik</span>
+                  <span class="gbar" style="grid-column:4 / 6"><i></i></span>
+                  <span class="gok">Freigabe: Entwicklung</span>
+                </div>
+                <div class="grow" data-step="4">
+                  <span class="gname">Rendering</span>
+                  <span class="gbar" style="grid-column:6 / 7"><i></i></span>
+                  
+                </div>
+                <div class="grow" data-step="5">
+                  <span class="gname">Fassungen &amp; Abnahme</span>
+                  <span class="gbar" style="grid-column:7 / 8"><i></i></span>
+                  <span class="gok">Abnahme</span>
+                </div>
+                <div class="grow grow--fair" data-step="6">
+                  <span class="gname">Messetag 1</span>
+                  <span class="gflag" style="grid-column:8 / 9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg></span>
+                  <span class="gok gok--solid">Film läuft am Stand</span>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- C: Formate -->
+      <div class="bcard bcard--half" data-reveal>
+        <div class="bcard-visual">
+          <div class="formats" data-formats></div>
+        </div>
+        <div class="bcard-copy">
+          <h3 class="bcard-title">Für jede Fläche gerendert</h3>
+          <p class="bcard-text">Von der LED-Wand über den Touchscreen bis zum Tablet am Stehtisch: jedes Format passgenau ausgespielt.</p>
+        </div>
+      </div>
+
+      <!-- D: Technische Freigabe -->
+      <div class="bcard bcard--half" data-reveal style="--d:.12s">
+        <div class="bcard-visual">
+          <div class="prompt">
+            <p>Bei
+              <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>00:12</span>
+              dreht sich der
+              <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg>Dichtring</span>
+              in die falsche Richtung. Bitte gegen den Uhrzeigersinn. <span class="prompt-muted">(Sonst passt alles.)</span><span class="caret"></span>
+            </p>
+            <div class="prompt-bar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              <span class="prompt-mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4-2.5z"/></svg>Animatic v2</span>
+              <span class="spacer"></span>
+              <span class="composer-model">Entwicklung<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg></span>
+              <span class="send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span>
+            </div>
+          </div>
+        </div>
+        <div class="bcard-copy">
+          <h3 class="bcard-title">Technisch korrekt, bevor gerendert wird</h3>
+          <p class="bcard-text">Ihre Entwicklung prüft jede Bewegung im Animatic und gibt sie frei. Gerendert wird erst, wenn alles stimmt.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ 3 — VERGLEICH ═══════════ -->
+  <section class="section compare" id="vergleich">
+    <div class="compare-noise" aria-hidden="true"></div>
+    <div class="container">
+      <div class="compare-head" data-reveal>
+        <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Warum wir</span>
+        <h2 class="h2">Das unterscheidet uns von <strong>klassischen 3D-Studios</strong>.</h2>
+      </div>
+
+      <div class="compare-table" data-reveal style="--d:.1s">
+        <div class="compare-col compare-col--with">
+          <img class="compare-bg" src="/3d-produktanimation/images/compare-bg.png" alt="" loading="lazy">
+          <p class="compare-label">Mit EvGlab</p>
+          <ul class="compare-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.3 2.3 4.7-4.9"/></svg>Gemacht für die Messehalle</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.3 2.3 4.7-4.9"/></svg>Ein fester Ansprechpartner</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.3 2.3 4.7-4.9"/></svg>Storyboard mit Stopp-Effekt</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.3 2.3 4.7-4.9"/></svg>Jedes Format für Ihren Stand</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.3 2.3 4.7-4.9"/></svg>Festpreis ohne Überraschungen</li>
+          </ul>
+        </div>
+        <div class="compare-col compare-col--without">
+          <p class="compare-label">Klassisches 3D-Studio</p>
+          <ul class="compare-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.3 9.3l5.4 5.4M14.7 9.3l-5.4 5.4"/></svg>Erklärfilme fürs Datenblatt</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.3 9.3l5.4 5.4M14.7 9.3l-5.4 5.4"/></svg>Wechselnde Zuständigkeiten</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.3 9.3l5.4 5.4M14.7 9.3l-5.4 5.4"/></svg>Lange Intros, die keiner sieht</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.3 9.3l5.4 5.4M14.7 9.3l-5.4 5.4"/></svg>Ein Format für alles</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.3 9.3l5.4 5.4M14.7 9.3l-5.4 5.4"/></svg>Kosten, die nachträglich steigen</li>
+          </ul>
+        </div>
+        <span class="compare-vs">VS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 4 — CTA ═══════════ -->
+  <section class="section cta" id="kontakt">
+    <div class="compare-noise" aria-hidden="true"></div>
+    <div class="container">
+      <div class="cta-head" data-reveal>
+        <div class="cta-head-text">
+          <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Nächster Schritt</span>
+          <h2 class="h2">Ihre nächste Messe beginnt <strong>mit einem Gespräch</strong>.</h2>
+        </div>
+        <a class="btn-swap" href="#"><span>Erstgespräch vereinbaren</span><span aria-hidden="true">Erstgespräch vereinbaren</span></a>
+      </div>
+
+      <div class="cta-grid">
+        <div class="cta-media" data-reveal>
+          <img src="/3d-produktanimation/images/cta-handshake.png" alt="" width="1536" height="1024" loading="lazy">
+          <div class="cta-media-content">
+            <div class="cta-big"><span class="odo" data-odo="3 Sek.">3 Sek.</span></div>
+            <div class="cta-media-label">
+              <strong>So viel Zeit hat Ihr Stand</strong>
+              <span>Mehr bekommt kein Aussteller, um einen vorbeilaufenden Besucher zu stoppen. Dafür bauen wir jeden Film.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-card" data-reveal style="--d:.12s">
+          <p>In 30 Minuten klären wir, welche Geschichte Ihr Produkt am Stand erzählen soll und welches Format dafür passt. Unverbindlich und ohne Agentur-Floskeln.</p>
+          <div class="cta-stats">
+            <div class="cta-stat"><span>Dauer des Gesprächs</span><span class="odo" data-odo="30 Min.">30 Min.</span></div>
+            <div class="cta-divider"></div>
+            <div class="cta-stat"><span>Kosten für Sie</span><span class="odo" data-odo="0 €">0 €</span></div>
+            <div class="cta-divider"></div>
+            <div class="cta-stat"><span>Verpflichtung</span><span>Keine</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 5 — POTENZIALANALYSE ═══════════ -->
+  <section class="section check" id="analyse">
+    <div class="check-bg" aria-hidden="true">
+      <img src="/3d-produktanimation/images/discus-statue.png" alt="" data-parallax="0.12" loading="lazy">
+    </div>
+    <div class="container">
+      <div class="check-copy" data-reveal>
+        <span class="check-eyebrow">Ihr nächster Schritt</span>
+        <h2 class="h2">Die kostenlose <strong>Potenzialanalyse</strong> für Ihr technisches Produkt.</h2>
+        <p class="check-intro">Wer täglich mit einem Produkt arbeitet, sieht nicht mehr, was Außenstehende nicht verstehen. Bei technischen Produkten steckt der eigentliche Wert oft im Inneren: in Mechanik, Abläufen und Details, die man weder am Exponat noch auf einem Foto erkennt. Im Gespräch schauen wir gemeinsam von außen drauf und sagen Ihnen konkret, was sich in 3D zeigen lässt. Für die Messe und darüber hinaus.</p>
+        <p class="check-intro">So läuft es ab: Sie schicken uns ein kurzes Video Ihres Messestands. Daraus erstellen wir ein Vorher-Nachher-Showvideo, das zeigt, wie ein 3D-Film auf Ihrem Stand platziert ist und wirkt. Im Potenzialgespräch gehen wir es gemeinsam durch.</p>
+
+        <p class="check-learn">Hier erfahren Sie:</p>
+        <ul class="check-list">
+          <li><span class="n">01</span><span><strong>Wie Ihr Stand mit 3D-Film wirkt:</strong> im Vorher-Nachher-Showvideo, gebaut auf Basis Ihres eigenen Messestands.</span></li>
+          <li><span class="n">02</span><span><strong>Welche Funktion Ihres Produkts heute unsichtbar bleibt</strong> und wie Schnitt, Explosion oder Ablauf sie verständlich machen.</span></li>
+          <li><span class="n">03</span><span><strong>Was ein Messebesucher in 3 Sekunden verstehen muss</strong>, damit er stehen bleibt, statt weiterzugehen.</span></li>
+          <li><span class="n">04</span><span><strong>Wo derselbe Film nach der Messe weiterarbeitet</strong>: im Vertrieb, auf der Website, in Präsentationen und Schulungen.</span></li>
+          <li><span class="n">05</span><span><strong>Welcher Zeitplan zu Ihrer nächsten Messe passt</strong> und welche Unterlagen wir dafür von Ihnen brauchen.</span></li>
+        </ul>
+
+        <div class="check-actions">
+          <a class="btn-swap" href="#"><span>Jetzt kostenlose Potenzialanalyse sichern</span><span aria-hidden="true">Jetzt kostenlose Potenzialanalyse sichern</span></a>
+          <span class="check-trust">Kostenlos und unverbindlich</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#hero" aria-label="EvGlab, nach oben">EvGlab</a>
+          <p class="footer-claim">3D-Produktfilme für Messen. <em>Gemacht, damit Besucher stehen bleiben.</em></p>
+        </div>
+
+        <nav class="footer-col" aria-label="Seitenbereiche">
+          <span class="footer-label">Seite</span>
+          <a href="#faktoren">Erfolgsfaktoren</a>
+          <a href="#ablauf">Ablauf</a>
+          <a href="#vergleich">Vergleich</a>
+          <a href="#kontakt">Erstgespräch</a>
+          <a href="#analyse">Potenzialanalyse</a>
+        </nav>
+
+        <div class="footer-col">
+          <span class="footer-label">Vertrieb</span>
+          <p class="footer-person">Baris Basöz<span>Vertrieb 3D-Produktfilme</span></p>
+          <a href="tel:+4917672791512">+49 176 72791512</a>
+          <a href="mailto:kontakt@evglab.com">kontakt@evglab.com</a>
+        </div>
+
+        <div class="footer-col">
+          <span class="footer-label">Anbieter</span>
+          <address>
+            Erik Freiherr von Gregory<br>
+            Hauptstraße 18<br>
+            86925 Fuchstal
+          </address>
+          <a href="mailto:info@evglab.com">info@evglab.com</a>
+          <a href="tel:+4915565602176">+49 1556 5602176</a>
+        </div>
+
+        <nav class="footer-col" aria-label="Rechtliches">
+          <span class="footer-label">Rechtliches</span>
+          <a href="/impressum">Impressum</a>
+          <a href="/datenschutz">Datenschutz</a>
+          <button type="button" data-cc-open>Cookie-Einstellungen</button>
+          <a href="/">evglab.com</a>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 EvGlab · Erik Freiherr von Gregory</span>
+        <a class="footer-top-link" href="#hero">Nach oben
+          <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 10.5V1.5M6 1.5L2 5.5M6 1.5l4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/3d-produktanimation/js/consent.js" defer></script>
+  <script src="/3d-produktanimation/js/vendor/gsap.min.js" defer></script>
+  <script src="/3d-produktanimation/js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="/3d-produktanimation/js/vendor/SplitText.min.js" defer></script>
+  <script src="/3d-produktanimation/js/vendor/DrawSVGPlugin.min.js" defer></script>
+  <script src="/3d-produktanimation/js/vendor/lenis.min.js" defer></script>
+  <script src="/3d-produktanimation/js/scroll.js" defer></script>
+  <script src="/3d-produktanimation/js/hero-light.js" defer></script>
+  <script src="/3d-produktanimation/js/sections.js" defer></script>
+  <script src="/3d-produktanimation/js/motion.js" defer></script>
+  <script src="/3d-produktanimation/js/factors-art.js" defer></script>
+</body>
+</html>

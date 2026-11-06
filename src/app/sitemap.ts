@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/", priority: 1, changeFrequency: "weekly" },
     { path: "/webdesign-landsberg", priority: 0.9, changeFrequency: "monthly" },
     { path: "/videos", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/3d-produktanimation", priority: 0.8, changeFrequency: "monthly" },
     { path: "/ueber-uns", priority: 0.8, changeFrequency: "monthly" },
     { path: "/impressum", priority: 0.3, changeFrequency: "yearly" },
     { path: "/datenschutz", priority: 0.3, changeFrequency: "yearly" },
