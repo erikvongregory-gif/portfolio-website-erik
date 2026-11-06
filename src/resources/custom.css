@@ -75,6 +75,12 @@ body {
   overscroll-behavior-x: none;
 }
 
+/* iOS Safari ignores user-scalable=no; touch-action blocks pinch- and
+   double-tap-zoom there while normal scrolling keeps working. */
+html {
+  touch-action: pan-x pan-y;
+}
+
 /* Alle Überschriften: Inter Tight, Weight 400 wie der Hero */
 :root {
   --font-weight-display-strong: 400;

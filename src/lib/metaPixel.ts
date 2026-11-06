@@ -1,3 +1,5 @@
+import { hasMarketingConsent } from "@/lib/cookieConsent";
+
 export const META_PIXEL_ID =
   process.env.NEXT_PUBLIC_META_PIXEL_ID || "919588920489707";
 
@@ -14,9 +16,10 @@ declare global {
   }
 }
 
-/** Standard-Event an Meta senden (nur wenn Pixel geladen ist). */
+/** Standard-Event an Meta senden (nur mit Marketing-Einwilligung und geladenem Pixel). */
 export function trackMetaEvent(event: string, params?: Record<string, unknown>) {
   if (typeof window === "undefined" || typeof window.fbq !== "function") return;
+  if (!hasMarketingConsent()) return;
   if (params) window.fbq("track", event, params);
   else window.fbq("track", event);
 }

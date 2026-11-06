@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Script from "next/script";
 import { META_PIXEL_ID } from "@/lib/metaPixel";
 import { useMarketingConsent } from "@/lib/useMarketingConsent";
@@ -7,9 +8,16 @@ import { useMarketingConsent } from "@/lib/useMarketingConsent";
 /**
  * Lädt den Meta Pixel erst nach Marketing-Einwilligung.
  * Ohne NEXT_PUBLIC_META_PIXEL_ID greift die Projekt-Default-ID.
+ * Ein bereits geladener Pixel wird beim Widerruf per fbq('consent', 'revoke') gestoppt
+ * und bei erneuter Zustimmung wieder freigegeben.
  */
 export function ConsentMetaPixel() {
   const enabled = useMarketingConsent();
+
+  useEffect(() => {
+    if (typeof window.fbq !== "function") return;
+    window.fbq("consent", enabled ? "grant" : "revoke");
+  }, [enabled]);
 
   if (!enabled || !META_PIXEL_ID) return null;
 

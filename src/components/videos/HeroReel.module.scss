@@ -1,5 +1,8 @@
+// The fanned stack is ~1.4× as wide as it is tall: cap the height by the
+// viewport width so the three frames never stick out on phones.
 .stage {
-  height: clamp(22rem, 46vw, 34rem);
+  height: min(clamp(22rem, 46vw, 34rem), 62vw);
+  max-width: 100%;
 }
 
 .frame {
