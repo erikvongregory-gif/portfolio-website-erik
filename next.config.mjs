@@ -9,6 +9,10 @@ const withMDX = mdx({
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   transpilePackages: ["next-mdx-remote"],
+  // Lead-magnet PDF is read from disk by the confirm route, not served publicly.
+  outputFileTracingIncludes: {
+    "/api/fenster/bestaetigen": ["./private/fenster-playbook.pdf"],
+  },
   images: {
     remotePatterns: [
       {
