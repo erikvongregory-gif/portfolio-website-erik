@@ -15,9 +15,11 @@
 }
 .footer-top {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
-  gap: 48px;
+  grid-template-columns: minmax(0, 1.4fr) repeat(4, minmax(0, 1fr));
+  gap: 40px;
 }
+.footer-person { display: flex; flex-direction: column; gap: 2px; line-height: 1.4; color: var(--white); }
+.footer-person span { font-size: 13px; color: var(--faint); }
 .footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
 .footer-logo {
   font-family: var(--font-header);
@@ -84,7 +86,7 @@
 .footer-top-link svg { width: 12px; height: 12px; }
 
 @media (max-width: 1023px) {
-  .footer-top { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .footer-top { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .footer-brand { grid-column: 1 / -1; }
 }
 @media (max-width: 809px) {
