@@ -18,6 +18,7 @@
   <link rel="preload" href="/3d-produktanimation/images/discus-statue.png" as="image">
   <link rel="stylesheet" href="/3d-produktanimation/css/brand.css">
   <link rel="stylesheet" href="/3d-produktanimation/css/sections.css">
+  <link rel="stylesheet" href="/3d-produktanimation/css/legal.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-text-size-adjust: 100%; }
@@ -610,17 +611,53 @@
 
   </main>
 
-  <footer class="legal-footer">
-    <span>© Evglab</span>
-    <a href="/impressum">Impressum</a>
-    <a href="/datenschutz">Datenschutz</a>
-  </footer>
-  <style>
-    .legal-footer { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; padding: 32px 16px 40px; background: var(--black); color: var(--gray-500); font-size: 13px; }
-    .legal-footer a { color: var(--gray-300); text-decoration: none; }
-    .legal-footer a:hover { color: var(--white); }
-  </style>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="footer-logo" href="#hero" aria-label="Evglab, nach oben">Evglab</a>
+          <p class="footer-claim">3D-Produktfilme für Messen. <em>Gemacht, damit Besucher stehen bleiben.</em></p>
+        </div>
 
+        <nav class="footer-col" aria-label="Seitenbereiche">
+          <span class="footer-label">Seite</span>
+          <a href="#faktoren">Erfolgsfaktoren</a>
+          <a href="#ablauf">Ablauf</a>
+          <a href="#vergleich">Vergleich</a>
+          <a href="#kontakt">Erstgespräch</a>
+          <a href="#analyse">Potenzialanalyse</a>
+        </nav>
+
+        <div class="footer-col">
+          <span class="footer-label">Kontakt</span>
+          <address>
+            Erik Freiherr von Gregory<br>
+            Hauptstraße 18<br>
+            86925 Fuchstal
+          </address>
+          <a href="mailto:info@evglab.com">info@evglab.com</a>
+          <a href="tel:+4915565602176">01556 5602176</a>
+        </div>
+
+        <nav class="footer-col" aria-label="Rechtliches">
+          <span class="footer-label">Rechtliches</span>
+          <a href="/impressum">Impressum</a>
+          <a href="/datenschutz">Datenschutz</a>
+          <button type="button" data-cc-open>Cookie-Einstellungen</button>
+          <a href="/">evglab.com</a>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Evglab · Erik Freiherr von Gregory</span>
+        <a class="footer-top-link" href="#hero">Nach oben
+          <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 10.5V1.5M6 1.5L2 5.5M6 1.5l4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/3d-produktanimation/js/consent.js" defer></script>
   <script src="/3d-produktanimation/js/vendor/lenis.min.js" defer></script>
   <script src="/3d-produktanimation/js/scroll.js" defer></script>
   <script src="/3d-produktanimation/js/hero-light.js" defer></script>
