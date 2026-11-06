@@ -181,23 +181,20 @@
     });
   }
 
+  // Erste Ebene: schmale Leiste unten. Zweck, Dienste, USA-Hinweis und
+  // zwei gleichwertige Knöpfe; Details über „Mehr anzeigen“.
   function introHTML() {
     return '' +
-      '<span class="cc-eyebrow">Datenschutz</span>' +
-      '<h2 class="cc-title" id="cc-title">Ihre Daten, <strong>Ihre Wahl.</strong></h2>' +
-      '<p class="cc-text" id="cc-desc">Wir verwenden technisch notwendige Speicherung, damit diese Seite funktioniert. ' +
-      'Mit Ihrer Einwilligung nutzen wir zusätzlich Statistik (Vercel Analytics, Google Analytics) und Marketing (Meta Pixel). ' +
-      'Dabei können Daten in die USA übermittelt werden.</p>' +
-      '<p class="cc-text">Ihre Einwilligung ist freiwillig und jederzeit über „Cookie-Einstellungen“ im Footer widerrufbar. ' +
-      'Mehr in der <a href="/datenschutz">Datenschutzerklärung</a>.</p>' +
-      '<div class="cc-actions">' +
-        '<button type="button" class="cc-btn" data-cc="reject">Nur notwendige</button>' +
-        '<button type="button" class="cc-btn" data-cc="accept">Alle akzeptieren</button>' +
-      '</div>' +
-      '<div class="cc-links">' +
-        '<button type="button" data-cc="settings">Einstellungen anpassen</button>' +
-        '<a href="/datenschutz">Datenschutz</a>' +
-        '<a href="/impressum">Impressum</a>' +
+      '<div class="cc-bar">' +
+        '<p class="cc-bar-text" id="cc-desc"><strong id="cc-title">Cookies:</strong> ' +
+        'Statistik und Marketing (Vercel, Google, Meta) laden wir nur mit Ihrer Einwilligung, ' +
+        'dabei sind Übermittlungen in die USA möglich. Jederzeit im Footer widerrufbar. ' +
+        '<span class="cc-nowrap"><a href="/datenschutz">Datenschutz</a> · <a href="/impressum">Impressum</a></span></p>' +
+        '<div class="cc-bar-actions">' +
+          '<button type="button" class="cc-more" data-cc="settings" aria-expanded="false">Mehr anzeigen</button>' +
+          '<button type="button" class="cc-btn" data-cc="reject">Nur notwendige</button>' +
+          '<button type="button" class="cc-btn" data-cc="accept">Alle akzeptieren</button>' +
+        '</div>' +
       '</div>';
   }
 
@@ -232,6 +229,7 @@
         '<button type="button" class="cc-btn cc-btn--ghost cc-btn--wide" data-cc="save">Auswahl speichern</button>' +
       '</div>' +
       '<div class="cc-links">' +
+        (c ? '' : '<button type="button" data-cc="intro">Weniger anzeigen</button>') +
         '<a href="/datenschutz">Datenschutz</a>' +
         '<a href="/impressum">Impressum</a>' +
       '</div>';
@@ -254,6 +252,7 @@
       document.body.appendChild(root);
     }
     root.innerHTML = view === 'settings' ? settingsHTML(current) : introHTML();
+    root.classList.toggle('cc--bar', view !== 'settings');
     root.hidden = false;
     void root.offsetWidth; // Startzustand übernehmen, damit die Einblendung animiert
     root.classList.add('is-in');
@@ -276,6 +275,7 @@
     if (!btn) return;
     var action = btn.getAttribute('data-cc');
     if (action === 'settings') { open('settings', true); return; }
+    if (action === 'intro') { open('intro', true); return; }
     if (action === 'accept') write({ statistics: true, marketing: true });
     if (action === 'reject') write({ statistics: false, marketing: false });
     if (action === 'save') {
