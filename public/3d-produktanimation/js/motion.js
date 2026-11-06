@@ -19,7 +19,7 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const EASE = 'power4.out';
   const PLAY = 'play none none none'; // einmal abspielen, Trigger bleibt bestehen
-  const SHADOW = 'drop-shadow(0 30px 60px rgba(0,0,0,0.9))';
+  const SHADOW = 'drop-shadow(0 1.875rem 3.75rem rgba(0,0,0,0.9))';
   const isMobile = matchMedia('(max-width: 809px)').matches;
 
   // Zeilen aus einer Maske heben (Überschriften)
@@ -143,18 +143,53 @@
   const factorsHead = $('.factors-head');
   if (factorsHead) rise($('p', factorsHead), factorsHead, { delay: 0.25 });
   const factors = $$('.factor');
+  const CLIP_FROM = 'inset(100% 0% 0% 0% round 1.25rem)';
+  const CLIP_TO = 'inset(0% 0% 0% 0% round 1.25rem)';
   if (factors.length) {
-    gsap.from(factors, {
-      y: 70, autoAlpha: 0, duration: 1.3, ease: EASE, stagger: 0.14,
-      scrollTrigger: { trigger: '.factors', start: 'clamp(top 84%)', toggleActions: PLAY },
-    });
-    gsap.fromTo($$('.factor-media'),
-      { clipPath: 'inset(100% 0% 0% 0% round 20px)' },
-      {
-        clipPath: 'inset(0% 0% 0% 0% round 20px)', duration: 1.5, ease: 'expo.out', stagger: 0.14,
+    const mm = gsap.matchMedia();
+
+    // Tablet und Desktop: Karten nebeneinander, gestaffelt einblenden
+    mm.add('(min-width: 810px)', () => {
+      gsap.from(factors, {
+        y: 70, autoAlpha: 0, duration: 1.3, ease: EASE, stagger: 0.14,
+        scrollTrigger: { trigger: '.factors', start: 'clamp(top 84%)', toggleActions: PLAY },
+      });
+      gsap.fromTo($$('.factor-media'), { clipPath: CLIP_FROM }, {
+        clipPath: CLIP_TO, duration: 1.5, ease: 'expo.out', stagger: 0.14,
         scrollTrigger: { trigger: '.factors', start: 'clamp(top 84%)', toggleActions: PLAY },
         onComplete() { gsap.set(this.targets(), { clearProps: 'clipPath' }); },
       });
+    });
+
+    // Handy: Karten stapeln sich. Jede neue schiebt sich über die vorige,
+    // die vorige wird dabei kleiner und dunkler.
+    mm.add('(max-width: 809px)', () => {
+      factors.forEach((card, i) => {
+        const media = $('.factor-media', card);
+        // Einblenden über die Kinder, damit die Karte selbst nur fürs Stapeln skaliert
+        gsap.timeline({ scrollTrigger: { trigger: card, start: 'clamp(top 90%)', toggleActions: PLAY } })
+          .from(card.children, { y: 60, autoAlpha: 0, duration: 1.2, ease: EASE, stagger: 0.08 })
+          .fromTo(media, { clipPath: CLIP_FROM }, {
+            clipPath: CLIP_TO, duration: 1.4, ease: 'expo.out',
+            onComplete() { gsap.set(media, { clearProps: 'clipPath' }); },
+          }, 0.05);
+
+        const next = factors[i + 1];
+        if (!next) return;
+        gsap.fromTo(card, { scale: 1, filter: 'brightness(1)' }, {
+          scale: 0.9,
+          filter: 'brightness(0.4)',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: next,
+            start: 'top bottom',
+            end: () => 'top ' + (parseFloat(getComputedStyle(next).top) || 0) + 'px',
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+    });
   }
 
   /* ── 5 · Bento-Karten ──────────────────────── */
@@ -193,9 +228,9 @@
   const ctaMedia = $('.cta-media');
   if (ctaMedia) {
     gsap.fromTo(ctaMedia,
-      { clipPath: 'inset(12% 10% 12% 10% round 14px)', autoAlpha: 0 },
+      { clipPath: 'inset(12% 10% 12% 10% round 0.875rem)', autoAlpha: 0 },
       {
-        clipPath: 'inset(0% 0% 0% 0% round 14px)', autoAlpha: 1, duration: 1.6, ease: 'expo.out',
+        clipPath: 'inset(0% 0% 0% 0% round 0.875rem)', autoAlpha: 1, duration: 1.6, ease: 'expo.out',
         scrollTrigger: { trigger: ctaMedia, start: 'clamp(top 85%)', toggleActions: PLAY },
         onComplete() { gsap.set(ctaMedia, { clearProps: 'clipPath' }); },
       });

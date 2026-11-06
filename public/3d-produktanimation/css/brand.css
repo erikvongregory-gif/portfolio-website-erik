@@ -31,11 +31,11 @@
   --text-letter-spacing: 0;
 
   /* Größen */
-  --size-h1: 33px;          /* Hero-Headline, Zeilenhöhe 1.1 */
+  --size-h1: 2.0625rem;          /* Hero-Headline, Zeilenhöhe 1.1 */
   --size-h1-line: 1.1;
-  --size-h2: 40px;          /* Sektions-Headlines (Desktop 48 → max 40) */
-  --size-h3: 24px;
-  --size-text: 16px;
+  --size-h2: 2.5rem;          /* Sektions-Headlines (Desktop 48 → max 40) */
+  --size-h3: 1.5rem;
+  --size-text: 1rem;
 
   /* Farben — Schwarz / Weiß */
   --black: #000000;

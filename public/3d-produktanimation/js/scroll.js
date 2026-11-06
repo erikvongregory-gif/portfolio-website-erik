@@ -10,6 +10,9 @@
 
   if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
+  // Kein Pinch-Zoom in Safari (ergänzt touch-action im CSS)
+  document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive: false });
+
   // Weiches, gedämpftes Scrollen
   if (!reduce && window.Lenis) {
     lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 });
