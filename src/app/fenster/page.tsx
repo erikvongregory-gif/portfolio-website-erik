@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { CookieSettingsButton } from "@/components/CookieSettingsButton";
 import FensterForm from "./FensterForm";
 import styles from "./fenster.module.scss";
 
@@ -68,6 +70,12 @@ export default async function Fenster({
           </>
         )}
       </div>
+
+      <nav className={styles.legal} aria-label="Rechtliches">
+        <Link href="/impressum">Impressum</Link>
+        <Link href="/datenschutz">Datenschutz</Link>
+        <CookieSettingsButton />
+      </nav>
     </section>
   );
 }
