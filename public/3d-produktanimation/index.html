@@ -128,7 +128,7 @@
       filter: drop-shadow(0 30px 60px rgba(0,0,0,0.9));
     }
     .hero-statue--left  { left: -5vw; }
-    .hero-statue--right { right: -5vw; transform: scaleX(-1); }
+    .hero-statue--right { right: -5vw; scale: -1 1; } /* eigene Eigenschaft: GSAP-Transforms heben die Spiegelung nicht auf */
 
     /* Copy — mittig */
     .hero-inner {
@@ -684,10 +684,12 @@
   <script src="/3d-produktanimation/js/vendor/gsap.min.js" defer></script>
   <script src="/3d-produktanimation/js/vendor/ScrollTrigger.min.js" defer></script>
   <script src="/3d-produktanimation/js/vendor/SplitText.min.js" defer></script>
+  <script src="/3d-produktanimation/js/vendor/DrawSVGPlugin.min.js" defer></script>
   <script src="/3d-produktanimation/js/vendor/lenis.min.js" defer></script>
   <script src="/3d-produktanimation/js/scroll.js" defer></script>
   <script src="/3d-produktanimation/js/hero-light.js" defer></script>
   <script src="/3d-produktanimation/js/sections.js" defer></script>
   <script src="/3d-produktanimation/js/motion.js" defer></script>
+  <script src="/3d-produktanimation/js/factors-art.js" defer></script>
 </body>
 </html>

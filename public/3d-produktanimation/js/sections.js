@@ -83,7 +83,7 @@
         const r = el.parentElement.getBoundingClientRect();
         if (r.bottom < 0 || r.top > vh) return;
         const shift = (r.top + r.height / 2 - vh / 2) * -parseFloat(el.dataset.parallax);
-        el.style.transform = `translateY(${shift.toFixed(1)}px) scaleX(-1)`;
+        el.style.transform = `translateY(${shift.toFixed(1)}px)`;
       });
     };
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });

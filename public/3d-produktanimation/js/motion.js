@@ -65,7 +65,6 @@
   const statueL = $('.hero-statue--left');
   const statueR = $('.hero-statue--right');
   const heroInner = $('.hero-inner');
-  if (statueR) gsap.set(statueR, { scaleX: -1 });
 
   const intro = gsap.timeline({ defaults: { ease: EASE }, delay: 0.15 });
   if (statueL && statueR) {
@@ -226,7 +225,6 @@
   }
   const checkImg = $('.check-bg img');
   if (checkImg) {
-    gsap.set(checkImg, { scaleX: -1 });
     gsap.fromTo(checkImg, { y: () => innerHeight * 0.12 }, {
       y: () => -innerHeight * 0.12, ease: 'none',
       scrollTrigger: { trigger: '.check', start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true },
