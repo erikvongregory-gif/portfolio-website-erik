@@ -74,7 +74,7 @@
 
   // Parallax für Hintergrundbilder (data-parallax = Stärke)
   const plx = Array.from(document.querySelectorAll('[data-parallax]'));
-  if (plx.length && !reduce) {
+  if (plx.length && !reduce && !window.gsap) {
     let ticking = false;
     const update = () => {
       ticking = false;

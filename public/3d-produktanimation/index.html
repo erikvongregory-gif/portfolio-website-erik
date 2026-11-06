@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Evglab | 3D-Produktfilme für Messen</title>
+  <title>EvGlab | 3D-Produktfilme für Messen</title>
   <meta name="description" content="3D-Produktfilme für Ihren Messeauftritt. Gemacht, damit Besucher stehen bleiben.">
   <link rel="canonical" href="https://evglab.com/3d-produktanimation">
   <link rel="icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-icon.png">
-  <meta property="og:title" content="Evglab | 3D-Produktfilme für Messen">
+  <meta property="og:title" content="EvGlab | 3D-Produktfilme für Messen">
   <meta property="og:description" content="3D-Produktfilme für Ihren Messeauftritt. Gemacht, damit Besucher stehen bleiben.">
   <meta property="og:url" content="https://evglab.com/3d-produktanimation">
   <meta property="og:type" content="website">
@@ -19,6 +19,22 @@
   <link rel="stylesheet" href="/3d-produktanimation/css/brand.css">
   <link rel="stylesheet" href="/3d-produktanimation/css/sections.css">
   <link rel="stylesheet" href="/3d-produktanimation/css/legal.css">
+  <script>
+    /* Hero bis zum GSAP-Start verbergen, damit nichts aufblitzt (Notbremse nach 3 s) */
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('motion-pending');
+      setTimeout(function () { document.documentElement.classList.remove('motion-pending'); }, 3000);
+    }
+  </script>
+  <style>
+    .motion-pending .site-header,
+    .motion-pending .hero-inner,
+    .motion-pending .hero-statue { visibility: hidden; }
+    /* Mit GSAP übernehmen die Timelines das Einblenden */
+    .has-motion [data-reveal] { opacity: 1; transform: none; transition: none; }
+    /* Masken für Zeilen: Platz für Ober- und Unterlängen */
+    .m-line-mask { padding: .1em 0 .16em; margin: -.1em 0 -.16em; }
+  </style>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-text-size-adjust: 100%; }
@@ -206,7 +222,7 @@
   <section id="hero">
     <header class="site-header">
       <a class="nav-link" href="#">Beispiele</a>
-      <a class="logo" href="#hero" aria-label="Evglab Startseite">Evglab</a>
+      <a class="logo" href="#hero" aria-label="EvGlab Startseite">EvGlab</a>
       <a class="nav-link" href="#analyse">Potenzialanalyse</a>
     </header>
     <div class="hero-light" data-hero-light aria-hidden="true"></div>
@@ -377,7 +393,7 @@
               <div class="msg" data-step="2">
                 <span class="studio-mark"></span>
                 <div>
-                  <div><span class="msg-name">Evglab</span><span class="msg-app">TEAM</span><span class="msg-time">09:44</span></div>
+                  <div><span class="msg-name">EvGlab</span><span class="msg-app">TEAM</span><span class="msg-time">09:44</span></div>
                   <span class="typing" data-step="2" data-hide="7"><i></i><i></i><i></i></span>
                   <p class="msg-text" data-step="7">Geht. Wir bauen die Anlage aus Ihren CAD-Daten in 3D nach, inklusive Schnittansicht. Das Storyboard liegt schon im Ordner.</p>
                 </div>
@@ -401,7 +417,7 @@
               </ul>
               <div class="composer">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-                <span class="composer-input">Nachricht an Evglab …</span>
+                <span class="composer-input">Nachricht an EvGlab …</span>
                 <span class="composer-model">4K<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg></span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
                 <span class="send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span>
@@ -518,7 +534,7 @@
       <div class="compare-table" data-reveal style="--d:.1s">
         <div class="compare-col compare-col--with">
           <img class="compare-bg" src="/3d-produktanimation/images/compare-bg.png" alt="" loading="lazy">
-          <p class="compare-label">Mit Evglab</p>
+          <p class="compare-label">Mit EvGlab</p>
           <ul class="compare-list">
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.3 2.3 4.7-4.9"/></svg>Gemacht für die Messehalle</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.3 2.3 4.7-4.9"/></svg>Ein fester Ansprechpartner</li>
@@ -615,7 +631,7 @@
     <div class="container">
       <div class="footer-top">
         <div class="footer-brand">
-          <a class="footer-logo" href="#hero" aria-label="Evglab, nach oben">Evglab</a>
+          <a class="footer-logo" href="#hero" aria-label="EvGlab, nach oben">EvGlab</a>
           <p class="footer-claim">3D-Produktfilme für Messen. <em>Gemacht, damit Besucher stehen bleiben.</em></p>
         </div>
 
@@ -656,7 +672,7 @@
       </div>
 
       <div class="footer-bottom">
-        <span>© 2026 Evglab · Erik Freiherr von Gregory</span>
+        <span>© 2026 EvGlab · Erik Freiherr von Gregory</span>
         <a class="footer-top-link" href="#hero">Nach oben
           <svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 10.5V1.5M6 1.5L2 5.5M6 1.5l4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -665,9 +681,13 @@
   </footer>
 
   <script src="/3d-produktanimation/js/consent.js" defer></script>
+  <script src="/3d-produktanimation/js/vendor/gsap.min.js" defer></script>
+  <script src="/3d-produktanimation/js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="/3d-produktanimation/js/vendor/SplitText.min.js" defer></script>
   <script src="/3d-produktanimation/js/vendor/lenis.min.js" defer></script>
   <script src="/3d-produktanimation/js/scroll.js" defer></script>
   <script src="/3d-produktanimation/js/hero-light.js" defer></script>
   <script src="/3d-produktanimation/js/sections.js" defer></script>
+  <script src="/3d-produktanimation/js/motion.js" defer></script>
 </body>
 </html>

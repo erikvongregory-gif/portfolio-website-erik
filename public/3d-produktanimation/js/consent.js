@@ -145,7 +145,7 @@
       locked: true,
       desc: 'Speichert Ihre Cookie-Auswahl, damit wir nicht bei jedem Besuch erneut fragen. Ohne diese Speicherung funktioniert die Seite nicht wie vorgesehen.',
       rows: [
-        ['Anbieter', 'Evglab (Erik Freiherr von Gregory)'],
+        ['Anbieter', 'EvGlab (Erik Freiherr von Gregory)'],
         ['Speicher', 'localStorage „evglab-cookie-consent“'],
         ['Dauer', '12 Monate oder bis Sie die Auswahl ändern'],
         ['Grundlage', '§ 25 Abs. 2 Nr. 2 TDDDG, Art. 6 Abs. 1 lit. c DSGVO']

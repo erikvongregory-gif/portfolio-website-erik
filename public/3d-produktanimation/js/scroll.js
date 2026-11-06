@@ -1,16 +1,28 @@
 /* ═══════════════════════════════════════════
-   SCROLLEN: weiches Scrollen (Lenis) + Parallax der Hintergrund-Muster
+   SCROLLEN: weiches Scrollen (Lenis), getaktet über GSAP
+   Lenis läuft im GSAP-Ticker und meldet jede Bewegung an ScrollTrigger,
+   damit Scroll-Animationen exakt mit dem gedämpften Scrollen laufen.
 ═══════════════════════════════════════════ */
 (function () {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hasGsap = !!(window.gsap && window.ScrollTrigger);
   let lenis = null;
+
+  if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
   // Weiches, gedämpftes Scrollen
   if (!reduce && window.Lenis) {
     lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 });
-    const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
-    requestAnimationFrame(raf);
+    if (hasGsap) {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+    }
   }
+  window.lenis = lenis;
 
   // Anker-Links (z. B. „Potenzialanalyse" im Header) weich anfahren
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
@@ -20,14 +32,13 @@
       const target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      if (lenis) lenis.scrollTo(target, { duration: 1.6 });
+      if (lenis) lenis.scrollTo(target, { duration: 1.6, easing: (t) => 1 - Math.pow(1 - t, 4) });
       else target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
     });
   });
 
-  // Parallax: Muster bewegen sich langsamer/schneller als der Inhalt,
-  // Kreise drehen sich dabei leicht mit.
-  if (reduce) return;
+  // Parallax der Hintergrund-Muster: mit GSAP übernimmt motion.js.
+  if (reduce || hasGsap) return;
   const page = document.querySelector('.page');
   const els = Array.from(document.querySelectorAll('.bp [data-speed]'));
   if (!page || !els.length) return;
