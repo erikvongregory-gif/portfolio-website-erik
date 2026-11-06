@@ -13,12 +13,24 @@
   <meta property="og:url" content="https://evglab.com/3d-produktanimation">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="EvGlab">
+  <meta property="og:image" content="https://evglab.com/3d-produktanimation/images/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="EvGlab: 3D-Produktfilme für Messen. Gemacht, damit Besucher stehen bleiben.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="EvGlab | 3D-Produktfilme für Messen">
+  <meta name="twitter:description" content="3D-Produktfilme für Ihren Messeauftritt. Gemacht, damit Besucher stehen bleiben.">
+  <meta name="twitter:image" content="https://evglab.com/3d-produktanimation/images/og.png">
   <link rel="preload" href="/3d-produktanimation/fonts/libre-baskerville-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/3d-produktanimation/fonts/libre-baskerville-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/3d-produktanimation/images/discus-statue.png" as="image">
   <link rel="stylesheet" href="/3d-produktanimation/css/brand.css">
   <link rel="stylesheet" href="/3d-produktanimation/css/sections.css">
   <link rel="stylesheet" href="/3d-produktanimation/css/legal.css">
+  <link rel="stylesheet" href="/3d-produktanimation/css/film.css">
+  <link rel="preconnect" href="https://1rna9soq8do1awe3.public.blob.vercel-storage.com" crossorigin>
   <script>
     /* Hero bis zum GSAP-Start verbergen, damit nichts aufblitzt (Notbremse nach 3 s) */
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -234,7 +246,7 @@
 
   <section id="hero">
     <header class="site-header">
-      <a class="nav-link" href="#">Beispiele</a>
+      <a class="nav-link" href="#film">Beispiele</a>
       <a class="logo" href="#hero" aria-label="EvGlab Startseite">EvGlab</a>
       <a class="nav-link" href="#analyse">Potenzialanalyse</a>
     </header>
@@ -317,6 +329,37 @@
         </g>
       </svg>
     </div>
+
+  <!-- ═══════════ 0 — IMAGEFILM ═══════════ -->
+  <section class="section film" id="film">
+    <div class="container film-head" data-reveal>
+      <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M10 8.8v6.4l5.2-3.2z"/><circle cx="12" cy="12" r="9"/></svg>Beispiel</span>
+      <h2 class="h2">Technik, die man <strong>in Sekunden versteht</strong>.</h2>
+      <p class="film-caption">Imagefilm · 60 Sekunden · bis 4K mit 50 fps</p>
+    </div>
+
+    <div class="film-stage">
+      <div class="film-frame">
+        <video class="film-video" data-hls="https://1rna9soq8do1awe3.public.blob.vercel-storage.com/imagefilm/v1/master.m3u8" poster="/3d-produktanimation/images/film-poster.webp" muted loop playsinline preload="none" disablepictureinpicture aria-label="Imagefilm von EvGlab, 60 Sekunden"></video>
+
+        <button type="button" class="film-play" data-film="play" aria-label="Film abspielen" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
+        </button>
+
+        <div class="film-ui">
+          <span class="film-quality" aria-hidden="true"></span>
+          <button type="button" class="film-btn" data-film="sound" aria-pressed="false" aria-label="Ton einschalten">
+            <svg class="i-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9.5l5 5M21 9.5l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="i-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18.2 6.5a7.8 7.8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <span class="film-btn-label">Ton an</span>
+          </button>
+          <button type="button" class="film-btn film-btn--icon" data-film="fullscreen" aria-label="Vollbild">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ═══════════ 1 — DREI FAKTOREN ═══════════ -->
   <section class="section" id="faktoren">
@@ -704,5 +747,6 @@
   <script src="/3d-produktanimation/js/sections.js" defer></script>
   <script src="/3d-produktanimation/js/motion.js" defer></script>
   <script src="/3d-produktanimation/js/factors-art.js" defer></script>
+  <script src="/3d-produktanimation/js/film.js" defer></script>
 </body>
 </html>

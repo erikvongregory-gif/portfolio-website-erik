@@ -139,6 +139,23 @@
     splitLines(h, {}, { trigger: h, start: 'clamp(top 86%)', toggleActions: PLAY });
   });
 
+  /* ── 3b · Imagefilm ────────────────────────── */
+  const filmHead = $('.film-head');
+  if (filmHead) {
+    rise($('.badge', filmHead), filmHead);
+    rise($('.film-caption', filmHead), filmHead, { delay: 0.35 });
+  }
+  const filmFrame = $('.film-frame');
+  if (filmFrame) {
+    // Bühne wächst beim Hereinscrollen auf volle Größe, Ecken werden ruhiger
+    gsap.fromTo(filmFrame,
+      { scale: 0.86, borderRadius: '2.5rem', autoAlpha: 0.4 },
+      {
+        scale: 1, borderRadius: isMobile ? '0.875rem' : '1.25rem', autoAlpha: 1, ease: 'none',
+        scrollTrigger: { trigger: filmFrame, start: 'top bottom', end: 'top 25%', scrub: true },
+      });
+  }
+
   /* ── 4 · Drei Faktoren ─────────────────────── */
   const factorsHead = $('.factors-head');
   if (factorsHead) rise($('p', factorsHead), factorsHead, { delay: 0.25 });
