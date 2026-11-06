@@ -19,7 +19,6 @@ export const showreelCategories: { value: ShowreelCategory | "alle"; label: stri
 ];
 
 export const showreel: ShowreelItem[] = [
-  { id: "risebeyond-3d", title: "Rise Beyond", kind: "3D-Logo & Launchfilm", category: "3d", ratio: "16 / 9" },
   { id: "evglab-reel", title: "EvGlab", kind: "Social Reel", category: "social", ratio: "9 / 16" },
   { id: "brewai-glass", title: "BrewAI", kind: "Produktfilm", category: "produkt", ratio: "9 / 16" },
   { id: "brewai-gold", title: "BrewAI", kind: "Werbespot", category: "spot", ratio: "16 / 9" },
@@ -30,7 +29,6 @@ export const showreel: ShowreelItem[] = [
   { id: "ibjungen", title: "Ingenieurbüro Jungen", kind: "Imagefilm", category: "spot", ratio: "16 / 9" },
   { id: "brewai-logo", title: "BrewAI", kind: "Logo-Film", category: "3d", ratio: "9 / 16" },
   { id: "evglab-landsberg", title: "EvGlab", kind: "Feed-Spot · 4:5", category: "social", ratio: "4 / 5" },
-  { id: "risebeyond-saas", title: "Rise Beyond", kind: "Produktfilm", category: "produkt", ratio: "16 / 9" },
   { id: "evglab-cut", title: "EvGlab", kind: "Brand-Reel", category: "social", ratio: "9 / 16" },
   { id: "kontext", title: "Kontext", kind: "SaaS-Launch · Konzept", category: "produkt", ratio: "16 / 9" },
   { id: "brewai-studio", title: "BrewAI", kind: "App-Film", category: "produkt", ratio: "9 / 16" },

@@ -26,6 +26,10 @@ const description =
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  // Fixed page on phones: no pinch-zoom, no sideways panning.
+  minimumScale: 1,
+  maximumScale: 1,
+  userScalable: false,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#000000" },

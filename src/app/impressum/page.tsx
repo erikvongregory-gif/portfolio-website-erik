@@ -65,11 +65,11 @@ export default function Impressum() {
       <LegalBlock title="Haftungsausschluss">
         <LegalSubheading>Haftung für Inhalte</LegalSubheading>
         <LegalText>
-          Als Diensteanbieter sind wir gemäß § 6 Abs. 1 DDG für eigene Inhalte auf diesen Seiten
-          nach den allgemeinen Gesetzen verantwortlich. Nach §§ 6 bis 10 DDG sind wir als
-          Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde
+          Als Diensteanbieter sind wir für eigene Inhalte auf diesen Seiten nach den allgemeinen
+          Gesetzen verantwortlich. Eine allgemeine Pflicht, übermittelte oder gespeicherte fremde
           Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige
-          Tätigkeit hinweisen.
+          Tätigkeit hinweisen, besteht nach Art. 8 der Verordnung (EU) 2022/2065 (Digital Services
+          Act) nicht.
         </LegalText>
         <LegalText>
           Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den
