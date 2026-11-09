@@ -240,7 +240,13 @@
       .hero-statue { width: 80vw; opacity: 0.4; bottom: -10vh; }
       .hero-statue--left  { left: -38vw; }
       .hero-statue--right { right: -38vw; }
+      /* Mobile: nur Kernaussage, ohne Teaser */
+      .hero-title { font-size: 1.875rem; }
+      .hero-sub { margin-top: 1.25rem; max-width: 20rem; }
+      .hs-long, .hero-teaser { display: none; }
+      .hero-sub .hs-short { display: inline; }
     }
+    .hs-short { display: none; }
   </style>
 </head>
 <body>
@@ -258,7 +264,7 @@
 
     <div class="hero-inner">
       <h1 class="hero-title">3D-Produktfilme, die aus Messe-Laufkundschaft echte Gespräche für Ihren Vertrieb machen.</h1>
-      <p class="hero-sub">Wir zeigen auf Ihrem Standscreen, was in Ihrem Produkt steckt, stumm verständlich und in Sekunden erfasst. Besucher bleiben stehen, verstehen den Nutzen und fragen nach. Ihr Vertrieb steigt dann mitten im Gespräch ein. Sie kennen Ihr Produkt, wir beherrschen 3D-Animation. Gemeinsam machen wir sichtbar, was es kann, egal in welcher Branche.</p>
+      <p class="hero-sub"><span class="hs-long">Wir zeigen auf Ihrem Standscreen, was in Ihrem Produkt steckt, stumm verständlich und in Sekunden erfasst. Besucher bleiben stehen, verstehen den Nutzen und fragen nach. Ihr Vertrieb steigt dann mitten im Gespräch ein. Sie kennen Ihr Produkt, wir beherrschen 3D-Animation. Gemeinsam machen wir sichtbar, was es kann, egal in welcher Branche.</span><span class="hs-short">Stumm verständlich, in Sekunden erfasst. Sie kennen Ihr Produkt, wir beherrschen 3D-Animation.</span></p>
       <p class="hero-teaser">Erfahren Sie, warum die meisten Messevideos in der Halle untergehen und was wir <u>grundlegend anders</u> machen.</p>
     </div>
   </section>
