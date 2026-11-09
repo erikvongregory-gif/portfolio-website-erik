@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="/3d-produktanimation/css/sections.css">
   <link rel="stylesheet" href="/3d-produktanimation/css/legal.css">
   <link rel="stylesheet" href="/3d-produktanimation/css/film.css">
+  <link rel="stylesheet" href="/3d-produktanimation/css/request.css">
   <link rel="preconnect" href="https://1rna9soq8do1awe3.public.blob.vercel-storage.com" crossorigin>
   <script>
     /* Hero bis zum GSAP-Start verbergen, damit nichts aufblitzt (Notbremse nach 3 s) */
@@ -418,7 +419,7 @@
         <div class="bcard-copy">
           <h3 class="bcard-title">Ein Kanal für Ihr ganzes Projekt</h3>
           <p class="bcard-text">Briefing, Feedback und Freigaben laufen über einen gemeinsamen Projekt-Chat. So sehen Sie jederzeit, wo Ihr Film steht.</p>
-          <a class="btn-pill" href="#">Projekt anfragen</a>
+          <a class="btn-pill" href="#anfrage" data-request="projekt">Projekt anfragen</a>
         </div>
         <div class="bcard-stage" data-sequence="750">
           <div class="win win--chat">
@@ -488,7 +489,7 @@
         <div class="bcard-copy">
           <h3 class="bcard-title">Pünktlich zum ersten Messetag</h3>
           <p class="bcard-text">Mit dem Messe-Countdown planen wir rückwärts von Ihrem Messetermin. Sie wissen ab Tag 1, wann was freigegeben wird.</p>
-          <a class="btn-pill" href="#">Zeitplan für meine Messe anfragen</a>
+          <a class="btn-pill" href="#anfrage" data-request="zeitplan">Zeitplan für meine Messe anfragen</a>
         </div>
         <div class="bcard-stage" data-sequence="550">
           <div class="win win--plan">
@@ -623,7 +624,7 @@
           <span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Nächster Schritt</span>
           <h2 class="h2">Ihre nächste Messe beginnt <strong>mit einem Gespräch</strong>.</h2>
         </div>
-        <a class="btn-swap" href="#"><span>Erstgespräch vereinbaren</span><span aria-hidden="true">Erstgespräch vereinbaren</span></a>
+        <a class="btn-swap" href="#anfrage" data-request="gespraech"><span>Erstgespräch vereinbaren</span><span aria-hidden="true">Erstgespräch vereinbaren</span></a>
       </div>
 
       <div class="cta-grid">
@@ -674,7 +675,7 @@
         </ul>
 
         <div class="check-actions">
-          <a class="btn-swap" href="#"><span>Jetzt kostenlose Potenzialanalyse sichern</span><span aria-hidden="true">Jetzt kostenlose Potenzialanalyse sichern</span></a>
+          <a class="btn-swap" href="#anfrage" data-request="analyse"><span>Jetzt kostenlose Potenzialanalyse sichern</span><span aria-hidden="true">Jetzt kostenlose Potenzialanalyse sichern</span></a>
           <span class="check-trust">Kostenlos und unverbindlich</span>
         </div>
       </div>
@@ -748,5 +749,6 @@
   <script src="/3d-produktanimation/js/motion.js" defer></script>
   <script src="/3d-produktanimation/js/factors-art.js" defer></script>
   <script src="/3d-produktanimation/js/film.js" defer></script>
+  <script src="/3d-produktanimation/js/request.js" defer></script>
 </body>
 </html>
