@@ -4,7 +4,7 @@ export const defaultOgImage = {
   url: "/opengraph-image",
   width: 1200,
   height: 630,
-  alt: "Erik EvGlab – Websites mit Charakter, die Kunden bringen.",
+  alt: "EvGlab – Websites, 3D-Filme und Reels, die Kunden bringen.",
 } as const;
 
 export const aboutOgImage = {

@@ -16,8 +16,10 @@ import {
 import { HeroMotion, ValuesMotion } from "./_components/UeberUnsMotion";
 import styles from "./ueber-uns.module.scss";
 
+import { JsonLd } from "@/components/JsonLd";
 import {
   aboutOgImage,
+  baseURL,
   createPageOpenGraph,
   createPageTwitter,
 } from "@/resources";
@@ -82,9 +84,45 @@ function Words({ text, accent }: { text: string; accent?: boolean }) {
   ));
 }
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": `${baseURL}/ueber-uns#webpage`,
+  url: `${baseURL}/ueber-uns`,
+  name: "Über mich",
+  inLanguage: "de-DE",
+  mainEntity: {
+    "@type": "Person",
+    "@id": `${baseURL}/ueber-uns#erik`,
+    name: "Erik von Gregory",
+    alternateName: ["Erik Freiherr von Gregory", "Erik EvGlab"],
+    url: `${baseURL}/ueber-uns`,
+    jobTitle: "Gründer von EvGlab, Agentur für Webdesign, 3D-Produktanimation und Reels",
+    worksFor: { "@type": "ProfessionalService", "@id": `${baseURL}/#business`, name: "EvGlab" },
+    knowsAbout: [
+      "3D-Produktanimation",
+      "Blender",
+      "Motion Design",
+      "Webdesign",
+      "Webentwicklung",
+      "Next.js",
+    ],
+    workLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Fuchstal",
+        addressRegion: "Bayern",
+        addressCountry: "DE",
+      },
+    },
+  },
+};
+
 export default function UeberUns() {
   return (
     <Column fillWidth horizontal="center">
+      <JsonLd data={structuredData} />
       <Column
         as="section"
         fillWidth

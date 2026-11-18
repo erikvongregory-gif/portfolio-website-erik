@@ -19,9 +19,9 @@ import {
 } from "@/components";
 import { fonts, style, dataStyle, baseURL, createPageOpenGraph, createPageTwitter } from "@/resources";
 
-const title = "Webdesign Landsberg am Lech · Erik EvGlab";
+const title = "Webdesign, 3D-Produktfilme & Reels · EvGlab Landsberg";
 const description =
-  "Webdesign & Webentwicklung aus Landsberg am Lech. Individuelle Websites und Landingpages mit Charakter, die Anfragen bringen.";
+  "EvGlab ist die Agentur für Werbematerial aus Landsberg am Lech: Websites, 3D-Produktanimationen und Reels aus einer Hand, persönlich mit Erik umgesetzt.";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -48,7 +48,12 @@ export const metadata: Metadata = {
   creator: "Erik von Gregory",
   publisher: "Erik EvGlab",
   keywords: [
+    "Werbeagentur Landsberg am Lech",
     "Webdesign",
+    "3D-Produktanimation",
+    "3D-Produktfilm",
+    "Reels",
+    "Social-Media-Videos",
     "Webentwicklung",
     "Landingpage",
     "Website erstellen",

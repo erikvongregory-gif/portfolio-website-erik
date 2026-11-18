@@ -35,8 +35,17 @@ const structuredData = {
   name: "EvGlab",
   alternateName: "Erik EvGlab",
   description:
-    "Webdesign und Webentwicklung aus Landsberg am Lech. Individuelle Websites und Landingpages mit Persönlichkeit, die Anfragen bringen.",
-  serviceType: ["Webdesign", "Webentwicklung", "Landingpage-Design", "Website-Betreuung"],
+    "Agentur für Werbematerial aus Landsberg am Lech: Webdesign und Webentwicklung, 3D-Produktanimationen und 3D-Produktfilme für Messen sowie Reels und Social-Media-Videos aus einer Hand.",
+  serviceType: [
+    "3D-Produktanimation",
+    "3D-Produktfilme für Messen",
+    "Videoproduktion",
+    "Reels und Social-Media-Videos",
+    "Webdesign",
+    "Webentwicklung",
+    "Landingpage-Design",
+    "Website-Betreuung",
+  ],
   url: baseURL,
   image: `${baseURL}/opengraph-image`,
   email: "info@evglab.com",
@@ -44,7 +53,9 @@ const structuredData = {
   priceRange: "€€",
   founder: {
     "@type": "Person",
+    "@id": `${baseURL}/ueber-uns#erik`,
     name: "Erik von Gregory",
+    url: `${baseURL}/ueber-uns`,
   },
   address: {
     "@type": "PostalAddress",
@@ -130,8 +141,8 @@ export default function Home() {
               onBackground="neutral-strong"
               style={{ paddingBottom: "1.5rem" }}
             >
-              <HeroLine>Websites mit Charakter,</HeroLine>
-              <HeroLine>die Kunden bringen – inklusive kostenlosem Entwurf.</HeroLine>
+              <HeroLine>Websites, 3D‑Filme und Reels,</HeroLine>
+              <HeroLine>die Kunden bringen.</HeroLine>
             </Heading>
 
             <Column className={`${styles.heroLead} ${heroEnter.lead}`} paddingBottom="32">
@@ -141,7 +152,7 @@ export default function Home() {
                 variant="body-default-m"
                 className={styles.heroLeadText}
               >
-                Für Unternehmen, die genug davon haben, dass ihre Website wie von der Stange wirkt
+                Für Unternehmen, die genug davon haben, dass ihr Auftritt wie von der Stange wirkt
                 und keine Anfragen bringt.
               </Text>
             </Column>
@@ -214,7 +225,7 @@ export default function Home() {
               variant="display-strong-xl"
               onBackground="neutral-strong"
             >
-              <HeroLine>Websites mit Charakter,</HeroLine>
+              <HeroLine>Websites, 3D‑Filme und Reels,</HeroLine>
               <HeroLine>die Kunden bringen.</HeroLine>
             </Heading>
 
@@ -226,7 +237,7 @@ export default function Home() {
                   variant="body-default-l"
                   className={styles.blinkLead}
                 >
-                  Für Unternehmen, die genug davon haben, dass ihre Website wie von der Stange wirkt
+                  Für Unternehmen, die genug davon haben, dass ihr Auftritt wie von der Stange wirkt
                   und keine Anfragen bringt.
                 </Text>
               </Column>

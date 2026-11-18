@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export const alt = "Erik EvGlab – Websites mit Charakter, die Kunden bringen.";
+export const alt = "EvGlab – Websites, 3D-Filme und Reels, die Kunden bringen.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
