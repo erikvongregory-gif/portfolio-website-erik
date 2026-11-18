@@ -1,7 +1,7 @@
 # EvGlab
-> Webdesign und Webentwicklung aus Landsberg am Lech. Individuelle Websites und Landingpages mit Charakter, die Anfragen bringen.
+> Agentur für Werbematerial aus Landsberg am Lech: Webdesign, 3D-Produktanimation und Reels aus einer Hand.
 
-EvGlab ist das Studio von Erik Freiherr von Gregory. Fokus: Webdesign, Webentwicklung und Landingpages für Unternehmen in Landsberg am Lech, Bayern und darüber hinaus – ohne Template-Look, mit klarem Fokus auf Anfragen.
+EvGlab ist die Agentur von Erik Freiherr von Gregory für Werbematerial, das auffällt und Anfragen bringt. Drei Leistungen aus einer Hand: individuelle Websites und Landingpages, 3D-Produktanimationen und 3D-Produktfilme (z. B. für Messen) sowie Reels und Social-Media-Videos. Für Unternehmen in Landsberg am Lech, Bayern und im ganzen deutschsprachigen Raum – ohne Template-Look, mit einem festen Ansprechpartner.
 
 ## Kernfakten
 - Name: EvGlab / Erik EvGlab
@@ -14,17 +14,27 @@ EvGlab ist das Studio von Erik Freiherr von Gregory. Fokus: Webdesign, Webentwic
 - Erstgespräch: kostenlos und unverbindlich, Antwort in der Regel innerhalb von 24 Stunden
 
 ## Leistungen
+- 3D-Produktfilme und 3D-Produktanimation für Messen, Vertrieb und Produktlaunches (Blender, bis 4K mit 50 fps, jedes Format für Messestand, LED-Wand und Social Media)
+- 3D-Logo-Animationen, Imagefilme und Reels für Instagram, TikTok und LinkedIn
 - Individuelles Webdesign
 - Webentwicklung (u. a. Next.js)
 - Landingpages
 - Website-Betreuung und Updates
 - Lokale Sichtbarkeit als Grundlage (Struktur, Inhalte, technische Basics)
 
+## 3D-Produktfilme für Messen (Kurzfassung)
+- Ziel: Messebesucher bleiben am Stand stehen, das Produkt ist in Sekunden verstanden, der Film führt ins Vertriebsgespräch.
+- Ablauf: kostenlose Potenzialanalyse, Storyboard, Freigabe durch die Fachleute des Kunden vor dem Rendern, Lieferung pünktlich zum ersten Messetag.
+- Unterschied zu klassischen 3D-Studios: ein fester Ansprechpartner, Storyboard mit Stopp-Effekt statt langer Intros, jedes Format für den Stand, Festpreis.
+- Branchen: Maschinenbau, Industrie, Medizintechnik, Konsumgüter und jedes erklärungsbedürftige Produkt.
+
 ## Für wen
 Unternehmen und Selbstständige, die einen Auftritt mit Persönlichkeit wollen – besonders Gastronomie, Handwerk, Industrie, Marken und lokale Betriebe in und um Landsberg am Lech.
 
 ## Wichtige Seiten
 - [Startseite](https://evglab.com/): Überblick, Projekte, Leistungen, Kontakt
+- [3D-Produktfilme für Messen](https://evglab.com/3d-produktanimation): 3D-Produktanimation, Imagefilm-Beispiel, Ablauf und kostenlose Potenzialanalyse
+- [Videos & 3D-Logo-Animation](https://evglab.com/videos): Logo-Idents, Produktfilme, Reels, Preise und FAQ
 - [Webdesign Landsberg am Lech](https://evglab.com/webdesign-landsberg): lokale Leistungsseite mit FAQ und Preisen
 - [Über mich](https://evglab.com/ueber-uns): Person hinter EvGlab
 - [Impressum](https://evglab.com/impressum): Anbieterkennzeichnung
