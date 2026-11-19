@@ -69,7 +69,9 @@ export function Countdown({ size = "l" }: CountdownProps) {
             radius="m"
           >
             <Text className={styles.clockValue} onBackground="neutral-strong">
-              {unit.value}
+              <span key={unit.value} className={styles.clockTick}>
+                {unit.value}
+              </span>
             </Text>
             <Text variant="label-default-xs" onBackground="neutral-weak">
               {unit.label}

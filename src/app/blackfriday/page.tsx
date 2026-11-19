@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { cloneElement, type CSSProperties, type ReactElement } from "react";
 import { Column, Grid, Heading, Icon, type IconName, Row, Text } from "@once-ui-system/core";
 import classNames from "classnames";
+import { Instrument_Serif } from "next/font/google";
 import { Projects, Reveal, SiteFooter, StickyMobileCta } from "@/components";
 import { Faq } from "@/components/sections/Faq";
 import { JsonLd } from "@/components/JsonLd";
@@ -9,6 +10,7 @@ import { BLACK_FRIDAY, BLACK_FRIDAY_PACKAGES, BLACK_FRIDAY_WHATSAPP_URL } from "
 import { CTA_PROOF } from "@/lib/contact";
 import { baseURL, createPageOpenGraph, createPageTwitter } from "@/resources";
 import {
+  BlackFridayScene,
   Countdown,
   LeadForm,
   ScrollToFormButton,
@@ -17,6 +19,14 @@ import {
   StringLights,
 } from "./_components";
 import styles from "./_components/blackfriday.module.scss";
+
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--bf-serif",
+  display: "swap",
+});
 
 const PAGE_PATH = "/blackfriday";
 const PAGE_TITLE = "Black Friday: Website für 500 €, Landingpage für 300 €";
@@ -125,6 +135,8 @@ const faqs: { question: string; answer: string }[] = [
   },
 ];
 
+const HEADLINE_GOLD = Array.from("Black Friday");
+
 const tickerItems = [
   "Black Friday",
   "Website 500 €",
@@ -200,7 +212,7 @@ export default function BlackFridayPage() {
   const slotsPct = Math.max(8, Math.round((slotsTaken / BLACK_FRIDAY.slotsTotal) * 100));
 
   return (
-    <Column data-theme="dark" className={styles.page} fillWidth horizontal="center">
+    <BlackFridayScene className={serif.variable}>
       <JsonLd data={structuredData} />
 
       {/* ---------- Hero ---------- */}
@@ -208,30 +220,68 @@ export default function BlackFridayPage() {
         as="section"
         className={styles.hero}
         data-sticky-cta-hero=""
+        data-bf-hero=""
         fillWidth
         horizontal="center"
         vertical="center"
         paddingX="l"
         paddingTop="160"
-        paddingBottom="80"
-        s={{ style: { paddingTop: "7.5rem" } }}
+        paddingBottom="64"
+        s={{ style: { paddingTop: "8rem" } }}
       >
+        <span
+          className={classNames(styles.glow, styles.glowRed)}
+          data-bf-glow=""
+          aria-hidden="true"
+        />
+        <span
+          className={classNames(styles.glow, styles.glowGold)}
+          data-bf-glow=""
+          aria-hidden="true"
+        />
+        <span
+          className={classNames(styles.glow, styles.glowGreen)}
+          data-bf-glow=""
+          aria-hidden="true"
+        />
+        <span className={styles.grain} aria-hidden="true" />
         <StringLights />
         <Snowfall />
 
-        <Column fillWidth maxWidth={60} gap="32" horizontal="center" align="center">
+        <Column
+          fillWidth
+          maxWidth={64}
+          gap="40"
+          horizontal="center"
+          align="center"
+          data-bf-hero-content=""
+          s={{ gap: "32" }}
+        >
           <HeroIn delay={0}>
-            <span className={styles.eyebrow}>
+            <Row className={styles.meta} gap="12" vertical="center" horizontal="center">
               <span className={styles.pulseDot} />
-              Black Week · nur bis {BLACK_FRIDAY.endsShortLabel}
-            </span>
+              <span className={styles.metaWide}>Black Week 2026</span>
+              <span className={classNames(styles.metaRule, styles.metaWide)} aria-hidden="true" />
+              <span>Nur bis {BLACK_FRIDAY.endsShortLabel}</span>
+            </Row>
           </HeroIn>
 
           <HeroIn delay={0.06}>
             <Heading as="h1" className={styles.headline}>
-              <span className={styles.gold}>Black Friday.</span>
-              <br />
-              Deine Website für 500&nbsp;€.
+              <span className={styles.serifLine} aria-label="Black Friday">
+                {HEADLINE_GOLD.map((ch, i) => (
+                  <span
+                    // biome-ignore lint/suspicious/noArrayIndexKey: feste Buchstabenfolge
+                    key={i}
+                    className={styles.goldLetter}
+                    data-bf-letter=""
+                    aria-hidden="true"
+                  >
+                    {ch === " " ? " " : ch}
+                  </span>
+                ))}
+              </span>
+              <span className={styles.sansLine}>Website für 500&nbsp;€</span>
             </Heading>
           </HeroIn>
 
@@ -240,29 +290,18 @@ export default function BlackFridayPage() {
               variant="body-default-xl"
               onBackground="neutral-medium"
               wrap="balance"
-              style={{ maxWidth: "38rem", lineHeight: 1.5 }}
+              style={{ maxWidth: "36rem", lineHeight: 1.55 }}
             >
-              Professionelle Website oder Landingpage, individuell gestaltet, in ca. 7 Tagen online.
-              Zum niedrigsten Preis, den es bei EvGlab je gab.
+              Individuell gestaltet statt Baukasten, in ca. 7 Tagen online. Der niedrigste Preis,
+              den es bei EvGlab je gab.
             </Text>
           </HeroIn>
 
-          <HeroIn delay={0.16}>
-            <Row className={styles.priceRow} horizontal="center">
-              {BLACK_FRIDAY_PACKAGES.map((pkg) => (
-                <span key={pkg.id} className={styles.pricePill}>
-                  <span className={styles.pricePillLabel}>{pkg.name}</span>
-                  <span className={styles.pricePillValue}>{pkg.priceLabel}</span>
-                  <span className={styles.strike}>{pkg.regularLabel.replace("regulär ", "")}</span>
-                </span>
-              ))}
-            </Row>
-          </HeroIn>
-
-          <HeroIn delay={0.24}>
+          <HeroIn delay={0.18}>
             <Row gap="12" wrap horizontal="center" vertical="center">
               <ScrollToFormButton label="Jetzt Platz sichern" />
               <a
+                data-bf-magnetic=""
                 className={styles.whatsapp}
                 href={BLACK_FRIDAY_WHATSAPP_URL}
                 target="_blank"
@@ -274,42 +313,57 @@ export default function BlackFridayPage() {
             </Row>
           </HeroIn>
 
-          <HeroIn delay={0.2}>
-            <Column gap="12" horizontal="center">
-              <Text variant="label-strong-s" onBackground="neutral-weak">
-                Angebot endet in
-              </Text>
-              <Countdown />
-            </Column>
-          </HeroIn>
-
-          <HeroIn delay={0.28}>
-            <Column gap="8" fillWidth horizontal="center" style={{ maxWidth: "22rem" }}>
-              <Row fillWidth horizontal="between">
+          <HeroIn delay={0.26}>
+            <Grid className={styles.dealBar} columns="3" m={{ columns: "1" }} fillWidth radius="xl">
+              {BLACK_FRIDAY_PACKAGES.map((pkg) => (
+                <Column
+                  key={pkg.id}
+                  className={styles.dealCell}
+                  gap="8"
+                  horizontal="start"
+                  align="left"
+                >
+                  <Text variant="label-default-s" onBackground="neutral-weak">
+                    {pkg.name}
+                  </Text>
+                  <Row gap="12" vertical="end">
+                    <Text className={styles.dealPrice}>{pkg.priceLabel}</Text>
+                    <Text className={styles.strike} style={{ marginBottom: "0.3rem" }}>
+                      {pkg.regularLabel.replace("regulär ", "")}
+                    </Text>
+                  </Row>
+                </Column>
+              ))}
+              <Column className={styles.dealCell} gap="8" horizontal="start" align="left">
                 <Text variant="label-default-s" onBackground="neutral-weak">
-                  Nur {BLACK_FRIDAY.slotsTotal} Projektplätze
+                  Angebot endet in
                 </Text>
-                <Text variant="label-strong-s" onBackground="neutral-strong">
-                  noch {BLACK_FRIDAY.slotsLeft} frei
-                </Text>
-              </Row>
-              <Row className={styles.slotsTrack} fillWidth>
-                <span className={styles.slotsFill} style={{ width: `${slotsPct}%` }} />
-              </Row>
-            </Column>
+                <Countdown size="m" />
+              </Column>
+            </Grid>
           </HeroIn>
 
           <HeroIn delay={0.32}>
-            <Text variant="label-default-s" onBackground="neutral-weak">
-              ★★★★★ „{CTA_PROOF.quote}“ · {CTA_PROOF.attribution}
-            </Text>
+            <Row gap="24" wrap horizontal="center" vertical="center" className={styles.heroFoot}>
+              <Row gap="12" vertical="center">
+                <Row className={styles.slotsTrack} style={{ width: "6rem" }}>
+                  <span className={styles.slotsFill} style={{ width: `${slotsPct}%` }} />
+                </Row>
+                <Text variant="label-default-s" onBackground="neutral-weak">
+                  Noch {BLACK_FRIDAY.slotsLeft} von {BLACK_FRIDAY.slotsTotal} Plätzen frei
+                </Text>
+              </Row>
+              <Text variant="label-default-s" onBackground="neutral-weak">
+                <span className={styles.stars}>★★★★★</span> „{CTA_PROOF.quote}“
+              </Text>
+            </Row>
           </HeroIn>
         </Column>
       </Column>
 
       {/* ---------- Ticker ---------- */}
       <Row className={styles.ticker} fillWidth aria-hidden="true">
-        <Row className={styles.tickerTrack}>
+        <Row className={styles.tickerTrack} data-bf-ticker="">
           {[...tickerItems, ...tickerItems, ...tickerItems, ...tickerItems].map((item, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: dekorative Laufschrift
             <span key={i} className={styles.tickerItem}>
@@ -333,8 +387,8 @@ export default function BlackFridayPage() {
       >
         <Column fillWidth maxWidth={68} gap="48" m={{ gap: "32" }}>
           <Column gap="16" horizontal="center" align="center">
-            <Text variant="label-strong-s" style={{ color: "var(--bf-gold)" }}>
-              DEINE BLACK-FRIDAY-GESCHENKE
+            <Text variant="label-strong-s" className={styles.kicker}>
+              Deine Black-Friday-Geschenke
             </Text>
             <Heading
               as="h2"
@@ -342,7 +396,7 @@ export default function BlackFridayPage() {
               wrap="balance"
               style={{ letterSpacing: "-0.035em" }}
             >
-              Zwei Pakete. {BLACK_FRIDAY.discountLabel}. Nur diese Woche.
+              Zwei Geschenke. <span className={styles.serif}>Minus 80 %.</span>
             </Heading>
             <Text
               variant="body-default-l"
@@ -358,7 +412,7 @@ export default function BlackFridayPage() {
             {BLACK_FRIDAY_PACKAGES.map((pkg, index) => {
               const featured = Boolean(pkg.badge);
               return (
-                <Reveal key={pkg.id} delay={index * 0.08}>
+                <Column key={pkg.id} fillHeight data-bf-card="">
                   <Column
                     className={classNames(styles.gift, featured && styles.giftFeatured)}
                     radius="xl"
@@ -367,12 +421,18 @@ export default function BlackFridayPage() {
                     gap="24"
                     fillHeight
                   >
-                    <span className={styles.ribbon} aria-hidden="true" />
+                    <span className={styles.ribbon} data-bf-ribbon="" aria-hidden="true" />
                     <Bow />
 
                     <Row gap="8" wrap>
-                      {pkg.badge && <span className={styles.badge}>{pkg.badge}</span>}
-                      <span className={styles.discount}>{BLACK_FRIDAY.discountLabel}</span>
+                      {pkg.badge && (
+                        <span className={styles.badge} data-bf-pop="">
+                          {pkg.badge}
+                        </span>
+                      )}
+                      <span className={styles.discount} data-bf-pop="">
+                        {BLACK_FRIDAY.discountLabel}
+                      </span>
                     </Row>
 
                     <Column gap="8">
@@ -385,17 +445,27 @@ export default function BlackFridayPage() {
                     </Column>
 
                     <Row gap="12" vertical="end" wrap>
-                      <Text className={styles.bigPrice} onBackground="neutral-strong">
+                      <Text
+                        className={styles.bigPrice}
+                        onBackground="neutral-strong"
+                        data-bf-price=""
+                        data-from={pkg.regularPrice}
+                        data-to={pkg.price}
+                      >
                         {pkg.priceLabel}
                       </Text>
-                      <Text className={styles.strike} style={{ marginBottom: "0.6rem" }}>
+                      <Text
+                        className={styles.strike}
+                        style={{ marginBottom: "0.6rem" }}
+                        data-bf-strike=""
+                      >
                         {pkg.regularLabel}
                       </Text>
                     </Row>
 
                     <Column as="ul" gap="12" style={{ listStyle: "none", padding: 0, margin: 0 }}>
                       {pkg.features.map((feature) => (
-                        <Row as="li" key={feature} gap="12" vertical="start">
+                        <Row as="li" key={feature} gap="12" vertical="start" data-bf-feature="">
                           <span className={styles.check}>
                             <Icon name="check" size="xs" />
                           </span>
@@ -414,7 +484,7 @@ export default function BlackFridayPage() {
                       />
                     </Column>
                   </Column>
-                </Reveal>
+                </Column>
               );
             })}
           </Grid>
@@ -440,22 +510,22 @@ export default function BlackFridayPage() {
       >
         <Column fillWidth maxWidth={68} gap="48" m={{ gap: "32" }}>
           <Column gap="16" maxWidth={42}>
-            <Text variant="label-strong-s" style={{ color: "var(--bf-gold)" }}>
-              IMMER DABEI
+            <Text variant="label-strong-s" className={styles.kicker}>
+              Immer dabei
             </Text>
             <Heading as="h2" variant="display-strong-s" wrap="balance">
-              Billig im Preis.{" "}
-              <Text as="span" onBackground="neutral-weak">
-                Nicht in der Qualität.
-              </Text>
+              Günstig im Preis.{" "}
+              <span className={classNames(styles.serif, styles.muted)}>Nicht in der Qualität.</span>
             </Heading>
           </Column>
 
           <Grid columns="3" m={{ columns: "2" }} s={{ columns: "1" }} gap="16">
             {included.map((item, index) => (
-              <Reveal key={item.title} delay={index * 0.05}>
+              <Column key={item.title} fillHeight data-bf-included="">
                 <Column className={styles.step} radius="l" padding="24" gap="12" fillHeight>
-                  <Icon name={item.icon} size="m" onBackground="neutral-strong" />
+                  <Row className={styles.iconBadge} center radius="m" data-bf-icon="">
+                    <Icon name={item.icon} size="m" onBackground="neutral-strong" />
+                  </Row>
                   <Text variant="heading-strong-s" onBackground="neutral-strong">
                     {item.title}
                   </Text>
@@ -463,7 +533,7 @@ export default function BlackFridayPage() {
                     {item.body}
                   </Text>
                 </Column>
-              </Reveal>
+              </Column>
             ))}
           </Grid>
         </Column>
@@ -483,31 +553,36 @@ export default function BlackFridayPage() {
       >
         <Column fillWidth maxWidth={68} gap="48" m={{ gap: "32" }}>
           <Column gap="16" horizontal="center" align="center">
-            <Text variant="label-strong-s" style={{ color: "var(--bf-gold)" }}>
-              SO EINFACH GEHT’S
+            <Text variant="label-strong-s" className={styles.kicker}>
+              So einfach geht’s
             </Text>
             <Heading as="h2" variant="display-strong-s" wrap="balance">
-              In 3 Schritten zur neuen Website.
+              In drei Schritten <span className={styles.serif}>online.</span>
             </Heading>
           </Column>
 
-          <Grid columns="3" m={{ columns: "1" }} gap="16">
-            {steps.map((step, index) => (
-              <Reveal key={step.title} delay={index * 0.08}>
-                <Column className={styles.step} radius="l" padding="32" gap="16" fillHeight>
-                  <Text className={classNames(styles.stepNumber, styles.gold)}>
-                    {String(index + 1).padStart(2, "0")}
-                  </Text>
-                  <Text variant="heading-strong-m" onBackground="neutral-strong">
-                    {step.title}
-                  </Text>
-                  <Text variant="body-default-m" onBackground="neutral-weak">
-                    {step.body}
-                  </Text>
+          <Column fillWidth gap="0" data-bf-steps="">
+            <Row className={styles.stepTrack} fillWidth aria-hidden="true">
+              <span className={styles.stepLine} data-bf-stepline="" />
+            </Row>
+            <Grid columns="3" m={{ columns: "1" }} gap="16">
+              {steps.map((step, index) => (
+                <Column key={step.title} fillHeight data-bf-step="">
+                  <Column className={styles.step} radius="l" padding="32" gap="16" fillHeight>
+                    <Text className={classNames(styles.stepNumber, styles.gold)} data-bf-stepnum="">
+                      {String(index + 1).padStart(2, "0")}
+                    </Text>
+                    <Text variant="heading-strong-m" onBackground="neutral-strong">
+                      {step.title}
+                    </Text>
+                    <Text variant="body-default-m" onBackground="neutral-weak">
+                      {step.body}
+                    </Text>
+                  </Column>
                 </Column>
-              </Reveal>
-            ))}
-          </Grid>
+              ))}
+            </Grid>
+          </Column>
 
           <Reveal>
             <Row
@@ -518,7 +593,7 @@ export default function BlackFridayPage() {
               gap="32"
               vertical="center"
             >
-              <span className={styles.seal}>
+              <span className={styles.seal} data-bf-seal="">
                 0 €
                 <br />
                 Risiko
@@ -558,10 +633,11 @@ export default function BlackFridayPage() {
           m={{ columns: "1" }}
           gap="48"
           style={{ alignItems: "center" }}
+          data-bf-form=""
         >
           <Column gap="24">
-            <Text variant="label-strong-s" style={{ color: "var(--bf-gold)" }}>
-              LETZTE CHANCE
+            <Text variant="label-strong-s" className={styles.kicker}>
+              Letzte Chance
             </Text>
             <Heading
               as="h2"
@@ -569,7 +645,8 @@ export default function BlackFridayPage() {
               wrap="balance"
               style={{ letterSpacing: "-0.035em" }}
             >
-              Sichere dir jetzt deinen <span className={styles.gold}>Black-Friday-Platz.</span>
+              Sichere dir deinen{" "}
+              <span className={classNames(styles.serif, styles.gold)}>Platz.</span>
             </Heading>
             <Text variant="body-default-l" onBackground="neutral-weak">
               60 Sekunden ausfüllen, kein Risiko. Ich melde mich innerhalb von 24 Stunden persönlich
@@ -611,6 +688,6 @@ export default function BlackFridayPage() {
         href="#kontakt"
         whatsappHref={BLACK_FRIDAY_WHATSAPP_URL}
       />
-    </Column>
+    </BlackFridayScene>
   );
 }

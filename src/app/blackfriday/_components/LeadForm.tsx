@@ -238,6 +238,7 @@ export function SelectPackageButton({ id, label, highlight = false }: SelectPack
   return (
     <button
       type="button"
+      data-bf-magnetic=""
       className={classNames(styles.ctaButton, !highlight && styles.ctaButtonGhost)}
       onClick={() => {
         window.dispatchEvent(new CustomEvent(BF_SELECT_EVENT, { detail: { id } }));
@@ -255,6 +256,7 @@ export function ScrollToFormButton({ label }: { label: string }) {
   return (
     <button
       type="button"
+      data-bf-magnetic=""
       className={styles.ctaButton}
       onClick={() =>
         document.getElementById("kontakt")?.scrollIntoView({ behavior: "smooth", block: "start" })

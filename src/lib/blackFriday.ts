@@ -21,6 +21,8 @@ export type BlackFridayPackage = {
   id: BlackFridayPackageId;
   name: string;
   price: number;
+  /** Regulärer Einstiegspreis, von dem die Karte herunterzählt. */
+  regularPrice: number;
   priceLabel: string;
   regularLabel: string;
   tagline: string;
@@ -33,6 +35,7 @@ export const BLACK_FRIDAY_PACKAGES: BlackFridayPackage[] = [
     id: "website",
     name: "Komplette Website",
     price: 500,
+    regularPrice: 2500,
     priceLabel: "500 €",
     regularLabel: "regulär ab 2.500 €",
     tagline: "Dein kompletter Auftritt: mehrere Seiten, eigenes Design, bereit für Anfragen.",
@@ -52,6 +55,7 @@ export const BLACK_FRIDAY_PACKAGES: BlackFridayPackage[] = [
     id: "landingpage",
     name: "Landingpage",
     price: 300,
+    regularPrice: 1500,
     priceLabel: "300 €",
     regularLabel: "regulär ab 1.500 €",
     tagline: "Eine Seite, ein Ziel: perfekt für ein Angebot, eine Kampagne oder deinen Start.",

@@ -23,16 +23,6 @@
   overflow: hidden;
   min-height: 100svh;
 
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    background:
-      radial-gradient(60% 45% at 50% 0%, color-mix(in srgb, var(--bf-red) 45%, transparent), transparent 70%),
-      radial-gradient(40% 35% at 85% 85%, color-mix(in srgb, var(--bf-gold-deep) 22%, transparent), transparent 70%),
-      radial-gradient(40% 35% at 10% 80%, color-mix(in srgb, var(--bf-green) 18%, transparent), transparent 70%);
-  }
 }
 
 .lights {
@@ -654,5 +644,368 @@
   .gift:hover,
   .ctaButton:hover {
     transform: none;
+  }
+}
+
+// ---------- GSAP-Ergänzungen ----------
+
+// Lichtkugeln im Hero (folgen der Maus)
+.glow {
+  position: absolute;
+  z-index: -2;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.glowRed {
+  top: -18%;
+  left: 50%;
+  width: 62vw;
+  height: 46vw;
+  margin-left: -31vw;
+  background: color-mix(in srgb, var(--bf-red) 48%, transparent);
+}
+
+.glowGold {
+  right: -8%;
+  bottom: 4%;
+  width: 34vw;
+  height: 30vw;
+  background: color-mix(in srgb, var(--bf-gold-deep) 26%, transparent);
+}
+
+.glowGreen {
+  left: -8%;
+  bottom: 8%;
+  width: 32vw;
+  height: 28vw;
+  background: color-mix(in srgb, var(--bf-green) 22%, transparent);
+}
+
+// „Black Friday.“ als einzelne Buchstaben mit durchlaufendem Goldverlauf
+.letters {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.goldLetter {
+  display: inline-block;
+  background: linear-gradient(100deg, var(--bf-gold-deep) 0%, var(--bf-gold) 35%, var(--bf-gold-soft) 55%, var(--bf-gold) 75%, var(--bf-gold-deep) 100%);
+  background-size: calc(var(--n) * 100%) 100%;
+  background-position: calc(var(--i) / (var(--n) - 1) * 100%) 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transform-origin: 50% 100%;
+}
+
+// Icon-Kachel in „Immer dabei“
+.iconBadge {
+  width: 3rem;
+  height: 3rem;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--bf-red) 35%, transparent), var(--neutral-alpha-weak));
+  border: 1px solid color-mix(in srgb, var(--bf-gold) 30%, transparent);
+}
+
+// Ablauflinie über den drei Schritten
+.stepTrack {
+  height: 3px;
+  margin-bottom: 1.5rem;
+  border-radius: 999px;
+  background: var(--neutral-alpha-weak);
+  overflow: hidden;
+}
+
+.stepLine {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--bf-red), var(--bf-gold), var(--scheme-green-700));
+  transform-origin: 0% 50%;
+}
+
+// Glanzstreifen über den roten Buttons
+.ctaButton {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 30%, color-mix(in srgb, var(--scheme-neutral-1200) 35%, transparent) 50%, transparent 70%);
+    transform: translateX(-120%);
+    animation: shine 3.6s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+.ctaButtonGhost::after {
+  display: none;
+}
+
+@keyframes shine {
+  0%,
+  55% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+// Ziffern im Countdown rollen ein
+.clockTick {
+  display: inline-block;
+  animation: tick 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes tick {
+  from {
+    transform: translateY(-45%);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaButton::after,
+  .clockTick {
+    animation: none;
+  }
+}
+
+// ---------- Agentur-Feinschliff ----------
+
+// Filmkorn über dem Hero
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+// Feine Vignette, damit der Rand ruhig bleibt
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 55%, var(--page-background) 100%);
+}
+
+// Lichterkette sitzt unter dem Header statt hinter der Navigation
+.lights {
+  top: 4.5rem;
+  height: 2.75rem;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .lights {
+    top: 4rem;
+    height: 2rem;
+  }
+}
+
+.meta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bf-gold);
+}
+
+.metaRule {
+  width: 2rem;
+  height: 1px;
+  background: color-mix(in srgb, var(--bf-gold) 60%, transparent);
+}
+
+.headline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1em;
+  font-size: inherit;
+  line-height: 1;
+  letter-spacing: normal;
+  font-weight: inherit;
+}
+
+.serifLine {
+  display: inline-block;
+  white-space: nowrap;
+  font-family: var(--bf-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(3.75rem, 13vw, 9.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  padding-inline: 0.06em;
+  position: relative;
+  isolation: isolate;
+
+  // Goldschein als eigene Ebene (ein Filter am Elternelement zerstört das Text-Clipping in Chrome)
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 15% 5%;
+    z-index: -1;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--bf-gold-deep) 30%, transparent);
+    filter: blur(50px);
+    pointer-events: none;
+  }
+}
+
+.sansLine {
+  display: block;
+  font-size: clamp(2.1rem, 6.2vw, 5.25rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--neutral-on-background-strong);
+}
+
+// Einheitlicher Metallverlauf pro Buchstabe (von oben hell nach unten tief)
+.goldLetter {
+  background-image: linear-gradient(180deg, var(--bf-gold-soft) 8%, var(--bf-gold) 48%, var(--bf-gold-deep) 96%);
+  background-size: 100% 100%;
+  background-position: 0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+// Glasleiste mit Preisen und Countdown
+.dealBar {
+  overflow: hidden;
+  background: color-mix(in srgb, var(--scheme-neutral-100) 70%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid color-mix(in srgb, var(--bf-gold) 22%, var(--neutral-alpha-medium));
+  box-shadow:
+    inset 0 1px 0 var(--neutral-alpha-weak),
+    0 30px 80px -40px color-mix(in srgb, var(--bf-red) 60%, transparent);
+}
+
+.dealCell {
+  padding: 1.25rem 1.5rem;
+
+  & + & {
+    border-left: 1px solid var(--neutral-alpha-medium);
+  }
+}
+
+@media (max-width: 1024px) {
+  .dealCell + .dealCell {
+    border-left: 0;
+    border-top: 1px solid var(--neutral-alpha-medium);
+  }
+}
+
+.dealPrice {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--neutral-on-background-strong);
+}
+
+.heroFoot {
+  opacity: 0.9;
+}
+
+.stars {
+  color: var(--bf-gold);
+  letter-spacing: 0.1em;
+}
+
+// Abschnitts-Kicker mit Goldlinie
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bf-gold);
+
+  &::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+}
+
+// Serif-Akzent in Überschriften
+.serif {
+  font-family: var(--bf-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.muted {
+  color: var(--neutral-on-background-weak);
+}
+
+// Geschenkkarten feiner: schmales Band mit Goldkanten, Lichtkante oben
+.ribbon {
+  right: 2.6rem;
+  width: 0.9rem;
+  opacity: 0.55;
+  background: linear-gradient(90deg, var(--bf-red-strong), var(--bf-red) 50%, var(--bf-red-strong));
+  box-shadow:
+    -1px 0 0 color-mix(in srgb, var(--bf-gold) 40%, transparent),
+    1px 0 0 color-mix(in srgb, var(--bf-gold) 40%, transparent);
+}
+
+.giftFeatured .ribbon {
+  opacity: 0.6;
+  background: linear-gradient(90deg, var(--bf-gold-deep), var(--bf-gold) 50%, var(--bf-gold-deep));
+}
+
+.gift {
+  box-shadow: inset 0 1px 0 var(--neutral-alpha-medium);
+}
+
+.bigPrice {
+  font-variant-numeric: tabular-nums;
+}
+
+// Laufband ruhiger
+.ticker {
+  transform: rotate(-0.8deg) scale(1.02);
+}
+
+.tickerItem {
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  padding-block: 0.8rem;
+}
+
+.meta {
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .metaWide {
+    display: none;
   }
 }
