@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
     { path: "/", priority: 1, changeFrequency: "weekly" },
     { path: "/webdesign-landsberg", priority: 0.9, changeFrequency: "monthly" },
+    { path: "/blackfriday", priority: 0.9, changeFrequency: "daily" },
     { path: "/videos", priority: 0.8, changeFrequency: "monthly" },
     { path: "/3d-produktanimation", priority: 0.8, changeFrequency: "monthly" },
     { path: "/ueber-uns", priority: 0.8, changeFrequency: "monthly" },

@@ -1,0 +1,658 @@
+// Black-Friday-/Weihnachtslook. Farben nur aus Once-UI-Skalen (Seite läuft immer im Dark-Scope).
+
+.page {
+  --bf-red: var(--scheme-red-500);
+  --bf-red-strong: var(--scheme-red-400);
+  --bf-red-glow: var(--scheme-red-500);
+  --bf-gold: var(--scheme-yellow-800);
+  --bf-gold-soft: var(--scheme-yellow-1000);
+  --bf-gold-deep: var(--scheme-yellow-600);
+  --bf-green: var(--scheme-green-500);
+  --bf-ink: var(--scheme-neutral-0);
+  --bf-snow: var(--scheme-neutral-1200);
+
+  background: var(--page-background);
+  color: var(--neutral-on-background-strong);
+  overflow-x: clip;
+}
+
+// ---------- Hero ----------
+
+.hero {
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100svh;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(60% 45% at 50% 0%, color-mix(in srgb, var(--bf-red) 45%, transparent), transparent 70%),
+      radial-gradient(40% 35% at 85% 85%, color-mix(in srgb, var(--bf-gold-deep) 22%, transparent), transparent 70%),
+      radial-gradient(40% 35% at 10% 80%, color-mix(in srgb, var(--bf-green) 18%, transparent), transparent 70%);
+  }
+}
+
+.lights {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3.75rem;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.wire {
+  stroke: var(--neutral-alpha-strong);
+  stroke-width: 1.5;
+}
+
+.socket {
+  fill: var(--neutral-alpha-strong);
+}
+
+.bulb {
+  animation: twinkle 2.2s ease-in-out infinite;
+  animation-delay: inherit;
+}
+
+.bulbRed .bulb {
+  fill: var(--bf-red-glow);
+  filter: drop-shadow(0 0 6px var(--bf-red-glow));
+}
+.bulbGold .bulb {
+  fill: var(--bf-gold);
+  filter: drop-shadow(0 0 6px var(--bf-gold));
+}
+.bulbGreen .bulb {
+  fill: var(--scheme-green-700);
+  filter: drop-shadow(0 0 6px var(--scheme-green-700));
+}
+.bulbRed,
+.bulbGold,
+.bulbGreen {
+  animation: none;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.snow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.flake {
+  position: absolute;
+  top: -10px;
+  border-radius: 50%;
+  background: var(--bf-snow);
+  filter: blur(0.4px);
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes fall {
+  from {
+    transform: translate3d(0, -10px, 0);
+  }
+  to {
+    transform: translate3d(var(--drift), 105svh, 0);
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bf-red) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--bf-red-glow) 55%, transparent);
+  color: var(--scheme-red-1100);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pulseDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--bf-red-glow);
+  box-shadow: 0 0 0 0 var(--bf-red-glow);
+  animation: pulse 1.6s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--bf-red-glow) 70%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+
+.headline {
+  font-size: clamp(2.6rem, 8.2vw, 6.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.gold {
+  background: linear-gradient(100deg, var(--bf-gold-deep) 0%, var(--bf-gold) 35%, var(--bf-gold-soft) 55%, var(--bf-gold) 75%, var(--bf-gold-deep) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.priceRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.pricePill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.8rem 1.1rem;
+  border-radius: 1rem;
+  background: var(--neutral-alpha-weak);
+  border: 1px solid var(--neutral-alpha-medium);
+}
+
+.pricePillLabel {
+  font-size: 0.95rem;
+  color: var(--neutral-on-background-medium);
+}
+
+.pricePillValue {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--neutral-on-background-strong);
+}
+
+.strike {
+  font-size: 0.95rem;
+  color: var(--neutral-on-background-weak);
+  text-decoration: line-through;
+  text-decoration-color: var(--bf-red-glow);
+  text-decoration-thickness: 2px;
+}
+
+.enter {
+  animation: bfEnter 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes bfEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .pricePill {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .ctaButton,
+  .whatsapp {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+// ---------- Countdown ----------
+
+.clockCell {
+  min-width: 4.25rem;
+  padding: 0.65rem 0.5rem 0.5rem;
+  background: linear-gradient(180deg, var(--neutral-alpha-medium), var(--neutral-alpha-weak));
+  border: 1px solid var(--neutral-alpha-medium);
+  box-shadow: inset 0 1px 0 var(--neutral-alpha-medium);
+}
+
+.clockCellM {
+  min-width: 3.5rem;
+  padding: 0.5rem 0.4rem 0.4rem;
+
+  .clockValue {
+    font-size: 1.5rem;
+  }
+}
+
+.clockValue {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.clockSep {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: -1rem;
+}
+
+@media (max-width: 480px) {
+  .clockCell {
+    min-width: 3.6rem;
+  }
+  .clockValue {
+    font-size: 1.6rem;
+  }
+  .clockSep {
+    display: none;
+  }
+}
+
+// ---------- Slots ----------
+
+.slotsTrack {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--neutral-alpha-medium);
+  overflow: hidden;
+}
+
+.slotsFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--bf-red-glow), var(--bf-gold));
+}
+
+// ---------- CTA ----------
+
+.ctaButton {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.5rem;
+  padding: 0 1.75rem;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--scheme-neutral-1200);
+  background: linear-gradient(180deg, var(--scheme-red-600), var(--bf-red) 45%, var(--bf-red-strong));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--bf-red-glow) 60%, transparent),
+    0 10px 30px -8px color-mix(in srgb, var(--bf-red-glow) 75%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--scheme-neutral-1200) 30%, transparent);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--bf-red-glow) 70%, transparent),
+      0 16px 40px -8px color-mix(in srgb, var(--bf-red-glow) 90%, transparent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--bf-gold);
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: progress;
+  }
+}
+
+.ctaButtonGhost {
+  background: var(--neutral-alpha-weak);
+  color: var(--neutral-on-background-strong);
+  box-shadow: 0 0 0 1px var(--neutral-alpha-strong);
+
+  &:hover {
+    box-shadow: 0 0 0 1px var(--neutral-on-background-weak);
+  }
+}
+
+.whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 3.5rem;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--neutral-on-background-strong);
+  box-shadow: 0 0 0 1px var(--neutral-alpha-strong);
+  text-decoration: none;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: var(--neutral-alpha-weak);
+  }
+}
+
+// ---------- Ticker ----------
+
+.ticker {
+  overflow: hidden;
+  background: linear-gradient(90deg, var(--bf-red-strong), var(--bf-red), var(--bf-red-strong));
+  border-block: 1px solid color-mix(in srgb, var(--bf-gold) 40%, transparent);
+  transform: rotate(-1.2deg) scale(1.02);
+  margin-block: 0.5rem;
+}
+
+.tickerTrack {
+  display: flex;
+  width: max-content;
+  animation: ticker 28s linear infinite;
+}
+
+.tickerItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.9rem 0.75rem;
+  white-space: nowrap;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--scheme-neutral-1200);
+}
+
+.tickerStar {
+  color: var(--bf-gold-soft);
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+// ---------- Offer cards (Geschenk) ----------
+
+.gift {
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, var(--neutral-alpha-weak), transparent 40%),
+    var(--surface-background);
+  border: 1px solid var(--neutral-alpha-medium);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.giftFeatured {
+  border-color: color-mix(in srgb, var(--bf-gold) 55%, transparent);
+  box-shadow: 0 30px 80px -30px color-mix(in srgb, var(--bf-red-glow) 55%, transparent);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(70% 50% at 50% 0%, color-mix(in srgb, var(--bf-red) 30%, transparent), transparent 70%);
+  }
+}
+
+// Schleifenband rechts oben
+.ribbon {
+  position: absolute;
+  top: 0;
+  right: 2.25rem;
+  width: 1.75rem;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(90deg, var(--bf-red-strong), var(--bf-red-glow) 50%, var(--bf-red-strong));
+  opacity: 0.35;
+}
+
+.giftFeatured .ribbon {
+  background: linear-gradient(90deg, var(--bf-gold-deep), var(--bf-gold) 50%, var(--bf-gold-deep));
+  opacity: 0.28;
+}
+
+.bow {
+  position: absolute;
+  top: 0.75rem;
+  right: 1.35rem;
+  width: 3.5rem;
+  height: 2.25rem;
+  pointer-events: none;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--bf-ink);
+  background: linear-gradient(180deg, var(--bf-gold-soft), var(--bf-gold));
+}
+
+.discount {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--scheme-neutral-1200);
+  background: var(--bf-red);
+}
+
+.bigPrice {
+  font-size: clamp(3.5rem, 7vw, 4.75rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.check {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.1rem;
+  border-radius: 50%;
+  color: var(--bf-ink);
+  background: var(--scheme-green-900);
+}
+
+// ---------- Steps / Value ----------
+
+.step {
+  background: var(--neutral-alpha-weak);
+  border: 1px solid var(--neutral-alpha-medium);
+}
+
+.stepNumber {
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.guarantee {
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid color-mix(in srgb, var(--bf-gold) 40%, transparent);
+  background:
+    radial-gradient(60% 80% at 0% 0%, color-mix(in srgb, var(--bf-green) 25%, transparent), transparent 70%),
+    radial-gradient(60% 80% at 100% 100%, color-mix(in srgb, var(--bf-red) 25%, transparent), transparent 70%),
+    var(--surface-background);
+}
+
+.seal {
+  flex-shrink: 0;
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--bf-ink);
+  background: radial-gradient(circle at 35% 30%, var(--bf-gold-soft), var(--bf-gold) 55%, var(--bf-gold-deep));
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--bf-gold) 20%, transparent),
+    0 12px 30px -10px var(--bf-gold-deep);
+  transform: rotate(-8deg);
+}
+
+.quote {
+  border-left: 3px solid var(--bf-gold);
+}
+
+// ---------- Formular ----------
+
+.formSection {
+  isolation: isolate;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(50% 50% at 80% 30%, color-mix(in srgb, var(--bf-red) 30%, transparent), transparent 70%),
+      radial-gradient(40% 40% at 10% 90%, color-mix(in srgb, var(--bf-green) 18%, transparent), transparent 70%);
+  }
+}
+
+.formCard {
+  background: var(--surface-background);
+  border: 1px solid color-mix(in srgb, var(--bf-gold) 35%, var(--neutral-alpha-medium));
+  box-shadow: 0 40px 100px -40px color-mix(in srgb, var(--bf-red-glow) 60%, transparent);
+}
+
+.choice {
+  appearance: none;
+  cursor: pointer;
+  flex: 1 1 9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.875rem;
+  font: inherit;
+  text-align: left;
+  color: var(--neutral-on-background-strong);
+  background: var(--neutral-alpha-weak);
+  border: 1px solid var(--neutral-alpha-medium);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+
+  &:hover {
+    border-color: var(--neutral-alpha-strong);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--bf-gold);
+    outline-offset: 2px;
+  }
+}
+
+.choiceActive {
+  border-color: var(--bf-red-glow);
+  background: color-mix(in srgb, var(--bf-red) 22%, transparent);
+  box-shadow: 0 0 0 1px var(--bf-red-glow);
+}
+
+.choiceLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.choicePrice {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.successIcon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--bf-ink);
+  background: var(--scheme-green-900);
+}
+
+// ---------- Reduced motion ----------
+
+@media (prefers-reduced-motion: reduce) {
+  .snow,
+  .pulseDot {
+    display: none;
+  }
+  .bulb,
+  .gold,
+  .tickerTrack {
+    animation: none;
+  }
+  .enter {
+    animation: none;
+  }
+  .gift:hover,
+  .ctaButton:hover {
+    transform: none;
+  }
+}

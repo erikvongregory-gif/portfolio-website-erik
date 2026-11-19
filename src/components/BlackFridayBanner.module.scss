@@ -1,0 +1,70 @@
+// Aktionsleiste: fest oben, der Header rückt per --announce-h darunter.
+:root:has(.banner) {
+  --announce-h: 2.5rem;
+}
+
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  height: var(--announce-h, 2.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--scheme-neutral-1200);
+  background: linear-gradient(90deg, var(--scheme-red-300), var(--scheme-red-500) 50%, var(--scheme-red-300));
+  border-bottom: 1px solid color-mix(in srgb, var(--scheme-yellow-800) 45%, transparent);
+  text-decoration: none;
+  transition: filter 0.2s ease;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--scheme-yellow-800);
+    outline-offset: -3px;
+  }
+}
+
+.tag {
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--scheme-neutral-0);
+  background: var(--scheme-yellow-800);
+}
+
+.copy {
+  white-space: nowrap;
+  color: var(--scheme-neutral-1200);
+
+  strong {
+    font-weight: 800;
+  }
+}
+
+.timer {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--scheme-red-1000);
+}
+
+.more {
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--scheme-neutral-1200);
+}
+
+@media (max-width: 640px) {
+  .desktopOnly {
+    display: none;
+  }
+}

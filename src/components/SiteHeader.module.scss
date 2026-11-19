@@ -1,4 +1,6 @@
 .header {
+  /* Unter der Black-Friday-Leiste, falls sichtbar. */
+  top: var(--announce-h, 0px) !important;
   background: transparent !important;
   border: none;
   transform: translate3d(0, 0, 0);

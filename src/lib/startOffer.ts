@@ -1,3 +1,5 @@
+import { isBlackFridayActive } from "@/lib/blackFriday";
+
 /**
  * Begrenztes Einstiegsangebot. Nur hier pflegen:
  * `slotsLeft` nach jedem Abschluss runterzählen, bei 0 verschwindet die Box überall.
@@ -29,6 +31,8 @@ export const START_OFFER_WHATSAPP_URL =
 
 export function isStartOfferActive(now: Date = new Date()): boolean {
   if (START_OFFER.slotsLeft <= 0) return false;
+  // Während Black Friday nicht anbieten: Landingpage für 300 € auf /blackfriday schlägt das Startpaket.
+  if (isBlackFridayActive(now)) return false;
   return now <= new Date(`${START_OFFER.validUntil}T23:59:59`);
 }
 
