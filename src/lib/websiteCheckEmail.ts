@@ -11,7 +11,7 @@ export type OfferEmailInput = {
   company: string;
   goal?: string;
   budget?: string;
-  kind?: "festpreis" | "entwurf";
+  kind?: "festpreis" | "entwurf" | "film";
 };
 
 /** First token from email local-part, e.g. max.mueller@… → Max */
@@ -26,17 +26,26 @@ export function greetingNameFromEmail(email: string) {
 }
 
 export function buildCheckConfirmationEmail(input: OfferEmailInput) {
+  const isFilm = input.kind === "film";
   const isDraft = input.kind === "entwurf";
-  const product = isDraft ? "kostenlosen Entwurf" : "Festpreis-Angebot";
-  const productShort = isDraft ? "Entwurf" : "Festpreis-Angebot";
+  const product = isFilm ? "Film" : isDraft ? "kostenlosen Entwurf" : "Festpreis-Angebot";
+  const productShort = isFilm ? "Film-Anfrage" : isDraft ? "Entwurf" : "Festpreis-Angebot";
   const whatsappHref =
     "https://wa.me/4915565602176?text=" +
     encodeURIComponent(
-      isDraft
+      isFilm
+        ? "Hallo Erik, ich interessiere mich für einen Film."
+        : isDraft
         ? "Hallo Erik, ich möchte den kostenlosen Entwurf besprechen."
         : "Hallo Erik, ich möchte mein Festpreis-Angebot besprechen.",
     );
-  const deliverables = isDraft
+  const deliverables = isFilm
+    ? ([
+        "Eine erste Idee für deinen Film",
+        "Ehrliche Einschätzung zu Aufwand und Preis",
+        "Antwort innerhalb von 24 Stunden",
+      ] as const)
+    : isDraft
     ? ([
         "Kostenloser Entwurf für deine Website",
         "Passende Richtung statt Bauchgefühl",
@@ -56,8 +65,12 @@ export function buildCheckConfirmationEmail(input: OfferEmailInput) {
   const company = input.company.trim();
 
   const subject = displayName
-    ? `${displayName}, dein ${productShort} zu ${company} ist unterwegs`
-    : `Dein ${productShort} zu ${company} ist unterwegs`;
+    ? isFilm
+      ? `${displayName}, deine Film-Anfrage zu ${company} ist angekommen`
+      : `${displayName}, dein ${productShort} zu ${company} ist unterwegs`
+    : isFilm
+      ? `Deine Film-Anfrage zu ${company} ist angekommen`
+      : `Dein ${productShort} zu ${company} ist unterwegs`;
 
   const text = `${hello}
 
@@ -79,7 +92,7 @@ Erik
 
 —
 Erik von Gregory · EvGlab
-Websites mit Charakter aus Landsberg am Lech
+Websites, 3D-Filme und Reels aus Landsberg am Lech
 ${CONTACT_EMAIL}
 ${CONTACT_PHONE_DISPLAY}
 `;
@@ -140,7 +153,7 @@ ${CONTACT_PHONE_DISPLAY}
                       </tr>
                     </table>
                     <div style="color:#f5f5f5;font-size:22px;font-weight:600;letter-spacing:-0.03em;line-height:1.3;padding-bottom:16px;">
-                      Dein ${productShort} ist unterwegs.
+                      ${isFilm ? "Deine Film-Anfrage ist angekommen." : `Dein ${productShort} ist unterwegs.`}
                     </div>
                     <div style="color:#a3a3a3;font-size:16px;line-height:1.6;padding-bottom:20px;">
                       ${hello}<br /><br />
@@ -148,7 +161,7 @@ ${CONTACT_PHONE_DISPLAY}
                       <strong style="color:#f5f5f5;">${company}</strong>
                       ist gerade bei mir eingegangen. Ich melde mich
                       <strong style="color:#f5f5f5;">innerhalb von 24 Stunden</strong>
-                      persönlich mit einem ${product}.
+                      persönlich${isFilm ? " mit einer ersten Idee und einer ehrlichen Einschätzung" : ` mit einem ${product}`}.
                     </div>
                   </td>
                 </tr>
@@ -194,7 +207,7 @@ ${CONTACT_PHONE_DISPLAY}
                     </div>
                     <div style="color:#525252;font-size:12px;line-height:1.5;padding-top:10px;">
                       Erik von Gregory · EvGlab<br />
-                      Websites mit Charakter aus Landsberg am Lech<br />
+                      Websites, 3D-Filme und Reels aus Landsberg am Lech<br />
                       <a href="mailto:${CONTACT_EMAIL}" style="color:#737373;text-decoration:none;">${CONTACT_EMAIL}</a>
                     </div>
                   </td>
@@ -206,7 +219,7 @@ ${CONTACT_PHONE_DISPLAY}
             <td align="center" style="padding:24px 8px 0 8px;color:#404040;font-size:11px;line-height:1.5;">
               Du bekommst diese Mail, weil du auf
               <a href="${SITE_URL}/" style="color:#525252;text-decoration:underline;">evglab.com</a>
-              ${isDraft ? "einen kostenlosen Entwurf" : "ein Festpreis-Angebot"} angefragt hast.
+              ${isFilm ? "einen Film" : isDraft ? "einen kostenlosen Entwurf" : "ein Festpreis-Angebot"} angefragt hast.
             </td>
           </tr>
         </table>

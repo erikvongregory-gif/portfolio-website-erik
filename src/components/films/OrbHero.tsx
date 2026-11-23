@@ -231,7 +231,7 @@ export function OrbHero() {
             Blender und Motion Design gebaut, im Look deiner Marke und passend zu deiner Website.
           </Text>
           <Row gap="20" vertical="center" wrap>
-            <ContactDialog label="Kostenloser Entwurf" size="m" funnel />
+            <ContactDialog label="Film anfragen" size="m" funnel topic="film" idPrefix="film-hero-" />
             <SmartLink href="#showreel" unstyled className={styles.secondary}>
               Showreel ansehen
             </SmartLink>

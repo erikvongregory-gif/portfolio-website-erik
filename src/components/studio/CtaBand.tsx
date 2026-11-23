@@ -11,6 +11,8 @@ type Props = {
   title?: ReactNode;
   text?: ReactNode;
   ctaLabel?: string;
+  /** Which funnel the button opens. */
+  topic?: "website" | "film";
 };
 
 /** Closing call to action on the dark stage, with a quieter light stream behind. */
@@ -22,6 +24,7 @@ export function CtaBand({
   ),
   text = "Erzähl kurz, was du vorhast. Du bekommst einen kostenlosen Entwurf und eine ehrliche Einschätzung, persönlich von Erik.",
   ctaLabel = "Kostenloser Entwurf",
+  topic = "website",
 }: Props) {
   return (
     <Column as="section" data-theme="dark" className={styles.band} fillWidth horizontal="center">
@@ -35,7 +38,7 @@ export function CtaBand({
           {text}
         </Text>
         <Row gap="24" vertical="center" wrap>
-          <ContactDialog label={ctaLabel} size="l" funnel />
+          <ContactDialog label={ctaLabel} size="l" funnel topic={topic} idPrefix={`cta-${topic}-`} />
           <Row gap="20" vertical="center" wrap>
             <SmartLink href={`mailto:${CONTACT_EMAIL}`} unstyled className={styles.link}>
               {CONTACT_EMAIL}

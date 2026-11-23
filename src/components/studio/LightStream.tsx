@@ -59,6 +59,79 @@ const gauss = () => {
   return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
 };
 
+/**
+ * One shared set of film sources for every LightStream on the page (hero and
+ * CTA band). Posters load right away (a few KB each); the preview videos only
+ * after the page has loaded and the browser is idle, and never on phones,
+ * with Save-Data or on slow connections. Videos play only while at least one
+ * stream is visible.
+ */
+type FilmSource = {
+  posters: HTMLImageElement[];
+  videos: (HTMLVideoElement | null)[];
+  playing: number;
+};
+let shared: FilmSource | null = null;
+
+function getFilmSource(): FilmSource {
+  if (shared) return shared;
+  const source: FilmSource = {
+    posters: FILMS.map((name) => {
+      const img = new Image();
+      img.decoding = "async";
+      img.src = `/videos/${name}.webp`;
+      return img;
+    }),
+    videos: FILMS.map(() => null),
+    playing: 0,
+  };
+  shared = source;
+
+  const conn = (navigator as Navigator & {
+    connection?: { saveData?: boolean; effectiveType?: string };
+  }).connection;
+  const lite =
+    window.matchMedia("(max-width: 768px)").matches ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    conn?.saveData === true ||
+    /(^|-)(2g|3g)$/.test(conn?.effectiveType ?? "");
+  if (lite) return source;
+
+  const loadVideos = () => {
+    source.videos = FILMS.map((name) => {
+      const v = document.createElement("video");
+      v.muted = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.preload = "auto";
+      v.setAttribute("muted", "");
+      v.setAttribute("playsinline", "");
+      v.src = `/videos/${name}-preview.mp4`;
+      if (source.playing > 0) v.play().catch(() => {});
+      return v;
+    });
+  };
+  const whenIdle = () => {
+    const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void })
+      .requestIdleCallback;
+    if (ric) ric(loadVideos, { timeout: 4000 });
+    else setTimeout(loadVideos, 1500);
+  };
+  if (document.readyState === "complete") whenIdle();
+  else window.addEventListener("load", whenIdle, { once: true });
+  return source;
+}
+
+function playFilms(source: FilmSource) {
+  source.playing += 1;
+  if (source.playing === 1) for (const v of source.videos) v?.play().catch(() => {});
+}
+
+function pauseFilms(source: FilmSource) {
+  source.playing = Math.max(0, source.playing - 1);
+  if (source.playing === 0) for (const v of source.videos) v?.pause();
+}
+
 export function LightStream({ className, onPulseArrive, variant = "hero" }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const arriveRef = useRef(onPulseArrive);
@@ -82,31 +155,17 @@ export function LightStream({ className, onPulseArrive, variant = "hero" }: Prop
     const actx = atlas.getContext("2d");
     if (!actx) return;
 
-    const posters = FILMS.map((name) => {
-      const img = new Image();
-      img.src = `/videos/${name}.webp`;
-      return img;
-    });
-    const videos = FILMS.map((name) => {
-      const v = document.createElement("video");
-      v.src = `/videos/${name}-preview.mp4`;
-      v.muted = true;
-      v.loop = true;
-      v.playsInline = true;
-      v.preload = "auto";
-      v.setAttribute("muted", "");
-      v.setAttribute("playsinline", "");
-      return v;
-    });
+    const source = getFilmSource();
+    const posters = source.posters;
 
     const paintAtlas = () => {
       FILMS.forEach((_, i) => {
         const x = (i % COLS) * TILE_W;
         const y = Math.floor(i / COLS) * TILE_H;
-        const v = videos[i];
+        const v = source.videos[i];
         const p = posters[i];
         try {
-          if (v.readyState >= 2) actx.drawImage(v, x, y, TILE_W, TILE_H);
+          if (v && v.readyState >= 2) actx.drawImage(v, x, y, TILE_W, TILE_H);
           else if (p.complete && p.naturalWidth) actx.drawImage(p, x, y, TILE_W, TILE_H);
         } catch {
           /* frame not decodable yet */
@@ -364,18 +423,25 @@ export function LightStream({ className, onPulseArrive, variant = "hero" }: Prop
       if (running) raf = requestAnimationFrame(loop);
     };
 
+    let holdsFilms = false;
     const start = () => {
       if (running && raf) return;
       running = true;
       last = performance.now();
-      for (const v of videos) v.play().catch(() => {});
+      if (!holdsFilms) {
+        holdsFilms = true;
+        playFilms(source);
+      }
       raf = requestAnimationFrame(loop);
     };
     const stop = () => {
       running = false;
       cancelAnimationFrame(raf);
       raf = 0;
-      for (const v of videos) v.pause();
+      if (holdsFilms) {
+        holdsFilms = false;
+        pauseFilms(source);
+      }
     };
 
     if (reduced) {
@@ -410,10 +476,6 @@ export function LightStream({ className, onPulseArrive, variant = "hero" }: Prop
       document.removeEventListener("visibilitychange", onVis);
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerleave", onLeave);
-      for (const v of videos) {
-        v.removeAttribute("src");
-        v.load();
-      }
     };
   }, [variant]);
 

@@ -5,7 +5,7 @@ export const alt = "EvGlab – Websites, 3D-Filme und Reels, die Kunden bringen.
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-/** Photoreal laptop mockup with live homepage — regenerate via `node scripts/compose-og.mjs`. */
+/** Share card from the real home hero — regenerate via `node scripts/og-studio.mjs` (dev server running). */
 export default async function Image() {
   const body = await readFile(join(process.cwd(), "src/app/og-assets/opengraph.png"));
   return new Response(body, {

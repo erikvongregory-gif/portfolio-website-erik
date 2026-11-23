@@ -1,7 +1,8 @@
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 20;
+  /* Full-screen funnel sits above the fixed header (50) and the offer banner (60). */
+  z-index: 70;
   width: 100%;
   height: 100dvh;
   pointer-events: none;

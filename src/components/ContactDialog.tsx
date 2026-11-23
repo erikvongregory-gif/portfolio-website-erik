@@ -37,6 +37,8 @@ type ContactDialogProps = {
   replaceGlobalHandler?: boolean;
   /** Multi-step Entwurf-Funnel (wie /festpreis) statt Kurzformular. */
   funnel?: boolean;
+  /** Funnel-Thema: Website (Standard) oder Film mit eigenen Fragen. */
+  topic?: "website" | "film";
   /** Force ShiftCta trigger (same as size="l"). */
   shift?: boolean;
   /** Compact ShiftCta for header. */
@@ -85,6 +87,7 @@ export function ContactDialog({
   idPrefix = "",
   replaceGlobalHandler = false,
   funnel = false,
+  topic = "website",
   shift = false,
   shiftCompact = false,
   shiftTone = "gradient",
@@ -311,7 +314,7 @@ export function ContactDialog({
             style={{ "--ox": origin.x, "--oy": origin.y } as CSSProperties}
             role="dialog"
             aria-modal="true"
-            aria-label="Kostenloser Entwurf"
+            aria-label={topic === "film" ? "Film anfragen" : "Kostenloser Entwurf"}
           >
             <Column className={styles.panel} fillWidth>
               <Row
@@ -327,10 +330,12 @@ export function ContactDialog({
                     variant="heading-strong-m"
                     onBackground="neutral-strong"
                   >
-                    Kostenloser Entwurf
+                    {topic === "film" ? "Film anfragen" : "Kostenloser Entwurf"}
                   </Text>
                   <Text variant="body-default-s" onBackground="neutral-medium">
-                    Ein paar kurze Fragen – dann weiß ich schon, was du brauchst.
+                    {topic === "film"
+                      ? "Fünf kurze Fragen – dann weiß ich, welcher Film zu dir passt."
+                      : "Ein paar kurze Fragen – dann weiß ich schon, was du brauchst."}
                   </Text>
                 </Column>
                 <button
@@ -346,7 +351,7 @@ export function ContactDialog({
               <div className={styles.body}>
                 <WebsiteCheckForm
                   key={funnelKey}
-                  variant="entwurf"
+                  variant={topic === "film" ? "film" : "entwurf"}
                   embedded
                   idPrefix={`${idPrefix}entwurf-`}
                 />

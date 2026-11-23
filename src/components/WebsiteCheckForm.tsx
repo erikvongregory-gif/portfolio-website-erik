@@ -55,13 +55,61 @@ const FEATURES = [
   "Online-Shop",
 ] as const;
 
-type GoalId = (typeof GOALS)[number]["id"];
-type BudgetId = (typeof BUDGETS)[number]["id"];
+type Choice = { readonly id: string; readonly label: string };
+
+/** Questions per topic: websites (festpreis/entwurf) or films. */
+const FLOWS = {
+  web: {
+    goals: GOALS as readonly Choice[],
+    step2Title: "Erzähl kurz von eurem Betrieb.",
+    step2Desc: "So passe ich das Konzept exakt auf die Nische an.",
+    companyPlaceholder: "z. B. Müller Dachtechnik",
+    extrasLabel: "Branche (optional)",
+    extras: INDUSTRIES as readonly string[],
+    budgets: BUDGETS as readonly Choice[],
+    step4Title: "Wichtige Features",
+    step4Desc: "Was braucht die Seite unbedingt? Optional — einfach antippen.",
+    features: FEATURES as readonly string[],
+    linkLabel: "Aktuelle Website (falls vorhanden)",
+  },
+  film: {
+    goals: [
+      { id: "product-3d", label: "3D-Produktfilm" },
+      { id: "fair", label: "Film für die Messe" },
+      { id: "spot", label: "Werbespot / Imagefilm" },
+      { id: "reels", label: "Reels für Social Media" },
+      { id: "logo", label: "3D-Logo-Animation" },
+      { id: "other", label: "Anderes" },
+    ] as readonly Choice[],
+    step2Title: "Worum geht es?",
+    step2Desc: "Firma und Produkt reichen. Wofür der Film gedacht ist, hilft mir zusätzlich.",
+    companyPlaceholder: "z. B. Müller Antriebstechnik, neue Pumpe X2",
+    extrasLabel: "Wo soll der Film laufen? (optional)",
+    extras: ["Messe", "Website", "Social Media", "Werbeanzeige", "Produktlaunch", "Präsentation"],
+    budgets: [
+      { id: "over-5k", label: "Über 5.000 €" },
+      { id: "2.5-5k", label: "2.500 € – 5.000 €" },
+      { id: "1-2.5k", label: "1.000 € – 2.500 €" },
+      { id: "under-1k", label: "Weniger als 1.000 €" },
+    ] as readonly Choice[],
+    step4Title: "Was gibt es schon?",
+    step4Desc: "Hilft mir beim Einschätzen. Optional — einfach antippen.",
+    features: [
+      "CAD- oder 3D-Daten",
+      "Produktfotos",
+      "Logo / Markenfarben",
+      "Texte oder Skript",
+      "Musikwunsch",
+      "Fester Termin (z. B. Messe)",
+    ],
+    linkLabel: "Website oder Produktseite (falls vorhanden)",
+  },
+} as const;
 
 type WebsiteCheckFormProps = {
   idPrefix?: string;
   /** festpreis = /festpreis funnel; entwurf = free draft funnel (homepage). */
-  variant?: "festpreis" | "entwurf";
+  variant?: "festpreis" | "entwurf" | "film";
   /** Strip card chrome when nested in a Dialog. */
   embedded?: boolean;
 };
@@ -102,6 +150,24 @@ const VARIANT = {
     submit: "Kostenlosen Entwurf anfordern",
     footer: "Unverbindlich · Antwort in 24h · Kostenloser Entwurf",
     kind: "entwurf" as const,
+  },
+  film: {
+    whatsapp:
+      "https://wa.me/4915565602176?text=" +
+      encodeURIComponent("Hallo Erik, ich interessiere mich für einen Film."),
+    messageIntro: "Film-Anfrage über die Filme-Seite.",
+    subject: (company: string) => `Film-Anfrage: ${company} (${SITE_HOST})`,
+    successTitle: "Danke! Deine Film-Anfrage ist da.",
+    successConfirmed:
+      "Bestätigung ist unterwegs. Ich melde mich innerhalb von 24 Stunden mit einer ersten Idee und einer ehrlichen Einschätzung.",
+    successFallback:
+      "Ich melde mich innerhalb von 24 Stunden mit einer ersten Idee und einer ehrlichen Einschätzung – persönlich von mir.",
+    step1Hint: "Wähle, was entstehen soll — dann frage ich gezielt nach.",
+    step5Title: "Wohin darf ich antworten?",
+    step5Desc: "Erste Idee und ehrliche Einschätzung – Antwort innerhalb von 24 Stunden.",
+    submit: "Film anfragen",
+    footer: "Unverbindlich · Antwort in 24h · Persönlich von Erik",
+    kind: "film" as const,
   },
 } as const;
 
@@ -161,12 +227,13 @@ export function WebsiteCheckForm({
   embedded = false,
 }: WebsiteCheckFormProps) {
   const copy = VARIANT[variant];
+  const flow = variant === "film" ? FLOWS.film : FLOWS.web;
   const [step, setStep] = useState(1);
   const [dir, setDir] = useState<Dir>("fwd");
-  const [goal, setGoal] = useState<GoalId | "">("");
+  const [goal, setGoal] = useState<string>("");
   const [company, setCompany] = useState("");
   const [industry, setIndustry] = useState("");
-  const [budget, setBudget] = useState<BudgetId | "">("");
+  const [budget, setBudget] = useState<string>("");
   const [features, setFeatures] = useState<string[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -178,8 +245,8 @@ export function WebsiteCheckForm({
   const [advancing, setAdvancing] = useState(false);
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const goalLabel = GOALS.find((g) => g.id === goal)?.label ?? "";
-  const budgetLabel = BUDGETS.find((b) => b.id === budget)?.label ?? "";
+  const goalLabel = flow.goals.find((g) => g.id === goal)?.label ?? "";
+  const budgetLabel = flow.budgets.find((b) => b.id === budget)?.label ?? "";
 
   useEffect(() => {
     return () => {
@@ -243,12 +310,12 @@ export function WebsiteCheckForm({
     goTo(Math.max(1, step - 1), "back");
   };
 
-  const selectGoal = (id: GoalId) => {
+  const selectGoal = (id: string) => {
     setGoal(id);
     softAdvance(2);
   };
 
-  const selectBudget = (id: BudgetId) => {
+  const selectBudget = (id: string) => {
     setBudget(id);
     softAdvance(4);
   };
@@ -277,9 +344,9 @@ export function WebsiteCheckForm({
       "",
       `Ziel: ${goalLabel}`,
       `Firma / Projekt: ${company.trim()}`,
-      `Branche: ${industry || "—"}`,
+      `${variant === "film" ? "Einsatz" : "Branche"}: ${industry || "—"}`,
       `Budget-Rahmen: ${budgetLabel}`,
-      `Features: ${featureList}`,
+      `${variant === "film" ? "Vorhanden" : "Features"}: ${featureList}`,
       `Name: ${name.trim()}`,
       `E-Mail: ${email.trim()}`,
       `Telefon: ${phone.trim() || "—"}`,
@@ -452,7 +519,7 @@ export function WebsiteCheckForm({
               </Text>
             </Column>
             <Column gap="8" fillWidth role="radiogroup" aria-label="Ziel">
-              {GOALS.map((item, index) => (
+              {flow.goals.map((item, index) => (
                 <div
                   key={item.id}
                   className={funnelStyles.staggerItem}
@@ -473,26 +540,26 @@ export function WebsiteCheckForm({
           <Column gap="16" fillWidth>
             <Column gap="8">
               <Text variant="heading-strong-s" onBackground="neutral-strong">
-                Erzähl kurz von eurem Betrieb.
+                {flow.step2Title}
               </Text>
               <Text variant="body-default-s" onBackground="neutral-medium">
-                So passe ich das Konzept exakt auf die Nische an.
+                {flow.step2Desc}
               </Text>
             </Column>
             <Input
               id={`${idPrefix}company`}
               label="Firmenname / Projekt"
-              placeholder="z. B. Müller Dachtechnik"
+              placeholder={flow.companyPlaceholder}
               value={company}
               onChange={(e) => setCompany(e.target.value)}
               onKeyDown={onKeyDown}
             />
             <Column gap="8" fillWidth>
               <Text variant="label-default-s" onBackground="neutral-medium">
-                Branche (optional)
+                {flow.extrasLabel}
               </Text>
               <Row gap="8" wrap>
-                {INDUSTRIES.map((item) => (
+                {flow.extras.map((item) => (
                   <ChipButton
                     key={item}
                     selected={industry === item}
@@ -516,7 +583,7 @@ export function WebsiteCheckForm({
               </Text>
             </Column>
             <Column gap="8" fillWidth role="radiogroup" aria-label="Budget">
-              {BUDGETS.map((item, index) => (
+              {flow.budgets.map((item, index) => (
                 <div
                   key={item.id}
                   className={funnelStyles.staggerItem}
@@ -537,14 +604,14 @@ export function WebsiteCheckForm({
           <Column gap="16" fillWidth>
             <Column gap="8">
               <Text variant="heading-strong-s" onBackground="neutral-strong">
-                Wichtige Features
+                {flow.step4Title}
               </Text>
               <Text variant="body-default-s" onBackground="neutral-medium">
-                Was braucht die Seite unbedingt? Optional — einfach antippen.
+                {flow.step4Desc}
               </Text>
             </Column>
             <Row gap="8" wrap>
-              {FEATURES.map((item) => (
+              {flow.features.map((item) => (
                 <ChipButton
                   key={item}
                   selected={features.includes(item)}
@@ -595,7 +662,7 @@ export function WebsiteCheckForm({
             <Input
               id={`${idPrefix}website`}
               type="url"
-              label="Aktuelle Website (falls vorhanden)"
+              label={flow.linkLabel}
               placeholder="www.firma.de"
               value={website}
               onChange={(e) => setWebsite(e.target.value)}

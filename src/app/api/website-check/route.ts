@@ -16,7 +16,7 @@ type FunnelBody = {
   features?: string[];
   phone?: string;
   website?: string;
-  kind?: "festpreis" | "entwurf";
+  kind?: "festpreis" | "entwurf" | "film";
 };
 
 /** Sends personalized confirmation to the lead (+ optional notify to Erik). */
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
   const phone = (body.phone ?? "").trim();
   const website = (body.website ?? "").trim();
   const features = Array.isArray(body.features) ? body.features : [];
-  const kind = body.kind === "entwurf" ? "entwurf" : "festpreis";
+  const kind = body.kind === "entwurf" || body.kind === "film" ? body.kind : "festpreis";
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "Bitte eine gültige E-Mail-Adresse angeben." }, { status: 400 });
@@ -86,9 +86,16 @@ export async function POST(request: Request) {
       from: EMAIL_FROM,
       to: CONTACT_EMAIL,
       replyTo: email,
-      subject: kind === "entwurf" ? `Neue Entwurf-Anfrage: ${company}` : `Neue Festpreis-Anfrage: ${company}`,
+      subject:
+        kind === "film"
+          ? `Neue Film-Anfrage: ${company}`
+          : kind === "entwurf"
+            ? `Neue Entwurf-Anfrage: ${company}`
+            : `Neue Festpreis-Anfrage: ${company}`,
       text: [
-        kind === "entwurf"
+        kind === "film"
+          ? "Neue Anfrage über den Film-Funnel."
+          : kind === "entwurf"
           ? "Neue Anfrage über den Entwurf-Funnel."
           : "Neue Anfrage über den Kosten-Funnel.",
         "",
@@ -97,8 +104,8 @@ export async function POST(request: Request) {
         `Firma / Projekt: ${company}`,
         `Ziel: ${goal || "—"}`,
         `Budget: ${budget || "—"}`,
-        `Branche: ${industry || "—"}`,
-        `Features: ${featureList}`,
+        `${kind === "film" ? "Einsatz" : "Branche"}: ${industry || "—"}`,
+        `${kind === "film" ? "Vorhanden" : "Features"}: ${featureList}`,
         `Telefon: ${phone || "—"}`,
         `Website: ${website || "—"}`,
       ].join("\n"),

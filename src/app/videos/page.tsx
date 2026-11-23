@@ -251,7 +251,9 @@ export default function VideosPage() {
             Lass uns deinen <Glow>Film</Glow> bauen.
           </>
         }
-        text="Erzähl kurz, was du zeigen willst. Du bekommst einen kostenlosen Entwurf und eine ehrliche Einschätzung, persönlich von Erik."
+        text="Erzähl kurz, was du zeigen willst. Du bekommst eine erste Idee und eine ehrliche Einschätzung zu Aufwand und Preis, persönlich von Erik."
+        ctaLabel="Film anfragen"
+        topic="film"
       />
       <StudioFooter />
     </Column>
