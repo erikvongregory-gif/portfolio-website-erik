@@ -1,0 +1,251 @@
+@use "../studio/studio" as studio;
+
+.text {
+  margin: 0;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: var(--studio-ink-2);
+}
+
+/* ——— Services ——— */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--studio-line);
+}
+
+.service {
+  padding: clamp(1.75rem, 3vw, 2.5rem) 0;
+  border-bottom: 1px solid var(--studio-line);
+  align-items: baseline !important;
+}
+
+.serviceTitle {
+  @include studio.headline(clamp(1.6rem, 2.6vw, 2.5rem));
+  flex: 0 0 34%;
+  margin: 0;
+  color: #fff;
+
+  @media (max-width: 1024px) {
+    flex-basis: auto;
+  }
+}
+
+.serviceBody {
+  flex: 1 1 auto;
+  max-width: 34rem;
+}
+
+.points {
+  margin: 0;
+  font-size: 0.875rem !important;
+  color: var(--studio-ink-3);
+}
+
+.price {
+  flex: 0 0 auto;
+  margin-left: auto;
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem) !important;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  @include studio.glow-text;
+
+  @media (max-width: 1024px) {
+    margin-left: 0;
+  }
+}
+
+/* ——— Combo ——— */
+.combo {
+  @include studio.glass(1.5rem);
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.comboKicker {
+  @include studio.kicker;
+  color: var(--studio-ink-3);
+}
+
+.comboTitle {
+  @include studio.headline(clamp(1.75rem, 3.2vw, 3rem));
+  margin: 0;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.checks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.check {
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 0.975rem !important;
+  color: var(--studio-ink);
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--studio-glow);
+    box-shadow: 0 0 8px rgba(143, 214, 224, 0.6);
+  }
+}
+
+/* ——— Process ——— */
+.process {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
+  position: relative;
+
+  // The line connecting all nodes.
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 5px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--studio-glow) 0%, var(--studio-line) 40%, var(--studio-line) 100%);
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    padding-left: 1.75rem;
+
+    &::before {
+      left: 5px;
+      right: auto;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      height: auto;
+      background: linear-gradient(180deg, var(--studio-glow) 0%, var(--studio-line) 40%);
+    }
+  }
+}
+
+.step {
+  position: relative;
+  padding-top: 2rem;
+
+  @media (max-width: 900px) {
+    padding-top: 0;
+  }
+}
+
+.node {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--studio-stage);
+  border: 1px solid var(--studio-glow);
+
+  .step:first-child & {
+    background: var(--studio-glow);
+    box-shadow: 0 0 14px rgba(143, 214, 224, 0.7);
+  }
+
+  @media (max-width: 900px) {
+    left: -1.75rem;
+    top: 0.5rem;
+  }
+}
+
+.stepTitle {
+  @include studio.headline(clamp(1.6rem, 2.4vw, 2.25rem));
+  margin: 0;
+  color: #fff;
+}
+
+/* ——— FAQ ——— */
+.faq {
+  max-width: 54rem;
+  border-top: 1px solid var(--studio-line);
+}
+
+.faqItem {
+  border-bottom: 1px solid var(--studio-line);
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  cursor: pointer;
+  list-style: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--studio-glow);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  &:hover .question {
+    color: #fff;
+  }
+}
+
+.question {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 400 !important;
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem) !important;
+  letter-spacing: -0.02em;
+  line-height: 1.25 !important;
+  color: var(--studio-ink);
+}
+
+.plus {
+  position: relative;
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6.5px;
+    width: 14px;
+    height: 1px;
+    background: var(--studio-ink-2);
+    transition: transform 0.3s var(--studio-ease);
+  }
+
+  &::after {
+    transform: rotate(90deg);
+  }
+
+  details[open] &::after {
+    transform: rotate(0deg);
+  }
+}
+
+.answer {
+  max-width: 44rem;
+  padding-bottom: 1.75rem;
+}

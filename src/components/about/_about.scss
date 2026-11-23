@@ -1,0 +1,58 @@
+// Shared notebook look for the about page. Import relatively:
+// @use "./about" as about;
+
+@mixin vars {
+  // Design-tool selection colour, mixed from studio tokens.
+  --about-select: color-mix(in oklch, var(--studio-glow) 52%, var(--studio-paper-ink));
+  --about-note: color-mix(in srgb, var(--studio-signal) 24%, var(--studio-paper));
+  --about-tape: color-mix(in srgb, var(--studio-paper-2) 70%, transparent);
+  --about-margin: color-mix(in srgb, var(--studio-signal) 45%, transparent);
+  --about-rule: 2rem;
+}
+
+// Lined notebook paper with a margin line on the left.
+@mixin ruled($offset: 0rem) {
+  background-color: var(--studio-paper);
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(var(--about-rule) - 1px),
+    var(--studio-paper-line) calc(var(--about-rule) - 1px),
+    var(--studio-paper-line) var(--about-rule)
+  );
+  background-size: 100% var(--about-rule);
+  background-position: 0 $offset;
+}
+
+// A strip of semi-transparent tape.
+@mixin tape {
+  background: var(--about-tape);
+  box-shadow: 0 1px 2px rgba(22, 24, 26, 0.08);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  clip-path: polygon(
+    0 6%, 4% 0, 9% 8%, 14% 1%, 20% 6%, 100% 0, 96% 9%, 100% 18%, 97% 30%, 100% 44%,
+    96% 58%, 100% 72%, 97% 86%, 100% 100%, 92% 94%, 85% 100%, 77% 93%, 0 100%, 3% 88%,
+    0 74%, 4% 60%, 0 46%, 3% 32%, 0 18%
+  );
+}
+
+// Paper object shadow, deeper when lifted.
+@mixin lifted($level: 1) {
+  @if $level == 1 {
+    box-shadow:
+      0 1px 1px rgba(22, 24, 26, 0.08),
+      0 6px 14px -6px rgba(22, 24, 26, 0.22);
+  } @else {
+    box-shadow:
+      0 2px 2px rgba(22, 24, 26, 0.06),
+      0 28px 40px -18px rgba(22, 24, 26, 0.38);
+  }
+}
+
+// Handwritten-feeling note text without a script font.
+@mixin scribble-text {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}

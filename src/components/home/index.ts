@@ -1,0 +1,9 @@
+export { HomeWork } from "./HomeWork";
+export { HomeServices } from "./HomeServices";
+export { HomeStatement } from "./HomeStatement";
+export { HomePricing } from "./HomePricing";
+export { HomeProcess } from "./HomeProcess";
+export { HomeVoices } from "./HomeVoices";
+export { HomeFaq } from "./HomeFaq";
+export { LoopVideo } from "./LoopVideo";
+export { FilmLightbox } from "./FilmLightbox";

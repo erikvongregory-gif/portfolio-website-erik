@@ -1,0 +1,526 @@
+@use "../studio/studio" as studio;
+
+// ---------- Hero ----------
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--studio-stage);
+  color: var(--studio-ink);
+  padding: calc(var(--studio-banner-h, 0px) + clamp(8.5rem, 15vw, 12.5rem)) clamp(1.25rem, 4vw, 4.5rem)
+    clamp(4.5rem, 9vw, 8rem);
+  border-bottom: 1px solid var(--studio-line);
+}
+
+// Soft light from the upper right, like the edge of the light stream.
+.halo {
+  position: absolute;
+  z-index: -1;
+  top: -30%;
+  right: -15%;
+  width: min(70rem, 120vw);
+  aspect-ratio: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgba(143, 214, 224, 0.16),
+    rgba(143, 214, 224, 0.05) 45%,
+    rgba(5, 9, 9, 0) 72%
+  );
+}
+
+.beam {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(143, 214, 224, 0) 0%, rgba(205, 238, 240, 0.45) 55%, rgba(143, 214, 224, 0) 100%);
+}
+
+.heroInner {
+  position: relative;
+}
+
+.enter {
+  animation: enter 0.9s var(--studio-ease) both;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter {
+    animation: none;
+  }
+}
+
+.crumbs {
+  font-size: 0.8125rem;
+  color: var(--studio-ink-3);
+
+  a {
+    color: var(--studio-ink-2);
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.kicker {
+  @include studio.kicker;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--studio-ink-2);
+
+  &::before {
+    content: "";
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--studio-signal);
+    box-shadow: 0 0 10px rgba(255, 154, 60, 0.7);
+  }
+}
+
+.h1 {
+  @include studio.display(clamp(2.4rem, 5.4vw, 5.25rem));
+  line-height: 0.98;
+  margin: 0;
+  max-width: 17ch;
+  color: #fff;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem) !important;
+  line-height: 1.55 !important;
+  color: var(--studio-ink-2);
+  max-width: 40rem;
+  margin: 0;
+}
+
+.trust {
+  font-size: 0.8125rem !important;
+  color: var(--studio-ink-3);
+}
+
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9375rem;
+  color: var(--studio-ink);
+  border-bottom: 1px solid rgba(242, 245, 244, 0.25);
+  padding-bottom: 2px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    color: #fff;
+    border-color: var(--studio-glow);
+  }
+}
+
+// ---------- Item grid (focus, benefits) ----------
+
+.item {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--studio-line);
+
+  .paperTone & {
+    border-top-color: var(--studio-paper-line);
+  }
+}
+
+.itemTitle {
+  font-family: var(--font-heading) !important;
+  font-weight: 400 !important;
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+  margin: 0;
+  color: #fff;
+
+  .paperTone & {
+    color: var(--studio-paper-ink);
+  }
+}
+
+.itemBody {
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: var(--studio-ink-2);
+  margin: 0;
+
+  .paperTone & {
+    color: var(--studio-paper-ink-2);
+  }
+}
+
+// ---------- Prose (deep text on paper) ----------
+
+.prose {
+  max-width: 44rem;
+}
+
+.paragraph {
+  font-size: clamp(1.05rem, 1.2vw, 1.175rem) !important;
+  line-height: 1.7 !important;
+  margin: 0;
+  color: var(--studio-ink-2);
+
+  .paperTone & {
+    color: var(--studio-paper-ink-2);
+  }
+}
+
+.inlineLink {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(143, 214, 224, 0.6);
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+// ---------- Pills (places, related pages) ----------
+
+.pills {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pill {
+  @include studio.glass;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.875rem;
+  color: var(--studio-ink-2);
+  white-space: nowrap;
+
+  .paperTone & {
+    background: rgba(22, 24, 26, 0.04);
+    border-color: var(--studio-paper-line);
+    color: var(--studio-paper-ink);
+    backdrop-filter: none;
+  }
+}
+
+a.pill {
+  transition: color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    color: #fff;
+    border-color: rgba(143, 214, 224, 0.4);
+  }
+}
+
+.note {
+  font-size: 0.9375rem !important;
+  line-height: 1.6 !important;
+  color: var(--studio-ink-3);
+  max-width: 42rem;
+  margin: 0;
+
+  .paperTone & {
+    color: var(--studio-paper-ink-2);
+  }
+}
+
+.paperTone {
+  // marker class for paper sections
+  position: relative;
+}
+
+// ---------- Price list ----------
+
+.priceList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--studio-line);
+}
+
+.priceRow {
+  display: grid !important;
+  width: 100% !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
+  gap: 1.5rem 2.5rem !important;
+  align-items: baseline !important;
+  border-radius: 0 !important;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--studio-line);
+  color: inherit;
+}
+
+a.priceRow {
+  transition: background 0.3s ease;
+
+  &:hover .priceTitle {
+    color: var(--studio-glow-soft);
+  }
+}
+
+.priceTitle {
+  font-family: var(--font-heading) !important;
+  font-weight: 400 !important;
+  font-size: clamp(1.35rem, 2vw, 1.75rem) !important;
+  letter-spacing: -0.025em;
+  line-height: 1.15 !important;
+  margin: 0;
+  color: #fff;
+  transition: color 0.2s ease;
+}
+
+.priceBody {
+  font-size: 1rem !important;
+  line-height: 1.55 !important;
+  color: var(--studio-ink-2);
+  margin: 0;
+}
+
+.priceValue {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: clamp(1.35rem, 2vw, 1.75rem) !important;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  text-align: right;
+  @include studio.glow-text;
+}
+
+@media (max-width: 768px) {
+  .priceRow {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem 1rem;
+  }
+
+  .priceBody {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+// ---------- Work ----------
+
+.refFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 1px solid var(--studio-line);
+  background: var(--studio-stage-2);
+  box-shadow: 0 40px 120px -40px rgba(143, 214, 224, 0.18);
+}
+
+.refMeta {
+  @include studio.kicker;
+  color: var(--studio-ink-3);
+}
+
+.refTitle {
+  font-family: var(--font-heading) !important;
+  font-weight: 300 !important;
+  font-size: clamp(1.75rem, 3vw, 2.5rem) !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.05 !important;
+  margin: 0;
+  color: #fff;
+}
+
+.quote {
+  margin: 0;
+  padding-left: 1.25rem;
+  border-left: 1px solid rgba(143, 214, 224, 0.5);
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--studio-ink);
+}
+
+.filmsHead {
+  font-family: var(--font-heading) !important;
+  font-weight: 400 !important;
+  font-size: 1.25rem !important;
+  letter-spacing: -0.02em !important;
+  margin: 0;
+  color: #fff;
+}
+
+.lightbox {
+  width: min(92vw, 1100px);
+  max-height: 90svh;
+  padding: 0;
+  border: 1px solid var(--studio-line);
+  border-radius: 1.25rem;
+  background: #000;
+  overflow: hidden;
+
+  &::backdrop {
+    background: rgba(2, 5, 5, 0.86);
+    backdrop-filter: blur(6px);
+  }
+}
+
+.lightboxPortrait {
+  width: auto;
+  height: min(86svh, 900px);
+  max-width: 92vw;
+}
+
+.lightboxVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 90svh;
+  object-fit: contain;
+  background: #000;
+}
+
+.lightboxClose {
+  @include studio.glass;
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  background: rgba(8, 14, 14, 0.6);
+
+  &:focus-visible {
+    outline: 2px solid var(--studio-glow);
+    outline-offset: 2px;
+  }
+}
+
+// ---------- Process ----------
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--studio-line);
+}
+
+.stepNum {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 2.25rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  @include studio.glow-text;
+}
+
+.stepMeta {
+  font-size: 0.8125rem !important;
+  color: var(--studio-ink-3);
+}
+
+// ---------- FAQ ----------
+
+.faqList {
+  border-top: 1px solid var(--studio-line);
+  max-width: 54rem;
+}
+
+.faq {
+  border-bottom: 1px solid var(--studio-line);
+
+  &[open] .faqIcon {
+    transform: rotate(45deg);
+    color: var(--studio-glow);
+  }
+}
+
+.faqSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  cursor: pointer;
+  list-style: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &:hover .faqQuestion {
+    color: var(--studio-glow-soft);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--studio-glow);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+}
+
+.faqQuestion {
+  font-family: var(--font-heading) !important;
+  font-weight: 400 !important;
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem) !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.015em !important;
+  margin: 0;
+  color: #fff;
+  transition: color 0.2s ease;
+}
+
+.faqIcon {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--studio-line);
+  color: var(--studio-ink-2);
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: transform 0.35s var(--studio-ease), color 0.2s ease;
+}
+
+.faqAnswer {
+  font-size: 1rem !important;
+  line-height: 1.65 !important;
+  color: var(--studio-ink-2);
+  max-width: 44rem;
+  margin: 0;
+  padding: 0 0 1.75rem;
+}

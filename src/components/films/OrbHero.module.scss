@@ -1,0 +1,269 @@
+@use "../studio/studio" as studio;
+
+// The only blue screen of the site.
+$blue-hi: #4d8dff;
+$blue: #1670ff;
+$blue-deep: #0a55e6;
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 100svh;
+  justify-content: center;
+  padding: clamp(7rem, 12vw, 9.5rem) clamp(1.25rem, 4vw, 4.5rem) clamp(2.5rem, 5vw, 4.5rem);
+  background: linear-gradient(165deg, $blue 0%, $blue-deep 100%);
+  color: #fff;
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 28% 22%, rgba(140, 190, 255, 0.55) 0%, rgba(77, 141, 255, 0) 70%),
+    radial-gradient(70% 60% at 85% 100%, rgba(4, 50, 170, 0.6) 0%, rgba(4, 50, 170, 0) 70%);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ——— Headline + lens ——— */
+.headWrap {
+  // Ball diameter; --x / --y (ball centre) are set from JS.
+  --d: clamp(8.5rem, 26vw, 21rem);
+  --r: calc(var(--d) * 0.5);
+  --x: 62%;
+  --y: 55%;
+  position: relative;
+
+  // Ball and lens appear once JS has placed them (and the render has loaded or failed).
+  .orb,
+  .lens,
+  .specular {
+    opacity: 0;
+    transition: opacity 0.8s var(--studio-ease);
+  }
+
+  &[data-ready] {
+    .orb,
+    .lens,
+    .specular {
+      opacity: 1;
+    }
+  }
+}
+
+.headline {
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  text-align: left;
+}
+
+.eyebrow {
+  @include studio.kicker;
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  color: rgba(255, 255, 255, 0.86);
+  margin-bottom: clamp(1rem, 2vw, 1.75rem);
+}
+
+.big {
+  @include studio.display(clamp(3.1rem, 9.6vw, 10.75rem));
+  max-width: 11ch;
+  text-wrap: balance;
+  padding-bottom: 0.06em;
+}
+
+.orb {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: var(--d);
+  height: var(--d);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate3d(calc(var(--x) - var(--r)), calc(var(--y) - var(--r)), 0);
+  box-shadow: 0 calc(var(--d) * 0.16) calc(var(--d) * 0.3) calc(var(--d) * -0.06) rgba(0, 22, 95, 0.55);
+  will-change: transform;
+}
+
+// The render fills ~79% of its square: scale the image so the ball matches --d.
+.orbImg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 126.5%;
+  height: 126.5%;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  user-select: none;
+}
+
+// Fallback: glossy red-orange marbled sphere in pure CSS.
+.orbCss {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 13%),
+    radial-gradient(circle at 70% 78%, rgba(255, 196, 140, 0.45) 0%, rgba(255, 196, 140, 0) 30%),
+    radial-gradient(circle at 40% 36%, #ffc08a 0%, #ff7a36 30%, #e2401c 58%, #8e1b0a 86%, #4a0c04 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset calc(var(--d) * -0.06) calc(var(--d) * -0.08) calc(var(--d) * 0.14) rgba(60, 6, 0, 0.55);
+
+  // Marble veins.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background:
+      repeating-linear-gradient(
+        118deg,
+        rgba(255, 236, 214, 0) 0 9%,
+        rgba(255, 236, 214, 0.38) 11%,
+        rgba(255, 236, 214, 0) 14%,
+        rgba(120, 16, 4, 0) 20%,
+        rgba(120, 16, 4, 0.4) 24%,
+        rgba(120, 16, 4, 0) 28%
+      );
+    filter: blur(calc(var(--d) * 0.02));
+    transform: rotate(-8deg) scale(1, 1.15);
+    mix-blend-mode: soft-light;
+  }
+
+  // Softbox reflection, as on the render.
+  &::after {
+    content: "";
+    position: absolute;
+    left: 28%;
+    top: 24%;
+    width: 15%;
+    height: 12%;
+    border-radius: 18%;
+    background: rgba(255, 255, 255, 0.78);
+    filter: blur(1.5px);
+    transform: skew(-8deg, -6deg);
+  }
+}
+
+// Lens: copies of the headline, clipped to the ball and magnified around its centre.
+.lens {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  isolation: isolate;
+  clip-path: circle(calc(var(--r) * 0.93) at var(--x) var(--y));
+
+  // Deepen the marble behind the text so the magnified words read.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle var(--r) at var(--x) var(--y),
+      rgba(90, 14, 0, 0.42) 0%,
+      rgba(90, 14, 0, 0.26) 70%,
+      rgba(40, 4, 0, 0.5) 100%
+    );
+  }
+}
+
+.copy {
+  position: absolute !important;
+  left: 0;
+  top: 0;
+  width: 100%;
+  transform-origin: var(--x) var(--y);
+}
+
+.copyRed {
+  color: #ff3d2e;
+  mix-blend-mode: screen;
+  transform: scale(var(--zoom-red));
+}
+
+.copyCyan {
+  color: #2ee8ff;
+  mix-blend-mode: screen;
+  transform: scale(var(--zoom-cyan));
+}
+
+.copyWhite {
+  color: #fff;
+  transform: scale(var(--zoom));
+  text-shadow: 0 0 calc(var(--d) * 0.04) rgba(255, 255, 255, 0.35);
+}
+
+// Glass rim and a soft sheen over the lens text, travelling with the ball.
+.specular {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  width: var(--d);
+  height: var(--d);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate3d(calc(var(--x) - var(--r)), calc(var(--y) - var(--r)), 0);
+  background: radial-gradient(circle at 36% 30%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 32%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    inset 0 calc(var(--d) * -0.04) calc(var(--d) * 0.08) rgba(255, 190, 150, 0.18);
+  will-change: transform;
+}
+
+/* ——— Lead + CTAs ——— */
+.bottom {
+  position: relative;
+  z-index: 5;
+}
+
+.lead {
+  max-width: 34rem;
+  margin: 0;
+  font-size: clamp(1rem, 1.2vw, 1.125rem) !important;
+  line-height: 1.55 !important;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.secondary {
+  font-size: 0.9375rem;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+  padding-bottom: 2px;
+  transition: border-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: #fff;
+  }
+}
+
+@media (max-width: 768px) {
+  .stage {
+    padding-top: 8rem;
+  }
+
+  .bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+
+  .headWrap {
+    --d: clamp(8rem, 40vw, 11rem);
+  }
+
+  .big {
+    font-size: clamp(2.9rem, 16.5vw, 5.5rem);
+  }
+}

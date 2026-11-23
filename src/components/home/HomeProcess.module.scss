@@ -1,0 +1,187 @@
+@use "../studio/studio" as studio;
+
+.timeline {
+  --p: 0;
+  --track: 3.25rem;
+  position: relative;
+}
+
+.clips {
+  list-style: none;
+  margin: 0;
+  padding: var(--track) 0 0;
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.clip {
+  position: relative;
+  min-width: 0;
+}
+
+// The clip on the track.
+.bar {
+  display: block;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--studio-stage-3);
+  border: 1px solid var(--studio-line);
+  margin-bottom: 0.75rem;
+  transition:
+    background 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.meta {
+  @include studio.kicker;
+  color: var(--studio-ink-3);
+  transition: color 0.5s ease;
+}
+
+.title {
+  @include studio.headline(clamp(1.35rem, 1.7vw, 1.75rem));
+  line-height: 1.1 !important;
+  color: var(--studio-ink-3);
+  transition: color 0.5s ease;
+}
+
+.body {
+  margin: 0;
+  font-size: 0.925rem !important;
+  line-height: 1.55 !important;
+  color: var(--studio-ink-3);
+  transition: color 0.5s ease;
+}
+
+.clip[data-on] {
+  .bar {
+    background: linear-gradient(90deg, var(--studio-glow-soft), var(--studio-glow));
+    border-color: transparent;
+    box-shadow: 0 0 18px rgba(143, 214, 224, 0.35);
+  }
+
+  .meta {
+    color: var(--studio-glow-soft);
+  }
+
+  .title {
+    color: #fff;
+  }
+
+  .body {
+    color: var(--studio-ink-2);
+  }
+}
+
+// Ruler with fine ticks along the top.
+.ruler {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1.25rem;
+  height: 10px;
+  border-top: 1px solid var(--studio-line);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.12) 0 1px,
+    transparent 1px 2.5%
+  );
+  mask: linear-gradient(#000, transparent);
+  pointer-events: none;
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  top: 1.25rem;
+  height: 1px;
+  width: calc(var(--p) * 100%);
+  background: linear-gradient(90deg, transparent, var(--studio-glow));
+  box-shadow: 0 0 10px rgba(143, 214, 224, 0.6);
+  pointer-events: none;
+}
+
+.playhead {
+  position: absolute;
+  top: 0.75rem;
+  left: calc(var(--p) * 100%);
+  height: calc(var(--track) + 0.5rem);
+  width: 1px;
+  background: var(--studio-glow-soft);
+  box-shadow: 0 0 12px rgba(143, 214, 224, 0.8);
+  pointer-events: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--studio-signal);
+    box-shadow: 0 0 12px rgba(255, 154, 60, 0.8);
+  }
+}
+
+// ——— Vertical timeline on tablet and phone ———
+@media (max-width: 1023px) {
+  .clips {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 0 0 0 2.25rem;
+  }
+
+  .bar {
+    position: absolute;
+    left: -2.25rem;
+    top: 0.1rem;
+    width: 6px;
+    height: calc(100% - 0.2rem);
+    margin: 0;
+    transform: translateX(-2.5px);
+  }
+
+  .ruler {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    width: 1px;
+    height: auto;
+    border-top: 0;
+    background: var(--studio-line);
+    mask: none;
+  }
+
+  .progress {
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: calc(var(--p) * 100%);
+    background: linear-gradient(180deg, transparent, var(--studio-glow));
+  }
+
+  .playhead {
+    top: calc(var(--p) * 100%);
+    left: -0.5rem;
+    width: 1.25rem;
+    height: 1px;
+
+    &::before {
+      top: -4px;
+      left: auto;
+      right: -10px;
+    }
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

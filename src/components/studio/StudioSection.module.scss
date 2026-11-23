@@ -1,0 +1,83 @@
+@use "./studio" as studio;
+
+.section {
+  position: relative;
+  @include studio.section-pad;
+}
+
+.stage {
+  background: var(--studio-stage);
+  color: var(--studio-ink);
+}
+
+.paper {
+  background: var(--studio-paper);
+  color: var(--studio-paper-ink);
+}
+
+.head {
+  max-width: 54rem;
+}
+
+.kicker {
+  @include studio.kicker;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  &::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--studio-signal);
+    box-shadow: 0 0 10px rgba(255, 154, 60, 0.7);
+  }
+
+  .stage & {
+    color: var(--studio-ink-3);
+  }
+
+  .paper & {
+    color: var(--studio-paper-ink-2);
+  }
+}
+
+.title {
+  @include studio.headline;
+  margin: 0;
+  text-wrap: balance;
+
+  .stage & {
+    color: #fff;
+  }
+
+  .paper & {
+    color: var(--studio-paper-ink);
+  }
+}
+
+.intro {
+  font-size: clamp(1rem, 1.2vw, 1.15rem) !important;
+  line-height: 1.55 !important;
+  max-width: 40rem;
+  margin: 0;
+
+  .stage & {
+    color: var(--studio-ink-2);
+  }
+
+  .paper & {
+    color: var(--studio-paper-ink-2);
+  }
+}
+
+.glow {
+  @include studio.glow-text;
+
+  .paper & {
+    background: linear-gradient(90deg, #16181a 0%, #1f5f6a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}

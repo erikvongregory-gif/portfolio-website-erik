@@ -1,0 +1,24 @@
+/*
+ * Black Friday banner offset (imported by BlackFridayBanner.tsx).
+ * While the slim banner is in the DOM it reserves --studio-banner-h at the very
+ * top; the fixed StudioHeader moves down by that height so they never overlap.
+ * Page heroes can add var(--studio-banner-h, 0px) to their top padding.
+ */
+:root:has([data-bf-banner]) {
+  --studio-banner-h: 36px;
+  /* legacy name used by the old SiteHeader */
+  --announce-h: 36px;
+}
+
+body:has([data-bf-banner]) > header[data-theme="dark"] {
+  top: var(--studio-banner-h, 0px);
+}
+
+/* The full-screen mobile menu covers everything, the banner steps back. */
+body:has(header [class*="sheetOpen"]) [data-bf-banner] {
+  visibility: hidden;
+}
+
+body:has(header [class*="sheetOpen"]) > header[data-theme="dark"] {
+  top: 0;
+}

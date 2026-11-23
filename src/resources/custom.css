@@ -140,8 +140,31 @@ h6,
   initial-value: 100%;
 }
 
+/* ============================================================
+   Studio design system (redesign 2026): stage = dark, paper = light
+   ============================================================ */
+:root {
+  --studio-stage: #050909;
+  --studio-stage-2: #0a1313;
+  --studio-stage-3: #111c1c;
+  --studio-ink: #f2f5f4;
+  --studio-ink-2: rgba(242, 245, 244, 0.74);
+  --studio-ink-3: rgba(242, 245, 244, 0.5);
+  --studio-line: rgba(255, 255, 255, 0.09);
+  --studio-glass: rgba(255, 255, 255, 0.045);
+  --studio-glow: #8fd6e0;
+  --studio-glow-soft: #cdeef0;
+  --studio-signal: #ff9a3c;
+  --studio-paper: #f3efe6;
+  --studio-paper-2: #ebe5d8;
+  --studio-paper-ink: #16181a;
+  --studio-paper-ink-2: rgba(22, 24, 26, 0.68);
+  --studio-paper-line: rgba(22, 24, 26, 0.12);
+  --studio-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
 [data-theme="dark"] {
-  --page-background: #000000;
+  --page-background: #050909;
   --evg-card-highlight: rgba(255, 255, 255, 0.07);
   --evg-card-shadow-xs: rgba(0, 0, 0, 0.18);
   --evg-card-shadow-sm: rgba(0, 0, 0, 0.22);

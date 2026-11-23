@@ -1,13 +1,1 @@
-export { Reveal } from "./Reveal";
-export { SpotlightCard } from "./SpotlightCard";
-export { Magnetic } from "./Magnetic";
-export { MagneticHeroFx } from "./MagneticHeroFx";
-export { Counter } from "./Counter";
-export { ScrollProgress } from "./ScrollProgress";
-export { ScrollPinScale } from "./ScrollPinScale";
-export { ScrollRevealText } from "./ScrollRevealText";
 export { SmoothScroll } from "./SmoothScroll";
-export { Marquee } from "./Marquee";
-export { Parallax } from "./Parallax";
-export { Aurora } from "./Aurora";
-export { RotatingWord } from "./RotatingWord";

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SmartLink } from "@once-ui-system/core";
-import { LegalBlock, LegalLayout, LegalSubheading, LegalText } from "@/components";
+import { LegalBlock, LegalSubheading, LegalText, StudioLegalLayout } from "@/components/legal";
 import { createPageOpenGraph, createPageTwitter } from "@/resources";
 
 const title = "Impressum";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function Impressum() {
   return (
-    <LegalLayout eyebrow="Rechtliches" title="Impressum">
+    <StudioLegalLayout eyebrow="Rechtliches" title="Impressum">
       <LegalBlock title="Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)">
         <LegalText>
           Erik Freiherr von Gregory
@@ -110,6 +110,6 @@ export default function Impressum() {
           werden wir derartige Inhalte umgehend entfernen.
         </LegalText>
       </LegalBlock>
-    </LegalLayout>
+    </StudioLegalLayout>
   );
 }

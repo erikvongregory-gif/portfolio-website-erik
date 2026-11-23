@@ -1,0 +1,131 @@
+@use "../studio/studio" as studio;
+
+.page {
+  background: var(--studio-stage);
+  color: var(--studio-ink);
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: calc(var(--studio-banner-h, 0px) + clamp(8.5rem, 14vw, 11.5rem)) clamp(1.25rem, 4vw, 4.5rem)
+    clamp(3rem, 6vw, 4.5rem);
+  border-bottom: 1px solid var(--studio-line);
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -40%;
+    right: -20%;
+    width: min(60rem, 120vw);
+    aspect-ratio: 1;
+    pointer-events: none;
+    background: radial-gradient(closest-side, rgba(143, 214, 224, 0.1), rgba(5, 9, 9, 0) 70%);
+  }
+}
+
+.measure {
+  width: 100%;
+  max-width: 68ch;
+}
+
+.kicker {
+  @include studio.kicker;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--studio-ink-3);
+
+  &::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--studio-signal);
+    box-shadow: 0 0 10px rgba(255, 154, 60, 0.7);
+  }
+}
+
+.title {
+  @include studio.display(clamp(2.5rem, 6vw, 5rem));
+  line-height: 1;
+  margin: 0;
+  color: #fff;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.intro {
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem) !important;
+  line-height: 1.6 !important;
+  color: var(--studio-ink-2);
+  margin: 0;
+}
+
+.updated {
+  font-size: 0.8125rem !important;
+  color: var(--studio-ink-3);
+}
+
+.body {
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 4vw, 4.5rem) clamp(5rem, 10vw, 8rem);
+}
+
+.block {
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--studio-line);
+
+  &:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+.h2 {
+  font-family: var(--font-heading) !important;
+  font-weight: 400 !important;
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.025em !important;
+  margin: 0;
+  color: #fff;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.h3 {
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: 1.0625rem !important;
+  line-height: 1.4 !important;
+  margin: 0.75rem 0 0;
+  color: var(--studio-ink);
+}
+
+.text {
+  font-size: 1.0625rem !important;
+  line-height: 1.7 !important;
+  color: var(--studio-ink-2);
+  margin: 0;
+  overflow-wrap: break-word;
+
+  a {
+    color: var(--studio-ink);
+    text-decoration: underline;
+    text-decoration-color: rgba(143, 214, 224, 0.55);
+    text-underline-offset: 3px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+
+    &:hover {
+      color: #fff;
+      text-decoration-color: var(--studio-glow);
+    }
+  }
+
+  strong {
+    color: var(--studio-ink);
+    font-weight: 600;
+  }
+}

@@ -1,0 +1,41 @@
+.dialog {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: min(92vw, 1100px);
+  max-height: 92svh;
+  overflow: visible;
+
+  &::backdrop {
+    background: rgba(5, 9, 9, 0.88);
+    backdrop-filter: blur(6px);
+  }
+}
+
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.video {
+  display: block;
+  max-width: min(92vw, 1100px);
+  max-height: calc(92svh - 4rem);
+  width: auto;
+  height: auto;
+  border-radius: 1.1rem;
+  border: 1px solid var(--studio-line);
+  background: var(--studio-stage-2);
+}
+
+.caption {
+  color: var(--studio-ink);
+  font-size: 0.9375rem !important;
+}
+
+.kind {
+  color: var(--studio-ink-3);
+  margin-left: 0.5rem;
+}

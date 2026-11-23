@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SmartLink } from "@once-ui-system/core";
-import { LegalBlock, LegalLayout, LegalSubheading, LegalText } from "@/components";
+import { LegalBlock, LegalSubheading, LegalText, StudioLegalLayout } from "@/components/legal";
 import { createPageOpenGraph, createPageTwitter } from "@/resources";
 
 const title = "Datenschutzerklärung";
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function Datenschutz() {
   return (
-    <LegalLayout
+    <StudioLegalLayout
       eyebrow="Rechtliches"
       title="Datenschutzerklärung"
       intro="Der Schutz deiner persönlichen Daten ist mir wichtig. Hier erfährst du, welche Daten beim Besuch dieser Website verarbeitet werden und welche Rechte dir zustehen."
@@ -347,6 +347,6 @@ export default function Datenschutz() {
           . Du kannst die Einwilligung jederzeit über „Cookie-Einstellungen“ im Footer widerrufen.
         </LegalText>
       </LegalBlock>
-    </LegalLayout>
+    </StudioLegalLayout>
   );
 }

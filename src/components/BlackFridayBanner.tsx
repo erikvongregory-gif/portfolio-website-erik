@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Icon, Row, Text } from "@once-ui-system/core";
 import { BLACK_FRIDAY, isBlackFridayActive } from "@/lib/blackFriday";
+import classNames from "classnames";
+import "./legal/banner-offset.css";
 import styles from "./BlackFridayBanner.module.scss";
 
 const HIDDEN_ON = ["/blackfriday", "/neueseite"];
@@ -50,14 +52,16 @@ export function BlackFridayBanner() {
   return (
     <Link
       href="/blackfriday"
+      data-bf-banner=""
       className={styles.banner}
       aria-label="Black Friday: Website für 500 €, Landingpage für 300 €. Zum Angebot"
     >
-      <Row fillWidth maxWidth="xl" horizontal="center" vertical="center" gap="12" paddingX="16">
+      <Row className={styles.inner} fillWidth maxWidth="xl" horizontal="center" vertical="center" gap="12" paddingX="16">
+        <span className={styles.dot} aria-hidden="true" />
         <Text as="span" className={styles.tag}>
           Black Friday
         </Text>
-        <Text as="span" variant="label-strong-s" className={styles.copy}>
+        <Text as="span" className={styles.copy}>
           Website <strong>500 €</strong>
           <span className={styles.desktopOnly}>
             {" "}
@@ -65,10 +69,13 @@ export function BlackFridayBanner() {
           </span>
         </Text>
         {countdown && (
-          <Text as="span" variant="label-default-s" className={styles.timer}>
-            <span className={styles.desktopOnly}>endet in </span>
-            {countdown}
-          </Text>
+          <>
+            <span className={classNames(styles.sep, styles.desktopOnly)} aria-hidden="true" />
+            <Text as="span" className={styles.timer}>
+              <span className={styles.desktopOnly}>endet in </span>
+              {countdown}
+            </Text>
+          </>
         )}
         <Row as="span" className={styles.more} vertical="center" gap="4">
           <span className={styles.desktopOnly}>Angebot ansehen</span>

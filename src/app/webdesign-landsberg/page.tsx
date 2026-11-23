@@ -1,24 +1,8 @@
 import type { Metadata } from "next";
-import {
-  Column,
-  Grid,
-  Heading,
-  Icon,
-  type IconName,
-  Row,
-  SmartLink,
-  Tag,
-  Text,
-} from "@once-ui-system/core";
-import {
-  FinalCta,
-  Reveal,
-  Section,
-  SectionHeader,
-  SiteFooter,
-  SpotlightCard,
-} from "@/components";
-import { ContactDialog } from "@/components/ContactDialog";
+import { Column, SmartLink, Text } from "@once-ui-system/core";
+import { FaqList, ItemGrid, LandingHero, PillList, PriceList, WorkShowcase } from "@/components/seo";
+import { CtaBand, Glow, StudioFooter, StudioSection } from "@/components/studio";
+import { seoReferences } from "@/lib/seoPages";
 import { JsonLd } from "@/components/JsonLd";
 import { StartOffer } from "@/components/StartOffer";
 import { startOfferFaqSentence } from "@/lib/startOffer";
@@ -53,24 +37,20 @@ export const metadata: Metadata = {
   twitter: createPageTwitter(PAGE_TITLE, PAGE_DESCRIPTION),
 };
 
-const benefits: { icon: IconName; title: string; body: string }[] = [
+const benefits: { title: string; body: string }[] = [
   {
-    icon: "sparkle",
     title: "Kein Baukasten-Look",
     body: "Jede Website wird individuell gestaltet – damit du in Landsberg und online nicht wie die Konkurrenz aussiehst.",
   },
   {
-    icon: "person",
     title: "Direkt mit mir",
     body: "Kein Account-Manager, kein Junior. Du sprichst durchgehend mit Erik – von der Idee bis nach dem Launch.",
   },
   {
-    icon: "document",
     title: "Klarer Ablauf",
     body: "Konzept, Design, Entwicklung, Launch. Transparente Richtpreise und in der Regel in wenigen Tagen live.",
   },
   {
-    icon: "world",
     title: "Lokal & erreichbar",
     body: "Für Unternehmen in Landsberg am Lech und Umgebung: persönlich vor Ort oder remote – wie es für dich passt.",
   },
@@ -239,270 +219,120 @@ const structuredData = {
   ],
 };
 
+
 export default function WebdesignLandsbergPage() {
   return (
-    <Column fillWidth horizontal="center">
+    <Column fillWidth horizontal="center" data-theme="dark">
       <JsonLd data={structuredData} />
 
-      <Column
-        as="section"
-        fillWidth
-        horizontal="center"
-        paddingX="l"
-        paddingTop="160"
-        paddingBottom="64"
+      <LandingHero
+        crumb="Webdesign Landsberg am Lech"
+        kicker="Lokal · Landsberg am Lech & Umgebung"
+        title={
+          <>
+            Webdesign Landsberg am Lech – <Glow>Websites mit Charakter, die Anfragen bringen.</Glow>
+          </>
+        }
+        lead="Du suchst einen Webdesigner in Landsberg am Lech? Ich gestalte und entwickle individuelle Websites und Landingpages für Unternehmen aus der Region – ohne Vorlagen-Look, mit klarer Botschaft und dem Ziel, dass Interessenten dich kontaktieren."
+        ctaLabel="Kostenloses Erstgespräch"
+        funnel={false}
+        secondary={{ label: "Projekte ansehen", href: "/#arbeiten" }}
+        trust="Antwort innerhalb 24h · Vor Ort oder remote · Aus der Region Landsberg"
+      />
+
+      <StudioSection
+        id="warum"
+        kicker="Warum EvGlab"
+        title={
+          <>
+            Webdesign aus der Region – <Glow>ohne Agentur-Overhead.</Glow>
+          </>
+        }
+        intro="Für Betriebe, Praxen, Gastronomie und Marken in Landsberg am Lech, die online professionell wirken und gefunden werden wollen."
       >
-        <Column fillWidth maxWidth={52} gap="24" horizontal="start" align="left">
-          <Reveal y={16}>
-            <Row gap="8" vertical="center" wrap>
-              <SmartLink href="/">
-                <Text variant="label-default-s" onBackground="neutral-weak">
-                  Start
-                </Text>
-              </SmartLink>
-              <Text variant="label-default-s" onBackground="neutral-weak" aria-hidden="true">
-                /
-              </Text>
-              <Text variant="label-default-s" onBackground="neutral-medium">
-                Webdesign Landsberg am Lech
-              </Text>
-            </Row>
-          </Reveal>
+        <ItemGrid items={benefits} columns="4" />
+      </StudioSection>
 
-          <Reveal delay={0.06}>
-            <Tag size="s" variant="neutral">
-              Lokal · Landsberg am Lech & Umgebung
-            </Tag>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <Heading
-              as="h1"
-              variant="display-strong-l"
-              onBackground="neutral-strong"
-              wrap="balance"
-              style={{ letterSpacing: "-0.035em", lineHeight: 1.02 }}
-            >
-              Webdesign Landsberg am Lech –{" "}
-              <Text as="span" onBackground="neutral-weak">
-                Websites mit Charakter, die Anfragen bringen.
-              </Text>
-            </Heading>
-          </Reveal>
-
-          <Reveal delay={0.16}>
-            <Text
-              variant="body-default-xl"
-              onBackground="neutral-weak"
-              wrap="balance"
-              style={{ maxWidth: "40rem", lineHeight: 1.5 }}
-            >
-              Du suchst einen Webdesigner in Landsberg am Lech? Ich gestalte und entwickle
-              individuelle Websites und Landingpages für Unternehmen aus der Region – ohne
-              Vorlagen-Look, mit klarer Botschaft und dem Ziel, dass Interessenten dich
-              kontaktieren.
-            </Text>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <Row gap="16" wrap vertical="center" paddingTop="8">
-              <ContactDialog label="Kostenloses Erstgespräch" size="l" />
-              <SmartLink href="/#projekte" unstyled>
-                <Text variant="label-strong-s" onBackground="neutral-strong">
-                  Projekte ansehen
-                </Text>
-              </SmartLink>
-            </Row>
-          </Reveal>
-
-          <Reveal delay={0.24}>
-            <Text variant="label-default-s" onBackground="neutral-weak">
-              Antwort innerhalb 24h · Vor Ort oder remote · Aus der Region Landsberg
-            </Text>
-          </Reveal>
-        </Column>
-      </Column>
-
-      <Section id="warum" background="surface">
-        <SectionHeader
-          eyebrow="Warum EvGlab"
-          title={
-            <>
-              Webdesign aus der Region –{" "}
-              <Text as="span" onBackground="neutral-weak">
-                ohne Agentur-Overhead.
-              </Text>
-            </>
-          }
-          description="Für Betriebe, Praxen, Gastronomie und Marken in Landsberg am Lech, die online professionell wirken und gefunden werden wollen."
+      <StudioSection
+        id="arbeiten"
+        kicker="Aus meiner Arbeit"
+        title={
+          <>
+            Echte Projekte, <Glow>kein Template.</Glow>
+          </>
+        }
+      >
+        <WorkShowcase
+          reference={seoReferences.daPeppe}
+          filmIds={["evglab-landsberg", "herzblut-ki", "brewai-glass"]}
+          filmRatio="4 / 5"
         />
+      </StudioSection>
 
-        <Grid columns="2" m={{ columns: "1" }} gap="16">
-          {benefits.map((item, index) => (
-            <Reveal key={item.title} delay={index * 0.06}>
-              <Column fillHeight>
-                <SpotlightCard
-                  background="page"
-                  border="neutral-alpha-weak"
-                  radius="l"
-                  padding="32"
-                  gap="16"
-                  fillHeight
-                >
-                  <Icon name={item.icon} size="m" onBackground="neutral-strong" />
-                  <Text variant="heading-strong-s" onBackground="neutral-strong">
-                    {item.title}
-                  </Text>
-                  <Text variant="body-default-m" onBackground="neutral-weak">
-                    {item.body}
-                  </Text>
-                </SpotlightCard>
-              </Column>
-            </Reveal>
-          ))}
-        </Grid>
-      </Section>
-
-      <Section id="leistungen">
-        <SectionHeader
-          eyebrow="Leistungen"
-          title={
-            <>
-              Was ich als Webdesigner in Landsberg{" "}
-              <Text as="span" onBackground="neutral-weak">
-                für dich baue.
-              </Text>
-            </>
-          }
-          description="Transparente Richtpreise. Den konkreten Umfang klären wir im Gespräch – ehrlich und ohne Druck."
-        />
-
+      <StudioSection
+        id="leistungen"
+        kicker="Leistungen"
+        title={
+          <>
+            Was ich als Webdesigner in Landsberg <Glow>für dich baue.</Glow>
+          </>
+        }
+        intro="Transparente Richtpreise. Den konkreten Umfang klären wir im Gespräch – ehrlich und ohne Druck."
+      >
         <StartOffer />
+        <PriceList items={services} />
+        <Text as="p" style={{ color: "var(--studio-ink-2)", margin: 0 }}>
+          Mehr Details und Beispiele findest du auf der{" "}
+          <SmartLink href="/" style={{ textDecoration: "underline", textUnderlineOffset: 3 }}>
+            Startseite
+          </SmartLink>{" "}
+          und unter{" "}
+          <SmartLink href="/#leistungen" style={{ textDecoration: "underline", textUnderlineOffset: 3 }}>
+            Leistungen
+          </SmartLink>
+          .
+        </Text>
+      </StudioSection>
 
-        <Grid columns="3" m={{ columns: "1" }} gap="16">
-          {services.map((service, index) => (
-            <Reveal key={service.title} delay={index * 0.06}>
-              <Column fillHeight>
-                <SpotlightCard
-                  background="surface"
-                  border="neutral-alpha-weak"
-                  radius="l"
-                  padding="32"
-                  gap="12"
-                  fillHeight
-                >
-                  <Text variant="heading-strong-s" onBackground="neutral-strong">
-                    {service.title}
-                  </Text>
-                  <Text variant="label-strong-m" onBackground="neutral-medium">
-                    {service.price}
-                  </Text>
-                  <Text variant="body-default-m" onBackground="neutral-weak">
-                    {service.body}
-                  </Text>
-                </SpotlightCard>
-              </Column>
-            </Reveal>
-          ))}
-        </Grid>
-
-        <Reveal delay={0.12}>
-          <Text variant="body-default-m" onBackground="neutral-weak">
-            Mehr Details und Beispiele findest du auf der{" "}
-            <SmartLink href="/">
-              <Text as="span" variant="body-default-m">
-                Startseite
-              </Text>
-            </SmartLink>{" "}
-            und unter{" "}
-            <SmartLink href="/#leistungen">
-              <Text as="span" variant="body-default-m">
-                Leistungen
-              </Text>
-            </SmartLink>
-            .
-          </Text>
-        </Reveal>
-      </Section>
-
-      <Section id="region" background="surface">
-        <SectionHeader
-          eyebrow="Einzugsgebiet"
-          title={
-            <>
-              Webdesign für Landsberg am Lech{" "}
-              <Text as="span" onBackground="neutral-weak">
-                und Umgebung.
-              </Text>
-            </>
-          }
-          description="Ich betreue Projekte in Landsberg am Lech und den umliegenden Orten – persönlich erreichbar, wenn du jemanden vor Ort schätzt."
-        />
-
-        <Row gap="8" wrap>
-          {regions.map((region) => (
-            <Tag key={region} size="m" variant="neutral">
-              {region}
-            </Tag>
-          ))}
-        </Row>
-
-        <Text variant="body-default-m" onBackground="neutral-weak" style={{ maxWidth: "42rem" }}>
+      <StudioSection
+        id="region"
+        tone="paper"
+        kicker="Einzugsgebiet"
+        title={
+          <>
+            Webdesign für Landsberg am Lech <Glow>und Umgebung.</Glow>
+          </>
+        }
+        intro="Ich betreue Projekte in Landsberg am Lech und den umliegenden Orten – persönlich erreichbar, wenn du jemanden vor Ort schätzt."
+      >
+        <PillList tone="paper" label="Einzugsgebiet" items={regions.map((region) => ({ label: region }))} />
+        <Text as="p" style={{ color: "var(--studio-paper-ink-2)", maxWidth: "42rem", margin: 0, lineHeight: 1.6 }}>
           Rechtlicher Sitz: Fuchstal. Servicegebiet und Fokus: Landsberg am Lech sowie die Region –
           damit Name, Ort und Angebot für Google und Kunden klar zusammenpassen.
         </Text>
-      </Section>
+      </StudioSection>
 
-      <Section id="faq">
-        <SectionHeader
-          eyebrow="FAQ"
-          title={
-            <>
-              Häufige Fragen zu Webdesign in{" "}
-              <Text as="span" onBackground="neutral-weak">
-                Landsberg am Lech.
-              </Text>
-            </>
-          }
-        />
+      <StudioSection
+        id="faq"
+        kicker="FAQ"
+        title={
+          <>
+            Häufige Fragen zu Webdesign in <Glow>Landsberg am Lech.</Glow>
+          </>
+        }
+      >
+        <FaqList items={faqs} />
+        <Text as="p" style={{ color: "var(--studio-ink-2)", margin: 0 }}>
+          Mehr über die Person hinter EvGlab:{" "}
+          <SmartLink href="/ueber-uns" style={{ textDecoration: "underline", textUnderlineOffset: 3 }}>
+            Über mich
+          </SmartLink>
+          .
+        </Text>
+      </StudioSection>
 
-        <Column fillWidth gap="16" maxWidth={48}>
-          {faqs.map((faq, index) => (
-            <Reveal key={faq.question} delay={index * 0.04}>
-              <Column
-                fillWidth
-                gap="8"
-                padding="24"
-                background="surface"
-                border="neutral-alpha-weak"
-                radius="l"
-              >
-                <Heading as="h3" variant="heading-strong-s" onBackground="neutral-strong">
-                  {faq.question}
-                </Heading>
-                <Text variant="body-default-m" onBackground="neutral-weak">
-                  {faq.answer}
-                </Text>
-              </Column>
-            </Reveal>
-          ))}
-        </Column>
-
-        <Reveal delay={0.1}>
-          <Text variant="body-default-m" onBackground="neutral-weak">
-            Mehr über die Person hinter EvGlab:{" "}
-            <SmartLink href="/ueber-uns">
-              <Text as="span" variant="body-default-m">
-                Über mich
-              </Text>
-            </SmartLink>
-            .
-          </Text>
-        </Reveal>
-      </Section>
-
-      <FinalCta />
-      <SiteFooter />
+      <CtaBand />
+      <StudioFooter />
     </Column>
   );
 }

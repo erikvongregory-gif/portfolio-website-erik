@@ -1,0 +1,120 @@
+.wrap {
+  --name-w: var(--pixel-name-w, min(36rem, 76vw));
+  width: 100%;
+  padding: 2.25rem 0 2.75rem;
+}
+
+.frame {
+  position: relative;
+  display: block;
+  width: calc(var(--name-w) * var(--sx, 1));
+  height: calc(var(--name-w) * 7 / 21 * var(--sy, 1));
+  outline: 1.5px solid var(--about-select);
+  outline-offset: 0.55rem;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.px {
+  fill: var(--studio-paper-ink);
+  animation: pxIn 0.42s steps(2, end) both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes pxIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sizeTag {
+  display: contents;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.layer {
+  position: absolute;
+  left: -0.55rem;
+  bottom: calc(100% + 0.55rem + 0.4rem);
+  color: var(--about-select);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  white-space: nowrap;
+}
+
+.size {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.55rem + 0.5rem);
+  transform: translateX(-50%);
+  padding: 0.25rem 0.4rem;
+  border-radius: 3px;
+  background: var(--about-select);
+  color: var(--studio-paper);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  white-space: nowrap;
+}
+
+.size:empty {
+  display: none;
+}
+
+.handle {
+  --o: 0.55rem;
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: var(--studio-paper);
+  border: 1.5px solid var(--about-select);
+  transform: translate(-50%, -50%);
+  touch-action: none;
+  z-index: 2;
+
+  // Bigger invisible hit area for fingers.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -14px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--about-select);
+    outline-offset: 3px;
+    background: var(--about-select);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: var(--about-select);
+    }
+  }
+}
+
+.nw { left: calc(var(--o) * -1); top: calc(var(--o) * -1); cursor: nwse-resize; }
+.n { left: 50%; top: calc(var(--o) * -1); cursor: ns-resize; }
+.ne { left: calc(100% + var(--o)); top: calc(var(--o) * -1); cursor: nesw-resize; }
+.e { left: calc(100% + var(--o)); top: 50%; cursor: ew-resize; }
+.se { left: calc(100% + var(--o)); top: calc(100% + var(--o)); cursor: nwse-resize; }
+.s { left: 50%; top: calc(100% + var(--o)); cursor: ns-resize; }
+.sw { left: calc(var(--o) * -1); top: calc(100% + var(--o)); cursor: nesw-resize; }
+.w { left: calc(var(--o) * -1); top: 50%; cursor: ew-resize; }
+
+.active {
+  outline-width: 2px;
+}

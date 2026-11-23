@@ -1,0 +1,69 @@
+@use "./studio" as studio;
+
+.footer {
+  position: relative;
+  overflow: hidden;
+  background: var(--studio-stage);
+  color: var(--studio-ink);
+  border-top: 1px solid var(--studio-line);
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 4vw, 4.5rem) 1.5rem;
+}
+
+.grid {
+  position: relative;
+  z-index: 1;
+}
+
+.contact {
+  grid-column: span 1;
+}
+
+.groupTitle {
+  @include studio.kicker;
+  color: var(--studio-ink-3);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  font-size: 0.9rem;
+  color: var(--studio-ink-2);
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.big {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.muted {
+  font-size: 0.8125rem !important;
+  color: var(--studio-ink-3);
+}
+
+.wordmark {
+  @include studio.display(clamp(6rem, 27vw, 30rem));
+  @include studio.glow-text;
+  margin: clamp(3rem, 6vw, 5rem) 0 0;
+  line-height: 0.78;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  opacity: 0.9;
+  user-select: none;
+}
+
+.base {
+  border-top: 1px solid var(--studio-line);
+  padding-top: 1.25rem;
+  margin-top: 1rem;
+}

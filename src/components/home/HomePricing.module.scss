@@ -1,0 +1,311 @@
+@use "../studio/studio" as studio;
+
+@property --ring-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --ring-alpha {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+// ——— Offer strip ———
+.offer {
+  padding: 1.25rem 1.5rem;
+  border-radius: 1.1rem;
+  border: 1px solid rgba(255, 154, 60, 0.28);
+  background: linear-gradient(90deg, rgba(255, 154, 60, 0.07), rgba(255, 154, 60, 0.015));
+}
+
+.offerKicker {
+  @include studio.kicker;
+  color: var(--studio-ink-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  &::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--studio-signal);
+    box-shadow: 0 0 10px rgba(255, 154, 60, 0.7);
+  }
+}
+
+.offerText {
+  margin: 0;
+  font-size: 1rem !important;
+  color: var(--studio-ink);
+
+  strong {
+    font-weight: 600;
+    color: #fff;
+  }
+}
+
+.offerRegular {
+  color: var(--studio-ink-3);
+  font-size: 0.875rem;
+}
+
+.offerNote {
+  margin: 0;
+  font-size: 0.8125rem !important;
+  line-height: 1.5 !important;
+  color: var(--studio-ink-3);
+}
+
+// ——— Package cards ———
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  position: relative;
+  min-width: 0;
+  padding: clamp(1.5rem, 2.6vw, 2.25rem);
+  border-radius: 1.1rem;
+  border: 1px solid var(--studio-line);
+  background: var(--studio-stage-2);
+}
+
+.featured {
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(143, 214, 224, 0.09), transparent 60%),
+    var(--studio-stage-2);
+  border-color: rgba(143, 214, 224, 0.22);
+
+  // The ring of light: a conic gradient masked to the 1px border.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--ring-angle),
+      transparent 0deg,
+      rgba(205, 238, 240, calc(var(--ring-alpha) * 1)) 40deg,
+      rgba(143, 214, 224, calc(var(--ring-alpha) * 0.8)) 70deg,
+      transparent 110deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+.lit .featured::before {
+  animation: ring 2.6s var(--studio-ease) 0.2s 1 both;
+}
+
+@keyframes ring {
+  0% {
+    --ring-angle: 0deg;
+    --ring-alpha: 0;
+  }
+  15% {
+    --ring-alpha: 1;
+  }
+  80% {
+    --ring-alpha: 1;
+  }
+  100% {
+    --ring-angle: 360deg;
+    --ring-alpha: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lit .featured::before {
+    animation: none;
+  }
+}
+
+.cardTitle {
+  font-family: var(--font-body);
+  font-size: 1.0625rem !important;
+  font-weight: 500 !important;
+  color: var(--studio-ink);
+  margin: 0;
+}
+
+.tag {
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  color: var(--studio-stage);
+  background: var(--studio-glow-soft);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+}
+
+.price {
+  @include studio.headline(clamp(2.25rem, 3.6vw, 3.4rem));
+  color: #fff;
+
+  .featured & {
+    @include studio.glow-text;
+  }
+}
+
+.body {
+  margin: 0;
+  font-size: 0.95rem !important;
+  line-height: 1.55 !important;
+  color: var(--studio-ink-2);
+}
+
+.features {
+  list-style: none;
+  margin: 0;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid var(--studio-line);
+}
+
+.feature {
+  font-size: 0.9rem !important;
+  color: var(--studio-ink);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  &::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--studio-glow);
+  }
+}
+
+// ——— Films ———
+.subhead {
+  @include studio.headline(clamp(1.6rem, 2.4vw, 2.25rem));
+  color: #fff;
+}
+
+.filmRow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--studio-line);
+  border-bottom: 1px solid var(--studio-line);
+}
+
+.filmItem {
+  padding: 1.5rem 1.5rem 1.5rem 0;
+
+  & + & {
+    border-left: 1px solid var(--studio-line);
+    padding-left: 1.5rem;
+  }
+
+  @media (max-width: 1023px) {
+    padding: 1.25rem 1rem 1.25rem 0;
+
+    & + & {
+      border-left: 0;
+      padding-left: 0;
+    }
+
+    &:nth-child(even) {
+      border-left: 1px solid var(--studio-line);
+      padding-left: 1rem;
+    }
+
+    &:nth-child(n + 3) {
+      border-top: 1px solid var(--studio-line);
+    }
+  }
+
+  @media (max-width: 560px) {
+    &:nth-child(even) {
+      border-left: 0;
+      padding-left: 0;
+    }
+
+    &:nth-child(n + 2) {
+      border-top: 1px solid var(--studio-line);
+    }
+  }
+}
+
+.filmTitle {
+  font-size: 0.875rem !important;
+  color: var(--studio-ink-2);
+}
+
+.filmPrice {
+  @include studio.headline(clamp(1.5rem, 2vw, 1.9rem));
+  color: #fff;
+}
+
+.filmNote {
+  font-size: 0.8125rem !important;
+  line-height: 1.45 !important;
+  color: var(--studio-ink-3);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--studio-ink);
+  text-decoration: none;
+
+  &:hover .linkLabel,
+  &:focus-visible .linkLabel {
+    color: var(--studio-glow-soft);
+  }
+}
+
+.linkLabel {
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  color: var(--studio-ink);
+  transition: color 0.3s ease;
+}
+
+// ——— Outcomes and notes ———
+.outcomesLabel {
+  @include studio.kicker;
+  color: var(--studio-ink-3);
+}
+
+.outcomes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.outcome {
+  font-size: 0.8125rem !important;
+  color: var(--studio-ink-2);
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--studio-line);
+}
+
+.note {
+  margin: 0;
+  font-size: 0.8125rem !important;
+  line-height: 1.5 !important;
+  color: var(--studio-ink-3);
+}
+
+.calcWrap {
+  scroll-margin-top: 6rem;
+  align-items: flex-start;
+}

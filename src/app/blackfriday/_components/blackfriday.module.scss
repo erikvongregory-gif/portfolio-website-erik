@@ -1,208 +1,46 @@
-// Black-Friday-/Weihnachtslook. Farben nur aus Once-UI-Skalen (Seite läuft immer im Dark-Scope).
+@use "../../../components/studio/studio" as studio;
+
+// Black Friday in the studio look: dark stage, white-to-cyan glow for the
+// prices, the orange signal only as a small live dot.
 
 .page {
-  --bf-red: var(--scheme-red-500);
-  --bf-red-strong: var(--scheme-red-400);
-  --bf-red-glow: var(--scheme-red-500);
-  --bf-gold: var(--scheme-yellow-800);
-  --bf-gold-soft: var(--scheme-yellow-1000);
-  --bf-gold-deep: var(--scheme-yellow-600);
-  --bf-green: var(--scheme-green-500);
-  --bf-ink: var(--scheme-neutral-0);
-  --bf-snow: var(--scheme-neutral-1200);
-
-  background: var(--page-background);
-  color: var(--neutral-on-background-strong);
-  overflow-x: clip;
+  background: var(--studio-stage);
+  color: var(--studio-ink);
 }
 
 // ---------- Hero ----------
 
 .hero {
+  position: relative;
+  overflow: hidden;
   isolation: isolate;
-  overflow: hidden;
-  min-height: 100svh;
-
+  padding: calc(var(--studio-banner-h, 0px) + clamp(8.5rem, 14vw, 11.5rem)) clamp(1.25rem, 4vw, 4.5rem)
+    clamp(4rem, 8vw, 6.5rem);
+  border-bottom: 1px solid var(--studio-line);
 }
 
-.lights {
+.halo {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3.75rem;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.wire {
-  stroke: var(--neutral-alpha-strong);
-  stroke-width: 1.5;
-}
-
-.socket {
-  fill: var(--neutral-alpha-strong);
-}
-
-.bulb {
-  animation: twinkle 2.2s ease-in-out infinite;
-  animation-delay: inherit;
-}
-
-.bulbRed .bulb {
-  fill: var(--bf-red-glow);
-  filter: drop-shadow(0 0 6px var(--bf-red-glow));
-}
-.bulbGold .bulb {
-  fill: var(--bf-gold);
-  filter: drop-shadow(0 0 6px var(--bf-gold));
-}
-.bulbGreen .bulb {
-  fill: var(--scheme-green-700);
-  filter: drop-shadow(0 0 6px var(--scheme-green-700));
-}
-.bulbRed,
-.bulbGold,
-.bulbGreen {
-  animation: none;
-}
-
-@keyframes twinkle {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-
-.snow {
-  position: absolute;
-  inset: 0;
   z-index: -1;
+  left: 50%;
+  top: -45%;
+  width: min(80rem, 140vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
   pointer-events: none;
-  overflow: hidden;
-}
-
-.flake {
-  position: absolute;
-  top: -10px;
-  border-radius: 50%;
-  background: var(--bf-snow);
-  filter: blur(0.4px);
-  animation-name: fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  will-change: transform;
-}
-
-@keyframes fall {
-  from {
-    transform: translate3d(0, -10px, 0);
-  }
-  to {
-    transform: translate3d(var(--drift), 105svh, 0);
-  }
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.9rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--bf-red) 22%, transparent);
-  border: 1px solid color-mix(in srgb, var(--bf-red-glow) 55%, transparent);
-  color: var(--scheme-red-1100);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.pulseDot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--bf-red-glow);
-  box-shadow: 0 0 0 0 var(--bf-red-glow);
-  animation: pulse 1.6s ease-out infinite;
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--bf-red-glow) 70%, transparent);
-  }
-  100% {
-    box-shadow: 0 0 0 10px transparent;
-  }
-}
-
-.headline {
-  font-size: clamp(2.6rem, 8.2vw, 6.4rem);
-  line-height: 0.95;
-  letter-spacing: -0.045em;
-  font-weight: 800;
-  text-wrap: balance;
-}
-
-.gold {
-  background: linear-gradient(100deg, var(--bf-gold-deep) 0%, var(--bf-gold) 35%, var(--bf-gold-soft) 55%, var(--bf-gold) 75%, var(--bf-gold-deep) 100%);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 6s linear infinite;
-}
-
-@keyframes shimmer {
-  to {
-    background-position: -200% 0;
-  }
-}
-
-.priceRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.pricePill {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.6rem;
-  padding: 0.8rem 1.1rem;
-  border-radius: 1rem;
-  background: var(--neutral-alpha-weak);
-  border: 1px solid var(--neutral-alpha-medium);
-}
-
-.pricePillLabel {
-  font-size: 0.95rem;
-  color: var(--neutral-on-background-medium);
-}
-
-.pricePillValue {
-  font-size: 1.6rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--neutral-on-background-strong);
-}
-
-.strike {
-  font-size: 0.95rem;
-  color: var(--neutral-on-background-weak);
-  text-decoration: line-through;
-  text-decoration-color: var(--bf-red-glow);
-  text-decoration-thickness: 2px;
+  background: radial-gradient(
+    closest-side,
+    rgba(143, 214, 224, 0.16),
+    rgba(143, 214, 224, 0.05) 45%,
+    rgba(5, 9, 9, 0) 72%
+  );
 }
 
 .enter {
-  animation: bfEnter 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: enter 0.9s var(--studio-ease) both;
 }
 
-@keyframes bfEnter {
+@keyframes enter {
   from {
     opacity: 0;
     transform: translateY(14px);
@@ -213,132 +51,123 @@
   }
 }
 
-@media (max-width: 560px) {
-  .pricePill {
-    width: 100%;
-    justify-content: space-between;
-  }
-  .ctaButton,
-  .whatsapp {
-    width: 100%;
-    justify-content: center;
+.meta {
+  @include studio.kicker;
+  color: var(--studio-ink-2);
+  flex-wrap: wrap;
+}
+
+.metaRule {
+  width: 1.5rem;
+  height: 1px;
+  background: var(--studio-line);
+}
+
+.pulseDot {
+  position: relative;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--studio-signal);
+  box-shadow: 0 0 10px rgba(255, 154, 60, 0.75);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 154, 60, 0.6);
+    animation: pulse 2s ease-out infinite;
   }
 }
 
-// ---------- Countdown ----------
-
-.clockCell {
-  min-width: 4.25rem;
-  padding: 0.65rem 0.5rem 0.5rem;
-  background: linear-gradient(180deg, var(--neutral-alpha-medium), var(--neutral-alpha-weak));
-  border: 1px solid var(--neutral-alpha-medium);
-  box-shadow: inset 0 1px 0 var(--neutral-alpha-medium);
-}
-
-.clockCellM {
-  min-width: 3.5rem;
-  padding: 0.5rem 0.4rem 0.4rem;
-
-  .clockValue {
-    font-size: 1.5rem;
+@keyframes pulse {
+  from {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.6);
+    opacity: 0;
   }
 }
 
-.clockValue {
-  font-size: 2rem;
-  font-weight: 800;
+.headline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  color: #fff;
+}
+
+.line1 {
+  @include studio.display(clamp(3.25rem, 10vw, 9rem));
+  line-height: 0.9;
+}
+
+.line2 {
+  @include studio.display(clamp(2.25rem, 6.4vw, 5.75rem));
   line-height: 1;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+  margin-top: 0.15em;
+  @include studio.glow-text;
 }
 
-.clockSep {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-top: -1rem;
+.lead {
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem) !important;
+  line-height: 1.55 !important;
+  color: var(--studio-ink-2);
+  max-width: 36rem;
+  margin: 0;
+  text-wrap: balance;
 }
 
-@media (max-width: 480px) {
-  .clockCell {
-    min-width: 3.6rem;
-  }
-  .clockValue {
-    font-size: 1.6rem;
-  }
-  .clockSep {
-    display: none;
-  }
-}
-
-// ---------- Slots ----------
-
-.slotsTrack {
-  height: 0.5rem;
-  border-radius: 999px;
-  background: var(--neutral-alpha-medium);
-  overflow: hidden;
-}
-
-.slotsFill {
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--bf-red-glow), var(--bf-gold));
-}
-
-// ---------- CTA ----------
+// ---------- Buttons ----------
 
 .ctaButton {
   appearance: none;
-  border: 0;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  min-height: 3.5rem;
-  padding: 0 1.75rem;
+  min-height: 3.25rem;
+  padding: 0 1.6rem;
+  border: 1px solid transparent;
   border-radius: 999px;
+  background: #fff;
+  color: #050909;
   font: inherit;
-  font-size: 1.0625rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--scheme-neutral-1200);
-  background: linear-gradient(180deg, var(--scheme-red-600), var(--bf-red) 45%, var(--bf-red-strong));
-  box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--bf-red-glow) 60%, transparent),
-    0 10px 30px -8px color-mix(in srgb, var(--bf-red-glow) 75%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--scheme-neutral-1200) 30%, transparent);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    filter 0.2s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.25s ease, box-shadow 0.35s ease, transform 0.35s var(--studio-ease);
 
-  &:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.08);
-    box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--bf-red-glow) 70%, transparent),
-      0 16px 40px -8px color-mix(in srgb, var(--bf-red-glow) 90%, transparent);
+  &:hover:not(:disabled) {
+    background: var(--studio-glow-soft);
+    box-shadow: 0 0 40px rgba(143, 214, 224, 0.35);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--bf-gold);
+    outline: 2px solid var(--studio-glow);
     outline-offset: 3px;
   }
 
   &:disabled {
-    opacity: 0.7;
+    opacity: 0.6;
     cursor: progress;
   }
 }
 
 .ctaButtonGhost {
-  background: var(--neutral-alpha-weak);
-  color: var(--neutral-on-background-strong);
-  box-shadow: 0 0 0 1px var(--neutral-alpha-strong);
+  background: var(--studio-glass);
+  border-color: var(--studio-line);
+  color: var(--studio-ink);
 
-  &:hover {
-    box-shadow: 0 0 0 1px var(--neutral-on-background-weak);
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(143, 214, 224, 0.4);
+    box-shadow: none;
   }
 }
 
@@ -346,428 +175,405 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  min-height: 3.5rem;
+  min-height: 3.25rem;
   padding: 0 1.4rem;
   border-radius: 999px;
-  font-weight: 600;
-  color: var(--neutral-on-background-strong);
-  box-shadow: 0 0 0 1px var(--neutral-alpha-strong);
-  text-decoration: none;
-  transition: background 0.2s ease;
+  border: 1px solid var(--studio-line);
+  background: var(--studio-glass);
+  color: var(--studio-ink);
+  font-size: 1rem;
+  transition: border-color 0.2s ease, color 0.2s ease;
 
   &:hover {
-    background: var(--neutral-alpha-weak);
+    border-color: rgba(143, 214, 224, 0.4);
+    color: #fff;
   }
 }
 
-// ---------- Ticker ----------
+// ---------- Deal bar ----------
 
-.ticker {
+.dealBar {
+  @include studio.glass(1.5rem);
   overflow: hidden;
-  background: linear-gradient(90deg, var(--bf-red-strong), var(--bf-red), var(--bf-red-strong));
-  border-block: 1px solid color-mix(in srgb, var(--bf-gold) 40%, transparent);
-  transform: rotate(-1.2deg) scale(1.02);
-  margin-block: 0.5rem;
+  max-width: 60rem;
 }
 
-.tickerTrack {
-  display: flex;
-  width: max-content;
-  animation: ticker 28s linear infinite;
-}
+.dealCell {
+  padding: 1.5rem 1.75rem;
+  border-left: 1px solid var(--studio-line);
 
-.tickerItem {
-  display: inline-flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 0.9rem 0.75rem;
-  white-space: nowrap;
-  font-weight: 800;
-  font-size: 1.1rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--scheme-neutral-1200);
-}
+  &:first-child {
+    border-left: 0;
+  }
 
-.tickerStar {
-  color: var(--bf-gold-soft);
-}
+  @media (max-width: 1024px) {
+    border-left: 0;
+    border-top: 1px solid var(--studio-line);
 
-@keyframes ticker {
-  to {
-    transform: translateX(-50%);
+    &:first-child {
+      border-top: 0;
+    }
   }
 }
 
-// ---------- Offer cards (Geschenk) ----------
+.dealLabel {
+  font-size: 0.8125rem !important;
+  color: var(--studio-ink-3);
+}
+
+.dealPrice {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: clamp(2rem, 3.4vw, 2.75rem) !important;
+  line-height: 1 !important;
+  letter-spacing: -0.04em;
+  @include studio.glow-text;
+}
+
+.strike {
+  font-size: 0.9375rem !important;
+  color: var(--studio-ink-3);
+  text-decoration: line-through;
+  text-decoration-color: rgba(242, 245, 244, 0.45);
+  white-space: nowrap;
+}
+
+.heroFoot {
+  font-size: 0.8125rem;
+  color: var(--studio-ink-3);
+}
+
+.footText {
+  font-size: 0.8125rem !important;
+  color: var(--studio-ink-3);
+  text-wrap: balance;
+}
+
+.slotsTrack {
+  position: relative;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.slotsFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--studio-glow-soft), var(--studio-glow));
+}
+
+.stars {
+  color: var(--studio-glow-soft);
+  letter-spacing: 0.08em;
+}
+
+// ---------- Package cards ----------
 
 .gift {
-  isolation: isolate;
-  overflow: hidden;
-  background:
-    linear-gradient(180deg, var(--neutral-alpha-weak), transparent 40%),
-    var(--surface-background);
-  border: 1px solid var(--neutral-alpha-medium);
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
+  position: relative;
+  border-radius: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+  border: 1px solid var(--studio-line);
 }
 
 .giftFeatured {
-  border-color: color-mix(in srgb, var(--bf-gold) 55%, transparent);
-  box-shadow: 0 30px 80px -30px color-mix(in srgb, var(--bf-red-glow) 55%, transparent);
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: radial-gradient(70% 50% at 50% 0%, color-mix(in srgb, var(--bf-red) 30%, transparent), transparent 70%);
-  }
-}
-
-// Schleifenband rechts oben
-.ribbon {
-  position: absolute;
-  top: 0;
-  right: 2.25rem;
-  width: 1.75rem;
-  height: 100%;
-  z-index: -1;
-  background: linear-gradient(90deg, var(--bf-red-strong), var(--bf-red-glow) 50%, var(--bf-red-strong));
-  opacity: 0.35;
-}
-
-.giftFeatured .ribbon {
-  background: linear-gradient(90deg, var(--bf-gold-deep), var(--bf-gold) 50%, var(--bf-gold-deep));
-  opacity: 0.28;
-}
-
-.bow {
-  position: absolute;
-  top: 0.75rem;
-  right: 1.35rem;
-  width: 3.5rem;
-  height: 2.25rem;
-  pointer-events: none;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--bf-ink);
-  background: linear-gradient(180deg, var(--bf-gold-soft), var(--bf-gold));
-}
-
-.discount {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 800;
-  color: var(--scheme-neutral-1200);
-  background: var(--bf-red);
-}
-
-.bigPrice {
-  font-size: clamp(3.5rem, 7vw, 4.75rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.05em;
-}
-
-.check {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.35rem;
-  height: 1.35rem;
-  margin-top: 0.1rem;
-  border-radius: 50%;
-  color: var(--bf-ink);
-  background: var(--scheme-green-900);
-}
-
-// ---------- Steps / Value ----------
-
-.step {
-  background: var(--neutral-alpha-weak);
-  border: 1px solid var(--neutral-alpha-medium);
-}
-
-.stepNumber {
-  font-size: 2.75rem;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.guarantee {
-  overflow: hidden;
-  isolation: isolate;
-  border: 1px solid color-mix(in srgb, var(--bf-gold) 40%, transparent);
-  background:
-    radial-gradient(60% 80% at 0% 0%, color-mix(in srgb, var(--bf-green) 25%, transparent), transparent 70%),
-    radial-gradient(60% 80% at 100% 100%, color-mix(in srgb, var(--bf-red) 25%, transparent), transparent 70%),
-    var(--surface-background);
-}
-
-.seal {
-  flex-shrink: 0;
-  width: 6.5rem;
-  height: 6.5rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-weight: 800;
-  font-size: 0.8rem;
-  line-height: 1.15;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--bf-ink);
-  background: radial-gradient(circle at 35% 30%, var(--bf-gold-soft), var(--bf-gold) 55%, var(--bf-gold-deep));
-  box-shadow:
-    0 0 0 6px color-mix(in srgb, var(--bf-gold) 20%, transparent),
-    0 12px 30px -10px var(--bf-gold-deep);
-  transform: rotate(-8deg);
-}
-
-.quote {
-  border-left: 3px solid var(--bf-gold);
-}
-
-// ---------- Formular ----------
-
-.formSection {
-  isolation: isolate;
-  overflow: hidden;
+  border-color: rgba(143, 214, 224, 0.35);
+  box-shadow: 0 40px 120px -50px rgba(143, 214, 224, 0.35), inset 0 1px 0 rgba(205, 238, 240, 0.12);
 
   &::before {
     content: "";
     position: absolute;
-    inset: 0;
-    z-index: -1;
-    background:
-      radial-gradient(50% 50% at 80% 30%, color-mix(in srgb, var(--bf-red) 30%, transparent), transparent 70%),
-      radial-gradient(40% 40% at 10% 90%, color-mix(in srgb, var(--bf-green) 18%, transparent), transparent 70%);
+    left: 10%;
+    right: 10%;
+    top: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(143, 214, 224, 0), rgba(205, 238, 240, 0.9), rgba(143, 214, 224, 0));
   }
 }
 
-.formCard {
-  background: var(--surface-background);
-  border: 1px solid color-mix(in srgb, var(--bf-gold) 35%, var(--neutral-alpha-medium));
-  box-shadow: 0 40px 100px -40px color-mix(in srgb, var(--bf-red-glow) 60%, transparent);
+.badge,
+.discount {
+  display: inline-flex;
+  align-items: center;
+  height: 1.75rem;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
-.choice {
-  appearance: none;
-  cursor: pointer;
-  flex: 1 1 9rem;
+.badge {
+  background: #fff;
+  color: #050909;
+}
+
+.discount {
+  border: 1px solid rgba(143, 214, 224, 0.35);
+  color: var(--studio-glow-soft);
+}
+
+.giftName {
+  font-family: var(--font-heading) !important;
+  font-weight: 400 !important;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem) !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.1 !important;
+  margin: 0;
+  color: #fff;
+}
+
+.tagline {
+  font-size: 1rem !important;
+  line-height: 1.55 !important;
+  color: var(--studio-ink-2);
+  margin: 0;
+}
+
+.bigPrice {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: clamp(3.5rem, 7vw, 5.5rem) !important;
+  line-height: 0.9 !important;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  @include studio.glow-text;
+}
+
+.features {
+  list-style: none;
+  margin: 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--studio-line);
+}
+
+.check {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.15rem;
+  border-radius: 50%;
+  color: var(--studio-glow);
+  border: 1px solid rgba(143, 214, 224, 0.35);
+}
+
+.featureText {
+  font-size: 0.975rem !important;
+  line-height: 1.5 !important;
+  color: var(--studio-ink-2);
+}
+
+.countRow {
+  color: var(--studio-ink-3);
+}
+
+// ---------- Steps + guarantee ----------
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--studio-line);
+}
+
+.stepNum {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 2.5rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  @include studio.glow-text;
+}
+
+.stepTitle {
+  font-family: var(--font-heading) !important;
+  font-weight: 400 !important;
+  font-size: clamp(1.3rem, 1.8vw, 1.6rem) !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.15 !important;
+  margin: 0;
+  color: #fff;
+}
+
+.stepBody {
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: var(--studio-ink-2);
+  margin: 0;
+}
+
+.guarantee {
+  @include studio.glass(1.5rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.seal {
+  flex: none;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.15rem;
-  padding: 0.8rem 1rem;
-  border-radius: 0.875rem;
-  font: inherit;
-  text-align: left;
-  color: var(--neutral-on-background-strong);
-  background: var(--neutral-alpha-weak);
-  border: 1px solid var(--neutral-alpha-medium);
-  transition:
-    border-color 0.2s ease,
-    background 0.2s ease;
-
-  &:hover {
-    border-color: var(--neutral-alpha-strong);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--bf-gold);
-    outline-offset: 2px;
-  }
+  min-width: 9rem;
 }
 
-.choiceActive {
-  border-color: var(--bf-red-glow);
-  background: color-mix(in srgb, var(--bf-red) 22%, transparent);
-  box-shadow: 0 0 0 1px var(--bf-red-glow);
+.sealValue {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: clamp(3.5rem, 7vw, 5rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  @include studio.glow-text;
 }
 
-.choiceLabel {
-  font-size: 0.9rem;
-  font-weight: 600;
+.sealLabel {
+  font-size: 0.875rem;
+  color: var(--studio-ink-3);
 }
 
-.choicePrice {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+.guaranteeTitle {
+  font-family: var(--font-heading) !important;
+  font-weight: 400 !important;
+  font-size: clamp(1.5rem, 2.4vw, 2rem) !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.15 !important;
+  margin: 0;
+  color: #fff;
+  text-wrap: balance;
+}
+
+// ---------- Form section ----------
+
+.formTitle {
+  @include studio.headline(clamp(2.25rem, 4.6vw, 4.25rem));
+  margin: 0;
+  color: #fff;
+}
+
+.glow {
+  @include studio.glow-text;
+}
+
+.bodyText {
+  font-size: clamp(1rem, 1.2vw, 1.15rem) !important;
+  line-height: 1.6 !important;
+  color: var(--studio-ink-2);
+  margin: 0;
+}
+
+.quote {
+  border-left: 1px solid rgba(143, 214, 224, 0.5);
+  padding-left: 1.25rem;
+}
+
+.quoteText {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 1.2rem !important;
+  line-height: 1.4 !important;
+  color: var(--studio-ink);
+}
+
+.formCard {
+  @include studio.glass(1.5rem);
+  background: rgba(10, 19, 19, 0.7);
+  box-shadow: 0 40px 120px -60px rgba(143, 214, 224, 0.35);
 }
 
 .successIcon {
   width: 3rem;
   height: 3rem;
-  color: var(--bf-ink);
-  background: var(--scheme-green-900);
+  color: #050909;
+  background: var(--studio-glow-soft);
 }
 
-// ---------- Reduced motion ----------
+.choice {
+  appearance: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0.6rem 1rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--studio-line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--studio-ink-2);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
 
-@media (prefers-reduced-motion: reduce) {
-  .snow,
-  .pulseDot {
-    display: none;
+  &:hover {
+    border-color: rgba(143, 214, 224, 0.35);
+    color: #fff;
   }
-  .bulb,
-  .gold,
-  .tickerTrack {
-    animation: none;
-  }
-  .enter {
-    animation: none;
-  }
-  .gift:hover,
-  .ctaButton:hover {
-    transform: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--studio-glow);
+    outline-offset: 2px;
   }
 }
 
-// ---------- GSAP-Ergänzungen ----------
-
-// Lichtkugeln im Hero (folgen der Maus)
-.glow {
-  position: absolute;
-  z-index: -2;
-  border-radius: 50%;
-  filter: blur(70px);
-  pointer-events: none;
-  will-change: transform;
+.choiceActive {
+  border-color: rgba(143, 214, 224, 0.7);
+  background: rgba(143, 214, 224, 0.08);
+  color: #fff;
 }
 
-.glowRed {
-  top: -18%;
-  left: 50%;
-  width: 62vw;
-  height: 46vw;
-  margin-left: -31vw;
-  background: color-mix(in srgb, var(--bf-red) 48%, transparent);
+.choiceLabel {
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
-.glowGold {
-  right: -8%;
-  bottom: 4%;
-  width: 34vw;
-  height: 30vw;
-  background: color-mix(in srgb, var(--bf-gold-deep) 26%, transparent);
+.choicePrice {
+  font-size: 0.8125rem;
+  color: var(--studio-glow-soft);
 }
 
-.glowGreen {
-  left: -8%;
-  bottom: 8%;
-  width: 32vw;
-  height: 28vw;
-  background: color-mix(in srgb, var(--bf-green) 22%, transparent);
+// ---------- Countdown ----------
+
+.clockCell {
+  min-width: 4rem;
+  padding: 0.6rem 0.5rem 0.5rem;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--studio-line);
 }
 
-// „Black Friday.“ als einzelne Buchstaben mit durchlaufendem Goldverlauf
-.letters {
-  display: inline-block;
-  white-space: nowrap;
+.clockCellM {
+  min-width: 3.25rem;
+  padding: 0.45rem 0.4rem 0.35rem;
+
+  .clockValue {
+    font-size: 1.4rem !important;
+  }
 }
 
-.goldLetter {
-  display: inline-block;
-  background: linear-gradient(100deg, var(--bf-gold-deep) 0%, var(--bf-gold) 35%, var(--bf-gold-soft) 55%, var(--bf-gold) 75%, var(--bf-gold-deep) 100%);
-  background-size: calc(var(--n) * 100%) 100%;
-  background-position: calc(var(--i) / (var(--n) - 1) * 100%) 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  transform-origin: 50% 100%;
-}
-
-// Icon-Kachel in „Immer dabei“
-.iconBadge {
-  width: 3rem;
-  height: 3rem;
-  background: linear-gradient(160deg, color-mix(in srgb, var(--bf-red) 35%, transparent), var(--neutral-alpha-weak));
-  border: 1px solid color-mix(in srgb, var(--bf-gold) 30%, transparent);
-}
-
-// Ablauflinie über den drei Schritten
-.stepTrack {
-  height: 3px;
-  margin-bottom: 1.5rem;
-  border-radius: 999px;
-  background: var(--neutral-alpha-weak);
+.clockValue {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 2rem !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
   overflow: hidden;
 }
 
-.stepLine {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--bf-red), var(--bf-gold), var(--scheme-green-700));
-  transform-origin: 0% 50%;
-}
-
-// Glanzstreifen über den roten Buttons
-.ctaButton {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(110deg, transparent 30%, color-mix(in srgb, var(--scheme-neutral-1200) 35%, transparent) 50%, transparent 70%);
-    transform: translateX(-120%);
-    animation: shine 3.6s ease-in-out infinite;
-    pointer-events: none;
-  }
-}
-
-.ctaButtonGhost::after {
-  display: none;
-}
-
-@keyframes shine {
-  0%,
-  55% {
-    transform: translateX(-120%);
-  }
-  100% {
-    transform: translateX(120%);
-  }
-}
-
-// Ziffern im Countdown rollen ein
 .clockTick {
   display: inline-block;
-  animation: tick 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: tick 0.35s var(--studio-ease);
 }
 
 @keyframes tick {
   from {
-    transform: translateY(-45%);
+    transform: translateY(-35%);
     opacity: 0;
   }
   to {
@@ -776,236 +582,20 @@
   }
 }
 
+.clockSep {
+  color: var(--studio-ink-3);
+}
+
+@media (max-width: 420px) {
+  .clockCellM {
+    min-width: 2.8rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .ctaButton::after,
-  .clockTick {
+  .enter,
+  .clockTick,
+  .pulseDot::after {
     animation: none;
-  }
-}
-
-// ---------- Agentur-Feinschliff ----------
-
-// Filmkorn über dem Hero
-.grain {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.09;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
-
-// Feine Vignette, damit der Rand ruhig bleibt
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(120% 90% at 50% 40%, transparent 55%, var(--page-background) 100%);
-}
-
-// Lichterkette sitzt unter dem Header statt hinter der Navigation
-.lights {
-  top: 4.5rem;
-  height: 2.75rem;
-  opacity: 0.9;
-}
-
-@media (max-width: 768px) {
-  .lights {
-    top: 4rem;
-    height: 2rem;
-  }
-}
-
-.meta {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--bf-gold);
-}
-
-.metaRule {
-  width: 2rem;
-  height: 1px;
-  background: color-mix(in srgb, var(--bf-gold) 60%, transparent);
-}
-
-.headline {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.1em;
-  font-size: inherit;
-  line-height: 1;
-  letter-spacing: normal;
-  font-weight: inherit;
-}
-
-.serifLine {
-  display: inline-block;
-  white-space: nowrap;
-  font-family: var(--bf-serif), Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(3.75rem, 13vw, 9.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.025em;
-  padding-inline: 0.06em;
-  position: relative;
-  isolation: isolate;
-
-  // Goldschein als eigene Ebene (ein Filter am Elternelement zerstört das Text-Clipping in Chrome)
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 15% 5%;
-    z-index: -1;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--bf-gold-deep) 30%, transparent);
-    filter: blur(50px);
-    pointer-events: none;
-  }
-}
-
-.sansLine {
-  display: block;
-  font-size: clamp(2.1rem, 6.2vw, 5.25rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.05em;
-  color: var(--neutral-on-background-strong);
-}
-
-// Einheitlicher Metallverlauf pro Buchstabe (von oben hell nach unten tief)
-.goldLetter {
-  background-image: linear-gradient(180deg, var(--bf-gold-soft) 8%, var(--bf-gold) 48%, var(--bf-gold-deep) 96%);
-  background-size: 100% 100%;
-  background-position: 0 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-// Glasleiste mit Preisen und Countdown
-.dealBar {
-  overflow: hidden;
-  background: color-mix(in srgb, var(--scheme-neutral-100) 70%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid color-mix(in srgb, var(--bf-gold) 22%, var(--neutral-alpha-medium));
-  box-shadow:
-    inset 0 1px 0 var(--neutral-alpha-weak),
-    0 30px 80px -40px color-mix(in srgb, var(--bf-red) 60%, transparent);
-}
-
-.dealCell {
-  padding: 1.25rem 1.5rem;
-
-  & + & {
-    border-left: 1px solid var(--neutral-alpha-medium);
-  }
-}
-
-@media (max-width: 1024px) {
-  .dealCell + .dealCell {
-    border-left: 0;
-    border-top: 1px solid var(--neutral-alpha-medium);
-  }
-}
-
-.dealPrice {
-  font-size: 2.25rem;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--neutral-on-background-strong);
-}
-
-.heroFoot {
-  opacity: 0.9;
-}
-
-.stars {
-  color: var(--bf-gold);
-  letter-spacing: 0.1em;
-}
-
-// Abschnitts-Kicker mit Goldlinie
-.kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--bf-gold);
-
-  &::before {
-    content: "";
-    width: 1.75rem;
-    height: 1px;
-    background: currentColor;
-    opacity: 0.6;
-  }
-}
-
-// Serif-Akzent in Überschriften
-.serif {
-  font-family: var(--bf-serif), Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-}
-
-.muted {
-  color: var(--neutral-on-background-weak);
-}
-
-// Geschenkkarten feiner: schmales Band mit Goldkanten, Lichtkante oben
-.ribbon {
-  right: 2.6rem;
-  width: 0.9rem;
-  opacity: 0.55;
-  background: linear-gradient(90deg, var(--bf-red-strong), var(--bf-red) 50%, var(--bf-red-strong));
-  box-shadow:
-    -1px 0 0 color-mix(in srgb, var(--bf-gold) 40%, transparent),
-    1px 0 0 color-mix(in srgb, var(--bf-gold) 40%, transparent);
-}
-
-.giftFeatured .ribbon {
-  opacity: 0.6;
-  background: linear-gradient(90deg, var(--bf-gold-deep), var(--bf-gold) 50%, var(--bf-gold-deep));
-}
-
-.gift {
-  box-shadow: inset 0 1px 0 var(--neutral-alpha-medium);
-}
-
-.bigPrice {
-  font-variant-numeric: tabular-nums;
-}
-
-// Laufband ruhiger
-.ticker {
-  transform: rotate(-0.8deg) scale(1.02);
-}
-
-.tickerItem {
-  font-size: 0.95rem;
-  letter-spacing: 0.14em;
-  padding-block: 0.8rem;
-}
-
-.meta {
-  white-space: nowrap;
-}
-
-@media (max-width: 560px) {
-  .metaWide {
-    display: none;
   }
 }

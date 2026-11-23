@@ -1,0 +1,43 @@
+.pickup {
+  position: absolute !important;
+  left: var(--mx);
+  top: var(--my);
+  z-index: 5;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transform-origin: 50% 12%;
+  will-change: transform;
+
+  img {
+    -webkit-user-drag: none;
+    pointer-events: none;
+  }
+
+  &:focus-visible {
+    outline: 2px dashed var(--about-select);
+    outline-offset: 6px;
+  }
+
+  @media (min-width: 640px) {
+    left: var(--tx);
+    top: var(--ty);
+  }
+
+  @media (min-width: 1200px) {
+    left: var(--dx);
+    top: var(--dy);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    cursor: default;
+    touch-action: auto;
+  }
+}
+
+.held {
+  --lift: 1;
+  cursor: grabbing;
+}

@@ -14,10 +14,9 @@ import {
   ConsentMetaPixel,
   CookieBanner,
   Providers,
-  ScrollProgress,
-  SiteHeader,
   SmoothScroll,
 } from "@/components";
+import { StudioHeader } from "@/components/studio";
 import { fonts, style, dataStyle, baseURL, createPageOpenGraph, createPageTwitter } from "@/resources";
 
 const title = "Webdesign, 3D-Produktfilme & Reels · EvGlab Landsberg";
@@ -31,10 +30,7 @@ export const viewport: Viewport = {
   minimumScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
-  ],
+  themeColor: "#050909",
 };
 
 export const metadata: Metadata = {
@@ -142,8 +138,9 @@ export default function RootLayout({
                       ? 'dark'
                       : 'light';
                   };
-                  const stored = localStorage.getItem('data-theme');
-                  const resolved = resolveTheme(stored);
+                  // Redesign 2026: the site is dark-first; paper sections set
+                  // data-theme="light" locally.
+                  const resolved = resolveTheme('dark');
                   root.setAttribute('data-theme', resolved);
                   Object.keys(config).forEach(key => {
                     const value = localStorage.getItem('data-' + key);
@@ -170,9 +167,8 @@ export default function RootLayout({
           horizontal="center"
         >
           <SmoothScroll />
-          <ScrollProgress />
           <BlackFridayBanner />
-          <SiteHeader />
+          <StudioHeader />
           <Flex
             as="main"
             id="top"

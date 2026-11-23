@@ -1,66 +1,98 @@
-// Aktionsleiste: fest oben, der Header rückt per --announce-h darunter.
-:root:has(.banner) {
-  --announce-h: 2.5rem;
-}
+@use "./studio/studio" as studio;
 
+// Slim dark glass bar fixed at the very top. Its height is published as
+// --studio-banner-h (see legal/banner-offset.css), the header sits below it.
 .banner {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 4;
-  height: var(--announce-h, 2.5rem);
+  z-index: 60;
+  height: var(--studio-banner-h, 36px);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--scheme-neutral-1200);
-  background: linear-gradient(90deg, var(--scheme-red-300), var(--scheme-red-500) 50%, var(--scheme-red-300));
-  border-bottom: 1px solid color-mix(in srgb, var(--scheme-yellow-800) 45%, transparent);
+  color: var(--studio-ink);
+  background: rgba(6, 11, 11, 0.78);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--studio-line);
   text-decoration: none;
-  transition: filter 0.2s ease;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  transition: background 0.2s ease;
+
+  // hairline of light along the lower edge
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(143, 214, 224, 0) 10%, rgba(205, 238, 240, 0.35) 50%, rgba(143, 214, 224, 0) 90%);
+  }
 
   &:hover {
-    filter: brightness(1.1);
+    background: rgba(10, 19, 19, 0.88);
+
+    .more {
+      color: #fff;
+    }
   }
 
   &:focus-visible {
-    outline: 2px solid var(--scheme-yellow-800);
+    outline: 2px solid var(--studio-glow);
     outline-offset: -3px;
   }
 }
 
+.inner {
+  min-width: 0;
+}
+
+.dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--studio-signal);
+  box-shadow: 0 0 10px rgba(255, 154, 60, 0.75);
+}
+
 .tag {
-  padding: 0.15rem 0.55rem;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-weight: 500;
   white-space: nowrap;
-  color: var(--scheme-neutral-0);
-  background: var(--scheme-yellow-800);
+  color: #fff;
 }
 
 .copy {
   white-space: nowrap;
-  color: var(--scheme-neutral-1200);
+  color: var(--studio-ink-2);
 
   strong {
-    font-weight: 800;
+    font-weight: 500;
+    @include studio.glow-text;
   }
+}
+
+.sep {
+  width: 1px;
+  height: 0.9rem;
+  background: var(--studio-line);
 }
 
 .timer {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  color: var(--scheme-red-1000);
+  color: var(--studio-ink-3);
 }
 
 .more {
   white-space: nowrap;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: var(--scheme-neutral-1200);
+  color: var(--studio-ink-2);
+  transition: color 0.2s ease;
 }
 
 @media (max-width: 640px) {

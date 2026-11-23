@@ -1,0 +1,94 @@
+@use "../studio/studio" as studio;
+
+.filters {
+  max-width: 100%;
+}
+
+.filter {
+  @include studio.glass;
+  @include studio.kicker;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  color: var(--studio-ink-2);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--studio-glow);
+    outline-offset: 2px;
+  }
+}
+
+.filterOn {
+  color: var(--studio-stage);
+  background: var(--studio-ink);
+  border-color: var(--studio-ink);
+
+  &:hover {
+    color: var(--studio-stage);
+    border-color: var(--studio-ink);
+  }
+
+  .count {
+    color: rgba(5, 9, 9, 0.55);
+  }
+}
+
+.count {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: var(--studio-ink-3);
+}
+
+.status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+// Masonry via CSS columns: mixed 9:16, 16:9, 4:5 and 5:4 films pack without gaps.
+.masonry {
+  display: block !important;
+  columns: 3;
+  column-gap: clamp(0.75rem, 1.6vw, 1.5rem);
+
+  @media (max-width: 1023px) {
+    columns: 2;
+  }
+}
+
+.cell {
+  break-inside: avoid;
+  margin-bottom: clamp(1.5rem, 2.6vw, 2.5rem);
+
+  // Captions wrap instead of pushing out on narrow columns.
+  > :last-child {
+    flex-wrap: wrap;
+    row-gap: 0.15rem !important;
+  }
+
+  @media (max-width: 559px) {
+    margin-bottom: 1.25rem;
+
+    > :last-child {
+      flex-direction: column;
+      align-items: flex-start !important;
+    }
+
+    > :last-child > :last-child {
+      text-align: left;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+.card {
+  min-width: 0;
+}
+
+.frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--studio-line);
+  border-radius: 1.1rem;
+  overflow: hidden;
+  background: var(--studio-stage-2);
+  cursor: pointer;
+  transition: border-color 0.3s ease, transform 0.5s var(--studio-ease);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(143, 214, 224, 0);
+    transition: box-shadow 0.4s ease;
+  }
+
+  &:hover,
+  &:focus-visible {
+    border-color: rgba(143, 214, 224, 0.35);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--studio-glow);
+    outline-offset: 3px;
+  }
+}
+
+.playing::after {
+  box-shadow: inset 0 0 0 1px rgba(143, 214, 224, 0.25), 0 0 40px rgba(143, 214, 224, 0.12);
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.title {
+  font-size: 0.9375rem !important;
+  color: var(--studio-ink);
+}
+
+.kind {
+  font-size: 0.8125rem !important;
+  color: var(--studio-ink-3);
+  text-align: right;
+}

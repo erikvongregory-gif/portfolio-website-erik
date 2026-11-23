@@ -1,0 +1,49 @@
+// Shared studio mixins. Import with a RELATIVE path, e.g. from
+// src/components/home/X.module.scss: @use "../studio/studio" as studio;
+
+// Giant light display type, as in the home hero word.
+@mixin display($size: clamp(3rem, 7vw, 7.5rem)) {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: $size;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+}
+
+// Section headline: large, light, tight.
+@mixin headline($size: clamp(2.25rem, 4.6vw, 4.75rem)) {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: $size;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+// White to cyan glow fill used for highlighted words.
+@mixin glow-text {
+  background: linear-gradient(90deg, #ffffff 0%, var(--studio-glow-soft) 55%, var(--studio-glow) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+// Floating glass pill / panel on the dark stage.
+@mixin glass($radius: 999px) {
+  border-radius: $radius;
+  background: var(--studio-glass);
+  border: 1px solid var(--studio-line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+// Small quiet label (not mono, not numbered).
+@mixin kicker {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+@mixin section-pad {
+  padding: clamp(5rem, 11vw, 10rem) clamp(1.25rem, 4vw, 4.5rem);
+}
