@@ -1,0 +1,84 @@
+@use "../studio/studio" as studio;
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  border-radius: 1.5rem;
+  border: 1px solid var(--studio-line);
+  background: rgba(10, 19, 19, 0.7);
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: rgba(143, 214, 224, 0.25);
+  }
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-bottom: 1px solid var(--studio-line);
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  transition: transform 1.2s var(--studio-ease);
+
+  .card:hover & {
+    transform: scale(1.04);
+  }
+}
+
+.num {
+  position: absolute;
+  left: 1.25rem;
+  top: 1rem;
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 2.5rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  @include studio.glow-text;
+}
+
+.title {
+  @include studio.headline(clamp(1.5rem, 2vw, 1.85rem));
+  line-height: 1.1;
+  margin: 0;
+  color: #fff;
+}
+
+.text {
+  margin: 0;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: var(--studio-ink-2);
+}
+
+.meta {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--studio-line);
+
+  p,
+  span {
+    font-size: 0.8125rem !important;
+    color: var(--studio-ink-3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art {
+    transition: none;
+  }
+}

@@ -1,3 +1,4 @@
+import { FILM_SERVICES, getFilmService } from "@/lib/filmServices";
 /**
  * Home page content. Carried over 1:1 from the previous sections
  * (src/components/sections/*) and the film offer on /videos. Do not invent facts here.
@@ -109,9 +110,9 @@ export const DISCIPLINES: Discipline[] = [
     film: "osmo-pocket",
     filmLabel: "3D-Produktfilm Osmo Pocket 4P, Spec-Ad (eigenes Konzept, nicht im Auftrag von DJI)",
     credit: "Spec-Ad · Osmo Pocket 4P · kein Auftrag von DJI",
-    body: "Dein Produkt im Studio-Look, ohne Fotoshooting. Makros, Kamerafahrten und Licht, die es in echt kaum gibt.",
-    points: ["15–45 Sekunden", "3D-Modell inklusive", "Musik und Texttafeln"],
-    price: "ab 1.490 €",
+    body: getFilmService("product").body,
+    points: getFilmService("product").points,
+    price: getFilmService("product").price,
     href: "/videos",
     linkLabel: "Filme ansehen",
   },
@@ -120,9 +121,9 @@ export const DISCIPLINES: Discipline[] = [
     name: "Reels",
     film: "evglab-cut",
     filmLabel: "Brand-Reel von EvGlab",
-    body: "Regelmäßig neue Reels für Instagram, TikTok und LinkedIn – im Look deiner Marke, fertig zum Posten.",
-    points: ["4 Reels pro Monat", "Hooks und Captions", "monatlich kündbar"],
-    price: "ab 690 € / Monat",
+    body: getFilmService("social").body,
+    points: getFilmService("social").points,
+    price: getFilmService("social").price,
     href: "/videos",
     linkLabel: "Reels ansehen",
   },
@@ -191,12 +192,7 @@ export const WEB_PACKAGES: WebPackage[] = [
 ];
 
 /** Film offer, as listed on /videos. */
-export const FILM_PRICES = [
-  { title: "3D-Logo-Animation", price: "ab 490 €", note: "5–10 Sekunden, 16:9 und 9:16" },
-  { title: "Produktfilm & CGI", price: "ab 1.490 €", note: "15–45 Sekunden, 3D-Modell inklusive" },
-  { title: "Werbespot & Erklärfilm", price: "ab 990 €", note: "20–60 Sekunden, Skript und Storyboard" },
-  { title: "Social-Media-Paket", price: "ab 690 € / Monat", note: "4 Reels pro Monat, monatlich kündbar" },
-];
+export const FILM_PRICES = FILM_SERVICES.map(({ title, price, note }) => ({ title, price, note }));
 
 export const OUTCOMES = [
   "Mehr Anfragen und Umsatz",

@@ -14,6 +14,20 @@ export const aboutOgImage = {
   alt: "Erik von Gregory – Gründer von EvGlab",
 } as const;
 
+export const filmsOgImage = {
+  url: "/videos/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: "3D-Produktfilme und Reels von EvGlab: Filme, die man nicht wegwischt.",
+} as const;
+
+export const studioOgImage = {
+  url: "/ueber-uns/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: "Erik von Gregory, EvGlab: Ich baue Werbematerial, das hängen bleibt.",
+} as const;
+
 export const festpreisOgImage = {
   url: "/festpreis/opengraph-image",
   width: 1200,
@@ -31,6 +45,8 @@ export const partnerOgImage = {
 type PageOgImage =
   | typeof defaultOgImage
   | typeof aboutOgImage
+  | typeof filmsOgImage
+  | typeof studioOgImage
   | typeof festpreisOgImage
   | typeof partnerOgImage;
 

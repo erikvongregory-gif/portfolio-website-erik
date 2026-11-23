@@ -3,7 +3,7 @@ import { Column } from "@once-ui-system/core";
 import { AboutCraft, AboutHero, AboutStory, AboutValues, AboutWorkflow } from "@/components/about";
 import { JsonLd } from "@/components/JsonLd";
 import { CtaBand, StudioFooter } from "@/components/studio";
-import { aboutOgImage, baseURL, createPageOpenGraph, createPageTwitter } from "@/resources";
+import { baseURL, studioOgImage, createPageOpenGraph, createPageTwitter } from "@/resources";
 
 const DESCRIPTION =
   "Hinter EvGlab steht eine Person: Erik. Websites, 3D-Produktfilme und Reels aus Fuchstal bei Landsberg am Lech – direkt, ehrlich und ohne Umwege.";
@@ -17,9 +17,9 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     path: "/ueber-uns",
     type: "profile",
-    image: aboutOgImage,
+    image: studioOgImage,
   }),
-  twitter: createPageTwitter("Über mich", DESCRIPTION, aboutOgImage),
+  twitter: createPageTwitter("Über mich", DESCRIPTION, studioOgImage),
 };
 
 const structuredData = {

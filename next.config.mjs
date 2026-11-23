@@ -26,15 +26,6 @@ const nextConfig = {
     compiler: "modern",
     silenceDeprecations: ["legacy-js-api"],
   },
-  // Static landing page (plain HTML/CSS/JS) served from public/3d-produktanimation.
-  async rewrites() {
-    return [
-      {
-        source: "/3d-produktanimation",
-        destination: "/3d-produktanimation/index.html",
-      },
-    ];
-  },
   async redirects() {
     return [
       {

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Column, SmartLink, Text } from "@once-ui-system/core";
+import { FILM_SERVICES } from "@/lib/filmServices";
 import { JsonLd } from "@/components/JsonLd";
 import {
   FilmCombo,
@@ -14,7 +15,7 @@ import {
 } from "@/components/films";
 import { CtaBand, Glow, StudioFooter, StudioSection } from "@/components/studio";
 import { showreel } from "@/lib/showreel";
-import { baseURL, createPageOpenGraph, createPageTwitter } from "@/resources";
+import { baseURL, createPageOpenGraph, createPageTwitter, filmsOgImage } from "@/resources";
 
 const PAGE_PATH = "/videos";
 const PAGE_TITLE = "Videos, 3D-Logo-Animation & Social Media";
@@ -39,36 +40,12 @@ export const metadata: Metadata = {
     title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,
     path: PAGE_PATH,
+    image: filmsOgImage,
   }),
-  twitter: createPageTwitter(PAGE_TITLE, PAGE_DESCRIPTION),
+  twitter: createPageTwitter(PAGE_TITLE, PAGE_DESCRIPTION, filmsOgImage),
 };
 
-const services: FilmService[] = [
-  {
-    title: "3D-Logo-Animation",
-    price: "ab 490 €",
-    body: "Dein Logo als Metall, Glas oder Licht – in Blender gebaut und gerendert. Ideal als Intro, Outro und Profil-Video.",
-    points: ["5–10 Sekunden", "16:9 und 9:16", "mit Sounddesign"],
-  },
-  {
-    title: "Produktfilm & CGI",
-    price: "ab 1.490 €",
-    body: "Dein Produkt im Studio-Look, ohne Fotoshooting. Makros, Kamerafahrten und Licht, die es in echt kaum gibt.",
-    points: ["15–45 Sekunden", "3D-Modell inklusive", "Musik und Texttafeln"],
-  },
-  {
-    title: "Werbespot & Erklärfilm",
-    price: "ab 990 €",
-    body: "Motion Design mit kinetischer Typo, UI-Animation und Sprecher. Für Website-Hero, Ads und Messen.",
-    points: ["20–60 Sekunden", "Skript und Storyboard", "optional Voiceover"],
-  },
-  {
-    title: "Social-Media-Paket",
-    price: "ab 690 € / Monat",
-    body: "Regelmäßig neue Reels für Instagram, TikTok und LinkedIn – im Look deiner Marke, fertig zum Posten.",
-    points: ["4 Reels pro Monat", "Hooks und Captions", "monatlich kündbar"],
-  },
-];
+const services: FilmService[] = FILM_SERVICES;
 
 const steps: FilmStep[] = [
   {

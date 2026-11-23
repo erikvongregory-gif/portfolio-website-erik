@@ -1,6 +1,10 @@
 import type { MetadataRoute } from "next";
+import { isBlackFridayActive } from "@/lib/blackFriday";
 import { seoPages } from "@/lib/seoPages";
 import { baseURL } from "@/resources";
+
+// Rebuilt hourly so the Black Friday page drops out once the offer has ended.
+export const revalidate = 3600;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -8,7 +12,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
     { path: "/", priority: 1, changeFrequency: "weekly" },
     { path: "/webdesign-landsberg", priority: 0.9, changeFrequency: "monthly" },
-    { path: "/blackfriday", priority: 0.9, changeFrequency: "daily" },
+    ...(isBlackFridayActive()
+      ? [{ path: "/blackfriday", priority: 0.9, changeFrequency: "daily" as const }]
+      : []),
     { path: "/videos", priority: 0.8, changeFrequency: "monthly" },
     { path: "/3d-produktanimation", priority: 0.8, changeFrequency: "monthly" },
     { path: "/ueber-uns", priority: 0.8, changeFrequency: "monthly" },

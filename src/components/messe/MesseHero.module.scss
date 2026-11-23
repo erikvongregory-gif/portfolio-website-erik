@@ -1,0 +1,197 @@
+@use "../studio/studio" as studio;
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 100svh;
+  justify-content: center;
+  padding: clamp(7.5rem, 12vw, 10rem) clamp(1.25rem, 4vw, 4.5rem) clamp(4rem, 8vw, 6rem);
+  background: var(--studio-stage);
+  color: var(--studio-ink);
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(42% 46% at 50% 8%, rgba(143, 214, 224, 0.16) 0%, rgba(143, 214, 224, 0) 70%),
+    radial-gradient(70% 50% at 50% 100%, rgba(10, 19, 19, 1) 0%, rgba(5, 9, 9, 0) 70%);
+}
+
+.statue {
+  position: absolute;
+  bottom: -2vh;
+  z-index: 1;
+  width: min(40vw, 90vh, 47.5rem);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 1.875rem 3.75rem rgba(0, 0, 0, 0.9));
+  animation: rise 1.6s var(--studio-ease) both;
+}
+
+.left {
+  left: -5vw;
+}
+
+// Own property, so the entry animation's transform does not undo the mirror.
+.right {
+  right: -5vw;
+  scale: -1 1;
+}
+
+// Dark floor so the statues stand in the room rather than float.
+.floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(5, 9, 9, 0) 0%, rgba(5, 9, 9, 0.85) 75%, var(--studio-stage) 100%);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  max-width: 46rem;
+  text-align: center;
+}
+
+.kicker {
+  @include studio.kicker;
+  color: var(--studio-ink-2);
+
+  p,
+  span {
+    @include studio.kicker;
+  }
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--studio-signal);
+  box-shadow: 0 0 10px rgba(255, 154, 60, 0.7);
+}
+
+.title {
+  @include studio.headline(clamp(2.1rem, 4.4vw, 4.25rem));
+  line-height: 1.04;
+  margin: 0;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.glowText {
+  @include studio.glow-text;
+}
+
+.sub {
+  margin: 0;
+  max-width: 36rem;
+  font-size: clamp(1rem, 1.2vw, 1.125rem) !important;
+  line-height: 1.6 !important;
+  color: var(--studio-ink-2);
+  text-wrap: pretty;
+}
+
+.short {
+  display: none;
+}
+
+.teaser {
+  margin: 0;
+  max-width: 34rem;
+  font-size: clamp(1rem, 1.2vw, 1.125rem) !important;
+  line-height: 1.6 !important;
+  color: #fff;
+  text-wrap: pretty;
+
+  u {
+    text-decoration-color: var(--studio-signal);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25rem;
+  }
+}
+
+.secondary {
+  font-size: 0.9375rem;
+  color: #fff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  padding-bottom: 2px;
+  transition: border-color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: #fff;
+  }
+}
+
+@media (max-width: 900px) {
+  .statue {
+    width: 62vw;
+    opacity: 0.55;
+    bottom: -4vh;
+  }
+
+  .left {
+    left: -22vw;
+  }
+
+  .right {
+    right: -22vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .stage {
+    justify-content: flex-start;
+    padding-top: 8.5rem;
+  }
+
+  .statue {
+    width: 80vw;
+    opacity: 0.4;
+    bottom: -6vh;
+  }
+
+  .left {
+    left: -38vw;
+  }
+
+  .right {
+    right: -38vw;
+  }
+
+  .title {
+    font-size: 2.05rem;
+  }
+
+  .long,
+  .teaser {
+    display: none;
+  }
+
+  .short {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statue {
+    animation: none;
+  }
+}

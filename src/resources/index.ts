@@ -6,6 +6,8 @@ export {
   createPageTwitter,
   defaultOgImage,
   festpreisOgImage,
+  filmsOgImage,
+  studioOgImage,
   partnerOgImage,
   siteName,
 } from "./metadata";

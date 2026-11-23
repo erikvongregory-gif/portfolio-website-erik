@@ -1,0 +1,50 @@
+// Shared layout for the trade-show page: one dark stage with the blueprint
+// layer running behind the sections (which therefore stay transparent).
+.canvas {
+  position: relative;
+  isolation: isolate;
+  background: var(--studio-stage);
+  overflow: hidden;
+}
+
+// Doubled class beats StudioSection's own .stage background.
+.clear.clear {
+  background: transparent;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.films {
+  align-items: center;
+}
+
+.specCopy {
+  max-width: 26rem;
+}
+
+.specTitle {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem) !important;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin: 0;
+  color: #fff;
+}
+
+.spec {
+  margin: 0;
+  font-size: 0.9375rem !important;
+  line-height: 1.55 !important;
+  color: var(--studio-ink-2);
+}
