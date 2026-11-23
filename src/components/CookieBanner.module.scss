@@ -1,0 +1,130 @@
+@use "./studio/studio" as studio;
+
+.wrap {
+  max-width: min(26rem, calc(100vw - 2rem));
+}
+
+.panel {
+  @include studio.glass(1.25rem);
+  background: rgba(8, 14, 14, 0.82);
+  color: var(--studio-ink);
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.7);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: transform 0.4s var(--studio-ease), opacity 0.32s ease;
+}
+
+.shown {
+  opacity: 1;
+  transform: none;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--studio-signal);
+  box-shadow: 0 0 10px rgba(255, 154, 60, 0.75);
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 400 !important;
+  font-size: 1.05rem !important;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.text {
+  margin: 0;
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
+  color: var(--studio-ink-2);
+}
+
+.inline {
+  color: #fff;
+  border-bottom: 1px solid rgba(242, 245, 244, 0.35);
+
+  &:hover {
+    border-color: #fff;
+  }
+}
+
+.choice {
+  flex: 1;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--studio-glow);
+    outline-offset: 2px;
+  }
+}
+
+.settings {
+  align-self: center;
+  padding: 0.35rem 0.5rem;
+  border: 0;
+  background: none;
+  color: var(--studio-ink-3);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(242, 245, 244, 0.25);
+
+  &:hover {
+    color: #fff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--studio-glow);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+.list {
+  border: 1px solid var(--studio-line);
+  border-radius: 0.9rem;
+  overflow: hidden;
+}
+
+.item {
+  padding: 0.75rem 0.9rem;
+
+  & + & {
+    border-top: 1px solid var(--studio-line);
+  }
+}
+
+.itemTitle {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: #fff;
+}
+
+.itemText {
+  font-size: 0.75rem !important;
+  line-height: 1.45 !important;
+  color: var(--studio-ink-3);
+}

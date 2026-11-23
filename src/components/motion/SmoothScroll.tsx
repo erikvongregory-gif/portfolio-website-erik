@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
 // Module-level handle so other components (e.g. modals) can pause/resume scrolling.
@@ -28,6 +29,23 @@ export function startLenis() {
 }
 
 export function SmoothScroll() {
+  const pathname = usePathname();
+
+  // On every page change start at the top (or at the #anchor). Without this,
+  // Lenis keeps its old scroll target and glides the new page back to the
+  // position of the previous one.
+  useEffect(() => {
+    const hash = window.location.hash;
+    const el = hash.length > 1 ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+    if (el) {
+      if (lenisInstance) lenisInstance.scrollTo(el, { offset: -96, immediate: true, force: true });
+      else el.scrollIntoView();
+      return;
+    }
+    lenisInstance?.scrollTo(0, { immediate: true, force: true });
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 

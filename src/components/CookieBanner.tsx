@@ -1,18 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Button,
-  Column,
-  Flex,
-  Icon,
-  IconButton,
-  Line,
-  Row,
-  SmartLink,
-  Switch,
-  Text,
-} from "@once-ui-system/core";
+import { Column, IconButton, Row, SmartLink, Switch, Text } from "@once-ui-system/core";
+import classNames from "classnames";
+import styles from "./CookieBanner.module.scss";
 import {
   COOKIE_CONSENT_UPDATED_EVENT,
   COOKIE_STORAGE_KEY,
@@ -146,46 +137,27 @@ export function CookieBanner() {
 
   return (
     <Row
+      data-theme="dark"
       position="fixed"
       bottom="16"
       left="16"
       zIndex={4}
       pointerEvents="none"
-      style={{ maxWidth: "min(27rem, calc(100vw - 2rem))" }}
+      className={styles.wrap}
     >
       <Column
         fillWidth
-        border="neutral-alpha-medium"
-        radius="l"
         padding="20"
         gap="16"
         pointerEvents="auto"
-        style={{
-          backgroundColor: "var(--page-background)",
-          transform: shown ? "translateY(0)" : "translateY(16px)",
-          opacity: shown ? 1 : 0,
-          transition: "transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease",
-          boxShadow: "0 calc(28 * var(--px)) calc(60 * var(--px)) calc(-28 * var(--px)) rgba(0,0,0,0.5)",
-          maxHeight: "calc(100vh - 2rem)",
-          overflowY: "auto",
-        }}
+        role="dialog"
+        aria-labelledby="cookie-title"
+        className={classNames(styles.panel, shown && styles.shown)}
       >
         <Row fillWidth gap="12" vertical="center" horizontal="between">
           <Row gap="12" vertical="center">
-            <Flex
-              horizontal="center"
-              vertical="center"
-              radius="m"
-              background="brand-alpha-weak"
-              style={{ width: "2.25rem", height: "2.25rem", flexShrink: 0 }}
-            >
-              <Icon name="cookie" size="m" onBackground="brand-strong" />
-            </Flex>
-            <Text
-              variant="heading-strong-s"
-              onBackground="neutral-strong"
-              style={{ letterSpacing: "-0.01em" }}
-            >
+            <span className={styles.dot} aria-hidden="true" />
+            <Text as="h2" id="cookie-title" className={styles.title}>
               {view === "intro" ? "Kalorienfreie Kekse" : "Cookie-Einstellungen"}
             </Text>
           </Row>
@@ -201,86 +173,66 @@ export function CookieBanner() {
 
         {view === "intro" ? (
           <>
-            <Text
-              variant="body-default-s"
-              onBackground="neutral-strong"
-              style={{ lineHeight: 1.6 }}
-            >
+            <Text as="p" className={styles.text}>
               Technisch notwendige Cookies sind immer dabei. Statistik und Marketing laden wir nur,
               wenn du zustimmst. Du entscheidest selbst, was auf den Teller kommt. Mehr im{" "}
-              <SmartLink href="/datenschutz">Datenschutz</SmartLink>.
+              <SmartLink href="/datenschutz" unstyled className={styles.inline}>
+                Datenschutz
+              </SmartLink>
+              .
             </Text>
 
-            <Column fillWidth gap="8">
-              <Button variant="primary" size="s" fillWidth onClick={acceptAll}>
+            {/* Accept and reject carry the same weight on purpose (TTDSG/DSGVO). */}
+            <Row fillWidth gap="8">
+              <button type="button" className={styles.choice} onClick={rejectAll}>
+                Nur Notwendige
+              </button>
+              <button type="button" className={styles.choice} onClick={acceptAll}>
                 Alle akzeptieren
-              </Button>
-              <Row fillWidth gap="8">
-                <Button
-                  variant="secondary"
-                  size="s"
-                  fillWidth
-                  onClick={() => setView("settings")}
-                >
-                  Einstellungen
-                </Button>
-                <Button variant="tertiary" size="s" fillWidth onClick={rejectAll}>
-                  Nur Notwendige
-                </Button>
-              </Row>
-            </Column>
+              </button>
+            </Row>
+            <button type="button" className={styles.settings} onClick={() => setView("settings")}>
+              Einstellungen anpassen
+            </button>
           </>
         ) : (
           <>
-            <Text
-              variant="body-default-s"
-              onBackground="neutral-strong"
-              style={{ lineHeight: 1.6 }}
-            >
+            <Text as="p" className={styles.text}>
               Stell dir deinen Keksteller selbst zusammen. Notwendige Cookies bleiben drin, der Rest
               ist deine Wahl.
             </Text>
 
-            <Column fillWidth gap="4" radius="m" border="neutral-alpha-weak" padding="4">
-              {categories.map((cat, i) => (
-                <Column key={cat.key} fillWidth>
-                  {i > 0 && <Line background="neutral-alpha-weak" />}
-                  <Row
-                    fillWidth
-                    gap="16"
-                    vertical="center"
-                    horizontal="between"
-                    paddingX="12"
-                    paddingY="12"
-                  >
-                    <Column gap="2" style={{ flex: 1, minWidth: 0 }}>
-                      <Text variant="label-strong-s" onBackground="neutral-strong">
-                        {cat.title}
-                      </Text>
-                      <Text variant="body-default-xs" onBackground="neutral-medium">
-                        {cat.description}
-                      </Text>
-                    </Column>
-                    <Switch
-                      isChecked={cat.locked ? true : consent[cat.key]}
-                      disabled={cat.locked}
-                      onToggle={() =>
-                        !cat.locked && toggle(cat.key as "statistics" | "marketing")
-                      }
-                      ariaLabel={`${cat.title} ${cat.locked ? "(immer aktiv)" : "umschalten"}`}
-                    />
-                  </Row>
-                </Column>
+            <Column fillWidth className={styles.list}>
+              {categories.map((cat) => (
+                <Row
+                  key={cat.key}
+                  fillWidth
+                  gap="16"
+                  vertical="center"
+                  horizontal="between"
+                  className={styles.item}
+                >
+                  <Column gap="2" style={{ flex: 1, minWidth: 0 }}>
+                    <Text className={styles.itemTitle}>{cat.title}</Text>
+                    <Text className={styles.itemText}>{cat.description}</Text>
+                  </Column>
+                  <Switch
+                    isChecked={cat.locked ? true : consent[cat.key]}
+                    disabled={cat.locked}
+                    onToggle={() => !cat.locked && toggle(cat.key as "statistics" | "marketing")}
+                    ariaLabel={`${cat.title} ${cat.locked ? "(immer aktiv)" : "umschalten"}`}
+                  />
+                </Row>
               ))}
             </Column>
 
             <Row fillWidth gap="8">
-              <Button variant="tertiary" size="s" fillWidth onClick={() => setView("intro")}>
+              <button type="button" className={styles.choice} onClick={() => setView("intro")}>
                 Zurück
-              </Button>
-              <Button variant="primary" size="s" fillWidth onClick={saveSelection}>
+              </button>
+              <button type="button" className={styles.choice} onClick={saveSelection}>
                 Auswahl speichern
-              </Button>
+              </button>
             </Row>
           </>
         )}
