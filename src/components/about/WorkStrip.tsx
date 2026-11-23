@@ -1,6 +1,6 @@
 "use client";
 
-import { Column, Text } from "@once-ui-system/core";
+import { Column, Text } from "@once-ui-system/core/components";
 import { useEffect, useRef } from "react";
 import styles from "./AboutSections.module.scss";
 

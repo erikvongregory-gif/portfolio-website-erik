@@ -1,4 +1,4 @@
-import { Column, Grid, Heading, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Grid, Heading, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import Image from "next/image";
 import { StudioSection } from "@/components/studio";
 import { Doodle, type DoodleKind } from "./Doodle";

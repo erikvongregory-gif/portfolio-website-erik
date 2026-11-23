@@ -1,6 +1,6 @@
 "use client";
 
-import { Column, Heading, Text } from "@once-ui-system/core";
+import { Column, Heading, Text } from "@once-ui-system/core/components";
 import { useRef } from "react";
 import { ScrollTrigger, useGsapScene } from "@/components/motion/gsap";
 import { Glow, StudioSection } from "@/components/studio";

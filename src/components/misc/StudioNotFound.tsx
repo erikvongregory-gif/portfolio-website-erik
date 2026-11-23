@@ -1,4 +1,4 @@
-import { Column, Heading, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Heading, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import { StudioFooter } from "@/components/studio";
 import { StudioNotFoundSearch } from "./StudioNotFoundSearch";
 import styles from "./NotFound.module.scss";

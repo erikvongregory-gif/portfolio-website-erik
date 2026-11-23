@@ -11,6 +11,7 @@ EvGlab ist die Agentur von Erik Freiherr von Gregory für Werbematerial, das auf
 - Telefon: +49 155 65602176
 - Sprache: Deutsch
 - Richtpreise: komplette Website ab 2.500 €, Landingpage ab 1.500 €, Betreuung ab 99 € / Monat
+- Richtpreise Filme: 3D-Logo-Animation ab 490 €, Werbespot & Erklärfilm ab 990 €, Produktfilm & CGI ab 1.490 €, Social-Media-Paket (4 Reels) ab 690 € / Monat
 - Erstgespräch: kostenlos und unverbindlich, Antwort in der Regel innerhalb von 24 Stunden
 
 ## Leistungen
@@ -42,6 +43,7 @@ Unternehmen und Selbstständige, die einen Auftritt mit Persönlichkeit wollen �
 
 ## Ausgewählte Projekte
 - [Da Peppe](https://da-peppe.com): Website für Osteria & Pizzeria in Landsberg am Lech (öffentliche 5★ Google-Bewertung für die Zusammenarbeit)
+- Spec-Ads (freie Studien, keine Aufträge der Marken): 3D-Produktfilm DJI Osmo Pocket 4P, Produktfilm Apple AirPods Pro
 - [Lünebräu](https://luenebraeu.vercel.app): Markenauftritt Craft-Bier-Brauerei
 - [Ingenieurbüro Jungen](https://ib-jungen-web.vercel.app): Industrie / Automation
 - [EvGlab KI](https://brewai.de): KI-Marketing für Brauereien

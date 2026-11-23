@@ -1,6 +1,6 @@
 "use client";
 
-import { Column, Grid, Heading, Icon, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Grid, Heading, Icon, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { Glow, StudioSection } from "@/components/studio";

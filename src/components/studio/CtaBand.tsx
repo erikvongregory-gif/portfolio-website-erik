@@ -1,6 +1,6 @@
 "use client";
 
-import { Column, Heading, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Heading, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import type { ReactNode } from "react";
 import { ContactDialog } from "@/components/ContactDialog";
 import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL } from "@/lib/contact";

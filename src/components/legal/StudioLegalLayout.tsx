@@ -1,4 +1,4 @@
-import { Column, Heading, Text } from "@once-ui-system/core";
+import { Column, Heading, Text } from "@once-ui-system/core/components";
 import type { ReactNode } from "react";
 import { StudioFooter } from "@/components/studio";
 import styles from "./StudioLegal.module.scss";

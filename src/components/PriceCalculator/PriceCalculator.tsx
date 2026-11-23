@@ -1,15 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
-import {
-  Button,
-  Column,
-  Grid,
-  Icon,
-  IconButton,
-  Row,
-  Text,
-} from "@once-ui-system/core";
+import { Button, Column, Grid, Icon, IconButton, Row, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { ShiftCta } from "@/components/ShiftCta";
 import {

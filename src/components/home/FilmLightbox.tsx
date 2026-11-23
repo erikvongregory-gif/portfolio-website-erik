@@ -1,6 +1,6 @@
 "use client";
 
-import { IconButton, Row, Text } from "@once-ui-system/core";
+import { IconButton, Row, Text } from "@once-ui-system/core/components";
 import { useEffect, useRef } from "react";
 import { startLenis, stopLenis } from "@/components/motion/SmoothScroll";
 import type { ShowreelItem } from "@/lib/showreel";

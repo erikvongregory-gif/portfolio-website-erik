@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Column, Row, Text } from "@once-ui-system/core";
+import { Column, Row, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { BLACK_FRIDAY } from "@/lib/blackFriday";
 import styles from "./blackfriday.module.scss";

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Icon, Row, Text } from "@once-ui-system/core";
+import { Icon, Row, Text } from "@once-ui-system/core/components";
 import { BLACK_FRIDAY, isBlackFridayActive } from "@/lib/blackFriday";
 import classNames from "classnames";
 import "./legal/banner-offset.css";

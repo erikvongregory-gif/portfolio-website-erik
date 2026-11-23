@@ -1,4 +1,4 @@
-import { Column, Grid, Heading, Text } from "@once-ui-system/core";
+import { Column, Grid, Heading, Text } from "@once-ui-system/core/components";
 import { MesseFilm } from "./MesseFilm";
 import styles from "./MessePage.module.scss";
 

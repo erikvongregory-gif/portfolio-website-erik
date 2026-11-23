@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Column } from "@once-ui-system/core";
+import { Column } from "@once-ui-system/core/components";
 import { JsonLd } from "@/components/JsonLd";
 import {
   IMAGEFILM_HLS,

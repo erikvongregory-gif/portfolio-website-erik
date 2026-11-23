@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Column, Grid, Heading, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Grid, Heading, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import type { SeoReference } from "@/lib/seoPages";
 import styles from "./Landing.module.scss";
 

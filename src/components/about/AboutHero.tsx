@@ -1,4 +1,4 @@
-import { Column, Heading, Row, Text } from "@once-ui-system/core";
+import { Column, Heading, Row, Text } from "@once-ui-system/core/components";
 import Image from "next/image";
 import { ContactDialog } from "@/components/ContactDialog";
 import { Doodle } from "./Doodle";

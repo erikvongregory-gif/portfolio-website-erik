@@ -1,4 +1,4 @@
-import { Column } from "@once-ui-system/core";
+import { Column } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import type { ComponentProps, ReactNode } from "react";
 import { StudioSection } from "@/components/studio";

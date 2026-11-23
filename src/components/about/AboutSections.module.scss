@@ -50,6 +50,11 @@
 .storyTapeR {
   right: -1.2rem;
   transform: rotate(28deg);
+
+  // On phones the photo spans the full width; keep the tape on screen.
+  @media (max-width: 768px) {
+    right: -0.5rem;
+  }
 }
 
 .storyImg {

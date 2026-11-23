@@ -1,6 +1,6 @@
 "use client";
 
-import { Column, Row, Text } from "@once-ui-system/core";
+import { Column, Row, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { useCallback, useRef, useState } from "react";
 import { FilmCard } from "@/components/studio";

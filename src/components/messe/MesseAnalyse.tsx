@@ -1,4 +1,4 @@
-import { Column, Heading, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Heading, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import { RequestTrigger } from "./MesseRequest";
 import styles from "./MesseAnalyse.module.scss";
 
@@ -40,7 +40,7 @@ export function MesseAnalyse() {
       {/* biome-ignore lint/performance/noImgElement: decorative transparent render */}
       <img
         className={styles.statue}
-        src="/3d-produktanimation/images/discus-statue.png"
+        src="/3d-produktanimation/images/discus-statue.webp"
         alt=""
         aria-hidden="true"
         loading="lazy"

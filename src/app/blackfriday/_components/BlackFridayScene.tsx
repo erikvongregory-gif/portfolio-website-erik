@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { Column } from "@once-ui-system/core";
+import { Column } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { gsap, ScrollTrigger, useGsapScene } from "@/components/motion/gsap";
 import styles from "./blackfriday.module.scss";

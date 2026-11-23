@@ -1,4 +1,4 @@
-import { Column, Text } from "@once-ui-system/core";
+import { Column, Text } from "@once-ui-system/core/components";
 import { StickyMobileCta } from "@/components";
 import { JsonLd } from "@/components/JsonLd";
 import { StartOffer } from "@/components/StartOffer";

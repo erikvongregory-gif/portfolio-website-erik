@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { Button, Column, Icon, Input, Row, Text } from "@once-ui-system/core";
+import { Button, Column, Icon, Input, Row, Text } from "@once-ui-system/core/components";
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,

@@ -1,4 +1,4 @@
-import { Column, Heading, Row, Text } from "@once-ui-system/core";
+import { Column, Heading, Row, Text } from "@once-ui-system/core/components";
 import type { ReactNode } from "react";
 import { ContactDialog } from "@/components/ContactDialog";
 import styles from "./FilmSections.module.scss";

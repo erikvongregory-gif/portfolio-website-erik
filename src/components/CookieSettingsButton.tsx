@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Text } from "@once-ui-system/core";
+import { Text } from "@once-ui-system/core/components";
 import { COOKIE_SETTINGS_EVENT } from "@/components/CookieBanner";
 
 type CookieSettingsButtonProps = {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SmartLink } from "@once-ui-system/core";
+import { SmartLink } from "@once-ui-system/core/components";
 import { LegalBlock, LegalSubheading, LegalText, StudioLegalLayout } from "@/components/legal";
 import { createPageOpenGraph, createPageTwitter } from "@/resources";
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
-import { Button, Column, Dialog, Icon, Input, Row, Text, Textarea } from "@once-ui-system/core";
+import { Button, Column, Dialog, Icon, Input, Row, Text, Textarea } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { startLenis, stopLenis } from "@/components/motion/SmoothScroll";
 import { WebsiteCheckForm } from "@/components/WebsiteCheckForm";

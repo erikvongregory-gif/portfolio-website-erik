@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Column } from "@once-ui-system/core";
+import { Column } from "@once-ui-system/core/components";
 import { AboutCraft, AboutHero, AboutStory, AboutValues, AboutWorkflow } from "@/components/about";
 import { JsonLd } from "@/components/JsonLd";
 import { CtaBand, StudioFooter } from "@/components/studio";

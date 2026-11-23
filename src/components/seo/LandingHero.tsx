@@ -1,4 +1,4 @@
-import { Column, Heading, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Heading, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import type { CSSProperties, ReactNode } from "react";
 import { ContactDialog } from "@/components/ContactDialog";

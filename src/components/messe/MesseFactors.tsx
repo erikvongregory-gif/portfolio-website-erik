@@ -1,4 +1,4 @@
-import { Column, Grid, Heading, Row, Text } from "@once-ui-system/core";
+import { Column, Grid, Heading, Row, Text } from "@once-ui-system/core/components";
 import styles from "./MesseFactors.module.scss";
 
 const FACTORS = [

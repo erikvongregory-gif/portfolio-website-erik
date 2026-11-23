@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Column, Grid, Heading, Icon, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Button, Column, Grid, Heading, Icon, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
 import { ContactDialog } from "@/components/ContactDialog";

@@ -1,8 +1,8 @@
-import { Column, Heading, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Heading, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import { RequestTrigger } from "./MesseRequest";
 import styles from "./MesseHero.module.scss";
 
-const STATUE = "/3d-produktanimation/images/discus-statue.png";
+const STATUE = "/3d-produktanimation/images/discus-statue.webp";
 
 /**
  * Hero of the trade-show page: two mirrored glass discus throwers frame the

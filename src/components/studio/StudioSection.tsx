@@ -1,4 +1,4 @@
-import { Column, Heading, Text } from "@once-ui-system/core";
+import { Column, Heading, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import type { ComponentProps, ReactNode } from "react";
 import styles from "./StudioSection.module.scss";

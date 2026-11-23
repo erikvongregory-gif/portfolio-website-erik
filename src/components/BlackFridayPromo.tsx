@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Column, Icon, Row, Text } from "@once-ui-system/core";
+import { Column, Icon, Row, Text } from "@once-ui-system/core/components";
 import { BLACK_FRIDAY, BLACK_FRIDAY_PACKAGES } from "@/lib/blackFriday";
 import { useBlackFridayCountdown } from "@/components/BlackFridayBanner";
 import styles from "./BlackFridayPromo.module.scss";

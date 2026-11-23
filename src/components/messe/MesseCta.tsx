@@ -1,4 +1,4 @@
-import { Column, Grid, Row, Text } from "@once-ui-system/core";
+import { Column, Grid, Row, Text } from "@once-ui-system/core/components";
 import { RequestTrigger } from "./MesseRequest";
 import styles from "./MesseCta.module.scss";
 
@@ -20,7 +20,7 @@ export function MesseCta() {
           {/* biome-ignore lint/performance/noImgElement: decorative still, sized by CSS */}
           <img
             className={styles.img}
-            src="/3d-produktanimation/images/cta-handshake.png"
+            src="/3d-produktanimation/images/cta-handshake.webp"
             alt=""
             width={1536}
             height={1024}

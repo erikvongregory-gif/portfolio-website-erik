@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Column, SmartLink, Text } from "@once-ui-system/core";
+import { Column, SmartLink, Text } from "@once-ui-system/core/components";
 import { FILM_SERVICES } from "@/lib/filmServices";
 import { JsonLd } from "@/components/JsonLd";
 import {

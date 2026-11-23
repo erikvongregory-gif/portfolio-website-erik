@@ -1,6 +1,6 @@
 "use client";
 
-import { Column, Heading, Icon, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Heading, Icon, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import Image from "next/image";
 import { useRef } from "react";

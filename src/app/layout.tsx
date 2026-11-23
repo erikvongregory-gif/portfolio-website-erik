@@ -6,7 +6,7 @@ import "@/resources/custom.css";
 import type { Metadata, Viewport } from "next";
 import classNames from "classnames";
 
-import { Column, Flex } from "@once-ui-system/core";
+import { Column, Flex } from "@once-ui-system/core/components";
 import { BlackFridayBanner } from "@/components/BlackFridayBanner";
 import {
   ConsentAnalytics,

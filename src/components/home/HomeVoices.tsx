@@ -1,4 +1,4 @@
-import { Column, Grid, Icon, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Grid, Icon, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import Image from "next/image";
 import { Glow, StudioSection } from "@/components/studio";
 import { LEAD_VOICE, MORE_VOICES } from "./data";

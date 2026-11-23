@@ -1,6 +1,6 @@
 "use client";
 
-import { Column, Row, Text } from "@once-ui-system/core";
+import { Column, Row, Text } from "@once-ui-system/core/components";
 import { useEffect, useRef } from "react";
 import type { ShowreelItem } from "@/lib/showreel";
 import styles from "./FilmLightbox.module.scss";

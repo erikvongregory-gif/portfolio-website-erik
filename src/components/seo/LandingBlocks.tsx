@@ -1,4 +1,4 @@
-import { Column, Grid, Heading, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Grid, Heading, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import type { ComponentProps } from "react";
 import styles from "./Landing.module.scss";

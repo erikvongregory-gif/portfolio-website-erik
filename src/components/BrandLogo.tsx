@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Row, Text } from "@once-ui-system/core";
+import { Flex, Row, Text } from "@once-ui-system/core/components";
 import type { ComponentProps } from "react";
 
 type RowProps = ComponentProps<typeof Row>;

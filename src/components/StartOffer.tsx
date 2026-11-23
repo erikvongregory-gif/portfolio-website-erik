@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Column, Grid, Heading, Icon, Row, Tag, Text } from "@once-ui-system/core";
+import { Button, Column, Grid, Heading, Icon, Row, Tag, Text } from "@once-ui-system/core/components";
 import { BlackFridayPromo } from "@/components/BlackFridayPromo";
 import { ContactDialog } from "@/components/ContactDialog";
 import { isBlackFridayActive } from "@/lib/blackFriday";

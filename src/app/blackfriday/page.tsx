@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
-import { Column, Grid, Heading, Icon, Row, Text } from "@once-ui-system/core";
+import { Column, Grid, Heading, Icon, Row, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { StickyMobileCta } from "@/components";
 import { ContactDialog } from "@/components/ContactDialog";
@@ -21,9 +21,9 @@ import {
 import styles from "./_components/blackfriday.module.scss";
 
 const PAGE_PATH = "/blackfriday";
-const PAGE_TITLE = "Black Friday: Website für 500 €, Landingpage für 300 €";
+const PAGE_TITLE = "Black Friday: Website 500 €, Landingpage 300 €";
 const PAGE_DESCRIPTION =
-  "Black Friday bei EvGlab: komplette Website für 500 € statt ab 2.500 €, Landingpage für 300 € statt ab 1.500 €. Individuelles Design, kostenloser Entwurf, in ca. 7 Tagen online. Nur bis Cyber Monday.";
+  "Black Friday bei EvGlab: komplette Website für 500 € statt ab 2.500 €, Landingpage für 300 € statt ab 1.500 €. Kostenloser Entwurf, nur bis Cyber Monday.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

@@ -1,6 +1,6 @@
 "use client";
 
-import { Column, Row, SmartLink } from "@once-ui-system/core";
+import { Column, Row, SmartLink } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";

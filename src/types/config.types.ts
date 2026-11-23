@@ -1,16 +1,4 @@
-import {
-  BorderStyle,
-  ChartMode,
-  ChartVariant,
-  NeutralColor,
-  ScalingSize,
-  Schemes,
-  SolidStyle,
-  SolidType,
-  SurfaceStyle,
-  Theme,
-  TransitionStyle,
-} from "@once-ui-system/core";
+import type { BorderStyle, ChartMode, ChartVariant, NeutralColor, ScalingSize, Schemes, SolidStyle, SolidType, SurfaceStyle, Theme, TransitionStyle } from "@once-ui-system/core";
 import { NextFontWithVariable } from "next/dist/compiled/@next/font";
 
 /**

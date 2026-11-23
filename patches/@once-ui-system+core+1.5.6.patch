@@ -1,0 +1,26 @@
+diff --git a/node_modules/@once-ui-system/core/dist/components/ClientFlex.js b/node_modules/@once-ui-system/core/dist/components/ClientFlex.js
+index 2394c4d..5c367a0 100644
+--- a/node_modules/@once-ui-system/core/dist/components/ClientFlex.js
++++ b/node_modules/@once-ui-system/core/dist/components/ClientFlex.js
+@@ -3,7 +3,7 @@ import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-run
+ import { forwardRef } from "react";
+ import { ServerFlex, Cursor } from ".";
+ import { useRef, useEffect, useCallback, useState } from "react";
+-import { useLayout } from "..";
++import { useLayout } from "../contexts/LayoutProvider";
+ import { useResponsiveClasses } from "../hooks/useResponsiveClasses";
+ const ClientFlex = forwardRef(({ cursor, hide, xl, l, m, s, xs, ...props }, ref) => {
+     const elementRef = useRef(null);
+diff --git a/node_modules/@once-ui-system/core/dist/components/ClientGrid.js b/node_modules/@once-ui-system/core/dist/components/ClientGrid.js
+index e64e480..b083cf5 100644
+--- a/node_modules/@once-ui-system/core/dist/components/ClientGrid.js
++++ b/node_modules/@once-ui-system/core/dist/components/ClientGrid.js
+@@ -3,7 +3,7 @@ import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-run
+ import { forwardRef } from "react";
+ import { ServerGrid, Cursor } from ".";
+ import { useRef, useEffect, useCallback, useState } from "react";
+-import { useLayout } from "..";
++import { useLayout } from "../contexts/LayoutProvider";
+ import { useResponsiveClasses } from "../hooks/useResponsiveClasses";
+ const ClientGrid = forwardRef(({ cursor, hide, xl, l, m, s, xs, ...props }, ref) => {
+     const elementRef = useRef(null);

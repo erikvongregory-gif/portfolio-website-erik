@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type MouseEvent } from "react";
-import { Button, IconButton, Row, Text } from "@once-ui-system/core";
+import { Button, IconButton, Row, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { ContactDialog } from "@/components/ContactDialog";
 import { subscribeScroll } from "@/components/motion/SmoothScroll";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Column, Row, Text } from "@once-ui-system/core";
+import { Column, Row, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
 import styles from "./MesseFilm.module.scss";

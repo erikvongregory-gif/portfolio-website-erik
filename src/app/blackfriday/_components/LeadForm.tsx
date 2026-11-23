@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { Button, Column, Icon, Input, Row, Text, Textarea } from "@once-ui-system/core";
+import { Button, Column, Icon, Input, Row, Text, Textarea } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import {
   BF_SELECT_EVENT,

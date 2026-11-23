@@ -1,6 +1,6 @@
 "use client";
 
-import { Column } from "@once-ui-system/core";
+import { Column } from "@once-ui-system/core/components";
 import { type ComponentProps, useEffect, useRef, useState } from "react";
 
 /**

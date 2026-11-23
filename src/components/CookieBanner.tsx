@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Column, IconButton, Row, SmartLink, Switch, Text } from "@once-ui-system/core";
+import { Column, IconButton, Row, SmartLink, Switch, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import styles from "./CookieBanner.module.scss";
 import {

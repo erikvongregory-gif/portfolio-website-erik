@@ -1,6 +1,6 @@
 "use client";
 
-import { Column, Grid, Heading, Row, Text } from "@once-ui-system/core";
+import { Column, Grid, Heading, Row, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import { type ReactNode, type RefObject, useEffect, useRef, useState } from "react";
 import { RequestTrigger } from "./MesseRequest";

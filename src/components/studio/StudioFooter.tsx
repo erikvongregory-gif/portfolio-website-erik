@@ -1,4 +1,4 @@
-import { Column, Grid, Row, SmartLink, Text } from "@once-ui-system/core";
+import { Column, Grid, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
 import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL } from "@/lib/contact";
 import { brancheLinks, leistungLinks, regionLinks } from "@/lib/seoPages/nav";

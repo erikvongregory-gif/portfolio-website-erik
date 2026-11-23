@@ -1,4 +1,4 @@
-import { Column, Grid, Text } from "@once-ui-system/core";
+import { Column, Grid, Text } from "@once-ui-system/core/components";
 import styles from "./MesseCompare.module.scss";
 
 const WITH = [

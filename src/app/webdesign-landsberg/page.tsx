@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Column, SmartLink, Text } from "@once-ui-system/core";
+import { Column, SmartLink, Text } from "@once-ui-system/core/components";
 import { FaqList, ItemGrid, LandingHero, PillList, PriceList, WorkShowcase } from "@/components/seo";
 import { CtaBand, Glow, StudioFooter, StudioSection } from "@/components/studio";
 import { seoReferences } from "@/lib/seoPages";
