@@ -1,6 +1,8 @@
 /**
- * Renders src/app/apple-icon.png (180px) and src/app/favicon.ico (48px) from
- * src/app/icon.svg using the installed Edge. Usage: node scripts/render-icons.mjs
+ * Renders src/app/apple-icon.png (180px) and src/app/favicon.ico (16/32/48px) from
+ * src/app/icon.svg using the installed Edge. The ICO is written by Pillow (Python),
+ * because Turbopack rejects the ICO files ffmpeg produces.
+ * Usage: node scripts/render-icons.mjs
  */
 import { chromium } from "playwright";
 import { execFileSync } from "node:child_process";
@@ -27,10 +29,16 @@ async function render(size, out, rounded) {
 }
 
 const apple = path.join(root, "src/app/apple-icon.png");
-const tmp = path.join(root, "src/app/.icon-48.png");
+const tmp = path.join(root, "src/app/.icon-256.png");
 await render(180, apple, false);
-await render(48, tmp, true);
+await render(256, tmp, true);
 await browser.close();
-execFileSync("ffmpeg", ["-v", "error", "-y", "-i", tmp, path.join(root, "src/app/favicon.ico")]);
+execFileSync("python", [
+  "-I",
+  "-c",
+  "import sys; from PIL import Image; Image.open(sys.argv[1]).convert('RGBA').save(sys.argv[2], format='ICO', sizes=[(16,16),(32,32),(48,48)])",
+  tmp,
+  path.join(root, "src/app/favicon.ico"),
+]);
 rmSync(tmp);
 console.log("written apple-icon.png and favicon.ico");
