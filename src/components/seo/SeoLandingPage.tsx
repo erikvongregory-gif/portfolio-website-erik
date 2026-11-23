@@ -25,11 +25,11 @@ const priceFaq = {
 
 /** Films shown next to each website reference (ids from src/lib/showreel.ts). */
 const filmsByReference: Record<SeoPage["reference"], string[]> = {
-  jungen: ["ibjungen", "brewai-gold", "tidely"],
-  luenebraeu: ["brewai-gold", "ibjungen", "kontext"],
-  daPeppe: ["brewai-gold", "ibjungen", "tidely"],
-  salonLiora: ["brewai-gold", "tidely", "ibjungen"],
-  kapitalanlagen: ["ibjungen", "veyra", "brewai-gold"],
+  jungen: ["ibjungen", "osmo-pocket", "tidely"],
+  luenebraeu: ["osmo-pocket", "ibjungen", "kontext"],
+  daPeppe: ["airpods-pro", "ibjungen", "tidely"],
+  salonLiora: ["airpods-pro", "tidely", "ibjungen"],
+  kapitalanlagen: ["ibjungen", "veyra", "osmo-pocket"],
 };
 
 function buildStructuredData(page: SeoPage, faqs: SeoPage["faqs"]) {

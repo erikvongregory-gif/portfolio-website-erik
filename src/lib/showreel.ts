@@ -23,7 +23,6 @@ export const showreel: ShowreelItem[] = [
   { id: "brewai-glass", title: "BrewAI", kind: "Produktfilm", category: "produkt", ratio: "9 / 16" },
   { id: "osmo-pocket", title: "Osmo Pocket 4P", kind: "3D-Produktfilm · Spec-Ad", category: "3d", ratio: "16 / 9" },
   { id: "airpods-pro", title: "AirPods Pro 3", kind: "Spec-Ad · Konzept", category: "produkt", ratio: "16 / 9" },
-  { id: "brewai-gold", title: "BrewAI", kind: "Werbespot", category: "spot", ratio: "16 / 9" },
   { id: "evglab-scalez", title: "EvGlab", kind: "Logo-Ident", category: "3d", ratio: "9 / 16" },
   { id: "herzblut-ki", title: "Herzblut Business Training", kind: "Werbespot · 4:5", category: "spot", ratio: "4 / 5" },
   { id: "tidely", title: "Tidely", kind: "App-Launch · Konzept", category: "produkt", ratio: "16 / 9" },
@@ -36,7 +35,6 @@ export const showreel: ShowreelItem[] = [
   { id: "veyra", title: "Veyra", kind: "SaaS-Teaser · Konzept", category: "produkt", ratio: "16 / 9" },
   { id: "evglab-pendel", title: "EvGlab", kind: "3D-Loop", category: "3d", ratio: "9 / 16" },
   { id: "gold-noir", title: "Gold Noir", kind: "Kinetic Type · Demo", category: "spot", ratio: "16 / 9" },
-  { id: "brewai-film", title: "BrewAI", kind: "Teaser-Reel", category: "social", ratio: "9 / 16" },
   { id: "brewai-flow", title: "BrewAI", kind: "Erklär-Reel", category: "social", ratio: "9 / 16" },
   { id: "evglab-flyover", title: "EvGlab", kind: "Website-Flyover", category: "social", ratio: "5 / 4" },
 ];

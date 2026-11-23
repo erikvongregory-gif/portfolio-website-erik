@@ -6,7 +6,8 @@ const STATUE = "/3d-produktanimation/images/discus-statue.webp";
 
 /**
  * Hero of the trade-show page: two mirrored glass discus throwers frame the
- * headline on the dark stage, lit by a soft cyan glow from above.
+ * headline on the dark stage, lit by a soft cyan glow and a slowly swaying
+ * spotlight from above.
  */
 export function MesseHero() {
   return (
@@ -20,6 +21,7 @@ export function MesseHero() {
       aria-labelledby="messe-hero-title"
     >
       <span className={styles.glow} aria-hidden="true" />
+      <span className={styles.beam} aria-hidden="true" />
       {/* biome-ignore lint/performance/noImgElement: decorative transparent render, sized by CSS */}
       <img
         className={`${styles.statue} ${styles.left}`}

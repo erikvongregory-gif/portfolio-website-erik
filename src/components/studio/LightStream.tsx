@@ -20,7 +20,7 @@ const FILMS = [
   "evglab-pendel",
   "gold-noir",
   "evglab-scalez",
-  "brewai-gold",
+  "osmo-pocket",
   "kontext",
 ];
 

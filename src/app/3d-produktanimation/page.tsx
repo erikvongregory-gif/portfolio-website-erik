@@ -20,9 +20,10 @@ import { baseURL } from "@/resources";
 
 const PAGE_PATH = "/3d-produktanimation";
 const PAGE_URL = `${baseURL}${PAGE_PATH}`;
-const PAGE_TITLE = "EvGlab | 3D-Produktfilme für Messen";
+const PAGE_TITLE = "3D-Produktfilme für Messen";
+const SHARE_TITLE = "3D-Produktfilme für Messen · EvGlab";
 const PAGE_DESCRIPTION =
-  "3D-Produktfilme für Ihren Messeauftritt, in jeder Branche. Gemacht, damit Besucher stehen bleiben.";
+  "3D-Produktfilme für Ihren Messeauftritt, in jeder Branche: Storyboard, Freigabe, pünktlich zum ersten Messetag. Gemacht, damit Besucher stehen bleiben.";
 const OG_IMAGE = {
   url: "/3d-produktanimation/images/og.png",
   width: 1200,
@@ -32,12 +33,11 @@ const OG_IMAGE = {
 };
 
 export const metadata: Metadata = {
-  // Absolute: this landing page keeps its own title without the site suffix.
-  title: { absolute: PAGE_TITLE },
+  title: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   alternates: { canonical: PAGE_PATH },
   openGraph: {
-    title: PAGE_TITLE,
+    title: SHARE_TITLE,
     description: PAGE_DESCRIPTION,
     url: PAGE_PATH,
     type: "website",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: PAGE_TITLE,
+    title: SHARE_TITLE,
     description: PAGE_DESCRIPTION,
     images: [OG_IMAGE.url],
   },

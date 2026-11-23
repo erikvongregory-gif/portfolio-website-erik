@@ -76,7 +76,7 @@ export const PROJECTS: HomeProject[] = [
 ];
 
 /** Showreel ids (src/lib/showreel.ts) shown under the website projects. */
-export const WORK_FILMS = ["brewai-glass", "evglab-scalez", "evglab-pendel"];
+export const WORK_FILMS = ["brewai-glass", "evglab-scalez", "evglab-reel", "evglab-pendel"];
 
 export type Discipline = {
   id: string;

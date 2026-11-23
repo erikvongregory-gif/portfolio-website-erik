@@ -1,5 +1,6 @@
 import { Column, Grid, Row, Text } from "@once-ui-system/core/components";
 import { RequestTrigger } from "./MesseRequest";
+import { SecondsTick } from "./SecondsTick";
 import styles from "./MesseCta.module.scss";
 
 const STATS = [
@@ -27,7 +28,7 @@ export function MesseCta() {
             loading="lazy"
           />
           <Column className={styles.mediaContent} gap="12">
-            <Text className={styles.big}>3 Sek.</Text>
+            <SecondsTick className={styles.big} />
             <Column gap="4">
               <Text className={styles.mediaTitle}>So viel Zeit hat Ihr Stand</Text>
               <Text as="p" className={styles.mediaText}>

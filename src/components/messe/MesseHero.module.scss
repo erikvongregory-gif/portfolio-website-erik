@@ -55,6 +55,69 @@
   background: linear-gradient(180deg, rgba(5, 9, 9, 0) 0%, rgba(5, 9, 9, 0.85) 75%, var(--studio-stage) 100%);
 }
 
+// Stage spotlight: a soft cone from the top that sways slowly across the statues.
+.beam {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  z-index: 1;
+  width: min(70rem, 120vw);
+  height: 120%;
+  margin-left: calc(min(70rem, 120vw) / -2);
+  pointer-events: none;
+  transform-origin: 50% 0;
+  background: conic-gradient(
+    // "from 180deg" makes 0deg point straight down, so the bright band sits around 0/360.
+    from 180deg at 50% 0%,
+    rgba(205, 238, 240, 0.17) 0deg,
+    rgba(205, 238, 240, 0.1) 6deg,
+    rgba(143, 214, 224, 0) 14deg,
+    rgba(143, 214, 224, 0) 346deg,
+    rgba(205, 238, 240, 0.1) 354deg,
+    rgba(205, 238, 240, 0.17) 360deg
+  );
+  mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 90%);
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  animation:
+    beamIn 2.4s var(--studio-ease) 0.3s both,
+    sway 16s ease-in-out 2.7s infinite alternate;
+}
+
+@keyframes beamIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-9deg);
+  }
+  to {
+    transform: rotate(9deg);
+  }
+}
+
+// Headline, text and buttons arrive one after another.
+.inner > * {
+  animation: lineIn 0.9s var(--studio-ease) both;
+}
+
+.inner > :nth-child(1) { animation-delay: 0.15s; }
+.inner > :nth-child(2) { animation-delay: 0.3s; }
+.inner > :nth-child(3) { animation-delay: 0.5s; }
+.inner > :nth-child(4) { animation-delay: 0.65s; }
+.inner > :nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes lineIn {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    filter: blur(6px);
+  }
+}
+
 @keyframes rise {
   from {
     opacity: 0;
@@ -191,7 +254,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .statue {
+  .statue,
+  .beam,
+  .inner > * {
     animation: none;
+  }
+
+  .beam {
+    transform: none;
   }
 }
