@@ -56,3 +56,16 @@
   color: var(--studio-ink-3);
   text-align: right;
 }
+
+// Narrow cards (three across on phones): stack title and kind instead of wrapping.
+@media (max-width: 560px) {
+  .caption {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 0.125rem !important;
+  }
+
+  .kind {
+    text-align: left;
+  }
+}

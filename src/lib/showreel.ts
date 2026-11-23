@@ -27,7 +27,6 @@ export const showreel: ShowreelItem[] = [
   { id: "evglab-scalez", title: "EvGlab", kind: "Logo-Ident", category: "3d", ratio: "9 / 16" },
   { id: "herzblut-ki", title: "Herzblut Business Training", kind: "Werbespot · 4:5", category: "spot", ratio: "4 / 5" },
   { id: "tidely", title: "Tidely", kind: "App-Launch · Konzept", category: "produkt", ratio: "16 / 9" },
-  { id: "brewai-desk", title: "BrewAI", kind: "Produktfilm", category: "produkt", ratio: "9 / 16" },
   { id: "ibjungen", title: "Ingenieurbüro Jungen", kind: "Imagefilm", category: "spot", ratio: "16 / 9" },
   { id: "brewai-logo", title: "BrewAI", kind: "Logo-Film", category: "3d", ratio: "9 / 16" },
   { id: "evglab-landsberg", title: "EvGlab", kind: "Feed-Spot · 4:5", category: "social", ratio: "4 / 5" },

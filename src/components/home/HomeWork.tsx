@@ -155,7 +155,7 @@ export function HomeWork() {
               </Row>
             </SmartLink>
           </Row>
-          <Grid columns="4" gap="20" m={{ columns: "2", gap: "16" }} fillWidth>
+          <Grid columns="3" gap="20" m={{ columns: "3", gap: "12" }} maxWidth={60}>
             {films.map((f) => (
               <FilmCard key={f.id} film={f} onOpen={setFilm} />
             ))}

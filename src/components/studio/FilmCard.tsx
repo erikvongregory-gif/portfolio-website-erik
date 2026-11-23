@@ -82,7 +82,7 @@ export function FilmCard({ film, ratio, className, onOpen }: Props) {
           aria-hidden="true"
         />
       </button>
-      <Row horizontal="between" vertical="center" gap="12">
+      <Row className={styles.caption} horizontal="between" vertical="center" gap="12">
         <Text className={styles.title}>{film.title}</Text>
         <Text className={styles.kind}>{film.kind}</Text>
       </Row>
