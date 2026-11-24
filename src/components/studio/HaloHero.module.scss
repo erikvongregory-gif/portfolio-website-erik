@@ -73,6 +73,9 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  /* background-clip paints only inside the box; line-height 0.82 cuts the g's descender. */
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
 }
 
 .wordGlow {
