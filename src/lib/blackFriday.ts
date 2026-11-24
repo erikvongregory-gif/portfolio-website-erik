@@ -11,7 +11,7 @@ export const BLACK_FRIDAY = {
   /** Spätester Projektstart für gebuchte Aktionsplätze. */
   startUntilLabel: "31. Januar 2027",
   slotsTotal: 10,
-  slotsLeft: 9 as number,
+  slotsLeft: 4 as number,
   discountLabel: "−80 %",
 } as const;
 
