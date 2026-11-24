@@ -2,6 +2,31 @@
 
 .filters {
   max-width: 100%;
+
+  // Phones: one swipeable row instead of three wrapped lines of chips.
+  @media (max-width: 559px) {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    // Fade the last chip so it reads as "more to the right".
+    mask-image: linear-gradient(90deg, #000 calc(100% - 2rem), transparent);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
+
+    .filter:last-child {
+      margin-right: 2rem;
+    }
+  }
 }
 
 .filter {
@@ -14,8 +39,15 @@
   padding: 0 1rem;
   font-size: 0.875rem;
   color: var(--studio-ink-2);
+  white-space: nowrap;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+
+  // Finger-sized on touch screens.
+  @media (hover: none) {
+    min-height: max(2.75rem, 44px);
+  }
 
   &:hover {
     color: #fff;
@@ -66,6 +98,11 @@
 
   @media (max-width: 1023px) {
     columns: 2;
+  }
+
+  // Phones held sideways: three columns, so a vertical reel fits the short screen.
+  @media (orientation: landscape) and (max-height: 540px) {
+    columns: 3;
   }
 }
 

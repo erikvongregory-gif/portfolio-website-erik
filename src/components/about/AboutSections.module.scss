@@ -81,7 +81,8 @@
 
 .body {
   margin: 0;
-  font-size: clamp(1rem, 1.2vw, 1.125rem) !important;
+  // Root drops to 15px on phones; body copy stays at 16px or more.
+  font-size: clamp(max(1rem, 16px), 1.2vw, 1.125rem) !important;
   line-height: 1.65 !important;
   color: var(--studio-paper-ink);
   max-width: 36rem;
@@ -106,7 +107,7 @@
 .marginText {
   @include about.scribble-text;
   margin: 0;
-  font-size: 0.95rem !important;
+  font-size: max(0.95rem, 15px) !important;
   line-height: 1.4 !important;
   color: var(--studio-paper-ink);
 }
@@ -211,7 +212,7 @@
 }
 
 .reason {
-  font-size: clamp(1.05rem, 1.35vw, 1.25rem) !important;
+  font-size: clamp(max(1.05rem, 16px), 1.35vw, 1.25rem) !important;
   line-height: 1.45 !important;
   color: var(--studio-paper-ink);
 }
@@ -293,7 +294,7 @@
 
 .cardBody {
   margin: 0;
-  font-size: 1rem !important;
+  font-size: max(1rem, 16px) !important;
   line-height: 1.65 !important;
   color: var(--studio-paper-ink);
 }
@@ -307,6 +308,14 @@
   text-decoration-color: var(--studio-signal);
   text-decoration-thickness: 2px;
   text-underline-offset: 0.3em;
+
+  // Fingers: 44px tall hit area without moving the layout.
+  @media (pointer: coarse) {
+    display: inline-block;
+    padding-block: 0.8rem;
+    margin-block: -0.8rem;
+    font-size: max(0.9375rem, 15px);
+  }
 
   &:focus-visible {
     outline: 2px solid var(--about-select);
@@ -434,7 +443,7 @@
 .valueBody {
   margin: 0;
   max-width: 30rem;
-  font-size: 1rem !important;
+  font-size: max(1rem, 16px) !important;
   line-height: 1.65 !important;
   color: var(--studio-paper-ink-2);
 }

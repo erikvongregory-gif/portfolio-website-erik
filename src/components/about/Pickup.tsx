@@ -64,6 +64,10 @@ export function Pickup({
     pvy: 0,
     lastMove: 0,
     dragging: false,
+    /** Touch only: the finger is down, but it is not yet clear if it scrolls or drags. */
+    pending: false,
+    downX: 0,
+    downY: 0,
     raf: 0,
     last: 0,
   });
@@ -124,10 +128,9 @@ export function Pickup({
     if (!st.raf) st.raf = requestAnimationFrame(tick);
   };
 
-  const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
-    if (prefersReducedMotion()) return;
-    if (e.pointerType === "mouse" && e.button !== 0) return;
+  const pickUp = (e: PointerEvent<HTMLDivElement>) => {
     const st = s.current;
+    st.pending = false;
     try {
       e.currentTarget.setPointerCapture(e.pointerId);
     } catch {
@@ -144,8 +147,30 @@ export function Pickup({
     run();
   };
 
+  const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    if (prefersReducedMotion()) return;
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    if (e.pointerType === "touch") {
+      // On phones the pile fills the screen. touch-action: pan-y lets a vertical
+      // swipe scroll the page; only a sideways start picks the item up.
+      const st = s.current;
+      st.pending = true;
+      st.downX = e.clientX;
+      st.downY = e.clientY;
+      return;
+    }
+    pickUp(e);
+  };
+
   const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
     const st = s.current;
+    if (st.pending) {
+      const dx = Math.abs(e.clientX - st.downX);
+      const dy = Math.abs(e.clientY - st.downY);
+      if (dx > 6 && dx > dy) pickUp(e);
+      else if (dy > 10) st.pending = false;
+      return;
+    }
     if (!st.dragging) return;
     const now = performance.now();
     const dt = Math.max((now - st.lastMove) / 1000, 1 / 240);
@@ -161,6 +186,7 @@ export function Pickup({
 
   const release = (e: PointerEvent<HTMLDivElement>) => {
     const st = s.current;
+    st.pending = false;
     if (!st.dragging) return;
     st.dragging = false;
     // Carry a little of the throw into the way home.

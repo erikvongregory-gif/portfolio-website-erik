@@ -60,7 +60,7 @@ const DESK: (Photo | Note | Label)[] = [
     tilt: 5,
     desk: { x: 4, y: 60 },
     mid: { x: 26, y: 6 },
-    pile: { x: 52, y: 3 },
+    pile: { x: 52, y: 3.5 },
   },
   {
     kind: "note",
@@ -69,7 +69,7 @@ const DESK: (Photo | Note | Label)[] = [
     tilt: -3,
     desk: { x: 1.5, y: 44 },
     mid: { x: 10, y: 57 },
-    pile: { x: 6, y: 31 },
+    pile: { x: 54, y: 29 },
   },
   {
     kind: "photo",
@@ -80,7 +80,7 @@ const DESK: (Photo | Note | Label)[] = [
     tilt: 4,
     desk: { x: 75, y: 14 },
     mid: { x: 52, y: 1 },
-    pile: { x: 3, y: 47 },
+    pile: { x: 3, y: 41 },
   },
   {
     kind: "photo",
@@ -91,7 +91,7 @@ const DESK: (Photo | Note | Label)[] = [
     tilt: -5,
     desk: { x: 75, y: 60 },
     mid: { x: 77, y: 5 },
-    pile: { x: 51, y: 49 },
+    pile: { x: 50, y: 58 },
   },
   {
     kind: "note",
@@ -99,7 +99,7 @@ const DESK: (Photo | Note | Label)[] = [
     tilt: 3,
     desk: { x: 84, y: 40 },
     mid: { x: 58, y: 59 },
-    pile: { x: 48, y: 78 },
+    pile: { x: 4, y: 69 },
   },
   {
     kind: "label",
@@ -107,7 +107,7 @@ const DESK: (Photo | Note | Label)[] = [
     tilt: -2,
     desk: { x: 81, y: 90 },
     mid: { x: 36, y: 88 },
-    pile: { x: 4, y: 85 },
+    pile: { x: 45, y: 91 },
   },
 ];
 

@@ -39,7 +39,7 @@
 // Small quiet label (not mono, not numbered).
 @mixin kicker {
   font-family: var(--font-body);
-  font-size: 0.8125rem;
+  font-size: max(0.8125rem, 13px);
   font-weight: 500;
   letter-spacing: 0.01em;
 }

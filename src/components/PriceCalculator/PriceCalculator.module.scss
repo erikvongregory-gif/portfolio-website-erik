@@ -57,6 +57,8 @@
   position: relative;
   z-index: 1;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   text-align: left;
   outline: none;
   min-width: 0;
@@ -106,6 +108,8 @@
 .item {
   position: relative;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   text-align: left;
   outline: none;
   overflow: hidden;
@@ -312,6 +316,24 @@
 }
 
 @media (max-width: 1023px) {
+  // Finger-sized stepper buttons (the l size renders at 38px on phones).
+  .stepBtn {
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  // A transform (also a filled transform animation) on the wrapper would become the
+  // containing block of the fixed bar and pin it mid-page instead of to the screen.
+  .summaryWrapDocked,
+  .in .summaryWrapDocked {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+
   .summaryDocked {
     position: fixed;
     left: 1rem;
@@ -340,6 +362,47 @@
     flex-shrink: 0;
     width: auto;
     min-width: 9.5rem;
+  }
+
+  // When price and button don't fit side by side (≈ 360px and below), the button
+  // wraps to a full-width second line instead of covering the price.
+  .summaryDocked {
+    flex-wrap: wrap !important;
+    // fillWidth's width: 100% plus left/right offsets pushed the bar 1rem off screen.
+    width: auto !important;
+  }
+
+  .summaryDocked > :first-child {
+    flex: 1 0 auto !important;
+  }
+
+  .summaryDocked .cta {
+    flex: 1 0 auto;
+  }
+}
+
+// Small phones: the price moves under the description so the text keeps its
+// full width instead of wrapping into a narrow column.
+@media (max-width: 480px) {
+  .item {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 0.875rem !important;
+    row-gap: 0.4rem !important;
+    padding-inline: 0.875rem !important;
+  }
+
+  .item > .check {
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .item > .itemPrice {
+    grid-column: 2;
+  }
+
+  .stepper {
+    padding: 0.75rem 0.875rem;
   }
 }
 

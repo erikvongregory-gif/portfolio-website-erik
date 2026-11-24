@@ -5,6 +5,7 @@
   max-width: min(92vw, 1100px);
   max-height: 92svh;
   overflow: visible;
+  overscroll-behavior: contain;
 
   &::backdrop {
     background: rgba(5, 9, 9, 0.88);
@@ -38,4 +39,104 @@
 .kind {
   color: var(--studio-ink-3);
   margin-left: 0.5rem;
+}
+
+.hint {
+  display: none;
+}
+
+// ---------------------------------------------------------------------------
+// Phones (portrait) and short landscape screens: full screen inside the safe
+// area, close button pinned top right, film as large as the screen allows.
+// ---------------------------------------------------------------------------
+
+$safe-t: env(safe-area-inset-top, 0px);
+$safe-r: env(safe-area-inset-right, 0px);
+$safe-b: env(safe-area-inset-bottom, 0px);
+$safe-l: env(safe-area-inset-left, 0px);
+
+@media (max-width: 767px), (max-height: 500px) {
+  .dialog {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    overflow: hidden;
+    touch-action: pan-x pinch-zoom;
+
+    &::backdrop {
+      background: rgba(5, 9, 9, 0.96);
+    }
+  }
+
+  .figure {
+    // Space the video may use: screen minus top bar (close) and caption row.
+    --top: calc(#{$safe-t} + 4rem);
+    --bottom: calc(#{$safe-b} + 3.75rem);
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    padding: var(--top) calc(#{$safe-r} + 0.75rem) var(--bottom) calc(#{$safe-l} + 0.75rem);
+    will-change: transform;
+  }
+
+  .video {
+    width: min(100%, calc((100dvh - var(--top) - var(--bottom)) * var(--ratio, 16 / 9)));
+    max-width: 100%;
+    max-height: none;
+    border-radius: 0.875rem;
+  }
+
+  .bar {
+    position: absolute;
+    left: calc(#{$safe-l} + 1rem);
+    right: calc(#{$safe-r} + 1rem);
+    bottom: calc(#{$safe-b} + 0.75rem);
+    padding-top: 0 !important;
+  }
+
+  .close {
+    position: fixed !important;
+    top: calc(#{$safe-t} + 0.75rem);
+    right: calc(#{$safe-r} + 0.75rem);
+    z-index: 2;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px;
+    background: rgba(5, 9, 9, 0.55) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 999px !important;
+  }
+
+  // Small grab handle: the film closes with a downward swipe.
+  .hint {
+    display: block;
+    position: absolute;
+    top: calc(#{$safe-t} + 1.6rem);
+    left: 50%;
+    width: 2.25rem;
+    height: 4px;
+    margin-left: -1.125rem;
+    border-radius: 999px;
+    background: var(--studio-ink-3);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// Landscape phone: no room for the caption, the film takes the full height.
+@media (max-height: 500px) and (orientation: landscape) {
+  .figure {
+    --top: calc(#{$safe-t} + 0.75rem);
+    --bottom: calc(#{$safe-b} + 0.75rem);
+  }
+
+  .caption,
+  .hint {
+    display: none;
+  }
 }

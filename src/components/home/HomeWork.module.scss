@@ -89,6 +89,21 @@
   transform: scale(1.012);
 }
 
+// Touch: a short press feedback instead of the hover zoom.
+.link {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: none) {
+  .link:active .frame {
+    transform: scale(0.985);
+  }
+
+  .frame {
+    transition: transform 0.25s var(--studio-ease);
+  }
+}
+
 .badge {
   position: absolute;
   bottom: 1rem;
@@ -175,5 +190,39 @@
   &:hover,
   &:focus-visible {
     border-color: rgba(143, 214, 224, 0.4);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Mobile: anchor target clears the fixed header; the six smaller projects
+// become a swipe row (shared .grid.carousel from HomeServices.module.scss).
+// ---------------------------------------------------------------------------
+
+// Anchor offset for header + banner comes from html scroll-padding-top (custom.css).
+.section {
+  @media (max-width: 1023px) {
+    scroll-margin-top: 0;
+  }
+}
+
+.rest {
+  --card-w: min(86%, 26rem);
+}
+
+@media (max-width: 1023px) {
+  .card {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  // Keep the frame lit inside the swipe row: cards slide in from the side,
+  // where the vertical projector band would leave them dark.
+  .armed .rest .frame .image {
+    filter: none;
+    transform: none;
+  }
+
+  .armed .rest .frame::after {
+    transform: scaleX(1);
   }
 }

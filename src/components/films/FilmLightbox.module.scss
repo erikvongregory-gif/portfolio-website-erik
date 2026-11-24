@@ -11,6 +11,7 @@
   display: none;
   place-items: center;
   overflow: auto;
+  overscroll-behavior: contain;
 
   &[open] {
     display: grid;
@@ -26,11 +27,16 @@
 
 .panel {
   width: min(100%, 64rem);
+  will-change: transform;
 
   &[data-portrait] {
     // Fit a vertical film into the viewport height.
     width: min(100%, calc((100svh - 9rem) * 0.5625), 28rem);
   }
+}
+
+.meta {
+  min-width: 0;
 }
 
 .title {
@@ -47,6 +53,14 @@
   color: var(--studio-ink-3);
 }
 
+.count {
+  font-variant-numeric: tabular-nums;
+}
+
+.actions {
+  flex: 0 0 auto;
+}
+
 .close {
   flex: 0 0 auto;
   display: grid;
@@ -58,6 +72,7 @@
   background: var(--studio-glass);
   color: #fff;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   transition: border-color 0.2s ease, background 0.2s ease;
 
   &:hover {
@@ -78,6 +93,95 @@
   border-radius: 1rem;
   background: #000;
   border: 1px solid var(--studio-line);
+}
+
+/* ——— Phones, portrait: film centred, bar at the bottom in thumb reach ——— */
+@media (max-width: 640px) and (orientation: portrait) {
+  .dialog {
+    padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right))
+      max(1rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+    overflow: hidden;
+    // The panel handles swipes itself (next film, swipe down to close).
+    touch-action: none;
+  }
+
+  .panel,
+  .panel[data-portrait] {
+    width: 100%;
+    height: 100%;
+  }
+
+  .video {
+    order: 1;
+    align-self: center;
+    margin: auto 0;
+    // Width from the free height, so tall films never letterbox.
+    width: min(100%, calc((100svh - 7.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * (var(--ar))));
+    max-height: none;
+    border-radius: 0.875rem;
+  }
+
+  .bar {
+    order: 2;
+  }
+
+  .close {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+/* ——— Phones, landscape: film as large as the height allows, bar on the right ——— */
+@media (orientation: landscape) and (max-height: 540px) {
+  .dialog {
+    padding: max(0.625rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right))
+      max(0.625rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .panel,
+  .panel[data-portrait] {
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem !important;
+  }
+
+  .video {
+    order: 1;
+    flex: 0 1 auto;
+    min-width: 0;
+    width: auto;
+    height: 100%;
+    max-height: none;
+    max-width: calc(100vw - 8.5rem);
+    object-fit: contain;
+    border-radius: 0.75rem;
+  }
+
+  .bar {
+    order: 2;
+    flex: 0 0 6.75rem;
+    align-self: stretch;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    padding: 0.25rem 0;
+  }
+
+  .title {
+    font-size: 1.05rem !important;
+  }
+
+  // Buttons stacked bottom right, under the right thumb; close at the very bottom.
+  .actions {
+    flex-direction: column !important;
+    align-self: flex-end;
+  }
 }
 
 @keyframes fadeIn {

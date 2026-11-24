@@ -127,6 +127,13 @@
     object-fit: cover;
     object-position: top left;
   }
+
+  // Small phones: a smaller thumbnail leaves the quote more line length.
+  @media (max-width: 480px) {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.7rem;
+  }
 }
 
 .small {

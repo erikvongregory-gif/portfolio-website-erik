@@ -134,12 +134,14 @@
 
 @media (max-width: 860px) {
   .header {
-    padding: 0.75rem;
+    // Notch / rounded corners in landscape and in home-screen mode.
+    padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) 0.75rem
+      max(0.75rem, env(safe-area-inset-left));
   }
 
   .bar {
     grid-template-columns: auto 1fr;
-    padding-left: 1.1rem;
+    padding: 0.375rem 0.375rem 0.375rem 0.6rem;
   }
 
   .links {
@@ -149,6 +151,11 @@
   .wordmark {
     grid-column: 1;
     grid-row: 1;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.5rem;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .end {
@@ -158,11 +165,83 @@
 
   .menuButton {
     display: inline-flex;
+    width: 44px;
+    height: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+
+    &:focus-visible {
+      outline: 2px solid var(--studio-glow);
+      outline-offset: 2px;
+    }
+  }
+
+  .sheet {
+    padding: calc(5.5rem + env(safe-area-inset-top))
+      max(1.5rem, env(safe-area-inset-right)) max(2rem, calc(1rem + env(safe-area-inset-bottom)))
+      max(1.5rem, env(safe-area-inset-left));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sheetLink {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    padding: 0.25rem 0;
+    -webkit-tap-highlight-color: transparent;
+
+    &:focus-visible {
+      outline: 2px solid var(--studio-glow);
+      outline-offset: 4px;
+      border-radius: 0.5rem;
+    }
+  }
+}
+
+// Short phones (SE, landscape): smaller sheet links so everything fits.
+@media (max-width: 860px) and (max-height: 640px) {
+  .sheetLink {
+    font-size: clamp(2rem, 9vh, 2.75rem);
+    min-height: 48px;
+  }
+
+  .sheet {
+    padding-top: calc(5rem + env(safe-area-inset-top));
   }
 }
 
 @media (max-width: 420px) {
   .cta {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .sheet,
+  .sheetLink,
+  .burger,
+  .burger::before,
+  .burger::after {
+    transition: none !important;
+  }
+}
+
+// Once UI colours every link with `a:not(.button)` (higher specificity than one
+// class), which tinted the header links brand-blue. Restore the intended ink.
+.header {
+  .link {
+    color: var(--studio-ink-2);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .wordmark,
+  .sheetLink {
+    color: #fff;
   }
 }

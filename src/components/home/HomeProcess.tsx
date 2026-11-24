@@ -16,9 +16,19 @@ export function HomeProcess() {
 
   useGsapScene(rootRef, ({ motion }, scope) => {
     const clips = Array.from(scope.querySelectorAll<HTMLElement>("[data-clip]"));
+    // --p goes only on the playhead and progress line, so a scroll frame restyles
+    // two decorative spans instead of the whole list of steps.
+    const marks = Array.from(scope.querySelectorAll<HTMLElement>("[data-mark]"));
+    let last = "";
     const set = (p: number) => {
-      scope.style.setProperty("--p", p.toFixed(4));
-      clips.forEach((c, i) => c.toggleAttribute("data-on", p >= i / clips.length + 0.02));
+      const v = p.toFixed(4);
+      if (v === last) return;
+      last = v;
+      marks.forEach((m) => m.style.setProperty("--p", v));
+      clips.forEach((c, i) => {
+        const on = p >= i / clips.length + 0.02;
+        if (c.hasAttribute("data-on") !== on) c.toggleAttribute("data-on", on);
+      });
     };
 
     if (!motion) {
@@ -51,8 +61,8 @@ export function HomeProcess() {
     >
       <Column ref={rootRef} fillWidth className={styles.timeline}>
         <span className={styles.ruler} aria-hidden="true" />
-        <span className={styles.progress} aria-hidden="true" />
-        <span className={styles.playhead} aria-hidden="true" />
+        <span className={styles.progress} aria-hidden="true" data-mark />
+        <span className={styles.playhead} aria-hidden="true" data-mark />
         <Column as="ol" className={styles.clips} fillWidth>
           {STEPS.map((s, i) => (
             <Column as="li" key={s.title} className={styles.clip} data-clip gap="12">

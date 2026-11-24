@@ -72,7 +72,7 @@ export function FilmGallery() {
         ))}
       </Column>
 
-      <FilmLightbox film={active} onClose={close} />
+      <FilmLightbox film={active} onClose={close} films={items} onNavigate={setActive} />
     </Column>
   );
 }

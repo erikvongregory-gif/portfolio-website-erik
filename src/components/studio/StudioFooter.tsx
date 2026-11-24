@@ -69,7 +69,7 @@ export function StudioFooter({ minimal = false }: Props) {
               {l.label}
             </SmartLink>
           ))}
-          <CookieSettingsButton />
+          <CookieSettingsButton className={styles.link} />
         </Row>
       </Row>
     </Column>

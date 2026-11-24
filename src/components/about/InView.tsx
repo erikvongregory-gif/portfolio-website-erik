@@ -21,7 +21,9 @@ export function InView({ children, ...rest }: ComponentProps<typeof Column>) {
           io.disconnect();
         }
       },
-      { threshold: 0.2 },
+      // Start once the top edge is a little way into the screen. A ratio
+      // threshold would fire late or never for blocks taller than the screen.
+      { threshold: 0, rootMargin: "0px 0px -12% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();

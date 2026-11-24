@@ -3,6 +3,7 @@ import { Column, SmartLink, Text } from "@once-ui-system/core/components";
 import { FaqList, ItemGrid, LandingHero, PillList, PriceList, WorkShowcase } from "@/components/seo";
 import { CtaBand, Glow, StudioFooter, StudioSection } from "@/components/studio";
 import { seoReferences } from "@/lib/seoPages";
+import { StickyMobileCta } from "@/components";
 import { JsonLd } from "@/components/JsonLd";
 import { StartOffer } from "@/components/StartOffer";
 import { startOfferFaqSentence } from "@/lib/startOffer";
@@ -331,7 +332,11 @@ export default function WebdesignLandsbergPage() {
         </Text>
       </StudioSection>
 
-      <CtaBand />
+      <Column id="kontakt" fillWidth>
+        <CtaBand />
+      </Column>
+      {/* Phones: CTA in thumb reach once the hero has scrolled away. */}
+      <StickyMobileCta label="Kostenloses Erstgespräch" buttonLabel="Anfragen" />
       <StudioFooter />
     </Column>
   );

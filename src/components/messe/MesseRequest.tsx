@@ -4,6 +4,7 @@ import { Column, Heading, Row, Text } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import {
   createContext,
+  type FocusEvent,
   type FormEvent,
   type ReactNode,
   useCallback,
@@ -212,6 +213,15 @@ export function MesseRequestProvider({ children }: { children: ReactNode }) {
     if (invalid[el.name] && el.checkValidity()) setInvalid((s) => ({ ...s, [el.name]: false }));
   };
 
+  // Touch screens: once the keyboard is up, bring the focused field to the middle
+  // of what is still visible, so it never hides behind the keyboard.
+  const onFocusField = (e: FocusEvent<HTMLFormElement>) => {
+    const el = e.target;
+    if (!(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement)) return;
+    if (!window.matchMedia("(pointer: coarse)").matches) return;
+    window.setTimeout(() => el.scrollIntoView({ block: "center", behavior: "smooth" }), 300);
+  };
+
   const copy = TOPICS[topic];
 
   return (
@@ -264,6 +274,7 @@ export function MesseRequestProvider({ children }: { children: ReactNode }) {
                 noValidate
                 onSubmit={onSubmit}
                 onInput={onInput}
+                onFocus={onFocusField}
               >
                 <label className={styles.field}>
                   <span className={styles.label}>Name</span>
@@ -271,10 +282,13 @@ export function MesseRequestProvider({ children }: { children: ReactNode }) {
                     className={styles.input}
                     name="name"
                     autoComplete="name"
+                    autoCapitalize="words"
+                    enterKeyHint="next"
                     required
                     minLength={2}
                     maxLength={120}
                     aria-invalid={invalid.name || undefined}
+                    aria-describedby={invalid.name ? "rq-error" : undefined}
                   />
                 </label>
                 <label className={styles.field}>
@@ -283,10 +297,12 @@ export function MesseRequestProvider({ children }: { children: ReactNode }) {
                     className={styles.input}
                     name="company"
                     autoComplete="organization"
+                    enterKeyHint="next"
                     required
                     minLength={2}
                     maxLength={160}
                     aria-invalid={invalid.company || undefined}
+                    aria-describedby={invalid.company ? "rq-error" : undefined}
                   />
                 </label>
                 <label className={styles.field}>
@@ -297,9 +313,14 @@ export function MesseRequestProvider({ children }: { children: ReactNode }) {
                     type="email"
                     autoComplete="email"
                     inputMode="email"
+                    autoCapitalize="off"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    enterKeyHint="next"
                     required
                     maxLength={200}
                     aria-invalid={invalid.email || undefined}
+                    aria-describedby={invalid.email ? "rq-error" : undefined}
                   />
                 </label>
                 <label className={styles.field}>
@@ -312,6 +333,7 @@ export function MesseRequestProvider({ children }: { children: ReactNode }) {
                     type="tel"
                     autoComplete="tel"
                     inputMode="tel"
+                    enterKeyHint="next"
                     maxLength={60}
                   />
                 </label>
@@ -322,6 +344,7 @@ export function MesseRequestProvider({ children }: { children: ReactNode }) {
                   <input
                     className={styles.input}
                     name="fair"
+                    enterKeyHint="next"
                     maxLength={160}
                     placeholder="z. B. Hannover Messe, April 2027"
                   />
@@ -336,7 +359,7 @@ export function MesseRequestProvider({ children }: { children: ReactNode }) {
                   Website <input name="website" tabIndex={-1} autoComplete="off" />
                 </label>
 
-                <p className={styles.error} role="alert" aria-live="polite">
+                <p id="rq-error" className={styles.error} role="alert" aria-live="polite">
                   {error}
                 </p>
                 <button type="submit" className={styles.submit} disabled={sending}>

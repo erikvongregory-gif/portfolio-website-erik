@@ -4,7 +4,8 @@
   top: var(--my);
   z-index: 5;
   cursor: grab;
-  touch-action: none;
+  // Vertical swipes still scroll the page; sideways drags pick the item up (Pickup.tsx).
+  touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;

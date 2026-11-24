@@ -243,6 +243,7 @@ export function WebsiteCheckForm({
   const [error, setError] = useState("");
   const [confirmationSent, setConfirmationSent] = useState(false);
   const [advancing, setAdvancing] = useState(false);
+  const [errorField, setErrorField] = useState<"name" | "email" | null>(null);
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const goalLabel = flow.goals.find((g) => g.id === goal)?.label ?? "";
@@ -264,8 +265,17 @@ export function WebsiteCheckForm({
     return () => window.clearTimeout(t);
   }, [step, idPrefix]);
 
+  /** Focus a field after a failed check and keep it clear of the on-screen keyboard. */
+  const focusField = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.focus({ preventScroll: true });
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
   const goTo = (next: number, direction: Dir) => {
     setError("");
+    setErrorField(null);
     setDir(direction);
     setStep(next);
     setAdvancing(false);
@@ -294,6 +304,7 @@ export function WebsiteCheckForm({
     }
     if (step === 2 && company.trim().length < 2) {
       setError("Bitte gib Firmenname oder Projekt an.");
+      focusField(`${idPrefix}company`);
       return;
     }
     if (step === 3 && !budget) {
@@ -323,13 +334,20 @@ export function WebsiteCheckForm({
   const send = async () => {
     if (name.trim().length < 2) {
       setError("Bitte gib deinen Namen an.");
+      setErrorField("name");
+      focusField(`${idPrefix}name`);
       return;
     }
-    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
     if (!validEmail) {
-      setError("Bitte gib eine gültige E-Mail-Adresse an.");
+      setError(
+        email.trim() ? "Bitte prüf die E-Mail-Adresse." : "Bitte gib deine E-Mail-Adresse an.",
+      );
+      setErrorField("email");
+      focusField(`${idPrefix}email`);
       return;
     }
+    setErrorField(null);
     if (!goal || !budget || company.trim().length < 2) {
       setError("Bitte vervollständige die vorherigen Schritte.");
       return;
@@ -548,7 +566,11 @@ export function WebsiteCheckForm({
             </Column>
             <Input
               id={`${idPrefix}company`}
+              name="organization"
               label="Firmenname / Projekt"
+              autoComplete="organization"
+              enterKeyHint="next"
+              error={step === 2 && Boolean(error)}
               placeholder={flow.companyPlaceholder}
               value={company}
               onChange={(e) => setCompany(e.target.value)}
@@ -635,25 +657,58 @@ export function WebsiteCheckForm({
             </Column>
             <Input
               id={`${idPrefix}name`}
+              name="name"
               label="Name *"
+              autoComplete="name"
+              autoCapitalize="words"
+              enterKeyHint="next"
+              aria-required="true"
+              error={errorField === "name"}
+              errorMessage={errorField === "name" ? error : undefined}
               placeholder="Max Mustermann"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (errorField === "name") {
+                  setErrorField(null);
+                  setError("");
+                }
+              }}
               onKeyDown={onKeyDown}
             />
             <Input
               id={`${idPrefix}email`}
+              name="email"
               type="email"
               label="E-Mail *"
+              autoComplete="email"
+              inputMode="email"
+              autoCapitalize="off"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="next"
+              aria-required="true"
+              error={errorField === "email"}
+              errorMessage={errorField === "email" ? error : undefined}
               placeholder="name@firma.de"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (errorField === "email") {
+                  setErrorField(null);
+                  setError("");
+                }
+              }}
               onKeyDown={onKeyDown}
             />
             <Input
               id={`${idPrefix}phone`}
+              name="tel"
               type="tel"
               label="Telefon"
+              autoComplete="tel"
+              inputMode="tel"
+              enterKeyHint="next"
               placeholder="0156 …"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -661,8 +716,15 @@ export function WebsiteCheckForm({
             />
             <Input
               id={`${idPrefix}website`}
+              name="url"
               type="url"
               label={flow.linkLabel}
+              autoComplete="url"
+              inputMode="url"
+              autoCapitalize="off"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="send"
               placeholder="www.firma.de"
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
@@ -672,13 +734,19 @@ export function WebsiteCheckForm({
         )}
       </div>
 
-      {error && (
-        <Text className={funnelStyles.error} variant="body-default-s" onBackground="danger-weak">
+      {error && !errorField && (
+        <Text
+          key={error}
+          className={funnelStyles.error}
+          variant="body-default-s"
+          onBackground="danger-weak"
+          role="alert"
+        >
           {error}
         </Text>
       )}
       {status === "error" && !error && (
-        <Text variant="body-default-s" onBackground="danger-weak">
+        <Text variant="body-default-s" onBackground="danger-weak" role="alert">
           Senden hat nicht geklappt. Versuch es erneut oder schreib an {CONTACT_EMAIL}.
         </Text>
       )}

@@ -112,14 +112,38 @@
   color: var(--studio-ink-3);
 }
 
+// Touch screens: 44px targets with a little more room between them.
+@media (pointer: coarse), (max-width: 768px) {
+  .btn {
+    height: 2.75rem;
+    min-height: 44px;
+  }
+
+  .icon {
+    width: 2.75rem;
+    min-width: 44px;
+  }
+
+  .ui {
+    right: 0.5rem;
+    bottom: 0.5rem;
+  }
+}
+
 @media (max-width: 480px) {
   .btnLabel {
     display: none;
   }
 
   .btn {
-    width: 2.5rem;
+    width: 2.75rem;
+    min-width: 44px;
     padding: 0;
     justify-content: center;
+  }
+
+  .play {
+    width: 4rem;
+    height: 4rem;
   }
 }

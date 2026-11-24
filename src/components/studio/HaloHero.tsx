@@ -47,7 +47,7 @@ export function HaloHero() {
             EvGlab baut Websites, 3D-Produktfilme und Reels für Unternehmen, die gesehen werden
             wollen. Alles, was hier fließt, sind echte Arbeiten.
           </Text>
-          <Row gap="16" vertical="center" wrap>
+          <Row className={styles.actions} gap="16" vertical="center" wrap>
             <ContactDialog label="Kostenloser Entwurf" size="m" funnel />
             <SmartLink href="/videos" unstyled className={styles.secondary}>
               Filme ansehen

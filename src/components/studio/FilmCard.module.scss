@@ -46,6 +46,49 @@
   display: block;
 }
 
+// Play cue, touch screens only (desktop keeps the clean hover preview).
+.play {
+  display: none;
+  position: absolute;
+  left: 0.625rem;
+  bottom: 0.625rem;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(5, 9, 9, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  svg {
+    margin-left: 2px;
+  }
+
+  @media (hover: none) {
+    display: grid;
+  }
+}
+
+// While the preview runs the film speaks for itself.
+.playing .play {
+  opacity: 0;
+}
+
+@media (hover: none) {
+  .frame {
+    -webkit-tap-highlight-color: transparent;
+
+    &:active {
+      transform: scale(0.985);
+      transition-duration: 0.15s;
+    }
+  }
+}
+
 .title {
   font-size: 0.9375rem !important;
   color: var(--studio-ink);

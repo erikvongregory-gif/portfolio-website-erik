@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Button, Column, Icon, Input, Row, Text, Textarea } from "@once-ui-system/core/components";
 import classNames from "classnames";
 import {
@@ -34,6 +34,8 @@ export function LeadForm() {
   const [note, setNote] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string }>({});
+  const successRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onSelect = (event: Event) => {
@@ -46,14 +48,31 @@ export function LeadForm() {
 
   const selected = CHOICES.find((c) => c.id === choice) ?? CHOICES[0];
 
+  // After sending, the (shorter) success card replaces the form: keep it in view.
+  useEffect(() => {
+    if (status !== "success") return;
+    successRef.current?.focus({ preventScroll: true });
+    successRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [status]);
+
+  const focusField = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.focus({ preventScroll: true });
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
   const submit = async (event: FormEvent) => {
     event.preventDefault();
-    if (name.trim().length < 2) {
-      setError("Bitte gib deinen Namen an.");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Bitte gib eine gültige E-Mail-Adresse an.");
+    const nextErrors: { name?: string; email?: string } = {};
+    if (name.trim().length < 2) nextErrors.name = "Bitte gib deinen Namen an.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      nextErrors.email = email.trim()
+        ? "Bitte prüf die E-Mail-Adresse."
+        : "Bitte gib deine E-Mail-Adresse an.";
+    setFieldErrors(nextErrors);
+    if (nextErrors.name || nextErrors.email) {
+      focusField(nextErrors.name ? "bf-name" : "bf-email");
       return;
     }
     setError("");
@@ -100,7 +119,18 @@ export function LeadForm() {
 
   if (status === "success") {
     return (
-      <Column className={styles.formCard} gap="20" padding="32" radius="xl" fillWidth>
+      <Column
+        ref={successRef}
+        className={classNames(styles.formCard, styles.successCard)}
+        gap="20"
+        padding="32"
+        s={{ padding: "24" }}
+        radius="xl"
+        fillWidth
+        role="status"
+        aria-live="polite"
+        tabIndex={-1}
+      >
         <Row className={styles.successIcon} center radius="full">
           <Icon name="check" size="m" />
         </Row>
@@ -126,7 +156,7 @@ export function LeadForm() {
   }
 
   return (
-    <form onSubmit={submit} noValidate style={{ width: "100%" }}>
+    <form onSubmit={submit} noValidate className={styles.leadForm}>
       <Column
         className={styles.formCard}
         gap="20"
@@ -162,32 +192,55 @@ export function LeadForm() {
           </Text>
           <Input
             id="bf-name"
+            name="name"
             label="Dein Name"
             autoComplete="name"
+            autoCapitalize="words"
+            enterKeyHint="next"
+            error={Boolean(fieldErrors.name)}
+            errorMessage={fieldErrors.name}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              if (fieldErrors.name) setFieldErrors((f) => ({ ...f, name: undefined }));
+            }}
           />
           <Input
             id="bf-email"
+            name="email"
             type="email"
             label="E-Mail"
             autoComplete="email"
+            inputMode="email"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+            enterKeyHint="next"
+            error={Boolean(fieldErrors.email)}
+            errorMessage={fieldErrors.email}
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (fieldErrors.email) setFieldErrors((f) => ({ ...f, email: undefined }));
+            }}
           />
           <Input
             id="bf-phone"
+            name="phone"
             type="tel"
-            label="Telefon (optional, für einen schnellen Rückruf)"
+            label="Telefon (optional, für Rückruf)"
             autoComplete="tel"
+            inputMode="tel"
+            enterKeyHint="next"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
           <Textarea
             id="bf-note"
+            name="note"
             label="Was machst du? (optional)"
-            placeholder="z. B. Friseursalon in Landsberg, bisher keine Website"
-            lines={2}
+            description="z. B. Friseursalon in Landsberg, bisher keine Website"
+            lines={3}
             value={note}
             onChange={(e) => setNote(e.target.value)}
           />
@@ -204,7 +257,11 @@ export function LeadForm() {
           </Text>
         )}
 
-        <button type="submit" className={styles.ctaButton} disabled={status === "sending"}>
+        <button
+          type="submit"
+          className={classNames(styles.ctaButton, styles.submitButton)}
+          disabled={status === "sending"}
+        >
           <span>
             {status === "sending"
               ? "Wird gesendet …"

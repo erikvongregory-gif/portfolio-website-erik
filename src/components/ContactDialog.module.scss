@@ -1,6 +1,7 @@
 .overlay {
   position: fixed;
   inset: 0;
+  bottom: auto;
   /* Full-screen funnel sits above the fixed header (50) and the offer banner (60). */
   z-index: 70;
   width: 100%;
@@ -27,7 +28,7 @@
   height: 100%;
   max-width: 36rem;
   margin-inline: auto;
-  padding: 1rem 1rem 2rem;
+  padding: calc(1rem + env(safe-area-inset-top, 0px)) 1rem calc(2rem + env(safe-area-inset-bottom, 0px));
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
@@ -40,6 +41,28 @@
   padding-block: 0.5rem 1rem;
   margin-bottom: 0.5rem;
   background: var(--page-background);
+}
+
+/* iOS zooms into any field under 16px; keep the short form at 16px or more. */
+.field :is(input, textarea) {
+  /* Once UI sets the size via .font-body.font-m, which outranks a plain selector. */
+  font-size: max(1rem, 16px) !important;
+}
+
+/* The short dialog must sit above the fixed header (50) and offer banner (60),
+   like the funnel overlay does. Once UI gives its overlay z-index 9. */
+:global([role="dialog"][aria-modal="true"]):has(.shortDialog) {
+  z-index: 75 !important;
+}
+
+/* Touch: every button in the short dialog (WhatsApp, Anrufen, Abbrechen,
+   Absenden, Schließen) gets at least a 44px tap target. */
+@media (max-width: 1024px), (pointer: coarse) {
+  .trigger,
+  .shortDialog :global(.button) {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
 .title {

@@ -1,6 +1,8 @@
 .stage {
   position: relative;
-  min-height: 100svh;
+  /* svh: stable under the iOS/Android address bar; the floor keeps tagline,
+     word and actions apart on short landscape phones. */
+  min-height: max(100svh, 32rem);
   overflow: hidden;
   isolation: isolate;
   background:
@@ -110,15 +112,18 @@
   margin: 0;
 }
 
-.secondary {
+/* Two classes: beats Once UI's global a:not(.button) brand colour. */
+.actions .secondary {
   font-size: 0.875rem;
   color: rgba(242, 245, 244, 0.82);
   border-bottom: 1px solid rgba(242, 245, 244, 0.3);
   padding-bottom: 2px;
 
-  &:hover {
-    color: #fff;
-    border-color: #fff;
+  @media (hover: hover) {
+    &:hover {
+      color: #fff;
+      border-color: #fff;
+    }
   }
 }
 
@@ -160,14 +165,56 @@
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 1.25rem !important;
-    padding: 0 1.25rem 1.5rem;
+    padding: 0 1.25rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
   }
 
+  /* Fills ~85 % of the width from 320 to 430 px without touching the edge. */
   .word {
-    font-size: clamp(3.5rem, 20vw, 6rem) !important;
+    font-size: clamp(3.5rem, 21vw, 7rem) !important;
   }
 
   .aside {
     width: 100%;
+  }
+
+  .status {
+    font-size: 0.8125rem !important;
+  }
+
+  .lead {
+    font-size: 1rem !important;
+  }
+
+  /* Thumb zone: a 48 px primary that takes the free width, the film link as a
+     48 px tall target beside it (below it on 320 px). */
+  .actions {
+    gap: 0.25rem 1.25rem !important;
+  }
+
+  .actions > button {
+    flex: 1 1 auto;
+    height: 3rem;
+    min-height: 3rem;
+  }
+
+  /* .actions prefix: beats Once UI's global a:not(.button) reset. */
+  .actions .secondary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
+    padding: 0 0.25rem;
+    font-size: 0.9375rem;
+    border-bottom: 0;
+    text-decoration: underline;
+    text-decoration-color: rgba(242, 245, 244, 0.35);
+    text-underline-offset: 0.3em;
+  }
+}
+
+/* Short phones (iPhone SE 1st gen, 320 x 568): the bottom block needs the
+   height, the floating tagline would sit on top of the word. */
+@media (max-width: 768px) and (max-height: 620px) {
+  .tagline {
+    display: none;
   }
 }

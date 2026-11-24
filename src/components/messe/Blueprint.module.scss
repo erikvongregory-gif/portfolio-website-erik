@@ -103,6 +103,12 @@
   .el {
     opacity: 0.6;
   }
+
+  // Phones: the two large circles stay still (barely visible turn, constant GPU work).
+  .spin,
+  .spinBack {
+    animation: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

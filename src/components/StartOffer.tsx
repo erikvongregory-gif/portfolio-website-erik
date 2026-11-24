@@ -106,11 +106,11 @@ export function StartOffer(props: StartOfferProps) {
           {START_OFFER.condition}
         </Text>
         <Row gap="8" wrap>
-          <ContactDialog label="Startpaket anfragen" />
+          <ContactDialog label="Startpaket anfragen" size="l" />
           <Button
             href={START_OFFER_WHATSAPP_URL}
             variant="secondary"
-            size="m"
+            size="l"
             prefixIcon="whatsapp"
             target="_blank"
             rel="noopener noreferrer"

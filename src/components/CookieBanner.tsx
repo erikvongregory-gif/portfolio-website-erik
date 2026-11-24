@@ -138,9 +138,8 @@ export function CookieBanner() {
   return (
     <Row
       data-theme="dark"
+      data-cookie-banner=""
       position="fixed"
-      bottom="16"
-      left="16"
       zIndex={4}
       pointerEvents="none"
       className={styles.wrap}
@@ -165,6 +164,7 @@ export function CookieBanner() {
             icon="close"
             variant="tertiary"
             size="s"
+            className={styles.close}
             onClick={handleClose}
             tooltip="Schließen"
             aria-label="Cookie-Hinweis schließen"
@@ -175,7 +175,9 @@ export function CookieBanner() {
           <>
             <Text as="p" className={styles.text}>
               Technisch notwendige Cookies sind immer dabei. Statistik und Marketing laden wir nur,
-              wenn du zustimmst. Du entscheidest selbst, was auf den Teller kommt. Mehr im{" "}
+              wenn du zustimmst.{" "}
+              <span className={styles.extra}>Du entscheidest selbst, was auf den Teller kommt. </span>
+              Mehr im{" "}
               <SmartLink href="/datenschutz" unstyled className={styles.inline}>
                 Datenschutz
               </SmartLink>
@@ -217,6 +219,7 @@ export function CookieBanner() {
                     <Text className={styles.itemText}>{cat.description}</Text>
                   </Column>
                   <Switch
+                    className={styles.switchHit}
                     isChecked={cat.locked ? true : consent[cat.key]}
                     disabled={cat.locked}
                     onToggle={() => !cat.locked && toggle(cat.key as "statistics" | "marketing")}
@@ -226,7 +229,7 @@ export function CookieBanner() {
               ))}
             </Column>
 
-            <Row fillWidth gap="8">
+            <Row fillWidth gap="8" className={styles.actions}>
               <button type="button" className={styles.choice} onClick={() => setView("intro")}>
                 Zurück
               </button>

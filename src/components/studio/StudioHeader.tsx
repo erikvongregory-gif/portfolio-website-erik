@@ -5,11 +5,12 @@ import classNames from "classnames";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ContactDialog } from "@/components/ContactDialog";
-import { getScrollY, subscribeScroll } from "@/components/motion/SmoothScroll";
+import { getScrollY, startLenis, stopLenis, subscribeScroll } from "@/components/motion/SmoothScroll";
 import { STUDIO_NAV } from "./nav";
 import styles from "./StudioHeader.module.scss";
 
 const HIDDEN_ON = ["/neueseite", "/motion-prototype"];
+const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 /**
  * Floating glass navigation for the whole site. Hides while scrolling down,
@@ -20,6 +21,8 @@ export function StudioHeader() {
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const lastY = useRef(0);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     lastY.current = getScrollY();
@@ -43,15 +46,62 @@ export function StudioHeader() {
     setOpen(false);
   }, [pathname]);
 
+  // Close the phone sheet when the viewport grows into the desktop layout.
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 861px)");
+    const onChange = () => mq.matches && setOpen(false);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  // Open sheet: lock page scroll (also on iOS), trap focus, close on Escape,
+  // and hand focus back to the burger when it closes.
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const html = document.documentElement;
+    const body = document.body;
+    const prevHtml = html.style.overflow;
+    const prevBody = body.style.overflow;
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    stopLenis();
+
+    const sheet = sheetRef.current;
+    const focusables = () => {
+      const inSheet = sheet ? Array.from(sheet.querySelectorAll<HTMLElement>(FOCUSABLE)) : [];
+      return [buttonRef.current, ...inSheet].filter((el): el is HTMLElement => !!el);
+    };
+    const focusTimer = window.setTimeout(() => focusables()[1]?.focus({ preventScroll: true }), 60);
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      const inside = active ? items.includes(active) : false;
+      if (e.shiftKey && (active === first || !inside)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !inside)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     window.addEventListener("keydown", onKey);
+
     return () => {
-      document.body.style.overflow = prev;
+      window.clearTimeout(focusTimer);
+      html.style.overflow = prevHtml;
+      body.style.overflow = prevBody;
+      startLenis();
       window.removeEventListener("keydown", onKey);
+      if (sheet?.contains(document.activeElement)) buttonRef.current?.focus({ preventScroll: true });
     };
   }, [open]);
 
@@ -78,6 +128,7 @@ export function StudioHeader() {
             <ContactDialog label="Projekt starten" size="s" />
           </span>
           <button
+            ref={buttonRef}
             type="button"
             className={styles.menuButton}
             aria-label={open ? "Menü schließen" : "Menü öffnen"}
@@ -91,10 +142,19 @@ export function StudioHeader() {
       </Row>
 
       <Column
+        ref={sheetRef}
+        as="nav"
         id="studio-menu"
+        aria-label="Menü"
         className={classNames(styles.sheet, open && styles.sheetOpen)}
         aria-hidden={!open}
-        gap="8"
+        inert={!open}
+        gap="4"
+        // Close on any link tap. (Once UI's SmartLink drops its own onClick for
+        // internal links, so the handler sits here and catches the bubble.)
+        onClick={(e) => {
+          if ((e.target as HTMLElement).closest("a")) setOpen(false);
+        }}
       >
         {STUDIO_NAV.map((item, i) => (
           <SmartLink
@@ -103,7 +163,6 @@ export function StudioHeader() {
             unstyled
             className={styles.sheetLink}
             style={{ transitionDelay: open ? `${80 + i * 50}ms` : "0ms" }}
-            onClick={() => setOpen(false)}
             tabIndex={open ? 0 : -1}
           >
             {item.label}

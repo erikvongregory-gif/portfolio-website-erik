@@ -26,10 +26,11 @@ const description =
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  // Fixed page on phones: no pinch-zoom, no sideways panning.
-  minimumScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  // Pinch-zoom stays allowed (accessibility). Sideways panning is prevented by
+  // overflow-x: clip in custom.css, iOS input zoom by 16px form fields.
+  // Draw edge to edge behind notch and home bar; fixed UI pads itself with
+  // env(safe-area-inset-*).
+  viewportFit: "cover",
   themeColor: "#050909",
 };
 
@@ -161,7 +162,7 @@ export default function RootLayout({
           as="body"
           background="page"
           fillWidth
-          style={{ minHeight: "100vh" }}
+          style={{ minHeight: "100svh" }}
           margin="0"
           padding="0"
           horizontal="center"

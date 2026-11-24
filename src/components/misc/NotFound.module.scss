@@ -130,8 +130,15 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  height: 2.75rem;
-  padding: 0 1.25rem;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 1.4rem;
+  text-align: center;
+
+  @media (max-width: 560px) {
+    width: 100%;
+    font-size: 1rem;
+  }
   border-radius: 999px;
   font-size: 0.9375rem;
   font-weight: 500;
@@ -166,22 +173,30 @@
   appearance: none;
   border: 0;
   background: none;
-  padding: 0.25rem 0;
+  // Visual stays an underlined text link; the hit area is 44px tall.
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.5rem;
   font: inherit;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
+  -webkit-tap-highlight-color: transparent;
   color: var(--studio-ink-2);
-  border-bottom: 1px solid rgba(242, 245, 244, 0.25);
+  text-decoration: underline;
+  text-decoration-color: rgba(242, 245, 244, 0.25);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
   cursor: pointer;
 
   &:hover:not(:disabled) {
     color: #fff;
-    border-color: var(--studio-glow);
+    text-decoration-color: var(--studio-glow);
   }
 
   &:disabled {
     cursor: default;
     color: var(--studio-ink-3);
-    border-color: transparent;
+    text-decoration-color: transparent;
   }
 
   &:focus-visible {

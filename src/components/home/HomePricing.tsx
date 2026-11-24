@@ -75,8 +75,30 @@ function OfferStrip() {
 export function HomePricing() {
   const [base, setBase] = useState<QuoteBase>("website");
   const [calcOpen, setCalcOpen] = useState(false);
+  const [activeCard, setActiveCard] = useState(0);
   const gridRef = useRef<HTMLDivElement>(null);
   const calcRef = useRef<HTMLDivElement>(null);
+
+  // Phones swipe through the packages; track which card is snapped for the dots.
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const first = grid.firstElementChild as HTMLElement | null;
+        if (!first || grid.scrollWidth <= grid.clientWidth) return;
+        const step = first.offsetWidth + parseFloat(getComputedStyle(grid).columnGap || "0");
+        setActiveCard(Math.round(grid.scrollLeft / step));
+      });
+    };
+    grid.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      grid.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
   useEffect(() => {
     const grid = gridRef.current;
@@ -122,7 +144,8 @@ export function HomePricing() {
           ref={gridRef}
           columns="2"
           gap="20"
-          m={{ columns: "1", gap: "16" }}
+          m={{ columns: "2", gap: "16" }}
+          aria-label="Pakete"
           fillWidth
           className={styles.grid}
         >
@@ -169,6 +192,11 @@ export function HomePricing() {
             </Column>
           ))}
         </Grid>
+        <Row hide s={{ hide: false }} horizontal="center" gap="4" className={styles.dots} aria-hidden="true">
+          {WEB_PACKAGES.map((p, i) => (
+            <span key={p.title} className={classNames(styles.dot, i === activeCard && styles.dotOn)} />
+          ))}
+        </Row>
 
         <Column fillWidth gap="24">
           <Row horizontal="between" vertical="end" gap="24" wrap>

@@ -18,6 +18,8 @@
   border: 0;
   border-radius: 1.15rem;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   color: var(--shift-ink);
   font-family: var(--font-heading), var(--font-body), sans-serif;
   font-size: 0.95rem;

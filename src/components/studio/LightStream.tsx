@@ -70,6 +70,8 @@ type FilmSource = {
   posters: HTMLImageElement[];
   videos: (HTMLVideoElement | null)[];
   playing: number;
+  /** Phones, reduced motion, Save-Data, slow networks: posters only, no videos. */
+  lite: boolean;
 };
 let shared: FilmSource | null = null;
 
@@ -84,6 +86,7 @@ function getFilmSource(): FilmSource {
     }),
     videos: FILMS.map(() => null),
     playing: 0,
+    lite: false,
   };
   shared = source;
 
@@ -95,6 +98,7 @@ function getFilmSource(): FilmSource {
     window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
     conn?.saveData === true ||
     /(^|-)(2g|3g)$/.test(conn?.effectiveType ?? "");
+  source.lite = lite;
   if (lite) return source;
 
   const loadVideos = () => {
@@ -158,12 +162,19 @@ export function LightStream({ className, onPulseArrive, variant = "hero" }: Prop
     const source = getFilmSource();
     const posters = source.posters;
 
+    // Posters are still images: once all of them are in the atlas it only needs
+    // repainting while preview videos are running (never on phones). Saves a
+    // texture re-upload per frame on mobile GPUs.
+    let atlasStatic = false;
     const paintAtlas = () => {
+      if (atlasStatic) return;
+      let settled = true;
       FILMS.forEach((_, i) => {
         const x = (i % COLS) * TILE_W;
         const y = Math.floor(i / COLS) * TILE_H;
         const v = source.videos[i];
         const p = posters[i];
+        if (v || !(p.complete && p.naturalWidth)) settled = false;
         try {
           if (v && v.readyState >= 2) actx.drawImage(v, x, y, TILE_W, TILE_H);
           else if (p.complete && p.naturalWidth) actx.drawImage(p, x, y, TILE_W, TILE_H);
@@ -171,6 +182,8 @@ export function LightStream({ className, onPulseArrive, variant = "hero" }: Prop
           /* frame not decodable yet */
         }
       });
+      // Freeze only in lite mode: on desktop the preview videos arrive later.
+      if (settled && source.lite) atlasStatic = true;
     };
 
     // ——— Bloom buffer (low-res copy, scaled back up = cheap soft glow) ———
@@ -181,9 +194,13 @@ export function LightStream({ className, onPulseArrive, variant = "hero" }: Prop
     let W = 0;
     let H = 0;
     let dpr = 1;
+    // Adaptive quality: 0 = full, 1 = DPR 1 + 70 % particles, 2 = 50 %,
+    // 3 = additionally 30 fps. Raised when frames take too long (weak phones).
+    let quality = 0;
+    let active = COUNT;
     const resize = () => {
       const r = canvas.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      dpr = Math.min(window.devicePixelRatio || 1, quality > 0 ? 1 : 1.5);
       W = r.width;
       H = r.height;
       canvas.width = Math.round(W * dpr);
@@ -318,7 +335,8 @@ export function LightStream({ className, onPulseArrive, variant = "hero" }: Prop
         if (pu.p > 1.2) pulses.splice(i, 1);
       }
 
-      for (const p of particles) {
+      for (let i = 0; i < active; i++) {
+        const p = particles[i];
         const d = p.t * p.t;
         p.t += p.speed * dt * (0.18 + d * 2.2);
         if (p.t > 1.02) spawn(p, false);
@@ -347,7 +365,8 @@ export function LightStream({ className, onPulseArrive, variant = "hero" }: Prop
       const py = pointer.y * H;
       const R = Math.min(W, H) * 0.16;
 
-      for (const p of particles) {
+      for (let i = 0; i < active; i++) {
+        const p = particles[i];
         const t = p.t;
         point(t, pt);
         const d = Math.pow(t, 1.7);
@@ -414,13 +433,43 @@ export function LightStream({ className, onPulseArrive, variant = "hero" }: Prop
       ctx.globalCompositeOperation = "source-over";
     };
 
+    // Work time per frame (smoothed). Budget leaves room for scrolling and
+    // scroll-linked animations on the main thread.
+    let work = 0;
+    let probe = 0;
+    let lastCheck = 0;
+    const BUDGET = mobile ? 9 : 12;
+    const degrade = () => {
+      if (quality >= 3) return;
+      quality += 1;
+      active = Math.round(COUNT * (quality === 1 ? 0.7 : 0.5));
+      if (quality === 1) resize();
+      canvas.dataset.quality = String(quality);
+      work = 0; // re-measure at the new tier
+    };
+
     const loop = (now: number) => {
+      if (running) raf = requestAnimationFrame(loop);
+      // Lowest tier: draw every other display frame (~30 fps).
+      if (quality >= 3 && frame++ % 2 === 1) return;
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
-      if (frame++ % 2 === 0) paintAtlas();
+      const t0 = performance.now();
+      if (quality >= 3 || frame++ % 2 === 0) paintAtlas();
       step(dt);
       draw();
-      if (running) raf = requestAnimationFrame(loop);
+      const ms = performance.now() - t0;
+      // Ignore the first frames (atlas warm-up, decoding), then check about
+      // every 0.75 s so very slow devices also step down quickly.
+      if (++probe > 20) {
+        work = work ? work * 0.85 + ms * 0.15 : ms;
+        if (now - lastCheck > 750) {
+          lastCheck = now;
+          const heavy = work > BUDGET * 3;
+          if (work > BUDGET) degrade();
+          if (heavy) degrade();
+        }
+      }
     };
 
     let holdsFilms = false;

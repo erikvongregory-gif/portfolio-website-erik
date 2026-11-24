@@ -68,6 +68,60 @@
   padding: 0;
 }
 
+// Phones: the packages become a swipeable row. The main package sits first and
+// fully in view, the next card peeks in so the row reads as swipeable.
+@media (max-width: 768px) {
+  .grid {
+    // Same as the side padding of studio.section-pad.
+    --bleed: clamp(1.25rem, 4vw, 4.5rem);
+    display: flex !important;
+    gap: 0.75rem !important;
+    align-items: stretch;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--bleed);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    // Bleed to the screen edge; the vertical padding keeps the ring of light unclipped.
+    width: calc(100% + 2 * var(--bleed)) !important;
+    max-width: none !important;
+    margin-inline: calc(-1 * var(--bleed));
+    padding: 2px var(--bleed) 4px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .grid > .card {
+    flex: 0 0 86%;
+    width: 86% !important;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+
+// Position dots under the swipe row (decorative, phones only via the hide props).
+.dots {
+  margin-top: -2rem;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--studio-line);
+  transition:
+    width 0.35s var(--studio-ease),
+    background 0.35s ease;
+}
+
+.dotOn {
+  width: 18px;
+  background: var(--studio-glow-soft);
+}
+
 .card {
   position: relative;
   min-width: 0;
@@ -306,6 +360,6 @@
 }
 
 .calcWrap {
-  scroll-margin-top: 6rem;
+  scroll-margin-top: 1rem;
   align-items: flex-start;
 }

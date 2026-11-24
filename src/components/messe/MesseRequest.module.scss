@@ -36,6 +36,18 @@
   }
 }
 
+// Phones: the sheet hangs from the top, so the on-screen keyboard (which only
+// shrinks the visual viewport) covers the empty end of the form, not the field
+// being typed in. The panel scrolls inside.
+@media (max-width: 560px) {
+  .dialog {
+    width: calc(100vw - 1.5rem);
+    max-height: calc(100dvh - 1.5rem);
+    margin: 0.75rem auto auto;
+    border-radius: 1.25rem;
+  }
+}
+
 .in {
   opacity: 1;
   transform: none;
@@ -55,8 +67,8 @@
   z-index: 2;
   top: 1rem;
   right: 1rem;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: max(2.5rem, 44px);
+  height: max(2.5rem, 44px);
   display: grid;
   place-items: center;
   border-radius: 999px;
@@ -149,7 +161,9 @@
   width: 100%;
   min-width: 0;
   font: inherit;
-  font-size: 1rem; // no iOS zoom
+  // The root size is 15px on phones, so 1rem would be below 16px and iOS zooms in on focus.
+  font-size: max(1rem, 16px);
+  scroll-margin: 5rem 0 6rem;
   color: #fff;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--studio-line);
@@ -241,7 +255,7 @@
 .note {
   grid-column: 1 / -1;
   margin: 0;
-  font-size: 0.75rem;
+  font-size: max(0.75rem, 12px);
   line-height: 1.5;
   color: var(--studio-ink-3);
 
@@ -296,7 +310,7 @@
   @include studio.glass;
   display: inline-flex;
   align-items: center;
-  min-height: 2.75rem;
+  min-height: max(2.75rem, 44px);
   padding: 0.6rem 1.25rem;
   color: #fff;
   font: inherit;

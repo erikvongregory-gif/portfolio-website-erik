@@ -37,9 +37,9 @@ export function CtaBand({
         <Text as="p" className={styles.text}>
           {text}
         </Text>
-        <Row gap="24" vertical="center" wrap>
+        <Row className={styles.actions} gap="24" vertical="center" wrap>
           <ContactDialog label={ctaLabel} size="l" funnel topic={topic} idPrefix={`cta-${topic}-`} />
-          <Row gap="20" vertical="center" wrap>
+          <Row className={styles.contacts} gap="20" vertical="center" wrap>
             <SmartLink href={`mailto:${CONTACT_EMAIL}`} unstyled className={styles.link}>
               {CONTACT_EMAIL}
             </SmartLink>

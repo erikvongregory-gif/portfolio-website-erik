@@ -267,3 +267,52 @@ $blue-deep: #0a55e6;
     font-size: clamp(2.9rem, 16.5vw, 5.5rem);
   }
 }
+
+// Phones held sideways: the headline, lead and buttons share one short screen.
+@media (orientation: landscape) and (max-height: 540px) {
+  .stage {
+    padding-top: 5.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .inner {
+    gap: 1.25rem !important;
+  }
+
+  .headWrap {
+    --d: clamp(6.5rem, 30svh, 9rem);
+  }
+
+  .eyebrow {
+    margin-bottom: 0.5rem;
+  }
+
+  .big {
+    font-size: clamp(2.4rem, 13svh, 3.75rem);
+    max-width: 14ch;
+  }
+
+  .bottom {
+    flex-direction: row !important;
+    align-items: flex-end !important;
+  }
+
+  .lead {
+    font-size: 0.9375rem !important;
+    max-width: 26rem;
+  }
+}
+
+// Comfortable tap target for the text link.
+@media (hover: none) {
+  .secondary {
+    display: inline-flex;
+    align-items: center;
+    min-height: max(2.75rem, 44px);
+    padding-bottom: 0;
+    border-bottom: 0;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.45);
+    text-underline-offset: 0.3em;
+  }
+}

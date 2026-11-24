@@ -1,4 +1,4 @@
-import { Column, Heading, Text } from "@once-ui-system/core/components";
+import { Column, Heading, Row, SmartLink, Text } from "@once-ui-system/core/components";
 import type { ReactNode } from "react";
 import { StudioFooter } from "@/components/studio";
 import styles from "./StudioLegal.module.scss";
@@ -8,14 +8,36 @@ type StudioLegalLayoutProps = {
   title: ReactNode;
   intro?: string;
   updated?: string;
+  /** Optional table of contents: section titles exactly as passed to LegalBlock. */
+  toc?: string[];
   children: ReactNode;
 };
+
+/** Stable anchor id for a section title ("3. Allgemeine Hinweise" -> "allgemeine-hinweise"). */
+export function legalAnchor(title: string) {
+  return title
+    .toLowerCase()
+    .replace(/^\d+\.\s*/, "")
+    .replace(/ä/g, "ae")
+    .replace(/ö/g, "oe")
+    .replace(/ü/g, "ue")
+    .replace(/ß/g, "ss")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
 
 /**
  * Legal pages (Impressum, Datenschutz) on the dark stage. Pure reading layout:
  * one column, about 68 characters per line, clear heading hierarchy.
  */
-export function StudioLegalLayout({ eyebrow, title, intro, updated, children }: StudioLegalLayoutProps) {
+export function StudioLegalLayout({
+  eyebrow,
+  title,
+  intro,
+  updated,
+  toc,
+  children,
+}: StudioLegalLayoutProps) {
   return (
     <Column fillWidth horizontal="center" data-theme="dark" className={styles.page}>
       <Column as="section" className={styles.hero} fillWidth horizontal="center">
@@ -30,6 +52,20 @@ export function StudioLegalLayout({ eyebrow, title, intro, updated, children }: 
             </Text>
           )}
           {updated && <Text className={styles.updated}>Stand: {updated}</Text>}
+          {toc && toc.length > 0 && (
+            <Column as="nav" aria-label="Inhalt" className={styles.toc} gap="8">
+              <Text className={styles.tocLabel}>Inhalt</Text>
+              <Row as="ol" wrap gap="8" className={styles.tocList}>
+                {toc.map((item) => (
+                  <li key={item}>
+                    <SmartLink href={`#${legalAnchor(item)}`} unstyled className={styles.tocLink}>
+                      {item}
+                    </SmartLink>
+                  </li>
+                ))}
+              </Row>
+            </Column>
+          )}
         </Column>
       </Column>
 
@@ -46,7 +82,7 @@ export function StudioLegalLayout({ eyebrow, title, intro, updated, children }: 
 
 export function LegalBlock({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <Column as="section" className={styles.block} gap="16" fillWidth>
+    <Column as="section" id={legalAnchor(title)} className={styles.block} gap="16" fillWidth>
       <Heading as="h2" className={styles.h2}>
         {title}
       </Heading>

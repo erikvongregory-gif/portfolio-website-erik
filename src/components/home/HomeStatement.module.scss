@@ -132,3 +132,21 @@
 .stat {
   flex-direction: column-reverse !important;
 }
+
+@media (max-width: 768px) {
+  // Grows with the phone (32 px at 320, 37 px at 430) instead of sitting at the
+  // 2rem floor; slightly more leading for the longer lines on small screens.
+  .statement {
+    font-size: clamp(2rem, 8.6vw, 2.5rem) !important;
+    line-height: 1.12 !important;
+  }
+
+  .body {
+    font-size: 1.0625rem !important;
+  }
+
+  .stats {
+    column-gap: 2rem !important;
+    row-gap: 1.25rem !important;
+  }
+}

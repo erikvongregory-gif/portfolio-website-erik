@@ -45,7 +45,7 @@ export function BlackFridayPromo(props: BlackFridayPromoProps) {
           </Text>
           <Row gap="24" wrap>
             {BLACK_FRIDAY_PACKAGES.map((pkg) => (
-              <Row key={pkg.id} gap="8" vertical="center">
+              <Row key={pkg.id} gap="8" vertical="center" wrap>
                 <Text variant="label-default-m" onBackground="neutral-medium">
                   {pkg.name}
                 </Text>

@@ -72,6 +72,24 @@
   }
 }
 
+// Phones: a bit less air between sections (was 80px top and bottom = 160px
+// between two sections) and long German compound words may break.
+@media (max-width: 560px) {
+  .section {
+    padding-top: 4.25rem;
+    padding-bottom: 4.25rem;
+  }
+
+  .section .inner {
+    gap: 2.25rem;
+  }
+
+  // Only words wider than the screen break; normal headlines wrap as before.
+  .title {
+    overflow-wrap: break-word;
+  }
+}
+
 .glow {
   @include studio.glow-text;
 

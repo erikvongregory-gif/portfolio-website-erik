@@ -38,7 +38,7 @@ export function SmoothScroll() {
     const hash = window.location.hash;
     const el = hash.length > 1 ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
     if (el) {
-      if (lenisInstance) lenisInstance.scrollTo(el, { offset: -96, immediate: true, force: true });
+      if (lenisInstance) lenisInstance.scrollTo(el, { immediate: true, force: true });
       else el.scrollIntoView();
       return;
     }
@@ -53,6 +53,9 @@ export function SmoothScroll() {
       lerp: 0.1,
       smoothWheel: true,
       wheelMultiplier: 1,
+      // Phones and tablets keep their own native momentum scrolling; Lenis
+      // only smooths mouse wheels and trackpads.
+      syncTouch: false,
     });
     lenisInstance = lenis;
     lenis.on("scroll", () => scrollListeners.forEach((listener) => listener()));
@@ -64,7 +67,8 @@ export function SmoothScroll() {
     };
     raf = requestAnimationFrame(loop);
 
-    // Smooth in-page anchor jumps (account for the fixed header). Handles both
+    // Smooth in-page anchor jumps. The fixed header + banner height comes from
+    // html { scroll-padding-top } in custom.css, which Lenis reads as well. Handles both
     // bare "#section" links and "/#section" links (used by the header/footer),
     // the latter only while we're already on the homepage so cross-page links
     // (e.g. from /ueber-uns) still navigate normally.
@@ -86,7 +90,13 @@ export function SmoothScroll() {
       const el = document.querySelector(hash);
       if (!el) return;
       e.preventDefault();
-      lenis.scrollTo(el as HTMLElement, { offset: -96 });
+      // A link in the open phone menu: the menu has stopped Lenis and locked
+      // the page. Wait until it has closed and released, then glide.
+      if (lenis.isStopped) {
+        window.setTimeout(() => lenis.scrollTo(el as HTMLElement), 80);
+        return;
+      }
+      lenis.scrollTo(el as HTMLElement);
     };
     // Capture phase so we intercept the click before Next.js <Link> performs
     // its client-side navigation (which would otherwise win and swallow the jump).

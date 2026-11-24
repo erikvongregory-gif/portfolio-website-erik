@@ -218,3 +218,30 @@
     box-shadow: none;
   }
 }
+
+// Phones: big, thumb-friendly controls. The primary action fills the row.
+@media (max-width: 768px) {
+  .chip {
+    min-height: 44px;
+    padding: 0.6rem 1rem;
+  }
+
+  .choice {
+    min-height: 3.5rem;
+  }
+
+  .nav > * {
+    min-height: 48px;
+  }
+
+  // 16px+ stops iOS Safari from zooming into the field on focus.
+  .shell input,
+  .shell textarea {
+    font-size: 16px !important;
+  }
+
+  .nav > *:last-child {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+}

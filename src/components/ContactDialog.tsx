@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type FocusEvent,
+  type MouseEvent,
+} from "react";
 import { createPortal } from "react-dom";
 import { Button, Column, Dialog, Icon, Input, Row, Text, Textarea } from "@once-ui-system/core/components";
 import classNames from "classnames";
@@ -109,6 +116,8 @@ export function ContactDialog({
   const [panel, setPanel] = useState<PanelState>("closed");
   const [origin, setOrigin] = useState({ x: "50%", y: "72%" });
   const [mounted, setMounted] = useState(false);
+  // Visible viewport while the funnel is open (iOS keeps 100dvh when the keyboard is up).
+  const [viewport, setViewport] = useState<{ h: number; top: number } | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const ignoreCloseSync = useRef(false);
@@ -196,15 +205,30 @@ export function ContactDialog({
     if (funnel) {
       if (panel !== "open" && panel !== "opening") return;
       const previousOverflow = document.body.style.overflow;
+      const previousHtmlOverflow = document.documentElement.style.overflow;
       document.body.style.overflow = "hidden";
+      // iOS keeps scrolling the page behind a fixed layer unless the root is locked too.
+      document.documentElement.style.overflow = "hidden";
       stopLenis();
       const onKeyDown = (e: KeyboardEvent) => {
         if (e.key === "Escape") beginClose();
       };
       window.addEventListener("keydown", onKeyDown);
+      const vv = window.visualViewport;
+      const fitViewport = () => {
+        if (!vv) return;
+        setViewport({ h: Math.round(vv.height), top: Math.round(vv.offsetTop) });
+      };
+      fitViewport();
+      vv?.addEventListener("resize", fitViewport);
+      vv?.addEventListener("scroll", fitViewport);
       return () => {
         document.body.style.overflow = previousOverflow;
+        document.documentElement.style.overflow = previousHtmlOverflow;
         window.removeEventListener("keydown", onKeyDown);
+        vv?.removeEventListener("resize", fitViewport);
+        vv?.removeEventListener("scroll", fitViewport);
+        setViewport(null);
         startLenis();
       };
     }
@@ -295,6 +319,13 @@ export function ContactDialog({
     }
   };
 
+  // Phones: once the keyboard has slid up, bring the focused field back into view.
+  const revealOnFocus = (e: FocusEvent<HTMLElement>) => {
+    const el = e.currentTarget;
+    if (!window.matchMedia("(max-width: 1024px)").matches) return;
+    window.setTimeout(() => el.scrollIntoView({ block: "center", behavior: "smooth" }), 320);
+  };
+
   const onTriggerClick = (e: MouseEvent<HTMLElement>) => {
     triggerRef.current = e.currentTarget;
     if (funnel) beginOpen(e.currentTarget);
@@ -311,7 +342,13 @@ export function ContactDialog({
               panelExpanded && styles.overlayOpen,
               panel === "closing" && styles.overlayClosing,
             )}
-            style={{ "--ox": origin.x, "--oy": origin.y } as CSSProperties}
+            style={
+              {
+                "--ox": origin.x,
+                "--oy": origin.y,
+                ...(viewport ? { height: viewport.h + "px", top: viewport.top + "px" } : {}),
+              } as CSSProperties
+            }
             role="dialog"
             aria-modal="true"
             aria-label={topic === "film" ? "Film anfragen" : "Kostenloser Entwurf"}
@@ -381,6 +418,7 @@ export function ContactDialog({
             arrowIcon={arrowIcon}
             fillWidth={fillWidth}
             data-open-contact=""
+            className={styles.trigger}
             onClick={onTriggerClick}
           >
             {label}
@@ -393,6 +431,7 @@ export function ContactDialog({
         <Dialog
           isOpen={open}
           onClose={() => setOpen(false)}
+          className={styles.shortDialog}
           title={status === "success" ? "Geschafft" : "Kostenloses Erstgespräch"}
           description={
             status === "success"
@@ -519,17 +558,28 @@ export function ContactDialog({
               <Input
                 id={`${idPrefix}contact-email`}
                 type="email"
+                inputMode="email"
+                autoComplete="email"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
+                enterKeyHint="next"
                 label="E-Mail"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onFocus={revealOnFocus}
+                className={styles.field}
               />
               <Textarea
                 id={`${idPrefix}contact-message`}
                 label="Worum geht’s?"
                 placeholder="z. B. neue Website / Landingpage für …"
                 lines={3}
+                autoCapitalize="sentences"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
+                onFocus={revealOnFocus}
+                className={styles.field}
               />
 
               {error && (

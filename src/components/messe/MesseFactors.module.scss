@@ -13,8 +13,11 @@
   overflow: hidden;
   transition: border-color 0.3s ease;
 
-  &:hover {
-    border-color: rgba(143, 214, 224, 0.25);
+  // Hover only where a pointer can hover (no sticky hover after a tap).
+  @media (hover: hover) {
+    &:hover {
+      border-color: rgba(143, 214, 224, 0.25);
+    }
   }
 }
 
@@ -34,8 +37,10 @@
   opacity: 0.85;
   transition: transform 1.2s var(--studio-ease);
 
-  .card:hover & {
-    transform: scale(1.04);
+  @media (hover: hover) {
+    .card:hover & {
+      transform: scale(1.04);
+    }
   }
 }
 

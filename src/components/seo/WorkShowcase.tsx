@@ -73,6 +73,8 @@ export function WorkShowcase({ reference, filmIds = [], filmRatio, filmsTitle = 
   const films = filmIds
     .map((id) => showreel.find((f) => f.id === id))
     .filter((f): f is ShowreelItem => Boolean(f));
+  const isPortrait = (ratio?: string) => ratio === "9 / 16" || ratio === "4 / 5";
+  const portraitRail = filmRatio ? isPortrait(filmRatio) : films.every((f) => isPortrait(f.ratio));
 
   return (
     <Column fillWidth gap="80" s={{ gap: "56" }}>
@@ -133,7 +135,17 @@ export function WorkShowcase({ reference, filmIds = [], filmRatio, filmsTitle = 
               <span aria-hidden="true">→</span>
             </SmartLink>
           </Row>
-          <Grid columns={String(Math.min(films.length, 3)) as "1" | "2" | "3"} s={{ columns: "1" }} gap="24" fillWidth>
+          {/* Phones: a swipe rail with the next film peeking in (see .filmRail). */}
+          <Grid
+            columns={String(Math.min(films.length, 3)) as "1" | "2" | "3"}
+            s={{ columns: "1" }}
+            gap="24"
+            fillWidth
+            className={classNames(
+              films.length > 1 && styles.filmRail,
+              films.length > 1 && portraitRail && styles.filmRailPortrait,
+            )}
+          >
             {films.map((film) => (
               <FilmCard key={film.id} film={film} ratio={filmRatio} onOpen={setOpen} />
             ))}

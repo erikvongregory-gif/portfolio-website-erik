@@ -52,20 +52,69 @@
   margin: 0;
 }
 
-.link {
+/* Two classes: beats Once UI's global a:not(.button) brand colour. */
+.contacts .link {
   font-size: 0.9rem;
   color: var(--studio-ink-2);
   border-bottom: 1px solid rgba(242, 245, 244, 0.25);
   padding-bottom: 2px;
 
-  &:hover {
-    color: #fff;
-    border-color: #fff;
+  @media (hover: hover) {
+    &:hover {
+      color: #fff;
+      border-color: #fff;
+    }
   }
 }
 
 @media (max-width: 768px) {
+  .band {
+    padding-top: 4.5rem;
+    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+    min-height: 72svh;
+  }
+
   .shade {
     background: linear-gradient(0deg, rgba(5, 9, 9, 0.95) 0%, rgba(5, 9, 9, 0.75) 50%, rgba(5, 9, 9, 0.3) 100%);
+  }
+
+  .inner {
+    gap: 1.5rem !important;
+  }
+
+  .text {
+    font-size: 1.0625rem !important;
+  }
+
+  /* Primary CTA spans the width in the thumb zone; mail and phone become
+     48 px tall rows below it instead of tiny inline links. */
+  .actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+    margin-top: 0.5rem;
+  }
+
+  .actions > button {
+    width: 100%;
+  }
+
+  .contacts {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
+  }
+
+  /* .contacts prefix: beats Once UI's global a:not(.button) reset. */
+  .contacts .link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
+    padding-bottom: 0;
+    font-size: 0.9375rem;
+    border-bottom: 0;
+    text-decoration: underline;
+    text-decoration-color: rgba(242, 245, 244, 0.25);
+    text-underline-offset: 0.3em;
   }
 }

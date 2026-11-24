@@ -206,7 +206,7 @@ export function AboutCraft() {
       <InView fillWidth gap="80">
         <Grid as="ul" fillWidth columns="3" gap="24" m={{ columns: "1" }} className={styles.cards}>
           {CRAFT.map((c, i) => (
-            <Column
+            <InView
               as="li"
               key={c.title}
               className={styles.card}
@@ -225,7 +225,7 @@ export function AboutCraft() {
               <SmartLink href={c.href} unstyled className={styles.cardLink}>
                 {c.link} →
               </SmartLink>
-            </Column>
+            </InView>
           ))}
         </Grid>
 
@@ -278,21 +278,20 @@ export function AboutValues() {
       kicker="Wofür ich stehe"
       title="Vier Regeln, nach denen ich jedes Projekt baue."
     >
-      <InView fillWidth>
-        <Grid as="ul" fillWidth columns="2" gap="0" m={{ columns: "1" }} className={styles.values}>
-          {VALUES.map((v, i) => (
-            <Column as="li" key={v.title} className={styles.value} gap="12">
-              <Doodle kind={v.doodle} className={styles.valueDoodle} weight={1.6} delay={0.2 + i * 0.18} />
-              <Heading as="h3" className={styles.valueTitle}>
-                {v.title}
-              </Heading>
-              <Text as="p" className={styles.valueBody}>
-                {v.body}
-              </Text>
-            </Column>
-          ))}
-        </Grid>
-      </InView>
+      <Grid as="ul" fillWidth columns="2" gap="0" m={{ columns: "1" }} className={styles.values}>
+        {VALUES.map((v, i) => (
+          // Each rule draws its own doodle when it scrolls in (stacked on phones).
+          <InView as="li" key={v.title} className={styles.value} gap="12">
+            <Doodle kind={v.doodle} className={styles.valueDoodle} weight={1.6} delay={0.2 + (i % 2) * 0.18} />
+            <Heading as="h3" className={styles.valueTitle}>
+              {v.title}
+            </Heading>
+            <Text as="p" className={styles.valueBody}>
+              {v.body}
+            </Text>
+          </InView>
+        ))}
+      </Grid>
     </StudioSection>
   );
 }

@@ -52,6 +52,12 @@ export function OrbHero() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    // Phones: every move repaints the blended lens copies, so draw at ~30 fps
+    // (the drift is slow, it still looks smooth) and hold still while the
+    // finger scrolls, so scrolling never competes with the lens.
+    const frameGap = finePointer ? 0 : 1000 / 30 - 4;
+    let lastDraw = 0;
+    let scrolling = 0;
 
     let w = wrap.offsetWidth;
     let h = wrap.offsetHeight;
@@ -98,6 +104,10 @@ export function OrbHero() {
     };
 
     const frame = (now: number) => {
+      raf = requestAnimationFrame(frame);
+      if (scrolling || now - lastDraw < frameGap) return;
+      const dt = lastDraw ? Math.min(3, (now - lastDraw) / (1000 / 60)) : 1;
+      lastDraw = now;
       const t = (now - t0) / 1000;
       // Slow Lissajous path over the headline (ratio ~ 3:5, never quite repeating).
       let tx = box.x + box.w * (0.5 + 0.44 * Math.sin(t * 0.19 + 0.6));
@@ -107,10 +117,11 @@ export function OrbHero() {
         tx += (pointer.x - tx) * pull;
         ty += (pointer.y - ty) * pull;
       }
-      x += (tx - x) * 0.08;
-      y += (ty - y) * 0.08;
+      // Same easing per second at any frame rate.
+      const k = 1 - (1 - 0.08) ** dt;
+      x += (tx - x) * k;
+      y += (ty - y) * k;
       apply();
-      raf = requestAnimationFrame(frame);
     };
 
     const start = () => {
@@ -133,6 +144,12 @@ export function OrbHero() {
       pointer = null;
     };
     const onVisibility = () => (document.hidden ? stop() : start());
+    const onScroll = () => {
+      window.clearTimeout(scrolling);
+      scrolling = window.setTimeout(() => {
+        scrolling = 0;
+      }, 160);
+    };
 
     measure();
     apply();
@@ -152,10 +169,13 @@ export function OrbHero() {
       stage.addEventListener("pointermove", onMove);
       stage.addEventListener("pointerleave", onLeave);
     }
+    if (!finePointer && !reduced) window.addEventListener("scroll", onScroll, { passive: true });
     start();
 
     return () => {
       stop();
+      window.clearTimeout(scrolling);
+      window.removeEventListener("scroll", onScroll);
       ro.disconnect();
       io.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
@@ -198,7 +218,7 @@ export function OrbHero() {
           <span className={styles.orb} aria-hidden="true">
             {orbLoaded ? (
               // biome-ignore lint/performance/noImgElement: decorative transparent render, sized by CSS
-              <img className={styles.orbImg} src={ORB_SRC} alt="" draggable={false} />
+              <img className={styles.orbImg} src={ORB_SRC} alt="" draggable={false} decoding="async" />
             ) : (
               <span className={styles.orbCss} />
             )}

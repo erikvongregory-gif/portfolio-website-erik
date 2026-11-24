@@ -8,6 +8,8 @@ import { FilmCard, Glow, StudioSection } from "@/components/studio";
 import { showreel, type ShowreelItem } from "@/lib/showreel";
 import { PROJECTS, WORK_FILMS, type HomeProject } from "./data";
 import { FilmLightbox } from "./FilmLightbox";
+import { SnapDots, useSnapIndex } from "./HomeServices";
+import servicesStyles from "./HomeServices.module.scss";
 import styles from "./HomeWork.module.scss";
 
 function categoryLabel(p: HomeProject) {
@@ -79,6 +81,8 @@ function ProjectMeta({ project: p, featured }: { project: HomeProject; featured?
  */
 export function HomeWork() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const restRef = useRef<HTMLDivElement>(null);
+  const { index, go } = useSnapIndex(restRef);
   const [film, setFilm] = useState<ShowreelItem | null>(null);
   const films = WORK_FILMS.map((id) => showreel.find((f) => f.id === id)).filter(
     (f): f is ShowreelItem => Boolean(f),
@@ -106,6 +110,7 @@ export function HomeWork() {
   return (
     <StudioSection
       id="arbeiten"
+      className={styles.section}
       kicker="Ausgewählte Arbeiten"
       title={
         <>
@@ -124,9 +129,17 @@ export function HomeWork() {
               </Column>
             </ProjectLink>
           </Column>
-          <Grid as="li" columns="2" gap="40" m={{ columns: "1", gap: "48" }} fillWidth>
+          <Column as="li" fillWidth gap="8">
+            <Grid
+              ref={restRef}
+              columns="2"
+              gap="40"
+              fillWidth
+              className={classNames(servicesStyles.grid, servicesStyles.carousel, styles.rest)}
+              aria-label="Weitere Projekte, seitlich wischen"
+            >
             {rest.map((p) => (
-              <Column key={p.title} as="article" fillWidth gap="20">
+              <Column key={p.title} as="article" fillWidth gap="20" className={styles.card}>
                 <ProjectLink project={p}>
                   <Column fillWidth gap="20">
                     <ProjectFrame project={p} />
@@ -135,7 +148,14 @@ export function HomeWork() {
                 </ProjectLink>
               </Column>
             ))}
-          </Grid>
+            </Grid>
+            <SnapDots
+              name="Projekt wählen"
+              labels={rest.map((p) => (p.obscured ? "Entwurf Immobilien" : p.title))}
+              index={index}
+              onSelect={go}
+            />
+          </Column>
         </Column>
 
         <Column fillWidth gap="32">

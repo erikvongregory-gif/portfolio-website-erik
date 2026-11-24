@@ -10,7 +10,14 @@ import styles from "./StickyMobileCta.module.scss";
 
 const MOBILE_MQ = "(max-width: 1024px)";
 
-function shouldShowBar(hero: Element, kontakt: Element, rechner: Element | null) {
+function shouldShowBar(
+  hero: Element,
+  kontakt: Element,
+  rechner: Element | null,
+  footer: Element | null,
+) {
+  // Never sit on top of the footer: its links and legal row need the space.
+  if (footer && footer.getBoundingClientRect().top < window.innerHeight) return false;
   const heroRect = hero.getBoundingClientRect();
   const kontaktRect = kontakt.getBoundingClientRect();
   const heroVisible = heroRect.bottom > 0 && heroRect.top < window.innerHeight;
@@ -53,6 +60,7 @@ export function StickyMobileCta({
       document.getElementById("abschluss");
     if (!hero || !kontakt) return;
     const rechner = document.getElementById("rechner");
+    const footer = document.querySelector("footer[data-theme]");
 
     const mq = window.matchMedia(MOBILE_MQ);
 
@@ -61,18 +69,19 @@ export function StickyMobileCta({
         setVisible(false);
         return;
       }
-      setVisible(shouldShowBar(hero, kontakt, rechner));
+      setVisible(shouldShowBar(hero, kontakt, rechner, footer));
     };
 
     sync();
     const unsubScroll = subscribeScroll(sync);
-    window.addEventListener("scroll", sync, { passive: true });
+    // Native scroll (touch devices skip Lenis); capture also catches a scrolling body.
+    document.addEventListener("scroll", sync, { passive: true, capture: true });
     window.addEventListener("resize", sync, { passive: true });
     mq.addEventListener("change", sync);
 
     return () => {
       unsubScroll();
-      window.removeEventListener("scroll", sync);
+      document.removeEventListener("scroll", sync, { capture: true });
       window.removeEventListener("resize", sync);
       mq.removeEventListener("change", sync);
     };
@@ -83,6 +92,7 @@ export function StickyMobileCta({
       <Row
         className={classNames(styles.root, styles.bar, visible && styles.visible)}
         aria-hidden={!visible}
+        inert={!visible}
         position="fixed"
         bottom="0"
         left="0"
@@ -90,10 +100,7 @@ export function StickyMobileCta({
         horizontal="center"
         zIndex={2}
         background="surface"
-        paddingX="16"
-        paddingY="12"
         vertical="center"
-        style={{ maxHeight: "4.375rem" }}
       >
         <Row fillWidth maxWidth={68} gap="12" vertical="center" horizontal="between">
           <Text

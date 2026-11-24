@@ -88,6 +88,33 @@
   border-bottom: 1px solid var(--studio-line);
 }
 
+// Smooth open and close where the browser can animate to `auto`
+// (::details-content + interpolate-size); elsewhere it simply snaps open.
+.details {
+  interpolate-size: allow-keywords;
+
+  &::details-content {
+    block-size: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      block-size 0.45s var(--studio-ease),
+      opacity 0.3s ease,
+      content-visibility 0.45s allow-discrete;
+  }
+
+  &[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::details-content {
+      transition: none;
+    }
+  }
+}
+
 .summary {
   list-style: none;
   display: flex;
@@ -97,6 +124,18 @@
   min-height: 44px;
   padding: 1.5rem 0;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+    padding: 1.25rem 0;
+  }
+
+  &:active .icon {
+    border-color: rgba(143, 214, 224, 0.4);
+  }
 
   &::-webkit-details-marker {
     display: none;

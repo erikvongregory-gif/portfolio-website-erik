@@ -91,6 +91,11 @@
     content: "";
     position: absolute;
     inset: -14px;
+
+    // Fingers: 9px + 2 × 18px = 45px.
+    @media (pointer: coarse) {
+      inset: -18px;
+    }
   }
 
   &:focus-visible {

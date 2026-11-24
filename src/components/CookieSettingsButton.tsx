@@ -27,6 +27,7 @@ export function CookieSettingsButton({ className }: CookieSettingsButtonProps) {
         margin: 0,
         cursor: "pointer",
         display: "inline-flex",
+        alignItems: "center",
         font: "inherit",
         lineHeight: 1,
       }}

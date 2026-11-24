@@ -100,3 +100,17 @@
     display: none;
   }
 }
+
+/* Small phones: one calm line, no clipping. The countdown steps back first. */
+@media (max-width: 400px) {
+  .banner .inner {
+    gap: 0.5rem;
+    padding-inline: 0.75rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .timer {
+    display: none;
+  }
+}

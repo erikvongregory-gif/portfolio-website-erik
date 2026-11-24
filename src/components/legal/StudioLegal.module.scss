@@ -74,6 +74,7 @@
 }
 
 .block {
+  scroll-margin-top: 1rem; /* header + banner come from html scroll-padding-top */
   padding-top: 2.5rem;
   border-top: 1px solid var(--studio-line);
 
@@ -110,8 +111,12 @@
   color: var(--studio-ink-2);
   margin: 0;
   overflow-wrap: break-word;
+  hyphens: auto;
 
+  // Long URLs and e-mail addresses must wrap instead of widening the page.
   a {
+    overflow-wrap: anywhere;
+    hyphens: none;
     color: var(--studio-ink);
     text-decoration: underline;
     text-decoration-color: rgba(143, 214, 224, 0.55);
@@ -127,5 +132,77 @@
   strong {
     color: var(--studio-ink);
     font-weight: 600;
+  }
+}
+
+.toc {
+  margin-top: 0.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--studio-line);
+}
+
+.tocLabel {
+  @include studio.kicker;
+  color: var(--studio-ink-3);
+}
+
+.tocList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    min-width: 0;
+  }
+}
+
+.tocLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--studio-line);
+  background: var(--studio-glass);
+  color: var(--studio-ink-2) !important;
+  font-size: 0.9375rem;
+  line-height: 1.3;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: rgba(143, 214, 224, 0.4);
+    color: #fff !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .title {
+    // "Datenschutzerklärung" is one long word: keep it on one line at 320px.
+    font-size: clamp(2rem, 10.5vw, 2.5rem) !important;
+  }
+
+  .block {
+    padding-top: 2rem;
+  }
+
+  // Root size is 15px: give body copy a true 17px on phones (iOS body size).
+  .text {
+    font-size: 17px !important;
+    line-height: 1.65 !important;
+  }
+
+  .h3 {
+    font-size: 17px !important;
+  }
+
+  .tocList li {
+    width: 100%;
+  }
+
+  .tocLink {
+    width: 100%;
+    border-radius: 0.9rem;
   }
 }

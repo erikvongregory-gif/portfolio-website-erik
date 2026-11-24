@@ -15,12 +15,22 @@ export const metadata: Metadata = {
   twitter: createPageTwitter(title, description),
 };
 
+const SECTIONS = [
+  "1. Verantwortlicher",
+  "2. Hosting",
+  "3. Allgemeine Hinweise und Pflichtinformationen",
+  "4. Datenerfassung auf dieser Website",
+  "5. Schriftarten (Fonts)",
+  "6. Cookies und Analyse-Tools",
+];
+
 export default function Datenschutz() {
   return (
     <StudioLegalLayout
       eyebrow="Rechtliches"
       title="Datenschutzerklärung"
       intro="Der Schutz deiner persönlichen Daten ist mir wichtig. Hier erfährst du, welche Daten beim Besuch dieser Website verarbeitet werden und welche Rechte dir zustehen."
+      toc={SECTIONS}
     >
       <LegalBlock title="1. Verantwortlicher">
         <LegalText>

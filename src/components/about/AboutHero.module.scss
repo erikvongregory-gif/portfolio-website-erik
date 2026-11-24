@@ -134,7 +134,8 @@
 .intro {
   margin: 1.5rem 0 0;
   max-width: 34rem;
-  font-size: clamp(1rem, 1.25vw, 1.125rem) !important;
+  // The root size drops to 15px on phones; body copy stays at 16px or more.
+  font-size: clamp(max(1rem, 16px), 1.25vw, 1.125rem) !important;
   line-height: 1.55 !important;
   color: var(--studio-paper-ink-2);
 }
@@ -154,8 +155,9 @@
   position: relative !important;
   z-index: 4;
   max-width: 26rem;
-  aspect-ratio: 0.43;
-  margin-top: 3.5rem;
+  // Phones: two loose columns, tight enough that nothing floats alone.
+  aspect-ratio: 0.55;
+  margin-top: 3rem;
 
   @media (min-width: 640px) {
     max-width: 52rem;
@@ -257,7 +259,7 @@
 
 .noteText {
   @include about.scribble-text;
-  font-size: clamp(0.875rem, 1.05vw, 1rem) !important;
+  font-size: clamp(max(0.875rem, 14px), 1.05vw, 1rem) !important;
   line-height: 1.3 !important;
   color: var(--studio-paper-ink);
 }

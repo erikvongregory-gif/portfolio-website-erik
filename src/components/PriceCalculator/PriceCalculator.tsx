@@ -122,7 +122,7 @@ function OptionRow({ selected, onSelect, title, subtitle, price, role, index = 0
       <Text
         variant="label-strong-s"
         onBackground="neutral-strong"
-        className={styles.itemBody}
+        className={classNames(styles.itemBody, styles.itemPrice)}
         style={{ flexShrink: 0 }}
       >
         {price}
@@ -348,7 +348,8 @@ export function PriceCalculator({
                     <IconButton
                       icon="minus"
                       variant="secondary"
-                      size="m"
+                      size="l"
+                      className={styles.stepBtn}
                       aria-label="Eine Seite weniger"
                       disabled={state.pages <= INCLUDED_PAGES}
                       onClick={() => setPages(state.pages - 1)}
@@ -365,7 +366,8 @@ export function PriceCalculator({
                     <IconButton
                       icon="plus"
                       variant="secondary"
-                      size="m"
+                      size="l"
+                      className={styles.stepBtn}
                       aria-label="Eine Seite mehr"
                       disabled={state.pages >= MAX_PAGES}
                       onClick={() => setPages(state.pages + 1)}
@@ -404,7 +406,7 @@ export function PriceCalculator({
         <Column
           flex={5}
           fillWidth
-          className={styles.summaryWrap}
+          className={classNames(styles.summaryWrap, docked && styles.summaryWrapDocked)}
           style={docked ? { minHeight: "5.75rem" } : undefined}
         >
           <Column
